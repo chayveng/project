@@ -48,10 +48,10 @@ class _DashBoardState extends State<DashBoard> {
         itemCount: clubs.length,
         itemBuilder: (context, index) {
           return CardField(
-            fieldName: clubs[index].title,
+            fieldName: clubs[index].clubName,
             // detail: clubs[index].detail,
             onTap: () {
-              print(clubs[index].title);
+              print(clubs[index].clubName);
             },
           );
         },

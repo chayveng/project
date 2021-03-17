@@ -34,7 +34,7 @@ class CardTime extends StatelessWidget {
                 time,
                 style: TextStyle(
                   fontSize: 20,
-                  color: navyPrimaryColor,
+                  color: greenPrimaryColor,
                 ),
               ),
             ),

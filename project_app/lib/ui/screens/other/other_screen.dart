@@ -9,15 +9,15 @@ class OtherScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: grayPrimaryColor,
-      appBar: AppBar(
-        title: Text(
-          'Other Screen',
-          style: TextStyle(
-            color: navyPrimaryColor,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //   title: Text(
+      //     'Other Screen',
+      //     style: TextStyle(
+      //       color: greenPrimaryColor,
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      // ),
       body: Body(),
     );
   }

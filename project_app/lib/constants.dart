@@ -18,4 +18,4 @@ const Color whitePrimaryColor = Color(0xFFdddddd);
 const Color grayPrimaryColor = Color(0xFFe7e6e1);
 const Color creamPrimaryColor = Color(0xFFf7f6e7);
 const Color orangePrimaryColor = Color(0xFFf2a154);
-const Color navyPrimaryColor = Color(0xFF314e52);
+const Color greenPrimaryColor = Color(0xFF314e52);

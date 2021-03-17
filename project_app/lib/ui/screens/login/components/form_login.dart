@@ -3,7 +3,7 @@ import 'package:project_app/core/models/User.dart';
 import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
 import 'package:project_app/ui/components/rounded_field.dart';
-import 'package:project_app/ui/screens/main/main_screen.dart';
+import 'package:project_app/ui/screens/home/home_screen.dart';
 import 'package:project_app/ui/screens/register/register_screen.dart';
 
 import '../../../../constants.dart';
@@ -47,9 +47,7 @@ class _FormLoginState extends State<FormLogin> {
     if (_formKey.currentState.validate()) {
       _formKey.currentState.save();
       await AuthService.login(user: user)
-          ? Navigator.pushNamedAndRemoveUntil(
-              context, MainScreen.routeName, (route) => false)
-          // ? Navigator. pushReplacementNamed(context, MainScreen.routeName)
+          ? Navigator. pushReplacementNamed(context, HomeScreen.routeName)
           : _showDialog();
     }
   }

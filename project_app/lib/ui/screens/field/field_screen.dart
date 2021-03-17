@@ -25,11 +25,11 @@ class FieldScreen extends StatelessWidget {
   AppBar buildAppBar() {
     return AppBar(
       // elevation: 0,
-      iconTheme: IconThemeData(color: navyPrimaryColor),
+      iconTheme: IconThemeData(color: greenPrimaryColor),
       title: Text(
-        field.title,
+        field.fieldName,
         style: TextStyle(
-          color: navyPrimaryColor,
+          color: greenPrimaryColor,
           fontWeight: FontWeight.bold,
         ),
       ),

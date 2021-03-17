@@ -8,22 +8,22 @@ class Field {
   Field({
     this.id,
     this.clubId,
-    this.title,
+    this.fieldName,
   });
 
   int id;
   int clubId;
-  String title;
+  String fieldName;
 
   factory Field.fromJson(Map<String, dynamic> json) => Field(
     id: json["id"],
     clubId: json["clubId"],
-    title: json["fieldName"],
+    fieldName: json["fieldName"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "clubId": clubId,
-    "fieldName": title,
+    "fieldName": fieldName,
   };
 }

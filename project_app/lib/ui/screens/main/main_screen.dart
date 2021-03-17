@@ -6,7 +6,6 @@ import 'package:project_app/ui/screens/other/other_screen.dart';
 import '../../../constants.dart';
 
 class MainScreen extends StatefulWidget {
-  static String routeName = '/main';
   @override
   _MainScreenState createState() => _MainScreenState();
 }
@@ -26,8 +25,8 @@ class _MainScreenState extends State<MainScreen> {
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         backgroundColor: orangePrimaryColor,
-        selectedItemColor: navyPrimaryColor,
-        unselectedItemColor: navyPrimaryColor,
+        selectedItemColor: greenPrimaryColor,
+        unselectedItemColor: greenPrimaryColor,
         type: BottomNavigationBarType.fixed,
         // showUnselectedLabels: false,
         items: [

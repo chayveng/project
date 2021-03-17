@@ -127,14 +127,14 @@ class BottomNavIcon extends StatelessWidget {
             Icon(
               iconData,
               size: 22,
-              color: navyPrimaryColor,
+              color: greenPrimaryColor,
             ),
             SizedBox(height: 2),
             Text(
               label,
               style: TextStyle(
                 fontSize: 12,
-                color: navyPrimaryColor,
+                color: greenPrimaryColor,
                 fontWeight: FontWeight.bold,
               ),
             ),

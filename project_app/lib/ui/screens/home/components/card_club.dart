@@ -32,13 +32,12 @@ class CardClub extends StatelessWidget {
                 Container(
                   height: 150,
                   width: sized.width,
-                  child: Image(image: AssetImage(club.photoPath),),
-                  // child: FlutterLogo(),
+                  child: FlutterLogo(),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
-                    club.title,
+                    club.clubName,
                     style: TextStyle(
                       fontSize: 16,
                     ),

@@ -18,7 +18,7 @@ class Body extends StatelessWidget {
       (index) => new Field(
         id: index,
         clubId: club.id,
-        title: 'Field:$index',
+        fieldName: 'Field:$index',
       ),
     );
     Size sized = MediaQuery.of(context).size;
@@ -34,7 +34,7 @@ class Body extends StatelessWidget {
           ...List.generate(
             fields.length,
             (index) => CardField(
-              fieldName: '${fields[index].title}',
+              fieldName: '${fields[index].fieldName}',
               onTap: () {
                 Navigator.push(
                   context,

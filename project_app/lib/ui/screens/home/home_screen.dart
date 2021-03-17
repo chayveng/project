@@ -14,12 +14,12 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.search),
-        iconTheme: IconThemeData(color: navyPrimaryColor),
+        iconTheme: IconThemeData(color: greenPrimaryColor),
         backgroundColor: creamPrimaryColor,
         title: Text(
           'Home',
           style: TextStyle(
-            color: navyPrimaryColor,
+            color: greenPrimaryColor,
             fontWeight: FontWeight.bold,
           ),
         ),

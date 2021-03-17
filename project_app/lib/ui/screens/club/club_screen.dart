@@ -21,12 +21,12 @@ class ClubScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: creamPrimaryColor,
         iconTheme: IconThemeData(
-          color: navyPrimaryColor,
+          color: greenPrimaryColor,
         ),
         title: Text(
-          '${club.title}',
+          '${club.clubName}',
           style: TextStyle(
-            color: navyPrimaryColor,
+            color: greenPrimaryColor,
             fontWeight: FontWeight.bold,
           ),
         ),

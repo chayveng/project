@@ -16,7 +16,7 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    clubs = _setClub(index: 10);
+    clubs = _setClub(index: 5);
     super.initState();
   }
 
@@ -25,11 +25,10 @@ class _BodyState extends State<Body> {
         (index) => new Club(
           id: index,
           userId: index,
-          title: 'Club:$index',
+          clubName: 'Club:$index',
           detail: 'detail:$index',
-          googleMap: 'map:$index',
+          map: 'map:$index',
           tel: 'tel:$index',
-          photoPath: 'assets/images/clubs/club-${index+1}.jpg',
         ),
       );
 
