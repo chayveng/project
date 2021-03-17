@@ -2,7 +2,6 @@ package com.example.project_api.controllers;
 
 import com.example.project_api.models.beans.ApiResponse;
 import com.example.project_api.models.repository.FieldRepository;
-import com.example.project_api.models.tables.Club;
 import com.example.project_api.models.tables.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -33,10 +32,10 @@ public class FieldController {
 
     @PostMapping("/add")
     public Object add(@RequestBody Field field) {
-        Optional<Field> fieldData = fieldRepository.findByFieldName(field.getFieldName());
+        Optional<Field> fieldData = fieldRepository.findByTitle(field.getTitle());
         if (fieldData.isEmpty()) {
             fieldRepository.save(field);
-            return new ApiResponse(1, "Add a field an succeed", fieldRepository.findByFieldName(field.getFieldName()));
+            return new ApiResponse(1, "Add a field an succeed", fieldRepository.findByTitle(field.getTitle()));
         } else {
             return new ApiResponse(0, "Add a field fail");
         }
@@ -59,7 +58,7 @@ public class FieldController {
             for (int j = 0; j < num; j++) {
                 Field _field = new Field();
                 _field.setClubId(i);
-                _field.setFieldName("Field" + j);
+                _field.setTitle("Field" + j);
                 _field.setDetail("detail" + j);
                 _field.setStatus(true);
                 fieldRepository.save(_field);

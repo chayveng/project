@@ -37,10 +37,10 @@ public class ClubController {
 
     @PostMapping("/add")
     public Object add(@RequestBody Club club) {
-        Optional<Club> clubData = clubRepository.findByClubName(club.getClubName());
+        Optional<Club> clubData = clubRepository.findByTitle(club.getTitle());
         if (clubData.isEmpty()) {
             clubRepository.save(club);
-            return new ApiResponse(1, "Add a club an succeed", clubRepository.findByClubName(club.getClubName()));
+            return new ApiResponse(1, "Add a club an succeed", clubRepository.findByTitle(club.getTitle()));
         } else {
             return new ApiResponse(0, "Add a club fail");
         }
@@ -63,7 +63,7 @@ public class ClubController {
         if (clubData.isPresent()) {
             Club _club = clubData.get();
             _club.setId(clubData.get().getId());
-            _club.setClubName(club.getClubName());
+            _club.setTitle(club.getTitle());
             _club.setDetail(club.getDetail());
             _club.setMap(club.getMap());
             _club.setTel(club.getTel());
@@ -79,7 +79,7 @@ public class ClubController {
         for (int i = 0; i < num; i++) {
             Club _club = new Club();
             _club.setUserId(i);
-            _club.setClubName("Title" + i);
+            _club.setTitle("Title" + i);
             _club.setDetail("detail" + i);
             _club.setMap("map" + i);
             _club.setTel("000000000" + i);

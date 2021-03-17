@@ -15,15 +15,10 @@ public class Field {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private int id;
-    @Column(name = "club_id")
     private int clubId;
-    @Column(name = "field_name")
-    private String fieldName;
-    @Column(name = "detail")
+    private String title;
     private String detail;
-    @Column(name = "status")
     private boolean status;
 
 }

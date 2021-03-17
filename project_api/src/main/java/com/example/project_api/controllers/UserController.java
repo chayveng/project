@@ -32,18 +32,18 @@ public class UserController {
 
     @PostMapping("/register")
     public Object register(@RequestBody User user) {
-        Optional<User> userData = userRepository.findByUsername(user.getUsername());
+        Optional<User> userData = userRepository.findByUserName(user.getUserName());
         if (userData.isEmpty()) {
             userRepository.save(user);
-            return new ApiResponse(1, "Register success", userRepository.findByUsername(user.getUsername()));
+            return new ApiResponse(1, "Register success", userRepository.findByUserName(user.getUserName()));
         } else {
-            return new ApiResponse(0, "User exists", userRepository.findByUsername(user.getUsername()));
+            return new ApiResponse(0, "User exists", userRepository.findByUserName(user.getUserName()));
         }
     }
 
     @PostMapping("/login")
     public Object login(@RequestBody User user) {
-        Optional<User> userData = userRepository.findByUsernameAndPassword(user.getUsername(), user.getPassword());
+        Optional<User> userData = userRepository.findByUserNameAndPassWord(user.getUserName(), user.getPassWord());
         if (userData.isPresent()) {
             return new ApiResponse(1, "Login success", userData);
         } else {

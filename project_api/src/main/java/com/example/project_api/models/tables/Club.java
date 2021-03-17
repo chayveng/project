@@ -17,17 +17,13 @@ public class Club {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
     private int id;
-    @Column(name = "user_id")
     private int userId;
-    @Column(name = "club_name")
-    private String clubName;
-    @Column(name = "detail")
+    private String title;
     private String detail;
-    @Column(name = "map")
-    private String map;
-    @Column(name = "tel")
+    private String address;
+    private String price;
     private String tel;
+    private String map;
 
 }
