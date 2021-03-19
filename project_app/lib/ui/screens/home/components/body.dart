@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/ui/screens/club/club_screen.dart';
+import 'package:project_app/ui/screens/home/components/search_bar.dart';
 
 import 'card_club.dart';
 
@@ -25,37 +26,50 @@ class _BodyState extends State<Body> {
         (index) => new Club(
           id: index,
           userId: index,
-          clubName: 'Club:$index',
+          title: 'Club:$index',
           detail: 'detail:$index',
-          map: 'map:$index',
+          googleMap: 'map:$index',
           tel: 'tel:$index',
+          price: 'price:$index',
+          photoPath: 'assets/images/clubs/club-${index + 1}.jpg',
         ),
       );
 
   @override
   Widget build(BuildContext context) {
     Size sized = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Column(
-        children: [
-          Expanded(
-            child: RefreshIndicator(
-              key: _refresh,
-              child: _listSection(),
-              onRefresh: _handleRefresh,
-            ),
-          ),
-        ],
+    return RefreshIndicator(
+      key: _refresh,
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SafeArea(child: SizedBox()),
+            SearchBar(),
+            ..._listSection(),
+          ],
+        ),
       ),
+      onRefresh: _handleRefresh,
     );
   }
 
-  ListView _listSection() {
-    return ListView.builder(
-      itemCount: clubs.length,
-      itemBuilder: (context, index) => CardClub(
-        club: clubs[index],
+  List<Widget> _listSection() {
+    return List.generate(
+      clubs.length,
+      (index) => CardClub(
         onTap: () {
+          Navigator.push(
+            context,
+            PageTransition(
+              type: PageTransitionType.fade,
+              child: ClubScreen(
+                club: clubs[index],
+              ),
+            ),
+          );
+        },
+        club: clubs[index],
+        onPressed: () {
           Navigator.push(
             context,
             PageTransition(
@@ -69,6 +83,7 @@ class _BodyState extends State<Body> {
       ),
     );
   }
+
 
   Future<Null> _handleRefresh() async {
     await Future.delayed(Duration(seconds: 1));

@@ -15,13 +15,13 @@ class BookingScreen extends StatelessWidget {
       backgroundColor: grayPrimaryColor,
       appBar: AppBar(
         title: Text(
-          'Booking Screen',
+          'Booking',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: greenPrimaryColor,
           ),
         ),
-        backgroundColor: orangePrimaryColor,
+        backgroundColor: creamPrimaryColor,
       ),
       body: Body(),
     );

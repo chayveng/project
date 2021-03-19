@@ -24,7 +24,7 @@ class ClubScreen extends StatelessWidget {
           color: greenPrimaryColor,
         ),
         title: Text(
-          '${club.clubName}',
+          '${club.title}',
           style: TextStyle(
             color: greenPrimaryColor,
             fontWeight: FontWeight.bold,

@@ -10,34 +10,50 @@ class Club {
   Club({
     this.id,
     this.userId,
-    this.clubName,
+    this.title,
     this.detail,
-    this.map,
+    this.photoPath,
+    this.open,
+    this.googleMap,
+    this.add,
+    this.price,
     this.tel,
   });
 
   int id;
   int userId;
-  String clubName;
+  String title;
   String detail;
-  String map;
+  String photoPath;
+  String open;
+  String googleMap;
+  String add;
+  String price;
   String tel;
 
   factory Club.fromJson(Map<String, dynamic> json) => Club(
     id: json["id"],
     userId: json["userId"],
-    clubName: json["clubName"],
+    title: json["Title"],
     detail: json["detail"],
-    map: json["map"],
+    photoPath: json["photoPath"],
+    open: json["open"],
+    googleMap: json["googleMap"],
+    add: json["add"],
+    price: json["price"],
     tel: json["tel"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "userId": userId,
-    "clubName": clubName,
+    "Title": title,
     "detail": detail,
-    "map": map,
+    "photoPath": photoPath,
+    "open": open,
+    "googleMap": googleMap,
+    "add": add,
+    "price": price,
     "tel": tel,
   };
 }

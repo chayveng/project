@@ -21,9 +21,8 @@ class _BodyState extends State<Body> {
             children: [
               TopOther(),
               Menu(title: 'Profile', onPressed: () {}),
-              Menu(title: 'Setting', onPressed: () {}),
               Menu(title: 'Club', onPressed: () {}),
-              MenuLogout(sized: sized),
+              MenuLogout(),
             ],
           ),
         ],
@@ -33,15 +32,10 @@ class _BodyState extends State<Body> {
 }
 
 class MenuLogout extends StatelessWidget {
-  const MenuLogout({
-    Key key,
-    @required this.sized,
-  }) : super(key: key);
-
-  final Size sized;
 
   @override
   Widget build(BuildContext context) {
+    Size sized = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.only(bottom: 2),
       width: sized.width,
