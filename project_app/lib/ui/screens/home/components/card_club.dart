@@ -42,6 +42,7 @@ class CardClub extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Padding(
                           padding:
@@ -54,10 +55,14 @@ class CardClub extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Padding(
+                        Container(
+                          width: sized.width * 0.6,
                           padding: const EdgeInsets.all(8.0),
                           child: Text(
                             club.price,
+                            // 'psdhfiew sdpofjiodf eriuhger uwiehfiwu wiehwihe weihw iewhr iuhewr',
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
                             style: TextStyle(
                               fontSize: 14,
                               color: greenPrimaryColor,
@@ -68,7 +73,7 @@ class CardClub extends StatelessWidget {
                     ),
                     Container(
                       margin: EdgeInsets.all(10),
-                      width: 120,
+                      width: sized.width * 0.25,
                       height: 40,
                       child: RaisedButton(
                         shape: RoundedRectangleBorder(

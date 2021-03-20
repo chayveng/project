@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/routs.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
@@ -12,6 +13,9 @@ import 'ui/screens/other/other_screen.dart';
 import 'ui/screens/profile/profile_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   WidgetsFlutterBinding.ensureInitialized();
   Widget screen = LoginScreen();
   if (await AuthService.isLogin() == true) {
