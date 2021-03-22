@@ -40,26 +40,6 @@ public class TimeController {
         }
     }
 
-    @PostMapping("/add")
-    public Object add(@RequestBody Time time) {
-        List<Time> times = timeRepository.findByFieldId(time.getFieldId());
-        java.sql.Time newTime = time.getStartTime();
-//        for (Time element : times) {
-//            java.sql.Time oldTime = element.getEndTime();
-////
-////            if(oldTime < newTime){
-////
-////            }
-//        }
-//        for(int i = 0 ; i < times.toArray().length ; i++){
-//
-//        }
-        return " ";
-
-//        timeRepository.save(time);
-//        return new ApiResponse(1, "add", timeRepository.findByFieldId(time.getFieldId()));
-    }
-
     @PostMapping("/delete/{id}")
     public Object delete(@PathVariable int id) {
         Optional<Time> timeData = timeRepository.findById(id);

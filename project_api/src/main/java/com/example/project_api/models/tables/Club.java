@@ -18,12 +18,14 @@ public class Club {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int userId;
+    private long userId;
     private String title;
     private String detail;
     private String address;
+    private String open;
     private String price;
     private String tel;
     private String map;
+    private String photosPath;
 
 }
