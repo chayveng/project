@@ -11,13 +11,14 @@ class TestScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text(
-          'TestScreen',
-          style: TextStyle(color: Colors.black),
-        ),
-      ),
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   title: Text(
+      //     'TestScreen',
+      //     style: TextStyle(color: Colors.black),
+      //   ),
+      // ),
+
       // body: FeedJsonData(),
       // body: CustomTimePicker(),
       // body: CustomAppBarListViewButton(),
@@ -33,45 +34,70 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final List<String> photos = [
-    'assets/images/clubs/club-1.jpg',
-    'assets/images/clubs/club-2.jpg',
-    'assets/images/clubs/club-3.jpg',
-    'assets/images/clubs/club-4.jpg',
-    'assets/images/clubs/club-5.jpg',
-    'assets/images/clubs/club-6.jpg',
-    'assets/images/clubs/club-7.jpg',
-    'assets/images/clubs/club-8.jpg',
-    'assets/images/clubs/club-9.jpg',
-    'assets/images/clubs/club-10.jpg',
-  ];
-  int count = 0;
-
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: buildPhoto(),
-    );
-  }
-
-  Column buildPhoto() {
-    // print(photos.length);
-    print(count);
-    photos.length;
-    return Column(
-      children: [
-        Image(
-          image: AssetImage('${photos[count]}'),
-        ),
-        RaisedButton(
-          child: Text('Next'),
-          onPressed: () {
-            setState(() {
-              (count >= photos.length-1) ? count = 0 : count++;
-            });
-          },
-        ),
-      ],
+    Size sized = MediaQuery.of(context).size;
+    return SafeArea(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            width: sized.width,
+            height: sized.height * 0.3,
+            color: Colors.red,
+            child: FlutterLogo(),
+          ),
+          Container(
+            color: Colors.yellow,
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Title"),
+                Text(
+                    "detail ;dlfjaslkjflskdj;lfkjasd;lfjsdl;ddjflsdjflskdfjdslkfjsdlfjdslfjdslfjsdlfjlks"),
+              ],
+            ),
+          ),
+          SizedBox(height: 20),
+          Stack(
+            alignment: AlignmentDirectional.centerStart,
+            children: [
+              Container(
+                padding: EdgeInsets.only(left: 150),
+              color: Colors.green,
+                width: sized.width,
+                height: 120,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 10),
+                    Text("Title"),
+                    SizedBox(height: 10),
+                    Text("detail"),
+                    SizedBox(height: 10),
+                    Text("time1"),
+                    Text("time1"),
+                    Text("time1"),
+                  ],
+                ),
+              ),
+              Container(
+                width: 150,
+                height: 150,
+                color: Colors.pinkAccent,
+                child: FlutterLogo(),
+              ),
+            ],
+          ),
+          Container(
+            child: Column(
+              children: [
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

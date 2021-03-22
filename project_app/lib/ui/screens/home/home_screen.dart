@@ -12,18 +12,18 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(Icons.search),
-        iconTheme: IconThemeData(color: navyPrimaryColor),
-        backgroundColor: creamPrimaryColor,
-        title: Text(
-          'Home',
-          style: TextStyle(
-            color: navyPrimaryColor,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
+      // appBar: AppBar(
+      //   leading: Icon(Icons.search),
+      //   iconTheme: IconThemeData(color: navyPrimaryColor),
+      //   backgroundColor: creamPrimaryColor,
+      //   title: Text(
+      //     'Home',
+      //     style: TextStyle(
+      //       color: navyPrimaryColor,
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      // ),
       backgroundColor: grayPrimaryColor,
       body: Body(),
     );

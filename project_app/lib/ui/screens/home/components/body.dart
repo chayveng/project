@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:project_app/core/models/Club.dart';
-import 'package:project_app/ui/screens/club/club_screen.dart';
 
+import '../../../../core/models/Club.dart';
+import '../../../../core/services/ClubService.dart';
+import '../../../../core/services/ClubService.dart';
+import '../../club/club_screen.dart';
 import 'card_club.dart';
+import 'search_bar.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -16,51 +19,69 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-
+    _fetchData();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     Size sized = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Column(
-        children: [
-          Expanded(
-            child: RefreshIndicator(
-              key: _refresh,
-              child: _listSection(),
-              onRefresh: _handleRefresh,
-            ),
+    return Column(
+      children: [
+        Expanded(
+          child: RefreshIndicator(
+            key: _refresh,
+            child: _listSection(),
+            onRefresh: _handleRefresh,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
-  ListView _listSection() {
+  Widget _listSection() {
     return ListView.builder(
-      itemCount: clubs.length,
-      itemBuilder: (context, index) => CardClub(
-        club: clubs[index],
-        onTap: () {
-          Navigator.push(
-            context,
-            PageTransition(
-              type: PageTransitionType.fade,
-              child: ClubScreen(
+      itemCount: (clubs == null) ? 0 : clubs.length,
+      itemBuilder: (context, index) {
+        if (index == 0) {
+          return Column(
+            children: [
+              SearchBar(),
+              CardClub(
+                onTap: () {},
                 club: clubs[index],
               ),
-            ),
+            ],
           );
-        },
-      ),
+        } else {
+          return CardClub(
+            onTap: () {
+              print("onTap");
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //     builder: (context) => ClubScreen(
+              //       club: clubs[index],
+              //     ),
+              //   ),
+              // );
+            },
+            club: clubs[index],
+          );
+        }
+      },
     );
   }
 
   Future<Null> _handleRefresh() async {
+    _fetchData();
     await Future.delayed(Duration(seconds: 1));
     setState(() {});
     return null;
+  }
+
+  Future<void> _fetchData() async {
+    clubs = await ClubService.fetchClubs();
+    setState(() {});
   }
 }

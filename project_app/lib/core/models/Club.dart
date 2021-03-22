@@ -12,48 +12,55 @@ class Club {
     this.userId,
     this.title,
     this.detail,
-    this.photoPath,
+    this.address,
     this.open,
-    this.googleMap,
-    this.add,
     this.price,
     this.tel,
+    this.map,
+    this.photosPath,
   });
 
   int id;
+
+
   int userId;
   String title;
   String detail;
-  String photoPath;
-  String open;
-  String googleMap;
-  String add;
-  String price;
-  String tel;
+  dynamic address;
+  dynamic open;
+  dynamic price;
+  dynamic tel;
+  dynamic map;
+  String photosPath;
 
   factory Club.fromJson(Map<String, dynamic> json) => Club(
     id: json["id"],
     userId: json["userId"],
-    title: json["Title"],
+    title: json["title"],
     detail: json["detail"],
-    photoPath: json["photoPath"],
+    address: json["address"],
     open: json["open"],
-    googleMap: json["googleMap"],
-    add: json["add"],
     price: json["price"],
     tel: json["tel"],
+    map: json["map"],
+    photosPath: json["photosPath"],
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
     "userId": userId,
-    "Title": title,
+    "title": title,
     "detail": detail,
-    "photoPath": photoPath,
+    "address": address,
     "open": open,
-    "googleMap": googleMap,
-    "add": add,
     "price": price,
     "tel": tel,
+    "map": map,
+    "photosPath": photosPath,
   };
+
+  @override
+  String toString() {
+    return 'Club{id: $id, userId: $userId, title: $title, detail: $detail, address: $address, open: $open, price: $price, tel: $tel, map: $map, photosPath: $photosPath}';
+  }
 }

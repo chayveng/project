@@ -5,6 +5,7 @@ import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
 
 import 'core/services/AuthService.dart';
+import 'ui/screens/testScreen/TestScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -37,14 +38,14 @@ class MyApp extends StatelessWidget {
       ),
       title: 'Flutter Demo',
       routes: routes,
-      home: screen,
+      // home: screen,
       // home: SelectField(),
       // home: FirstScreen(),
       // home: ClubScreen(),
       // home: HomeScreen(),
       // home: ProfileScreen(),
       // home: LoginScreen(),
-      // home: TestScreen(),
+      home: TestScreen(),
     );
   }
 }
