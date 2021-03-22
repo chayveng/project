@@ -145,7 +145,7 @@ class _FormRegisterState extends State<FormRegister> {
       label: 'PASSWORD \:',
       hintText: 'Enter your password',
       obscureText: _obscureText,
-      onSaved: (input) => user.password = input,
+      onSaved: (input) => user.passWord = input,
       validator: (input) {
         _confirmPass = input;
         if (input.isEmpty) {
@@ -168,7 +168,7 @@ class _FormRegisterState extends State<FormRegister> {
     return RoundedField(
       label: 'USERNAME \:',
       hintText: 'Enter your username',
-      onSaved: (input) => user.username = input,
+      onSaved: (input) => user.userName = input,
       validator: (input) => input.isEmpty ? 'Please enter your username' : null,
       focusNode: focusNode['user'],
       onFieldSubmitted: (term) {

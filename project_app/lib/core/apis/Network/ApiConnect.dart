@@ -9,7 +9,8 @@ import '../../../config/Config.dart';
 class ApiConnect {
   static Future<Object> get({@required path}) async {
     var response = await http.get('${Config.API_URL}$path');
-    return response.body;
+    var res = jsonDecode(utf8.decode(response.bodyBytes));
+    return jsonEncode(res);
   }
 
   static Future<Object> post(
@@ -19,6 +20,7 @@ class ApiConnect {
       body: jsonEncode(data),
       headers: {HttpHeaders.contentTypeHeader: ('application/json')},
     );
-    return response.body;
+    var res = jsonDecode(utf8.decode(response.bodyBytes));
+    return jsonEncode(res);
   }
 }

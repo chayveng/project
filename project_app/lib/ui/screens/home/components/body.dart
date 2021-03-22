@@ -16,22 +16,9 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    clubs = _setClub(index: 10);
+
     super.initState();
   }
-
-  List<Club> _setClub({int index}) => List.generate(
-        index,
-        (index) => new Club(
-          id: index,
-          userId: index,
-          title: 'Club:$index',
-          detail: 'detail:$index',
-          googleMap: 'map:$index',
-          tel: 'tel:$index',
-          photoPath: 'assets/images/clubs/club-${index+1}.jpg',
-        ),
-      );
 
   @override
   Widget build(BuildContext context) {

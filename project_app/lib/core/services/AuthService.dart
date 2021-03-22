@@ -30,7 +30,7 @@ class AuthService {
     if (res.status == 1) {
       User userData = userFromJson(jsonEncode(res.data));
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      _prefs.setString(USERNAME, user.username);
+      _prefs.setString(USERNAME, user.userName);
       _prefs.setInt(USER_ID, userData.id);
       _prefs.setBool(IS_LOGIN, true);
       print(res.message);
