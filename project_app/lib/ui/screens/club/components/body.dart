@@ -1,51 +1,114 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Club.dart';
-import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/ui/screens/club/components/card_field.dart';
-import 'package:project_app/ui/screens/field/field_screen.dart';
 
 import '../../../../constants.dart';
 
 class Body extends StatelessWidget {
   final Club club;
 
-  Body({Key key, this.club}) : super(key: key);
+  const Body({Key key, this.club}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Field> fields = List.generate(
-      3,
-      (index) => new Field(
-        id: index,
-        clubId: club.id,
-        fieldName: 'Field:$index',
-      ),
-    );
     Size sized = MediaQuery.of(context).size;
     return SingleChildScrollView(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          Stack(
+            children: [
+              Container(
+                width: sized.width,
+                height: sized.height * 0.35,
+                child: Container(
+                  child: Image(
+                    image: AssetImage('assets/images/clubs/club-1.jpg'),
+                    fit: BoxFit.fill,
+                  ),
+                ),
+              ),
+              Container(
+                width: sized.width,
+                height: sized.height * 0.35,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: FractionalOffset.topCenter,
+                    end: FractionalOffset.bottomCenter,
+                    colors: [
+                      Colors.black38.withOpacity(0.8),
+                      Colors.white10,
+                    ],
+                  ),
+                ),
+              ),
+              Positioned(
+                left: 15,
+                top: sized.height * 0.05,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      icon: Icon(
+                        Icons.arrow_back,
+                        color: creamPrimaryColor,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                    SizedBox(width: 20),
+                    Text(
+                      'Name',
+                      style: TextStyle(color: creamPrimaryColor, fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
           Container(
             width: sized.width,
-            height: 300,
-            color: grayPrimaryColor,
-            child: FlutterLogo(),
-          ),
-          ...List.generate(
-            fields.length,
-            (index) => CardField(
-              fieldName: '${fields[index].fieldName}',
-              onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => FieldScreen(
-                      field: fields[index],
-                    ),
+            color: creamPrimaryColor,
+            padding: const EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Title",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: greenPrimaryColor,
                   ),
-                );
-              },
+                ),
+                Text(
+                  "detail hgeuguerhguerhreuis",
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: greenPrimaryColor,
+                  ),
+                ),
+              ],
             ),
+          ),
+          CardField(
+            onTap: () {},
+            title: 'สนาม 5-6 คน',
+            price: 'ราคา 600 บาท',
+            time: '14:00 - 23:00z',
+          ),
+          CardField(
+            onTap: () {},
+            title: 'สนาม 5-6 คน',
+            price: 'ราคา 600 บาท',
+            time: '14:00 - 23:00z',
+          ),
+          CardField(
+            onTap: () {},
+            title: 'สนาม 5-6 คน',
+            price: 'ราคา 600 บาท',
+            time: '14:00 - 23:00z',
           ),
         ],
       ),

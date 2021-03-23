@@ -14,17 +14,13 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     Size sized = MediaQuery.of(context).size;
-    return Container(
-      child: ListView(
+    return SingleChildScrollView(
+      child: Column(
         children: [
-          Column(
-            children: [
-              TopOther(),
-              Menu(title: 'Profile', onPressed: () {}),
-              Menu(title: 'Club', onPressed: () {}),
-              MenuLogout(),
-            ],
-          ),
+          TopOther(),
+          Menu(title: 'Profile', onPressed: () {}),
+          Menu(title: 'Club', onPressed: () {}),
+          MenuLogout(),
         ],
       ),
     );
@@ -32,7 +28,6 @@ class _BodyState extends State<Body> {
 }
 
 class MenuLogout extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     Size sized = MediaQuery.of(context).size;

@@ -5,6 +5,7 @@ import 'package:project_app/constants.dart';
 import 'package:project_app/routs.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
+import 'package:project_app/ui/screens/testScreen/TestScreen.dart';
 import 'core/services/AuthService.dart';
 import 'ui/screens/booking/booking_screen.dart';
 import 'ui/screens/home/home_screen.dart';
@@ -73,9 +74,9 @@ class MyApp extends StatelessWidget {
       // home: HomeScreen(),
       // home: ProfileScreen(),
       // home: LoginScreen(),
-      // home: TestScreen(),
+      home: TestScreen(),
       // home: OtherScreen(),
-      home: MainScreen(),
+      // home: MainScreen(),
     );
   }
 }

@@ -35,7 +35,7 @@ class CardClub extends StatelessWidget {
                   width: sized.width,
                   child: Image(
                     image: AssetImage(club.photoPath),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 Row(

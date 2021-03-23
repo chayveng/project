@@ -15,6 +15,7 @@ class TopOther extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          SafeArea(child: SizedBox()),
           Text(
             'UserName :',
             style: TextStyle(fontSize: 30, color: greenPrimaryColor),

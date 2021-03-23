@@ -18,20 +18,21 @@ class ClubScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: grayPrimaryColor,
-      appBar: AppBar(
-        backgroundColor: creamPrimaryColor,
-        iconTheme: IconThemeData(
-          color: greenPrimaryColor,
-        ),
-        title: Text(
-          '${club.title}',
-          style: TextStyle(
-            color: greenPrimaryColor,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      body: Body(club: club),
+      // appBar: AppBar(
+      //   backgroundColor: creamPrimaryColor,
+      //   iconTheme: IconThemeData(
+      //     color: greenPrimaryColor,
+      //   ),
+      //   title: Text(
+      //     '${club.title}',
+      //     style: TextStyle(
+      //       color: greenPrimaryColor,
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      // ),
+      // body: Body(club: club),
+      body: Body(),
     );
   }
 }
