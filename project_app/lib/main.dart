@@ -74,9 +74,9 @@ class MyApp extends StatelessWidget {
       // home: HomeScreen(),
       // home: ProfileScreen(),
       // home: LoginScreen(),
-      home: TestScreen(),
+      // home: TestScreen(),
       // home: OtherScreen(),
-      // home: MainScreen(),
+      home: MainScreen(),
     );
   }
 }

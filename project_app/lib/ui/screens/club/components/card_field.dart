@@ -47,41 +47,44 @@ class CardField extends StatelessWidget {
     //     ),
     //   ),
     // );
-    return InkWell(
-      onTap: onTap,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 10),
-        child: Container(
-          padding: EdgeInsets.all(10),
-          width: sized.width,
-          color: creamPrimaryColor,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                title,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: orangePrimaryColor,
-                  fontWeight: FontWeight.bold,
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: Material(
+        color: creamPrimaryColor,
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            width: sized.width,
+            // color: creamPrimaryColor,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: orangePrimaryColor,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-              ),
-              Text(
-                price,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: greenPrimaryColor,
+                Text(
+                  price,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: greenPrimaryColor,
+                  ),
                 ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                time,
-                style: TextStyle(
-                  fontSize: 14,
-                  color: greenPrimaryColor,
+                SizedBox(height: 8),
+                Text(
+                  time,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: greenPrimaryColor,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

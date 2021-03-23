@@ -29,7 +29,7 @@ class _TestScreenState extends State<TestScreen> {
               print('ok');
               showDialog(
                   context: context,
-                  // barrierDismissible: false,
+                  barrierDismissible: false,
                   builder: (BuildContext context) => MyDialog());
             },
             text: 'go',
@@ -99,12 +99,14 @@ class _MyDialogState extends State<MyDialog> {
     Size sized = MediaQuery.of(context).size;
     return Dialog(
       child: Container(
+        padding: EdgeInsets.symmetric(vertical: 15),
         width: sized.width,
         height: sized.height * 0.8,
         color: Colors.white30,
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Text('Title'),
               Row(
                 children: [
                   Checkbox(
@@ -116,6 +118,30 @@ class _MyDialogState extends State<MyDialog> {
                     },
                   ),
                   Text('I am true now'),
+                ],
+              ),
+              Row(
+                children: [
+                  Checkbox(
+                    value: isValue,
+                    onChanged: (value) {
+                      setState(() {
+                        isValue = !isValue;
+                      });
+                    },
+                  ),
+                  Text('I am true now'),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text('Cancel')),
+                  TextButton(onPressed: () {}, child: Text('Ok')),
                 ],
               ),
             ],
