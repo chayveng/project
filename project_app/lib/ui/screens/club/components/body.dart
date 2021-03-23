@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project_app/config/Config.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/core/models/Field.dart';
+import 'package:project_app/core/services/ClubService.dart';
 import 'package:project_app/ui/screens/club/components/card_field.dart';
 import 'package:project_app/ui/screens/field/field_screen.dart';
 
@@ -26,11 +28,22 @@ class Body extends StatelessWidget {
       child: Column(
         children: [
           Container(
+            height: 250,
             width: sized.width,
-            height: 300,
-            color: grayPrimaryColor,
-            child: FlutterLogo(),
+            child: FadeInImage.assetNetwork(
+              placeholder: defaultImage,
+              image: ClubService.mainImage(fileName: club.photosPath),
+              // image: "${Config.API_URL}/club/images?imageName=${club.photosPath}",
+              fit: BoxFit.cover,
+            ),
+            // child: FlutterLogo(),
           ),
+          // Container(
+          //   width: sized.width,
+          //   height: 300,
+          //   color: grayPrimaryColor,
+          //   child: FlutterLogo(),
+          // ),
           ...List.generate(
             fields.length,
             (index) => CardField(

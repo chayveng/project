@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Club.dart';
+import 'package:project_app/core/services/ClubService.dart';
 
 import '../../../../config/Config.dart';
 import '../../../../constants.dart';
 
 class CardClub extends StatelessWidget {
   final AssetImage image;
+  // final Function onTap;
   final GestureTapCallback onTap;
   final Club club;
 
@@ -34,8 +36,8 @@ class CardClub extends StatelessWidget {
                   height: 250,
                   width: sized.width,
                   child: FadeInImage.assetNetwork(
-                    placeholder: "assets/images/clubs/club-1.jpg",
-                    image: "${Config.API_URL}/club/images?imageName=${club.photosPath}",
+                    placeholder: defaultImage,
+                    image: ClubService.mainImage(fileName: club.photosPath),
                     fit: BoxFit.cover,
                   ),
                   // child: FlutterLogo(),

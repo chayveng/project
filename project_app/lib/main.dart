@@ -38,14 +38,14 @@ class MyApp extends StatelessWidget {
       ),
       title: 'Flutter Demo',
       routes: routes,
-      // home: screen,
+      home: screen,
+      // home: TestScreen(),
       // home: SelectField(),
       // home: FirstScreen(),
       // home: ClubScreen(),
       // home: HomeScreen(),
       // home: ProfileScreen(),
       // home: LoginScreen(),
-      home: TestScreen(),
     );
   }
 }
