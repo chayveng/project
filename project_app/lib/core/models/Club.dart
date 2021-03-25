@@ -56,4 +56,9 @@ class Club {
     "price": price,
     "tel": tel,
   };
+
+  @override
+  String toString() {
+    return 'Club{id: $id, userId: $userId, title: $title, detail: $detail, photoPath: $photoPath, open: $open, googleMap: $googleMap, add: $add, price: $price, tel: $tel}';
+  }
 }

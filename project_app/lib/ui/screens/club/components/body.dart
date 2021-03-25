@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/ui/screens/club/components/card_field.dart';
+import 'package:project_app/ui/screens/home/home_screen.dart';
+import 'package:project_app/ui/screens/main/main_screen.dart';
 
 import '../../../../constants.dart';
 
@@ -55,7 +57,7 @@ class Body extends StatelessWidget {
                         size: 30,
                       ),
                       onPressed: () {
-                        Navigator.pop(context);
+                        Navigator.pushNamed(context, MainScreen.routeName);
                       },
                     ),
                     SizedBox(width: 20),
@@ -96,20 +98,15 @@ class Body extends StatelessWidget {
             onTap: () {},
             title: 'สนาม 5-6 คน',
             price: 'ราคา 600 บาท',
-            time: '14:00 - 23:00z',
+            time: '14:00 - 23:00',
           ),
           CardField(
             onTap: () {},
-            title: 'สนาม 5-6 คน',
-            price: 'ราคา 600 บาท',
-            time: '14:00 - 23:00z',
+            title: 'สนาม 7-9 คน',
+            price: 'ราคา 800 บาท',
+            time: '14:00 - 23:00',
           ),
-          CardField(
-            onTap: () {},
-            title: 'สนาม 5-6 คน',
-            price: 'ราคา 600 บาท',
-            time: '14:00 - 23:00z',
-          ),
+
         ],
       ),
     );

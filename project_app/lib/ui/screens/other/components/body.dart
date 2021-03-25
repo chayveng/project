@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:project_app/ui/screens/create_club/create_club_screen.dart';
 import 'package:project_app/ui/screens/other/components/menu.dart';
 import 'package:project_app/ui/screens/other/components/top_other.dart';
 import '../../../../constants.dart';
@@ -19,7 +21,16 @@ class _BodyState extends State<Body> {
         children: [
           TopOther(),
           Menu(title: 'Profile', onPressed: () {}),
-          Menu(title: 'Club', onPressed: () {}),
+          Menu(
+            title: 'Club',
+            onPressed: () {
+              Navigator.push(
+                context,
+                PageTransition(
+                    child: CreateClubScreen(), type: PageTransitionType.fade),
+              );
+            },
+          ),
           MenuLogout(),
         ],
       ),

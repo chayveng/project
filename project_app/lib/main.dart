@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/routs.dart';
+import 'package:project_app/ui/screens/create_club/create_club_screen.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
 import 'package:project_app/ui/screens/testScreen/TestScreen.dart';
@@ -76,6 +77,7 @@ class MyApp extends StatelessWidget {
       // home: LoginScreen(),
       // home: TestScreen(),
       // home: OtherScreen(),
+      // home: CreateClubScreen(),
       home: MainScreen(),
     );
   }

@@ -6,6 +6,8 @@ import 'package:project_app/ui/screens/other/other_screen.dart';
 import '../../../constants.dart';
 
 class MainScreen extends StatefulWidget {
+  static String routeName = '/main';
+
   @override
   _MainScreenState createState() => _MainScreenState();
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
 
-import '../../../constants.dart';
 
 class TestScreen extends StatefulWidget {
   static String routeName = '/test_screen';
@@ -38,52 +37,6 @@ class _TestScreenState extends State<TestScreen> {
       ),
     );
   }
-
-  Future<void> _showMyDialog(context) async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('AlertDialog Title'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                Text('This is a demo alert dialog.'),
-                Text('This is a demo alert dialog.'),
-                Text('This is a demo alert dialog.'),
-                Text('This is a demo alert dialog.'),
-                Text('This is a demo alert dialog.'),
-                Text('This is a demo alert dialog.'),
-                Text('This is a demo alert dialog.'),
-                Text('This is a demo alert dialog.'),
-                Text('This is a demo alert dialog.'),
-                Text('This is a demo alert dialog.'),
-                Text('This is a demo alert dialog.'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  child: Text('Cancel'),
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                ),
-                TextButton(
-                  child: Text('Ok'),
-                  onPressed: () {},
-                ),
-              ],
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
 
 class MyDialog extends StatefulWidget {
@@ -101,12 +54,25 @@ class _MyDialogState extends State<MyDialog> {
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 15),
         width: sized.width,
-        height: sized.height * 0.8,
+        // height: sized.height * 0.8,
         color: Colors.white30,
         child: SingleChildScrollView(
           child: Column(
             children: [
               Text('Title'),
+              Row(
+                children: [
+                  Checkbox(
+                    value: isValue,
+                    onChanged: (value) {
+                      setState(() {
+                        isValue = !isValue;
+                      });
+                    },
+                  ),
+                  Text('I am true now'),
+                ],
+              ),
               Row(
                 children: [
                   Checkbox(

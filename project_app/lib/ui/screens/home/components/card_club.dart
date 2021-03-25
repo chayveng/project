@@ -28,64 +28,18 @@ class CardClub extends StatelessWidget {
           child: InkWell(
             onTap: onTap,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: 250,
-                  width: sized.width,
-                  child: Image(
-                    image: AssetImage(club.photoPath),
-                    fit: BoxFit.fill,
-                  ),
-                ),
+                buildImage(sized),
                 Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 8, top: 8, right: 8),
-                          child: Text(
-                            club.title,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: greenPrimaryColor,
-                            ),
-                          ),
-                        ),
-                        Container(
-                          width: sized.width * 0.6,
-                          padding: const EdgeInsets.all(8.0),
-                          child: Text(
-                            club.price,
-                            // 'psdhfiew sdpofjiodf eriuhger uwiehfiwu wiehwihe weihw iewhr iuhewr',
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: greenPrimaryColor,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      margin: EdgeInsets.all(10),
-                      width: sized.width * 0.25,
-                      height: 40,
-                      child: RaisedButton(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        color: orangePrimaryColor,
-                        child: Text(
-                          'จอง',
-                          style:
-                              TextStyle(fontSize: 14, color: greenPrimaryColor),
-                        ),
-                        onPressed: onPressed,
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          buildTitle(),
+                          buildDetail(sized),
+                        ],
                       ),
                     ),
                   ],
@@ -94,6 +48,48 @@ class CardClub extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Container buildImage(Size sized) {
+    return Container(
+      height: 250,
+      width: sized.width,
+      child: Image(
+        image: AssetImage(club.photoPath),
+        fit: BoxFit.fill,
+      ),
+      // child: FlutterLogo(),
+    );
+  }
+
+  Container buildTitle() {
+    return Container(
+      padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+      child: Text(
+        (club.title) ?? 'null',
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.bold,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
+    );
+  }
+
+  Container buildDetail(Size sized) {
+    return Container(
+      width: sized.width,
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        club.detail ?? 'null',
+        style: TextStyle(
+          fontSize: 14,
+        ),
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
       ),
     );
   }
