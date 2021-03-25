@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/ui/screens/club/components/card_field.dart';
 import 'package:project_app/ui/screens/home/home_screen.dart';
@@ -57,7 +58,13 @@ class Body extends StatelessWidget {
                         size: 30,
                       ),
                       onPressed: () {
-                        Navigator.pushNamed(context, MainScreen.routeName);
+                        Navigator.push(
+                          context,
+                          PageTransition(
+                            type: PageTransitionType.fade,
+                            child: MainScreen(),
+                          ),
+                        );
                       },
                     ),
                     SizedBox(width: 20),
@@ -106,7 +113,6 @@ class Body extends StatelessWidget {
             price: 'ราคา 800 บาท',
             time: '14:00 - 23:00',
           ),
-
         ],
       ),
     );
