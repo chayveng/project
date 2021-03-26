@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Club.dart';
+import 'package:project_app/ui/components/rounded_button.dart';
 
 import '../../../constants.dart';
 import 'components/body.dart';
@@ -18,20 +19,6 @@ class ClubScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: grayPrimaryColor,
-      // appBar: AppBar(
-      //   backgroundColor: creamPrimaryColor,
-      //   iconTheme: IconThemeData(
-      //     color: greenPrimaryColor,
-      //   ),
-      //   title: Text(
-      //     '${club.title}',
-      //     style: TextStyle(
-      //       color: greenPrimaryColor,
-      //       fontWeight: FontWeight.bold,
-      //     ),
-      //   ),
-      // ),
-      // body: Body(club: club),
       body: Body(),
     );
   }
