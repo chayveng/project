@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_app/ui/components/rounded_button.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:project_app/constants.dart';
 
 class TestScreen extends StatefulWidget {
   static String routeName = '/test_screen';
@@ -13,109 +14,16 @@ class _TestScreenState extends State<TestScreen> {
   Widget build(BuildContext context) {
     Size sized = MediaQuery.of(context).size;
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        title: Text('TestScreen'),
-      ),
-      body: Center(
-        child: Container(
-          width: 300,
-          height: 100,
-          child: RoundedButton(
-            onTap: () {
-              print('ok');
-              showDialog(
-                  context: context,
-                  barrierDismissible: false,
-                  builder: (BuildContext context) => MyDialog());
-            },
-            text: 'go',
-          ),
-        ),
-      ),
+      body: buildCenter(),
     );
   }
-}
 
-class MyDialog extends StatefulWidget {
-  @override
-  _MyDialogState createState() => _MyDialogState();
-}
-
-class _MyDialogState extends State<MyDialog> {
-  bool isValue1 = false;
-  bool isValue2 = false;
-  bool isValue3 = false;
-
-  @override
-  Widget build(BuildContext context) {
-    Size sized = MediaQuery.of(context).size;
-    return Dialog(
-      child: Container(
-        padding: EdgeInsets.symmetric(vertical: 15),
-        width: sized.width,
-        // height: sized.height * 0.8,
-        color: Colors.white30,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Text(
-                'Title',
-                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                    value: isValue1,
-                    onChanged: (value) {
-                      setState(() {
-                        isValue1 = !isValue1;
-                      });
-                    },
-                  ),
-                  Text('I am true now'),
-                ],
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                    value: isValue2,
-                    onChanged: (value) {
-                      setState(() {
-                        isValue2 = !isValue2;
-                      });
-                    },
-                  ),
-                  Text('I am true now'),
-                ],
-              ),
-              Row(
-                children: [
-                  Checkbox(
-                    value: isValue3,
-                    onChanged: (value) {
-                      setState(() {
-                        isValue3 = !isValue3;
-                      });
-                    },
-                  ),
-                  Text('I am true now'),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  TextButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text('Cancel')),
-                  TextButton(onPressed: () {}, child: Text('Ok')),
-                ],
-              ),
-            ],
-          ),
-        ),
+  Center buildCenter() {
+    return Center(
+      child: SpinKitWave(
+        color: orangePrimaryColor,
+        size: 30,
+        duration: Duration(milliseconds: 1500),
       ),
     );
   }
