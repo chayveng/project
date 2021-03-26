@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
 
-
 class TestScreen extends StatefulWidget {
   static String routeName = '/test_screen';
 
@@ -24,7 +23,6 @@ class _TestScreenState extends State<TestScreen> {
           height: 100,
           child: RoundedButton(
             onTap: () {
-              // _showMyDialog(context);
               print('ok');
               showDialog(
                   context: context,
@@ -45,7 +43,9 @@ class MyDialog extends StatefulWidget {
 }
 
 class _MyDialogState extends State<MyDialog> {
-  bool isValue = false;
+  bool isValue1 = false;
+  bool isValue2 = false;
+  bool isValue3 = false;
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +59,17 @@ class _MyDialogState extends State<MyDialog> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text('Title'),
+              Text(
+                'Title',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              ),
               Row(
                 children: [
                   Checkbox(
-                    value: isValue,
+                    value: isValue1,
                     onChanged: (value) {
                       setState(() {
-                        isValue = !isValue;
+                        isValue1 = !isValue1;
                       });
                     },
                   ),
@@ -76,10 +79,10 @@ class _MyDialogState extends State<MyDialog> {
               Row(
                 children: [
                   Checkbox(
-                    value: isValue,
+                    value: isValue2,
                     onChanged: (value) {
                       setState(() {
-                        isValue = !isValue;
+                        isValue2 = !isValue2;
                       });
                     },
                   ),
@@ -89,10 +92,10 @@ class _MyDialogState extends State<MyDialog> {
               Row(
                 children: [
                   Checkbox(
-                    value: isValue,
+                    value: isValue3,
                     onChanged: (value) {
                       setState(() {
-                        isValue = !isValue;
+                        isValue3 = !isValue3;
                       });
                     },
                   ),

@@ -2,15 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/ui/screens/club/components/card_field.dart';
+import 'package:project_app/ui/screens/club/components/time_list/time_list.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
 
 import '../../../../constants.dart';
 
-class Body extends StatelessWidget {
+class Body extends StatefulWidget {
   final Club club;
 
   const Body({Key key, this.club}) : super(key: key);
 
+  @override
+  _BodyState createState() => _BodyState();
+}
+
+class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     Size sized = MediaQuery.of(context).size;
@@ -21,7 +27,7 @@ class Body extends StatelessWidget {
           buildHeader(sized, context),
           buildTitleBox(sized),
           listSection(),
-          SizedBox(height:15),
+          SizedBox(height: 15),
           buildCreateButton(sized),
         ],
       ),
@@ -140,7 +146,12 @@ class Body extends StatelessWidget {
     return Column(
       children: [
         CardField(
-          onTap: () {},
+          onTap: () {
+            showDialog(
+              context: context,
+                barrierDismissible: false,
+                builder: (BuildContext context) => TimesDialog());
+          },
           title: 'สนาม 5-6 คน',
           price: 'ราคา 600 บาท',
           time: '14:00 - 23:00',
