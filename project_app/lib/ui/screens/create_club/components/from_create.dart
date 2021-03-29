@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/core/services/ClubService.dart';
@@ -118,7 +119,7 @@ class _FromCreateState extends State<FromCreate> {
     print('create');
     _formKey.currentState.save();
     if(await ClubService.update(club: club, image: _image)){
-     await Future.delayed(Duration(milliseconds: 2000));
+    await  buildDialogLoading(context, 1500);
       Navigator.pushNamedAndRemoveUntil(
           context, MainScreen.routeName, (route) => false);
     }else{
@@ -130,7 +131,7 @@ class _FromCreateState extends State<FromCreate> {
     print('create');
     _formKey.currentState.save();
     if (await ClubService.create(club: club, image: _image)) {
-     await Future.delayed(Duration(milliseconds: 2000));
+      await buildDialogLoading(context, 1500);
       Navigator.pushNamedAndRemoveUntil(
           context, MainScreen.routeName, (route) => false);
     } else {
