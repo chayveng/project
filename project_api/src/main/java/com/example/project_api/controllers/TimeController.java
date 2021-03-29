@@ -1,15 +1,11 @@
 package com.example.project_api.controllers;
 
 import com.example.project_api.models.beans.ApiResponse;
-import com.example.project_api.models.beans.ApiResponse.ApiResponseBuilder;
 import com.example.project_api.models.repository.TimeRepository;
 import com.example.project_api.models.tables.Time;
-import lombok.val;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +26,29 @@ public class TimeController {
         return new ApiResponse(1, "Times", timeRepository.findAll());
     }
 
+    @PostMapping("/add")
+    public Object add(@RequestBody Time time) {
+        Optional<Time> timeData = timeRepository.findByStartTimeAndEndTimeAndFieldId(time.getStartTime(),time.getEndTime(), time.getFieldId());
+        if (timeData.isEmpty()) {
+            time.setUserId(0);
+            timeRepository.save(time);
+            return new ApiResponse(1, "Add Time Succeed", timeRepository.findByStartTimeAndEndTime(time.getStartTime(), time.getEndTime()));
+        } else {
+            return new ApiResponse(0, "Time is exists", timeRepository.findByStartTimeAndEndTime(time.getStartTime(), time.getEndTime()));
+        }
+    }
+
+    @GetMapping("/getByUserId/{userId}")
+    public Object getByUserId(@PathVariable int userId) {
+        List<Time> timeData = timeRepository.findByUserId(userId);
+        if (timeData != null) {
+            return new ApiResponse(1, "Time By UserId", timeData);
+        } else {
+            return new ApiResponse(0, "Fail", timeRepository.findByUserId(userId));
+        }
+    }
+
+
     @GetMapping("/getByFieldId/{fieldId}")
     public Object getByFieldId(@PathVariable int fieldId) {
         List<Time> times = timeRepository.findByFieldId(fieldId);
@@ -39,6 +58,7 @@ public class TimeController {
             return new ApiResponse(0, "No times by field id", null);
         }
     }
+
 
     @PostMapping("/delete/{id}")
     public Object delete(@PathVariable int id) {

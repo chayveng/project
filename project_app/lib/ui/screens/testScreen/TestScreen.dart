@@ -1,7 +1,24 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'dart:ui';
+import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:project_app/config/Config.dart';
+import 'package:project_app/core/apis/Network/ApiConnect.dart';
+import 'package:project_app/core/apis/Network/FieldNetwork.dart';
+import 'package:project_app/core/models/Field.dart';
+import 'package:project_app/core/models/Time.dart';
+import 'package:project_app/core/services/ClubService.dart';
+import 'package:project_app/core/services/FieldServices.dart';
+import 'package:http/http.dart' as http;
+import 'package:project_app/core/services/TimeService.dart';
+import 'package:project_app/ui/components/outline_field.dart';
+import 'package:project_app/ui/screens/testScreen/components/custom_time_picker.dart';
 
+import '../../../constants.dart';
 import 'components/feed_json_data.dart';
 import 'components/time_list_section.dart';
 
@@ -34,70 +51,41 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  var _formKey = GlobalKey<FormState>();
+  Time time = new Time(fieldId: 99, userId: 99, status: true);
+  List<Time> times = new List<Time>();
+  Time _time = new Time(startTime: '12:00', endTime: '13:00');
+  Map<String, dynamic> textEditCtl = new Map();
+
+  Future<void> fetchTimes() async {
+    times = await TimeService.fetchTimes();
+    await Future.delayed(Duration(milliseconds: 1000));
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size sized = MediaQuery.of(context).size;
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            width: sized.width,
-            height: sized.height * 0.3,
-            color: Colors.red,
-            child: FlutterLogo(),
-          ),
-          Container(
-            color: Colors.yellow,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Title"),
-                Text(
-                    "detail ;dlfjaslkjflskdj;lfkjasd;lfjsdl;ddjflsdjflskdfjdslkfjsdlfjdslfjdslfjsdlfjlks"),
-              ],
-            ),
-          ),
-          SizedBox(height: 20),
-          Stack(
-            alignment: AlignmentDirectional.centerStart,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
             children: [
-              Container(
-                padding: EdgeInsets.only(left: 150),
-              color: Colors.green,
-                width: sized.width,
-                height: 120,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: 10),
-                    Text("Title"),
-                    SizedBox(height: 10),
-                    Text("detail"),
-                    SizedBox(height: 10),
-                    Text("time1"),
-                    Text("time1"),
-                    Text("time1"),
-                  ],
+              Opacity(
+                opacity: 0.5,
+                child: Container(
+                  width: 200,
+                  height: 200,
+                  child: Image.asset(
+                    'assets/images/default/image_symbol_landscape.png',
+                    fit: BoxFit.cover,
+                  ),
                 ),
-              ),
-              Container(
-                width: 150,
-                height: 150,
-                color: Colors.pinkAccent,
-                child: FlutterLogo(),
               ),
             ],
           ),
-
-          Container(
-            child: Column(
-              children: [
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }

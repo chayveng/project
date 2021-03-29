@@ -5,10 +5,9 @@ import 'package:project_app/core/apis/Network/UserNetwork.dart';
 import 'package:project_app/core/models/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class AuthService {
   static final String IS_LOGIN = 'is_login';
-  static final String USERNAME = 'username';
+  static final String USERNAME = 'user_name';
   static final String USER_ID = 'user_id';
 
   static Future<bool> isLogin() async {
@@ -45,5 +44,11 @@ class AuthService {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     _prefs.remove(IS_LOGIN);
     return await Future<void>.delayed(Duration(seconds: 1));
+  }
+
+  static Future<int> getUserId() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    int userId = _pref.getInt(USER_ID);
+    return userId;
   }
 }

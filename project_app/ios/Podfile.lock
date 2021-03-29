@@ -26,7 +26,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   hexcolor: fdfb9c4258ad96e949c2dbcdf790a62194b8aa89
-  image_picker: a211f28b95a560433c00f5cd3773f4710a20404d
+  image_picker: 9c3312491f862b28d21ecd8fdf0ee14e601b3f09
   shared_preferences: af6bfa751691cdc24be3045c43ec037377ada40d
 
 PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c

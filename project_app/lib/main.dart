@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/routs.dart';
@@ -30,11 +32,15 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: UiFont,
-        appBarTheme: AppBarTheme(
-          elevation: 0,
-          centerTitle: true,
-          color: creamPrimaryColor,
-        ),
+        // appBarTheme: AppBarTheme(
+        //   iconTheme: IconThemeData(
+        //     color: blackPrimaryColor,
+        //   ),
+        //   // textTheme: Typography.material2018().black,
+        //   elevation: 0,
+        //   centerTitle: true,
+        //   color: creamPrimaryColor,
+        // ),
       ),
       title: 'Flutter Demo',
       routes: routes,

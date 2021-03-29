@@ -17,8 +17,8 @@ public class Time {
     private int id;
     private int fieldId;
     private int userId;
-    private java.sql.Time startTime;
-    private java.sql.Time endTime;
+    private String startTime;
+    private String endTime;
     private boolean status;
 
 }

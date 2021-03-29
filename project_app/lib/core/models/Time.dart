@@ -2,6 +2,9 @@ import 'dart:convert';
 
 Time timeFromJson(String str) => Time.fromJson(json.decode(str));
 
+List<Time> timesFormJson(List lst) =>
+    lst.map((e) => timeFromJson(jsonEncode(e))).toList();
+
 String timeToJson(Time data) => json.encode(data.toJson());
 
 class Time {

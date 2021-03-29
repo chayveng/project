@@ -7,8 +7,9 @@ import 'package:project_app/ui/screens/register/register_screen.dart';
 
 
 class Config {
-  // static String API_URL = 'http://172.16.3.37:8080';
   // static String API_URL = 'http://172.20.10.3:8080';
+  // static String API_URL = 'http://172.16.3.37:8080';
+  // static String API_URL = 'http://172.24.161.141:8080';
   static String API_URL = 'http://localhost:8080';
   static final route = <String, WidgetBuilder>{
     '/home_screen': (BuildContext context) => HomeScreen(),

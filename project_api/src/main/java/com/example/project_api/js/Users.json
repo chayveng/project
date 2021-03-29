@@ -1,18 +1,18 @@
-  [
-    {
-      "userName": "admin",
-      "passWord": "12345678",
-      "firstName": "firstName",
-      "lastName": "lastName",
-      "tel": "12345676543",
-      "email": "admin@mail.com"
-    },
-    {
-      "userName": "user",
-      "passWord": "9876545678",
-      "firstName": "firstName",
-      "lastName": "lastName",
-      "tel": "12345676543",
-      "email": "admin@mail.com"
-    }
-  ]
+[
+  {
+    "userName": "admin",
+    "passWord": "12345678",
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "tel": "12345676543",
+    "email": "admin@mail.com"
+  },
+  {
+    "userName": "user",
+    "passWord": "9876545678",
+    "firstName": "firstName",
+    "lastName": "lastName",
+    "tel": "12345676543",
+    "email": "admin@mail.com"
+  }
+]

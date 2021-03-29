@@ -8,6 +8,10 @@ import java.util.Optional;
 
 public interface TimeRepository extends JpaRepository<Time, Integer> {
     List<Time> findByFieldId(int fieldId);
-    Optional<Time> findByStartTime(java.sql.Time startTime);
+    Optional<Time> findByStartTime(String startTime);
+    Optional<Time> findByStartTimeAndEndTime(String startTime, String endTime);
+    Optional<Time> findByStartTimeAndEndTimeAndFieldId(String startTime, String endTime,int fieldId);
+    List<Time> findByUserId(int userId);
+
 }
 

@@ -37,8 +37,18 @@ public class ClubController {
     }
 
     @GetMapping("/getByUserId/{userId}")
-    public Object getByUserId(@PathVariable int userId) {
-        return new ApiResponse(1, "Get a club by id", clubRepository.findByUserId(userId));
+    public Object getByUserId(@PathVariable long userId) {
+        Optional<Club> clubData = clubRepository.findByUserId(userId);
+        if (clubData.isPresent()) {
+            return new ApiResponse(1, "Get By User Id", clubRepository.findById(clubData.get().getId()));
+        }else{
+            return new ApiResponse(0, "Fail", null);
+        }
+    }
+
+    @GetMapping("/getByTitle/{title}")
+    public Object getByTitle(@RequestParam String title){
+        return new ApiResponse(1, "Get By Title", clubRepository.findByTitle(title));
     }
 
     @GetMapping("/getAll")
@@ -46,29 +56,67 @@ public class ClubController {
         return new ApiResponse(1, "Get clubs", clubRepository.findAll());
     }
 
+    @PostMapping("/addClub")
+    public Object add(@RequestBody Club club) {
+        Optional<Club> data = clubRepository.findByTitle(club.getTitle());
+        if (data.isEmpty()) {
+            clubRepository.save(club);
+            return new ApiResponse(1, "Saved", clubRepository.findByTitle(club.getTitle()));
+        } else {
+            return new ApiResponse(0, "Club exists", clubRepository.findByTitle(club.getTitle()));
+        }
+    }
 
-    @PostMapping("/add")
-    public Object add(Club club, @RequestParam(value = "fileImage", required = false) MultipartFile fileImage) {
-        ApiResponse res = new ApiResponse();
+    @PostMapping("/addImage/")
+    public Object addImage(@RequestParam int clubId,@RequestParam(value = "fileImage", required = false) MultipartFile fileImage){
         Random random = new Random();
-        try {
-            if (fileImage != null) {
+        ApiResponse res = new ApiResponse();
+        Optional<Club> clubData = clubRepository.findById(clubId);
+
+        if (clubData.isPresent()) {
+            try{
+                Club _club = clubData.get();
                 char a = (char) (random.nextInt(26) + 'a');
                 char b = (char) (random.nextInt(26) + 'a');
-                club.setPhotosPath(String.valueOf(club.getId()) + String.valueOf(a) + String.valueOf(b) + ".png");
-                File fileToSave = new File(Config.PATH_IMAGE + club.getId() + a + b + ".png");
+                String photosPath = (String.valueOf(clubId) + String.valueOf(a) + String.valueOf(b) + ".png");
+                File fileToSave = new File(Config.PATH_IMAGE + clubId + a + b + ".png");
+                _club.setPhotosPath(photosPath);
                 fileImage.transferTo(fileToSave);
-                clubRepository.save(club);
+                clubRepository.save(_club);
                 res.setStatus(1);
-                res.setData("add success");
-                res.setData(clubRepository.findByTitle(club.getTitle()));
+                res.setMessage("add Image");
+                res.setData(clubRepository.findById(clubId));
+            } catch (IOException e) {
+                e.printStackTrace();
+                res.setStatus(0);
+                res.setMessage("add Image fail");
             }
-        } catch (Exception err) {
-            res.setStatus(0);
-            res.setMessage("add fail ");
         }
         return res;
     }
+
+//    @PostMapping("/add")
+//    public Object add( Club club, @RequestParam(value = "fileImage", required = false) MultipartFile fileImage) {
+//        ApiResponse res = new ApiResponse();
+//        Random random = new Random();
+//        try {
+//            if (fileImage != null) {
+//                char a = (char) (random.nextInt(26) + 'a');
+//                char b = (char) (random.nextInt(26) + 'a');
+//                club.setPhotosPath(String.valueOf(club.getId()) + String.valueOf(a) + String.valueOf(b) + ".png");
+//                File fileToSave = new File(Config.PATH_IMAGE + club.getId() + a + b + ".png");
+//                fileImage.transferTo(fileToSave);
+//                clubRepository.save(club);
+//                res.setStatus(1);
+//                res.setData("add success");
+//                res.setData(clubRepository.findByTitle(club.getTitle()));
+//            }
+//        } catch (Exception err) {
+//            res.setStatus(0);
+//            res.setMessage("add fail ");
+//        }
+//        return res;
+//    }
 
     @ResponseBody
     @RequestMapping(value = "/images", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
@@ -85,30 +133,6 @@ public class ClubController {
         return null;
     }
 
-//    @PostMapping("/add")
-//    public Object add( Club club, @RequestParam(value = "value", required = false) MultipartFile fileImage) {
-//        System.out.println(club);
-//        Random random = new Random();
-//        try {
-//            Optional<Club> clubData = clubRepository.findByTitle(club.getTitle());
-//            if (clubData.isEmpty()) {
-//                if (fileImage != null) {
-//                    char a = (char) (random.nextInt(26) + 'a');
-//                    char b = (char) (random.nextInt(26) + 'a');
-//
-//                    club.setPhotosPath(String.valueOf(club.getId()) + String.valueOf(a) + String.valueOf(b) + ".png");
-//                    File fileToSave = new File(Config.URL_IMAGE + club.getId() + a + b + ".png");
-//                    fileImage.transferTo(fileToSave);
-//                }
-//                return new ApiResponse(1, "Add a club an succeed", clubRepository.findByTitle(club.getTitle()));
-//            } else {
-//                return new ApiResponse(0, "Add a club fail");
-//            }
-//        } catch (Exception err) {
-//            return new ApiResponse(0, "Add a club fail");
-//        }
-//    }
-
     @GetMapping("/delete/{id}")
     public Object delete(@PathVariable int id) {
         Optional<Club> clubData = clubRepository.findById(id);
@@ -120,9 +144,9 @@ public class ClubController {
         }
     }
 
-    @PostMapping("/update/{id}")
-    public Object update(@PathVariable int id, @RequestBody Club club) {
-        Optional<Club> clubData = clubRepository.findById(id);
+    @PostMapping("/update")
+    public Object update( @RequestBody Club club) {
+        Optional<Club> clubData = clubRepository.findById(club.getId());
         if (clubData.isPresent()) {
             Club _club = clubData.get();
             _club.setId(clubData.get().getId());
@@ -160,7 +184,7 @@ public class ClubController {
             JSONArray objList = jsonObject;
             Iterator<JSONObject> iterator = objList.iterator();
             while (iterator.hasNext()) {
-                JSONObject _jsonObject =(JSONObject) iterator.next();
+                JSONObject _jsonObject = (JSONObject) iterator.next();
                 Club club = new Club();
                 club.setUserId((Long) _jsonObject.get("userId"));
                 club.setTitle((String) _jsonObject.get("title"));
@@ -174,14 +198,14 @@ public class ClubController {
                 Optional<Club> clubData = clubRepository.findByTitle(club.getTitle());
                 if (clubData.isEmpty()) {
                     clubRepository.save(club);
-                }else{
+                } else {
                     return "Saved";
                 }
             }
         } catch (ParseException | IOException e) {
             e.printStackTrace();
         }
-     return  clubRepository.findAll();
+        return clubRepository.findAll();
     }
 
 }
