@@ -17,19 +17,23 @@ class ListSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: (clubs == null) ? 0 : clubs.length,
+      itemCount: (clubs != null) ? clubs.length : 0,
       itemBuilder: (context, index) {
-        if (index == 0) {
-          return Column(
-            children: [
-              SafeArea(child: SizedBox()),
-              SizedBox(height: 8),
-              SearchBar(),
-              buildCardClub(clubs[index], context),
-            ],
-          );
-        } else {
-          return buildCardClub(clubs[index], context);
+        if(clubs == null){
+          return SizedBox();
+        }else{
+          if (index == 0) {
+            return Column(
+              children: [
+                SafeArea(child: SizedBox()),
+                SizedBox(height: 8),
+                SearchBar(),
+                buildCardClub(clubs[index], context),
+              ],
+            );
+          } else {
+            return buildCardClub(clubs[index], context);
+          }
         }
       },
     );
@@ -42,7 +46,7 @@ class ListSection extends StatelessWidget {
         Navigator.push(
           context,
           PageTransition(
-            child: ClubScreen(club: club),
+            child: ClubScreen(clubId: club.id ),
             type: PageTransitionType.fade,
           ),
         );

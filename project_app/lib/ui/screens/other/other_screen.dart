@@ -5,6 +5,7 @@ import 'package:project_app/ui/components/custom_bottom_bar.dart';
 import 'components/body.dart';
 
 class OtherScreen extends StatelessWidget {
+  static String routeName = '/other';
   @override
   Widget build(BuildContext context) {
     return Scaffold(

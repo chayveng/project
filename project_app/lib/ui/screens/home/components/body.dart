@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:project_app/core/models/Club.dart';
 
+import '../../../../constants.dart';
 import '../../../../core/models/Club.dart';
 import '../../../../core/services/ClubService.dart';
 import 'list_section.dart';
@@ -17,8 +19,22 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     _fetchData();
-    Future.delayed(Duration(milliseconds: 500), () => setState(() {}));
     super.initState();
+  }
+
+  Future<Null> _handleRefresh() async {
+    _fetchData();
+    await Future.delayed(Duration(milliseconds: 500));
+    setState(() {});
+    return null;
+  }
+
+  Future<bool> _fetchData() async {
+    clubs = await ClubService.fetchClubs();
+    clubs = clubs ?? List<Club>();
+    await Future.delayed(Duration(milliseconds: 500));
+    // await Future.delayed(Duration(milliseconds: 500), () => setState(() {}));
+    return true;
   }
 
   @override
@@ -28,7 +44,21 @@ class _BodyState extends State<Body> {
         Expanded(
           child: RefreshIndicator(
             key: _refresh,
-            child: ListSection(clubs: clubs),
+            child: FutureBuilder(
+              future: _fetchData(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (snapshot.hasData) {
+                  return ListSection(clubs: clubs);
+                } else {
+                  return Center(
+                    child: SpinKitWave(
+                      color: orangePrimaryColor,
+                      size: 40,
+                    ),
+                  );
+                }
+              },
+            ),
             onRefresh: _handleRefresh,
           ),
         ),
@@ -36,18 +66,4 @@ class _BodyState extends State<Body> {
     );
   }
 
-  Future<Null> _handleRefresh() async {
-    _fetchData();
-    await Future.delayed(Duration(milliseconds: 1000));
-    setState(() {});
-    return null;
-  }
-
-  Future<void> _fetchData() async {
-    clubs = await ClubService.fetchClubs();
-    clubs = clubs ?? List<Club>();
-    // print("fetchData: $clubs");
-    // await Future.delayed(Duration(milliseconds: 500));
-    // setState(() {});
-  }
 }

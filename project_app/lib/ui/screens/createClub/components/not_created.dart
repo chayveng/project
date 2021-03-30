@@ -10,12 +10,6 @@ class NotCreated extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: creamPrimaryColor,
-      appBar: AppBar(
-        brightness: Brightness.light,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: blackPrimaryColor.withOpacity(0.5)),
-      ),
       body: Container(
         width: sized(context).width,
         height: sized(context).height,

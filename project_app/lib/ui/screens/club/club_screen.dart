@@ -8,12 +8,12 @@ import 'components/body.dart';
 class ClubScreen extends StatelessWidget {
   static String routeName = '/club';
 
-  final Club club;
+  final int clubId;
   final bool isOwner;
 
   const ClubScreen({
     Key key,
-    @required this.club,
+    @required this.clubId,
     this.isOwner = false,
   }) : super(key: key);
 
@@ -24,7 +24,7 @@ class ClubScreen extends StatelessWidget {
     ));
     return Scaffold(
       backgroundColor: grayPrimaryColor,
-      body: Body(club: club, isOwner: isOwner),
+      body: Body(clubId: clubId, isOwner: isOwner),
     );
   }
 }

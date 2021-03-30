@@ -22,6 +22,12 @@ class ClubService {
     }
   }
 
+  static Future<Club> getById({@required int id})async{
+    var response = await ClubNetwork.getById(id: id);
+    return clubFromJson(jsonEncode(response.data));
+  }
+
+
   static Future<bool> create(
       {@required Club club, @required File image}) async {
     var response = await ClubNetwork.addClub(club: club);

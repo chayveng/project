@@ -1,12 +1,7 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:project_app/core/models/Time.dart';
-import 'package:project_app/core/services/TimeService.dart';
+import 'package:project_app/constants.dart';
 
+import 'body.dart';
 
 class TestScreen extends StatelessWidget {
   static String routeName = '/test_screen';
@@ -30,48 +25,73 @@ class TestScreen extends StatelessWidget {
   }
 }
 
-class Body extends StatefulWidget {
-  @override
-  _BodyState createState() => _BodyState();
-}
-
-class _BodyState extends State<Body> {
-  var _formKey = GlobalKey<FormState>();
-  Time time = new Time(fieldId: 99, userId: 99, status: true);
-  List<Time> times = new List<Time>();
-  Time _time = new Time(startTime: '12:00', endTime: '13:00');
-  Map<String, dynamic> textEditCtl = new Map();
-
-  Future<void> fetchTimes() async {
-    times = await TimeService.fetchTimes();
-    await Future.delayed(Duration(milliseconds: 1000));
-    setState(() {});
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Form(
-        key: _formKey,
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Opacity(
-                opacity: 0.5,
-                child: Container(
-                  width: 200,
-                  height: 200,
-                  child: Image.asset(
-                    'assets/images/default/image_symbol_landscape.png',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-}
+// class Body extends StatefulWidget {
+//   @override
+//   _BodyState createState() => _BodyState();
+// }
+//
+// class _BodyState extends State<Body> {
+//   bool status = false;
+//   double _height = 0;
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.only(top: 50),
+//       child: Container(
+//         width: sized(context).width,
+//         child: Column(
+//           children: [
+//             GestureDetector(
+//               onTap: () {
+//                 setState(() {
+//                   status = !status;
+//                   status == true ? _height = 200 : _height = 0;
+//                 });
+//               },
+//               child: Container(
+//                 color: Colors.red,
+//                 height: 60,
+//                 width: sized(context).width * 0.9,
+//                 child: Column(
+//                   crossAxisAlignment: CrossAxisAlignment.start,
+//                   children: [
+//                     Text("data"),
+//                     Text("data"),
+//                     Text("data"),
+//                   ],
+//                 ),
+//               ),
+//             ),
+//             AnimatedContainer(
+//               color: Colors.yellow,
+//               height: _height,
+//               width: sized(context).width * 0.9,
+//               duration: Duration(milliseconds: 20),
+//               child: status == true ? buildColumn() : SizedBox(),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+//
+//   SingleChildScrollView buildColumn() {
+//     return SingleChildScrollView(
+//       child: Column(
+//         children: [
+//           Text("data"),
+//           Text("data"),
+//           Text("data"),
+//           Text("data"),
+//           Text("data"),
+//           Text("data"),
+//           Text("data"),
+//           Text("data"),
+//           Text("data"),
+//           Text("data"),
+//         ],
+//       ),
+//     );
+//   }
+// }

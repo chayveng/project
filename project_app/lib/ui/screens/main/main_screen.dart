@@ -7,11 +7,15 @@ import '../../../constants.dart';
 
 class MainScreen extends StatefulWidget {
   static String routeName = '/main';
+  final int currentIndex;
+
+  const MainScreen({Key key, this.currentIndex}) : super(key: key);
   @override
-  _MainScreenState createState() => _MainScreenState();
+  _MainScreenState createState() => _MainScreenState(currentIndex);
 }
 
 class _MainScreenState extends State<MainScreen> {
+  int currentIndex;
   int _currentIndex = 0;
   final tabs = [
     HomeScreen(),
@@ -19,10 +23,12 @@ class _MainScreenState extends State<MainScreen> {
     OtherScreen(),
   ];
 
+  _MainScreenState(this.currentIndex);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: tabs[_currentIndex],
+      body: tabs[currentIndex != null ? currentIndex : _currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         backgroundColor: orangePrimaryColor,
@@ -49,6 +55,8 @@ class _MainScreenState extends State<MainScreen> {
         onTap: (index) {
           setState(() {
             _currentIndex = index;
+            currentIndex = null;
+             // _currentIndex = currentIndex == null ? index : currentIndex;
           });
         },
       ),

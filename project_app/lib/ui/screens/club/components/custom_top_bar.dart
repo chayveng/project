@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_app/ui/screens/main/main_screen.dart';
+import 'package:project_app/ui/screens/other/other_screen.dart';
 
 import '../../../../constants.dart';
 
@@ -35,7 +37,27 @@ class CustomTopBar extends StatelessWidget {
                 color: Colors.white,
               ),
               onPressed: () {
-                Navigator.pop(context);
+                (isOwner)
+                    // ? Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => MainScreen(
+                    //         currentIndex: 2,
+                    //       ),
+                    //     ),
+                    //   )
+                    ? Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MainScreen(
+                            currentIndex: 2,
+                          ),
+                        ),
+                        (route) => false)
+                    : Navigator.pop(context);
+
+                // ? Navigator.pushNamedAndRemoveUntil(
+                //     context, OtherScreen.routeName, (route) => false)
               },
             ),
             title: Text(
@@ -48,12 +70,12 @@ class CustomTopBar extends StatelessWidget {
             ),
             trailing: isOwner == true
                 ? IconButton(
-              icon: Icon(
-                Icons.edit,
-                color: Colors.white,
-              ),
-              onPressed: trailingTap,
-            )
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.white,
+                    ),
+                    onPressed: trailingTap,
+                  )
                 : SizedBox(),
           ),
           SizedBox(height: 30),

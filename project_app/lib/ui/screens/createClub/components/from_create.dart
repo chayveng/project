@@ -8,7 +8,7 @@ import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/core/services/ClubService.dart';
 import 'package:project_app/ui/components/outline_field.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
-import 'package:project_app/ui/screens/main/main_screen.dart';
+import 'package:project_app/ui/screens/club/club_screen.dart';
 
 import 'field_image.dart';
 
@@ -31,11 +31,11 @@ class _FormCreateState extends State<FormCreate> {
     Future.delayed(Duration(milliseconds: 200), () => setState(() {}));
     super.initState();
   }
-  
+
   Future<void> isCreate() async {
     var userId = await AuthService.getUserId();
     club = await ClubService.getByUserId(userId: userId);
-    if(club.userId == null){
+    if (club.userId == null) {
       club.userId = userId;
       _status = !_status;
     }
@@ -110,7 +110,7 @@ class _FormCreateState extends State<FormCreate> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Container(
                 height: 55,
-                width: sized(context).width ,
+                width: sized(context).width,
                 child: _isCreate(status: _status),
               ),
             ),
@@ -125,13 +125,21 @@ class _FormCreateState extends State<FormCreate> {
       : RoundedButton(text: 'Create', onTap: () async => _onCreate(context));
 
   Future<void> _onUpdate(BuildContext context) async {
-    print('create');
+    print('update');
     _formKey.currentState.save();
-    if(await ClubService.update(club: club, image: _image)){
-    await  buildDialogLoading(context, 1500);
-      Navigator.pushNamedAndRemoveUntil(
-          context, MainScreen.routeName, (route) => false);
-    }else{
+    if (await ClubService.update(club: club, image: _image)) {
+      Club _club = await ClubService.getByUserId(userId: club.userId);
+      await Future.delayed(Duration(milliseconds: 1500));
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ClubScreen(
+              clubId: _club.id,
+              isOwner: true,
+            ),
+          ),
+          (route) => false);
+    } else {
       print('Update Fail');
     }
   }
@@ -140,9 +148,17 @@ class _FormCreateState extends State<FormCreate> {
     print('create');
     _formKey.currentState.save();
     if (await ClubService.create(club: club, image: _image)) {
+      Club _club = await ClubService.getByUserId(userId: club.userId);
       await buildDialogLoading(context, 1500);
-      Navigator.pushNamedAndRemoveUntil(
-          context, MainScreen.routeName, (route) => false);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ClubScreen(
+            clubId: _club.id,
+            isOwner: true,
+          ),
+        ),
+      );
     } else {
       print('add fail');
     }
