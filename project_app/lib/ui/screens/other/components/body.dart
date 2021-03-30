@@ -1,8 +1,15 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
+import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/core/services/AuthService.dart';
-import 'package:project_app/ui/screens/create_club/CreateClubScreen.dart';
+import 'package:project_app/core/services/ClubService.dart';
+import 'package:project_app/ui/screens/club/club_screen.dart';
+import 'package:project_app/ui/screens/createClub/create_club.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
+import 'package:project_app/ui/screens/other/components/button_menu.dart';
+
+import 'custom_dialog.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -10,89 +17,68 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+
+  Future<void> _onMyClub(BuildContext context) async {
+    int userId = await AuthService.getUserId();
+    Club club = await ClubService.getByUserId(userId: userId);
+    await Future.delayed(Duration(milliseconds: 500));
+    bool _isOwner = club.id != null ? true : false;
+    print(_isOwner);
+    print(club);
+    _isOwner == true
+        ? Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ClubScreen(
+                club: club,
+                isOwner: _isOwner,
+              ),
+            ),
+          )
+        : Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateClub(isOwner: _isOwner, club: club),
+            ),
+          );
+  }
+
+  Future _onLogout(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => CustomDialog(
+        itOk: () {
+          print('logout');
+          AuthService.logout();
+          Navigator.pushNamedAndRemoveUntil(
+              context, LoginScreen.routeName, (route) => false);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size sized = MediaQuery.of(context).size;
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          BuildButton(
-            text: "My Club",
-            onPressed: () {
-              // print('Create Club');
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => CreateClubScreen()));
-            },
+          ButtonMenu(
+            title: 'Profile',
+            onPressed: () => print('onProfile'),
           ),
-          BuildButton(
-            text: "Logout",
-            onPressed: () => showDialog(
-              context: context,
-              builder: (context) => CustomDialog(
-                itOk: () => _isLogout(context),
-              ),
-            ),
+          ButtonMenu(
+            title: 'My club',
+            onPressed: () async => await _onMyClub(context),
+          ),
+          ButtonMenu(
+            title: 'Logout',
+            icon: Icons.logout,
+            textColor: Colors.red,
+            onPressed: () => _onLogout(context),
           ),
         ],
       ),
-    );
-  }
-
-  void _isLogout(BuildContext context) {
-    print('logout');
-    AuthService.logout();
-    Navigator.pushNamedAndRemoveUntil(
-        context, LoginScreen.routeName, (route) => false);
-  }
-}
-
-class CustomDialog extends StatelessWidget {
-  final VoidCallback itOk;
-
-  const CustomDialog({
-    Key key,
-    this.itOk,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      title: Text('Logout'),
-      actions: [
-        FlatButton(
-          onPressed: () => Navigator.pop(context),
-          child: Text("Cancel"),
-        ),
-        FlatButton(
-          onPressed: itOk,
-          child: Text("Ok"),
-        ),
-      ],
-    );
-  }
-}
-
-class BuildButton extends StatelessWidget {
-  final String text;
-  final VoidCallback onPressed;
-
-  const BuildButton({
-    Key key,
-    @required this.text,
-    @required this.onPressed,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return RaisedButton(
-      child: Container(
-        width: sized(context).width,
-        child: Center(
-          child: Text(text),
-        ),
-      ),
-      onPressed: onPressed,
     );
   }
 }

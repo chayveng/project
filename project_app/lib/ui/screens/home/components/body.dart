@@ -17,7 +17,7 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     _fetchData();
-    Future.delayed(Duration(milliseconds: 200), () => setState(() {}));
+    Future.delayed(Duration(milliseconds: 500), () => setState(() {}));
     super.initState();
   }
 

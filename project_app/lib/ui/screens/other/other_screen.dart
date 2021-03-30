@@ -12,10 +12,6 @@ class OtherScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           'Other Screen',
-          style: TextStyle(
-            color: navyPrimaryColor,
-            fontWeight: FontWeight.bold,
-          ),
         ),
       ),
       body: Body(),

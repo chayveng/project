@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project_app/core/models/Club.dart';
 
 import '../../../constants.dart';
@@ -8,30 +9,22 @@ class ClubScreen extends StatelessWidget {
   static String routeName = '/club';
 
   final Club club;
+  final bool isOwner;
 
   const ClubScreen({
     Key key,
-    this.club,
+    @required this.club,
+    this.isOwner = false,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+        statusBarColor: Colors.white
+    ));
     return Scaffold(
       backgroundColor: grayPrimaryColor,
-      // appBar: AppBar(
-      //   backgroundColor: creamPrimaryColor,
-      //   iconTheme: IconThemeData(
-      //     color: navyPrimaryColor,
-      //   ),
-      //   title: Text(
-      //     '${club.title}',
-      //     style: TextStyle(
-      //       color: navyPrimaryColor,
-      //       fontWeight: FontWeight.bold,
-      //     ),
-      //   ),
-      // ),
-      body: Body(club: club),
+      body: Body(club: club, isOwner: isOwner),
     );
   }
 }

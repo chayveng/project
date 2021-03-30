@@ -26,10 +26,13 @@ class OutlineField extends StatelessWidget {
       controller: controller,
       maxLines: (minLine == null) ? 1 : minLine,
       decoration: InputDecoration(
+        filled: true,
+        fillColor: creamPrimaryColor,
         labelText: labelText,
+        labelStyle: TextStyle(fontSize: 20, color: navyPrimaryColor),
         hintText: hintText,
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
+        contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
         focusedBorder: buildOutlineInputBorder(),
         enabledBorder: buildOutlineInputBorder(),
       ),
@@ -39,8 +42,11 @@ class OutlineField extends StatelessWidget {
 
   OutlineInputBorder buildOutlineInputBorder() {
     return OutlineInputBorder(
-      borderRadius: BorderRadius.circular(20),
-      borderSide: BorderSide(color: blackPrimaryColor.withOpacity(0.5)),
+      borderRadius: BorderRadius.circular(10),
+      borderSide: BorderSide(
+        color: navyPrimaryColor.withOpacity(0.5),
+        width: 3,
+      ),
       gapPadding: 10,
     );
   }

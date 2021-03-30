@@ -12,12 +12,12 @@ import 'package:project_app/ui/screens/main/main_screen.dart';
 
 import 'field_image.dart';
 
-class FromCreate extends StatefulWidget {
+class FormCreate extends StatefulWidget {
   @override
-  _FromCreateState createState() => _FromCreateState();
+  _FormCreateState createState() => _FormCreateState();
 }
 
-class _FromCreateState extends State<FromCreate> {
+class _FormCreateState extends State<FormCreate> {
   var _formKey = GlobalKey<FormState>();
   Club club = Club();
   File _image;
@@ -31,8 +31,7 @@ class _FromCreateState extends State<FromCreate> {
     Future.delayed(Duration(milliseconds: 200), () => setState(() {}));
     super.initState();
   }
-
-
+  
   Future<void> isCreate() async {
     var userId = await AuthService.getUserId();
     club = await ClubService.getByUserId(userId: userId);
@@ -47,66 +46,76 @@ class _FromCreateState extends State<FromCreate> {
     setDefaultInput();
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          FieldImage(
-            image: _image,
-            photosPath: club.photosPath,
-            onTap: () async => chooseImage(ImageSource.gallery),
-          ),
-          Container(
-            padding: EdgeInsets.all(10),
-            child: Column(
-              children: [
-                SizedBox(height: heightPadding),
-                OutlineField(
-                  labelText: "Title",
-                  hintText: "Title",
-                  controller: textCtl['title'],
-                  onSaved: (input) => club.title = input,
-                ),
-                SizedBox(height: heightPadding),
-                OutlineField(
-                  labelText: "Detail",
-                  hintText: "detail",
-                  controller: textCtl['detail'],
-                  minLine: 5,
-                  onSaved: (input) => club.detail = input,
-                ),
-                SizedBox(height: heightPadding),
-                Row(
-                  children: [
-                    Expanded(
-                      child: OutlineField(
-                        labelText: "open-time",
-                        hintText: "open-time",
-                        controller: textCtl['open'],
-                        onSaved: (input) => club.open = input,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: OutlineField(
-                        labelText: "Price",
-                        hintText: "price",
-                        controller: textCtl['price'],
-                        onSaved: (input) => club.price = input,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: heightPadding),
-                OutlineField(
-                  labelText: "Tel",
-                  hintText: "tel",
-                  controller: textCtl['tel'],
-                  onSaved: (input) => club.tel = input,
-                ),
-              ],
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            FieldImage(
+              image: _image,
+              photosPath: club.photosPath,
+              onTap: () async => chooseImage(ImageSource.gallery),
             ),
-          ),
-          _isCreate(status: _status),
-        ],
+            Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  SizedBox(height: heightPadding),
+                  OutlineField(
+                    labelText: "Title",
+                    hintText: "Title",
+                    controller: textCtl['title'],
+                    onSaved: (input) => club.title = input,
+                  ),
+                  SizedBox(height: heightPadding),
+                  OutlineField(
+                    labelText: "Detail",
+                    hintText: "detail",
+                    controller: textCtl['detail'],
+                    minLine: 5,
+                    onSaved: (input) => club.detail = input,
+                  ),
+                  SizedBox(height: heightPadding),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: OutlineField(
+                          labelText: "open-time",
+                          hintText: "open-time",
+                          controller: textCtl['open'],
+                          onSaved: (input) => club.open = input,
+                        ),
+                      ),
+                      SizedBox(width: 10),
+                      Expanded(
+                        child: OutlineField(
+                          labelText: "Price",
+                          hintText: "price",
+                          controller: textCtl['price'],
+                          onSaved: (input) => club.price = input,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: heightPadding),
+                  OutlineField(
+                    labelText: "Tel",
+                    hintText: "tel",
+                    controller: textCtl['tel'],
+                    onSaved: (input) => club.tel = input,
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Container(
+                height: 55,
+                width: sized(context).width ,
+                child: _isCreate(status: _status),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

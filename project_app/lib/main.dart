@@ -32,15 +32,23 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         fontFamily: UiFont,
-        // appBarTheme: AppBarTheme(
-        //   iconTheme: IconThemeData(
-        //     color: blackPrimaryColor,
-        //   ),
-        //   // textTheme: Typography.material2018().black,
-        //   elevation: 0,
-        //   centerTitle: true,
-        //   color: creamPrimaryColor,
-        // ),
+        appBarTheme: AppBarTheme(
+          elevation: 0,
+          centerTitle: true,
+          color: creamPrimaryColor,
+          brightness: Brightness.light,
+          iconTheme: IconThemeData(
+            color: navyPrimaryColor,
+          ),
+          textTheme: TextTheme(
+            headline6: TextStyle(
+              fontSize: 18,
+              fontFamily: UiFont,
+              fontWeight: FontWeight.bold,
+              color: navyPrimaryColor,
+            ),
+          ),
+        ),
       ),
       title: 'Flutter Demo',
       routes: routes,

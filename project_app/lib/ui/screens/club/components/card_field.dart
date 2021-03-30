@@ -1,42 +1,46 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:project_app/core/models/Field.dart';
 
 import '../../../../constants.dart';
 
 class CardField extends StatelessWidget {
-  final String fieldName;
+  final Field field;
   final GestureTapCallback onTap;
 
   const CardField({
     Key key,
-    this.fieldName,
+    this.field,
     this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size sized = MediaQuery.of(context).size;
     return Padding(
-      padding: const EdgeInsets.only(left: 10,right: 10, top: 10),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Material(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: GestureDetector(
+        onTap: () {
+          print('field');
+        },
+        child: Container(
+          padding: EdgeInsets.all(8),
+          width: sized(context).width,
           color: creamPrimaryColor,
-          child: InkWell(
-            onTap: onTap,
-            child: Container(
-              height: 50,
-              child: Center(
-                child: Text(
-                  fieldName,
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.bold,
-                  ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                field.title,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
+              SizedBox(height: 5),
+              Text(field.detail),
+              Text(field.price),
+            ],
           ),
         ),
       ),
