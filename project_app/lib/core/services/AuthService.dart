@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:project_app/core/apis/Network/UserNetwork.dart';
 import 'package:project_app/core/models/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -8,7 +8,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthService {
   static final String IS_LOGIN = 'is_login';
-  static final String USERNAME = 'username';
+  static final String USERNAME = 'user_name';
   static final String USER_ID = 'user_id';
 
   static Future<bool> isLogin() async {
@@ -30,7 +30,7 @@ class AuthService {
     if (res.status == 1) {
       User userData = userFromJson(jsonEncode(res.data));
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      _prefs.setString(USERNAME, user.username);
+      _prefs.setString(USERNAME, user.userName);
       _prefs.setInt(USER_ID, userData.id);
       _prefs.setBool(IS_LOGIN, true);
       print(res.message);
@@ -45,5 +45,11 @@ class AuthService {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     _prefs.remove(IS_LOGIN);
     return await Future<void>.delayed(Duration(seconds: 1));
+  }
+
+  static Future<int> getUserId() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    int userId = _pref.getInt(USER_ID);
+    return userId;
   }
 }

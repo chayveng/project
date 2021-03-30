@@ -16,6 +16,10 @@ class _TestScreenState extends State<TestScreen> {
   Widget build(BuildContext context) {
     Size sized = MediaQuery.of(context).size;
     return Scaffold(
+        appBar: AppBar(
+          backgroundColor: Colors.red, // status bar color
+          brightness: Brightness.dark // status bar brightness
+        ),
       // body: buildCenter(),
       body: Center(
         child: Column(

@@ -5,6 +5,20 @@ const String UiFont = 'Comfortaa';
 
 Size sized(BuildContext context) => MediaQuery.of(context).size;
 
+
+const String defaultImagePath = "assets/images/default/photo_symbol.png";
+const String defaultImagePathLandscape =
+    "assets/images/default/image_symbol_landscape.png";
+
+Opacity buildDefaultImage() {
+  return Opacity(
+    opacity: 0.5,
+    child: Image(
+      image: AssetImage(defaultImagePath),
+    ),
+  );
+}
+
 Future buildDialogLoading(BuildContext context, int millisecond) {
   return showDialog(
       context: context,

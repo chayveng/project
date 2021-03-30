@@ -19,8 +19,8 @@ class UserNetwork {
       apiResponseFromJson(await ApiConnect.get(path: '/user/dummy/$index'));
 
   static Future<ApiResponse> register({@required User user}) async =>
-      apiResponseFromJson(await ApiConnect.post(path:'/user/register',data: user));
+      apiResponseFromJson(await ApiConnect.post(path:'/user/register',body: user));
 
   static Future<ApiResponse> login({@required User user}) async =>
-      apiResponseFromJson(await ApiConnect.post(path: '/user/login',data: user));
+      apiResponseFromJson(await ApiConnect.post(path: '/user/login',body: user));
 }

@@ -10,28 +10,45 @@ String userToJson(User data) => json.encode(data.toJson());
 class User {
   User({
     this.id,
-    this.username,
-    this.password,
+    this.userName,
+    this.passWord,
+    this.firstName,
+    this.lastName,
+    this.tel,
+    this.email,
   });
 
   int id;
-  String username;
-  String password;
+  String userName;
+  String passWord;
+  String firstName;
+  String lastName;
+  String tel;
+  String email;
+
+  factory User.fromJson(Map<String, dynamic> json) => User(
+    id: json["id"],
+    userName: json["userName"],
+    passWord: json["passWord"],
+    firstName: json["firstName"],
+    lastName: json["lastName"],
+    tel: json["tel"],
+    email: json["email"],
+  );
+
+  Map<String, dynamic> toJson() => {
+    "id": id,
+    "userName": userName,
+    "passWord": passWord,
+    "firstName": firstName,
+    "lastName": lastName,
+    "tel": tel,
+    "email": email,
+  };
+
 
   @override
   String toString() {
-    return 'User{id: $id, username: $username, password: $password}';
+    return 'User{id: $id, userName: $userName, passWord: $passWord, firstName: $firstName, lastName: $lastName, tel: $tel, email: $email}';
   }
-
-  factory User.fromJson(Map<String, dynamic> json) => User(
-        id: json['id'],
-        username: json['username'],
-        password: json['password'],
-      );
-
-  Map<String, dynamic> toJson() => {
-        'id': id,
-        'username': username,
-        'password': password,
-      };
 }

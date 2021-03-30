@@ -83,7 +83,7 @@ class _BodyState extends State<Body> {
               end: FractionalOffset.bottomCenter,
               colors: [
                 Colors.black38.withOpacity(0.8),
-                Colors.white10,
+                Colors.transparent,
               ],
             ),
           ),
@@ -148,7 +148,7 @@ class _BodyState extends State<Body> {
         CardField(
           onTap: () {
             showDialog(
-              context: context,
+                context: context,
                 barrierDismissible: false,
                 builder: (BuildContext context) => TimesDialog());
           },

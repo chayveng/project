@@ -27,7 +27,7 @@ class FieldScreen extends StatelessWidget {
       // elevation: 0,
       iconTheme: IconThemeData(color: greenPrimaryColor),
       title: Text(
-        field.fieldName,
+        field.title,
         style: TextStyle(
           color: greenPrimaryColor,
           fontWeight: FontWeight.bold,

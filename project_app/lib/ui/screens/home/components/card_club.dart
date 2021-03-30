@@ -57,7 +57,7 @@ class CardClub extends StatelessWidget {
       height: 250,
       width: sized.width,
       child: Image(
-        image: AssetImage(club.photoPath),
+        image: AssetImage(club.photosPath),
         fit: BoxFit.fill,
       ),
       // child: FlutterLogo(),

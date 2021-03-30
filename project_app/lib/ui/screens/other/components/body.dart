@@ -5,7 +5,6 @@ import 'package:project_app/ui/screens/other/components/menu.dart';
 import 'package:project_app/ui/screens/other/components/top_other.dart';
 import '../../../../constants.dart';
 import '../../../../core/services/AuthService.dart';
-import '../../../components/rounded_button.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -27,7 +26,7 @@ class _BodyState extends State<Body> {
               Navigator.push(
                 context,
                 PageTransition(
-                    child: CreateClubScreen(), type: PageTransitionType.fade),
+                    child: CreateClub(), type: PageTransitionType.fade),
               );
             },
           ),

@@ -28,10 +28,10 @@ class _BodyState extends State<Body> {
           userId: index,
           title: 'Club:$index',
           detail: 'detail:$index',
-          googleMap: 'map:$index',
+          map: 'map:$index',
           tel: 'tel:$index',
           price: 'price:$index',
-          photoPath: 'assets/images/clubs/club-${index + 1}.jpg',
+          photosPath: 'assets/images/clubs/club-${index + 1}.jpg',
         ),
       );
 

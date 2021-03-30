@@ -3,28 +3,20 @@ import 'package:project_app/ui/screens/create_club/components/body.dart';
 
 import '../../../constants.dart';
 
-class CreateClubScreen extends StatefulWidget {
+class CreateClub extends StatefulWidget {
   @override
-  _CreateClubScreenState createState() => _CreateClubScreenState();
+  _CreateClubState createState() => _CreateClubState();
 }
 
-class _CreateClubScreenState extends State<CreateClubScreen> {
+class _CreateClubState extends State<CreateClub> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: grayPrimaryColor,
+      backgroundColor: creamPrimaryColor,
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: greenPrimaryColor, //change your color here
-        ),
         title: Text(
           'Create club',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: greenPrimaryColor,
-          ),
         ),
-        backgroundColor: creamPrimaryColor,
       ),
       body: Body(),
     );

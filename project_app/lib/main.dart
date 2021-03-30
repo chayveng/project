@@ -54,6 +54,16 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: UiFont,
         appBarTheme: AppBarTheme(
+          brightness: Brightness.light,
+          iconTheme: IconThemeData(color: greenPrimaryColor),
+          textTheme: TextTheme(
+            headline6: TextStyle(
+              fontSize: 22,
+              fontFamily: UiFont,
+              fontWeight: FontWeight.bold,
+              color: greenPrimaryColor,
+            ),
+          ),
           elevation: 0,
           centerTitle: true,
           color: creamPrimaryColor,
@@ -62,15 +72,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       routes: routes,
       // home: screen,
-      // home: SelectField(),
       // home: FirstScreen(),
-      // home: ClubScreen(),
-      // home: HomeScreen(),
-      // home: ProfileScreen(),
-      // home: LoginScreen(),
       // home: TestScreen(),
-      // home: OtherScreen(),
-      // home: CreateClubScreen(),
       home: MainScreen(),
     );
   }

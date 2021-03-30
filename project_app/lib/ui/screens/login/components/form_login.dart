@@ -114,7 +114,7 @@ class _FormLoginState extends State<FormLogin> {
       label: 'PASSWORD \:',
       hintText: 'Enter your password',
       obscureText: _obscureText,
-      onSaved: (input) => user.password = input,
+      onSaved: (input) => user.passWord = input,
       validator: (input) {
         if (input.isEmpty) {
           return "Please Enter New Password";
@@ -132,7 +132,7 @@ class _FormLoginState extends State<FormLogin> {
     return RoundedField(
       label: 'USERNAME \:',
       hintText: 'Enter your username',
-      onSaved: (input) => user.username = input,
+      onSaved: (input) => user.userName = input,
       validator: (input) => input.isEmpty ? 'Please enter your username' : null,
       focusNode: focusNode['user'],
       onFieldSubmitted: (term) {
