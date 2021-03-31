@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Club.dart';
 
-import 'from_create.dart';
+import 'form_create.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -22,11 +22,10 @@ class _BodyState extends State<Body> {
       child: Center(
         child: Column(
           children: [
-            FromCreate(),
+            FormCreate(),
           ],
         ),
       ),
     );
   }
-
 }

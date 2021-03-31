@@ -3,6 +3,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/ui/screens/club/components/card_field.dart';
 import 'package:project_app/ui/screens/club/components/time_list/time_list.dart';
+import 'package:project_app/ui/screens/createField/create_field.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
 
 import '../../../../constants.dart';
@@ -133,7 +134,15 @@ class _BodyState extends State<Body> {
             'Create',
             style: TextStyle(color: greenPrimaryColor),
           ),
-          onPressed: () {},
+          onPressed: () {
+            Navigator.push(
+              context,
+              PageTransition(
+                child: CreateField(),
+                type: PageTransitionType.fade,
+              ),
+            );
+          },
           shape: new RoundedRectangleBorder(
             borderRadius: new BorderRadius.circular(10.0),
           ),

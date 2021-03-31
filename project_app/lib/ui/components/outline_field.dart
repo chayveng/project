@@ -29,7 +29,7 @@ class OutlineField extends StatelessWidget {
         // filled: true,
         // fillColor: grayPrimaryColor.withOpacity(0.5),
         labelText: labelText,
-        labelStyle: TextStyle(fontSize: 20, color: greenPrimaryColor),
+        labelStyle: TextStyle(fontSize: 20, color: greenPrimaryColor,fontWeight: FontWeight.bold),
         hintText: hintText,
         floatingLabelBehavior: FloatingLabelBehavior.always,
         contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:project_app/constants.dart';
+import 'package:project_app/ui/components/rounded_button.dart';
+import 'package:project_app/ui/screens/club/components/time_list/time_list.dart';
 
 class TestScreen extends StatefulWidget {
   static String routeName = '/test_screen';
@@ -59,6 +61,10 @@ class _TestScreenState extends State<TestScreen> {
                   //     });
                 }),
             // ShowLoading()
+            RoundedButton(text: 'null', onTap: (){
+              showDialog(context: context,builder: (context) =>
+              TimesDialog());
+            },),
           ],
         ),
       ),

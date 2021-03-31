@@ -32,45 +32,7 @@ class _MyDialogState extends State<TimesDialog> {
           'Title',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
         ),
-        Row(
-          children: [
-            Checkbox(
-              value: isValue1,
-              onChanged: (value) {
-                setState(() {
-                  isValue1 = !isValue1;
-                });
-              },
-            ),
-            Text('I am true now'),
-          ],
-        ),
-        Row(
-          children: [
-            Checkbox(
-              value: isValue2,
-              onChanged: (value) {
-                setState(() {
-                  isValue2 = !isValue2;
-                });
-              },
-            ),
-            Text('I am true now'),
-          ],
-        ),
-        Row(
-          children: [
-            Checkbox(
-              value: isValue3,
-              onChanged: (value) {
-                setState(() {
-                  isValue3 = !isValue3;
-                });
-              },
-            ),
-            Text('I am true now'),
-          ],
-        ),
+        TimeList(),
         buildRowButton(context),
       ],
     );
@@ -95,6 +57,29 @@ class _MyDialogState extends State<TimesDialog> {
               print('Ok');
             },
             child: Text('Ok')),
+      ],
+    );
+  }
+}
+
+class TimeList extends StatelessWidget {
+  const TimeList({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Checkbox(
+          value: true,
+          onChanged: (value) {
+          },
+        ),
+        Expanded(child: Text('12:00 - 13:00')),
+        IconButton(icon: Icon(Icons.edit), onPressed: (){}),
+        IconButton(icon: Icon(Icons.close), onPressed: (){}),
       ],
     );
   }

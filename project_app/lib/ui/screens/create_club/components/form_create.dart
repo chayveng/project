@@ -12,12 +12,12 @@ import 'package:project_app/ui/screens/main/main_screen.dart';
 
 import 'field_image.dart';
 
-class FromCreate extends StatefulWidget {
+class FormCreate extends StatefulWidget {
   @override
-  _FromCreateState createState() => _FromCreateState();
+  _FormCreateState createState() => _FormCreateState();
 }
 
-class _FromCreateState extends State<FromCreate> {
+class _FormCreateState extends State<FormCreate> {
   var _formKey = GlobalKey<FormState>();
   Club club = Club();
   File _image;

@@ -73,8 +73,8 @@ class MyApp extends StatelessWidget {
       routes: routes,
       // home: screen,
       // home: FirstScreen(),
-      // home: TestScreen(),
-      home: MainScreen(),
+      home: TestScreen(),
+      // home: MainScreen(),
     );
   }
 }
