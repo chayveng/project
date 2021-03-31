@@ -74,12 +74,12 @@ class TimeList extends StatelessWidget {
       children: [
         Checkbox(
           value: true,
-          onChanged: (value) {
-          },
+          onChanged: (value) {},
         ),
         Expanded(child: Text('12:00 - 13:00')),
-        IconButton(icon: Icon(Icons.edit), onPressed: (){}),
-        IconButton(icon: Icon(Icons.close), onPressed: (){}),
+        IconButton(icon: Icon(Icons.edit), onPressed: () {}),
+        IconButton(icon: Icon(Icons.close), onPressed: () {}),
+        // IconButton(icon: Icon(Icons.st), onPressed: (){}),
       ],
     );
   }
