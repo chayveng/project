@@ -13,6 +13,11 @@ class _FormCreateState extends State<FormCreate> {
   Field field = Field();
   double heightPadding = 25;
 
+  Map<String, FocusNode> focusNode = {
+    'title': FocusNode(),
+    'detail': FocusNode(),
+    'price': FocusNode(),
+  };
   @override
   Widget build(BuildContext context) {
     return Form(
@@ -24,6 +29,11 @@ class _FormCreateState extends State<FormCreate> {
             labelText: 'Title',
             hintText: 'title',
             onSaved: (input) => field.title = input,
+            focusNode: focusNode['title'],
+            onFieldSubmitted: (term) {
+              focusNode['title'].unfocus();
+              FocusScope.of(context).requestFocus(focusNode['detail']);
+            },
           ),
           SizedBox(height: heightPadding),
           OutlineField(
@@ -31,6 +41,11 @@ class _FormCreateState extends State<FormCreate> {
             hintText: 'detail',
             minLine: 2,
             onSaved: (input) => field.detail = input,
+            focusNode: focusNode['detail'],
+            onFieldSubmitted: (term) {
+              focusNode['detail'].unfocus();
+              FocusScope.of(context).requestFocus(focusNode['price']);
+            },
           ),
           SizedBox(height: heightPadding),
           OutlineField(

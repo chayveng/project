@@ -1,175 +1,164 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:project_app/core/models/Club.dart';
-import 'package:project_app/ui/screens/club/components/card_field.dart';
-import 'package:project_app/ui/screens/club/components/time_list/time_list.dart';
+import 'package:project_app/core/models/Field.dart';
+import 'package:project_app/core/models/Time.dart';
+import 'package:project_app/core/services/ClubService.dart';
+import 'package:project_app/core/services/FieldServices.dart';
+import 'package:project_app/ui/screens/club/components/sectionFieldTime/section_field_time.dart';
+import 'package:project_app/ui/screens/club/components/sectionImage/section_image.dart';
 import 'package:project_app/ui/screens/createField/create_field.dart';
-import 'package:project_app/ui/screens/main/main_screen.dart';
 
 import '../../../../constants.dart';
+import 'button_add_field.dart';
 
 class Body extends StatefulWidget {
-  final Club club;
+  final int clubId;
+  final bool isOwner;
 
-  const Body({Key key, this.club}) : super(key: key);
+  Body({Key key, this.clubId, this.isOwner}) : super(key: key);
 
   @override
-  _BodyState createState() => _BodyState();
+  _BodyState createState() => _BodyState(clubId, isOwner);
 }
 
 class _BodyState extends State<Body> {
+  final int clubId;
+  final bool isOwner;
+  Club club = new Club();
+  List<Field> fields = new List<Field>();
+  List<Time> times = new List<Time>();
+
+  _BodyState(this.clubId, this.isOwner);
+
+  @override
+  void initState() {
+    fetchData();
+    Future.delayed(Duration(milliseconds: 500), () => setState(() {}));
+    super.initState();
+  }
+
+  onGoBlack() {
+    setState(() {});
+  }
+
+  Future<bool> fetchData() async {
+    club = await ClubService.getById(id: clubId);
+    fields = await FieldServices.getFieldClubId(club.id);
+    await Future.delayed(Duration(milliseconds: 1000));
+    return true;
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size sized = MediaQuery.of(context).size;
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          buildHeader(sized, context),
-          buildTitleBox(sized),
-          listSection(),
-          SizedBox(height: 15),
-          buildCreateButton(sized),
-        ],
-      ),
-    );
-  }
-
-  Container buildTitleBox(Size sized) {
-    return Container(
-      width: sized.width,
-      color: creamPrimaryColor,
-      padding: const EdgeInsets.all(10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Title",
-            style: TextStyle(
-              fontSize: 14,
-              color: greenPrimaryColor,
-            ),
-          ),
-          Text(
-            "detail hgeuguerhguerhreuis",
-            style: TextStyle(
-              fontSize: 14,
-              color: greenPrimaryColor,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Stack buildHeader(Size sized, BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          width: sized.width,
-          height: sized.height * 0.35,
-          child: Container(
-            child: Image(
-              image: AssetImage('assets/images/clubs/club-1.jpg'),
-              fit: BoxFit.fill,
-            ),
-          ),
-        ),
-        Container(
-          width: sized.width,
-          height: sized.height * 0.35,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: FractionalOffset.topCenter,
-              end: FractionalOffset.bottomCenter,
-              colors: [
-                Colors.black38.withOpacity(0.8),
-                Colors.transparent,
+    var _field = Field(title: 'test',detail: 'hello');
+          return SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SectionImage(
+                  isOwner: isOwner,
+                  club: club,
+                ),
+                SectionFieldTime(isOwner: true, field: _field),
+                // ...List.generate(
+                //   (fields == null) ? 0 : fields.length,
+                //   (index) {
+                //     return SectionFieldTime(
+                //       field: _field,
+                //       isOwner: isOwner,
+                //     );
+                //     // return Stack(
+                //     //   children: [
+                //     //     Column(
+                //     //       children: [
+                //     //         CardField(
+                //     //           field: fields[index],
+                //     //           onTap: () {
+                //     //             print('onTap');
+                //     //             showDialog(
+                //     //               context: context,
+                //     //               barrierDismissible: true,
+                //     //               builder: (context) {
+                //     //                 return DialogTimes(
+                //     //                   fieldId: fields[index].id,
+                //     //                   isOwner: isOwner,
+                //     //                 );
+                //     //               },
+                //     //             );
+                //     //           },
+                //     //         ),
+                //     //       ],
+                //     //     ),
+                //     //     isOwner
+                //     //         ? OwnerButton(
+                //     //             onClose: () async => await _onRemove(index),
+                //     //             onEdit: () => _onEdit(context, index),
+                //     //           )
+                //     //         : SizedBox(),
+                //     //   ],
+                //     // );
+                //   },
+                // ),
+                SizedBox(height: 10),
+                ButtonAddField(isOwner: isOwner, club: club),
               ],
             ),
-          ),
-        ),
-        Positioned(
-          left: 15,
-          top: sized.height * 0.05,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: creamPrimaryColor,
-                  size: 30,
-                ),
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    PageTransition(
-                      type: PageTransitionType.fade,
-                      child: MainScreen(),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(width: 20),
-              Text(
-                'Name',
-                style: TextStyle(color: creamPrimaryColor, fontSize: 20),
-              ),
-            ],
-          ),
-        ),
-      ],
-    );
+          );
   }
 
-  Center buildCreateButton(Size sized) {
-    return Center(
-      child: Container(
-        width: sized.width * 0.8,
-        height: 50,
-        child: RaisedButton(
-          color: orangePrimaryColor,
-          child: Text(
-            'Create',
-            style: TextStyle(color: greenPrimaryColor),
-          ),
-          onPressed: () {
-            Navigator.push(
-              context,
-              PageTransition(
-                child: CreateField(),
-                type: PageTransitionType.fade,
-              ),
-            );
-          },
-          shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(10.0),
-          ),
+  void _onEdit(BuildContext context, int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CreateField(
+          // fieldId: fields[index].id,
+
+          clubId: club.id,
+          isOwner: true,
         ),
       ),
     );
   }
 
-  Column listSection() {
-    return Column(
+  Future _onRemove(int index) async {
+    print('close');
+    var res = await FieldServices.delete(id: fields[index].id);
+    if (res) {
+      await fetchData();
+      setState(() {});
+    } else {
+      print('Fail');
+    }
+  }
+}
+
+class OwnerButton extends StatelessWidget {
+  final GestureTapCallback onClose;
+  final GestureTapCallback onEdit;
+
+  const OwnerButton({
+    Key key,
+    this.onClose,
+    this.onEdit,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        CardField(
-          onTap: () {
-            showDialog(
-                context: context,
-                barrierDismissible: false,
-                builder: (BuildContext context) => TimesDialog());
-          },
-          title: 'สนาม 5-6 คน',
-          price: 'ราคา 600 บาท',
-          time: '14:00 - 23:00',
+        GestureDetector(
+          onTap: onEdit,
+          child: Icon(
+            Icons.edit,
+            size: 20,
+          ),
         ),
-        CardField(
-          onTap: () {},
-          title: 'สนาม 7-9 คน',
-          price: 'ราคา 800 บาท',
-          time: '14:00 - 23:00',
+        GestureDetector(
+          onTap: onClose,
+          child: Icon(Icons.close),
         ),
       ],
     );

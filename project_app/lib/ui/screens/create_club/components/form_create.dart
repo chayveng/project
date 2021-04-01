@@ -24,6 +24,13 @@ class _FormCreateState extends State<FormCreate> {
   Map<String, dynamic> textCtl;
   double heightPadding = 25;
   bool _status = true;
+  Map<String, FocusNode> focusNode = {
+    'title': FocusNode(),
+    'detail': FocusNode(),
+    'time': FocusNode(),
+    'price': FocusNode(),
+    'tel': FocusNode(),
+  };
 
   @override
   void initState() {
@@ -63,6 +70,12 @@ class _FormCreateState extends State<FormCreate> {
                   hintText: "Title",
                   controller: textCtl['title'],
                   onSaved: (input) => club.title = input,
+                  focusNode: focusNode['title'],
+                  onFieldSubmitted: (term) {
+                    focusNode['title'].unfocus();
+                    FocusScope.of(context).requestFocus(focusNode['detail']);
+                  },
+
                 ),
                 SizedBox(height: heightPadding),
                 OutlineField(
@@ -71,6 +84,12 @@ class _FormCreateState extends State<FormCreate> {
                   controller: textCtl['detail'],
                   minLine: 5,
                   onSaved: (input) => club.detail = input,
+                  focusNode: focusNode['detail'],
+                  onFieldSubmitted: (term) {
+                    focusNode['detail'].unfocus();
+                    FocusScope.of(context).requestFocus(focusNode['time']);
+                  },
+
                 ),
                 SizedBox(height: heightPadding),
                 Row(
@@ -81,6 +100,11 @@ class _FormCreateState extends State<FormCreate> {
                         hintText: "open-time",
                         controller: textCtl['open'],
                         onSaved: (input) => club.open = input,
+                        focusNode: focusNode['time'],
+                        onFieldSubmitted: (term) {
+                          focusNode['time'].unfocus();
+                          FocusScope.of(context).requestFocus(focusNode['price']);
+                        },
                       ),
                     ),
                     SizedBox(width: 10),
@@ -90,6 +114,11 @@ class _FormCreateState extends State<FormCreate> {
                         hintText: "price",
                         controller: textCtl['price'],
                         onSaved: (input) => club.price = input,
+                        focusNode: focusNode['price'],
+                        onFieldSubmitted: (term) {
+                          focusNode['price'].unfocus();
+                          FocusScope.of(context).requestFocus(focusNode['tel']);
+                        },
                       ),
                     ),
                   ],
@@ -100,6 +129,7 @@ class _FormCreateState extends State<FormCreate> {
                   hintText: "tel",
                   controller: textCtl['tel'],
                   onSaved: (input) => club.tel = input,
+                  focusNode: focusNode['tel'],
                 ),
               ],
             ),

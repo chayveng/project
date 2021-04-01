@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/routs.dart';
+import 'package:project_app/ui/screens/club/club_screen.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
 import 'package:project_app/ui/screens/testScreen/TestScreen.dart';
@@ -72,8 +73,9 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       routes: routes,
       // home: screen,
+      home: ClubScreen(isOwner: true,clubId: 1),
       // home: FirstScreen(),
-      home: TestScreen(),
+      // home: TestScreen(),
       // home: MainScreen(),
     );
   }

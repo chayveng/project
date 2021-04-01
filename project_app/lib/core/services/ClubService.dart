@@ -64,6 +64,10 @@ class ClubService {
       return true;
     }
   }
+  static Future<Club> getById({@required int id})async{
+    var response = await ClubNetwork.getById(id: id);
+    return clubFromJson(jsonEncode(response.data));
+  }
 
   static String mainImage({var fileName}) =>
       "${Config.API_URL}/club/images?imageName=$fileName";

@@ -63,7 +63,7 @@ class _BodyState extends State<Body> {
             PageTransition(
               type: PageTransitionType.fade,
               child: ClubScreen(
-                club: clubs[index],
+                clubId: clubs[index].id,
               ),
             ),
           );
@@ -75,7 +75,7 @@ class _BodyState extends State<Body> {
             PageTransition(
               type: PageTransitionType.fade,
               child: ClubScreen(
-                club: clubs[index],
+                clubId: clubs[index].id,
               ),
             ),
           );

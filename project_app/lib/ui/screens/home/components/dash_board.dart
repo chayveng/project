@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Club.dart';
+import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/ClubService.dart';
+import 'package:project_app/ui/screens/club/components/sectionFieldTime/card_field.dart';
+import 'package:project_app/ui/screens/club/components/sectionFieldTime/section_field_time.dart';
 
-import '../../club/components/card_field.dart';
+// import '../../club/components/card_field.dart';
 
 class DashBoard extends StatefulWidget {
 
@@ -47,13 +50,8 @@ class _DashBoardState extends State<DashBoard> {
   Widget _listSection({List<Club> clubs}) => ListView.builder(
         itemCount: clubs.length,
         itemBuilder: (context, index) {
-          return CardField(
-            fieldName: clubs[index].title,
-            // detail: clubs[index].detail,
-            onTap: () {
-              print(clubs[index].title);
-            },
-          );
+          var _field = Field();
+          return SectionFieldTime(isOwner: true, field: _field);
         },
       );
 }

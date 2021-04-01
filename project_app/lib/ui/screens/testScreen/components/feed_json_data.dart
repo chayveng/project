@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/core/services/ClubService.dart';
-import 'package:project_app/ui/screens/club/components/card_field.dart';
 
 class FeedJsonData extends StatefulWidget {
   @override
@@ -55,13 +54,14 @@ class _FeedJsonDataState extends State<FeedJsonData> {
   Widget _listSection({List<Club> clubs}) => ListView.builder(
         itemCount: clubs.length,
         itemBuilder: (context, index) {
-          return CardField(
-             fieldName: clubs[index].title,
-            // detail: clubs[index].detail,
-            onTap: () {
-              print(clubs[index].title);
-            },
-          );
+          // return CardField(
+          //    fieldName: clubs[index].title,
+          //   // detail: clubs[index].detail,
+          //   onTap: () {
+          //     print(clubs[index].title);
+          //   },
+          // );
+          return Container();
         },
       );
 }
