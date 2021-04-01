@@ -118,7 +118,7 @@ class CardTime extends StatelessWidget {
     Key key,
     @required this.isTime,
     this.time = '',
-    this.onPressed,
+    this.onPressed, bool status,
   }) : super(key: key);
 
   @override

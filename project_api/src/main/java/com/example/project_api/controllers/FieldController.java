@@ -33,6 +33,10 @@ public class FieldController {
         return new ApiResponse(1, "get by Club id", fieldRepository.findByClubId(clubId));
     }
 
+    @GetMapping("/getById/{id}")
+    public Object getById(@PathVariable int id){
+        return new ApiResponse(1, "get by id", fieldRepository.findById(id));
+    }
 
     @GetMapping("/getAll")
     public Object getAll() {

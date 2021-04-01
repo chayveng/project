@@ -36,7 +36,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<bool> fetchFields() async {
-    fields = await FieldServices.fetchFieldClubId(1);
+    fields = await FieldServices.getFieldClubId(1);
     await Future.delayed(Duration(milliseconds: 500));
     // await Future.delayed(Duration(milliseconds: 500), () => setState(() {}));
     return true;
@@ -131,7 +131,6 @@ class _BodyState extends State<Body> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => CreateField(
-                            isOwner: isOwner,
                             clubId: club.id,
                           ),
                         ),

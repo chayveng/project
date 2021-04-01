@@ -8,11 +8,13 @@ import 'components/not_created.dart';
 class CreateClub extends StatelessWidget {
   final bool isOwner;
   final Club club;
+  final bool isCreate;
 
   const CreateClub({
     Key key,
     @required this.isOwner,
     @required this.club,
+    this.isCreate = false,
   }) : super(key: key);
 
   @override
@@ -20,14 +22,9 @@ class CreateClub extends StatelessWidget {
     return Scaffold(
       backgroundColor: creamPrimaryColor,
       appBar: AppBar(
-          title: Text('Create or Update'),
+        title: Text('Create or Update'),
       ),
-      body: isOwner == false
-          ? NotCreated()
-          : FormCreate(),
+      body: isOwner == false ? NotCreated() : FormCreate(isCreate: isCreate),
     );
   }
-
-
-
 }

@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:project_app/ui/components/custom_dialog_loading.dart';
 
@@ -18,6 +21,7 @@ Opacity buildDefaultImage() {
   );
 }
 
+// await Future.delayed(Duration(milliseconds: 500), () => setState(() {}));
 
 
 Future buildDialogLoading(BuildContext context, int millisecond) {

@@ -13,6 +13,12 @@ class TimeNetwork {
   static Future<ApiResponse> getByUserId({@required int userId}) async =>
       apiResponseFromJson(await ApiConnect.get(path: '/time/getByUserId/$userId'));
 
-  static Future<ApiResponse> add(Time time) async =>
+  static Future<ApiResponse> getByFieldId({@required int fieldId}) async =>
+      apiResponseFromJson(await ApiConnect.get(path: '/time/getByFieldId/$fieldId'));
+
+  static Future<ApiResponse> add({@required Time time}) async =>
       apiResponseFromJson(await ApiConnect.post(path: '/time/add', body: time));
+
+  static Future<ApiResponse> delete({@required int id}) async =>
+      apiResponseFromJson(await ApiConnect.get(path: '/time/delete/$id}'));
 }

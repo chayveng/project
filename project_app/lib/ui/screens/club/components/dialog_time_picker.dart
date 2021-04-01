@@ -2,30 +2,35 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:project_app/core/apis/Network/TimeNetwork.dart';
 import 'package:project_app/core/models/Time.dart';
+import 'package:project_app/ui/screens/club/club_screen.dart';
 
-class CustomTimePicker extends StatefulWidget {
-  @override
-  _CustomTimePickerState createState() => _CustomTimePickerState();
-}
+class DialogTimePicker extends StatefulWidget {
+  final int fieldId;
+  final int clubId;
 
-class _CustomTimePickerState extends State<CustomTimePicker> {
+  const DialogTimePicker({
+    Key key,
+    @required this.fieldId,
+    @required this.clubId,
+  }) : super(key: key);
+
   @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: RaisedButton(
-        child: Text('Time Picker'),
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (BuildContext context) => CustomDialog());
-        },
-      ),
-    );
+  _DialogTimePickerState createState() => _DialogTimePickerState(fieldId);
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(IntProperty('clubId', clubId));
   }
 }
 
-class CustomDialog extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
+class _DialogTimePickerState extends State<DialogTimePicker> {
+  final int fieldId;
+  var _formKey = GlobalKey<FormState>();
+
+  var clubId;
+
+  _DialogTimePickerState(this.fieldId);
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +44,7 @@ class CustomDialog extends StatelessWidget {
       actionsPadding: EdgeInsets.all(0),
       title: Text('Select time'),
       content: Container(
-        // height: 300,
-        // height: sized.height * 0.3,
         width: sized.width,
-
         child: Form(
           key: _formKey,
           child: SingleChildScrollView(
@@ -75,6 +77,7 @@ class CustomDialog extends StatelessWidget {
             ),
             SizedBox(width: 30),
             InkWell(
+              // onTap: onTapOk,
               onTap: () async {
                 print('ok');
                 if (_formKey.currentState.validate()) {
@@ -82,11 +85,20 @@ class CustomDialog extends StatelessWidget {
                   print('start: $startTime');
                   print('end: $endTime');
                   Time _time = Time();
-                  _time.fieldId = 2;
-                  _time.startTime = '${startTime['h']}:${startTime['m']}:00';
-                  _time.endTime = '${endTime['h']}:${endTime['m']}:00';
+                  _time.fieldId = widget.fieldId;
+                  _time.startTime = '${startTime['h']}:${startTime['m']}';
+                  _time.endTime = '${endTime['h']}:${endTime['m']}';
                   print(_time);
                   print(await TimeNetwork.add(time: _time));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ClubScreen(
+                        clubId: 1,
+                        isOwner: true,
+                      ),
+                    ),
+                  );
                 }
               },
               child: Text('Ok'),

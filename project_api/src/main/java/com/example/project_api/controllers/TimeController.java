@@ -60,7 +60,7 @@ public class TimeController {
     }
 
 
-    @PostMapping("/delete/{id}")
+    @GetMapping("/delete/{id}")
     public Object delete(@PathVariable int id) {
         Optional<Time> timeData = timeRepository.findById(id);
         if (timeData.isPresent()) {

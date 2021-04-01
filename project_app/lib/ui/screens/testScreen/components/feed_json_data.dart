@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/core/services/ClubService.dart';
-import 'package:project_app/ui/components/get_image_network.dart';
-import 'package:project_app/ui/screens/club/components/card_field.dart';
 import 'package:project_app/ui/screens/home/components/card_club.dart';
 
 class FeedJsonData extends StatefulWidget {
@@ -24,7 +22,7 @@ class _FeedJsonDataState extends State<FeedJsonData> {
             height: sized.height,
             child: Center(
               child: FutureBuilder<List<Club>>(
-                future: ClubService.fetchClubs(),
+                future: ClubService.getClubs(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Container(

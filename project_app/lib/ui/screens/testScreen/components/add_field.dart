@@ -16,10 +16,10 @@ class _BodyState extends State<Body> {
 
   var _formKey = GlobalKey<FormState>();
 
-  Future<void> fetchFields() async {
-    await Future.delayed(Duration(milliseconds: 1000));
-    fields = await FieldServices.fetchFields();
-  }
+  // Future<void> fetchFields() async {
+  //   await Future.delayed(Duration(milliseconds: 1000));
+  //   fields = await FieldServices.fetchFields();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +61,7 @@ class _BodyState extends State<Body> {
                 onPressed: () {
                   print(fields);
                   FieldServices.addField(field: field);
-                  fetchFields();
+                  // fetchFields();
                   setState(() {});
                 },
               ),

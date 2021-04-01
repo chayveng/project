@@ -23,7 +23,6 @@ class _BodyState extends State<Body> {
     Club club = await ClubService.getByUserId(userId: userId);
     await Future.delayed(Duration(milliseconds: 500));
     bool _isOwner = club.id != null ? true : false;
-    print(club);
     _isOwner == true
         ? Navigator.push(
             context,

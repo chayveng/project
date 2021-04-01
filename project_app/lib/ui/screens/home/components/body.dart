@@ -30,40 +30,42 @@ class _BodyState extends State<Body> {
   }
 
   Future<bool> _fetchData() async {
-    clubs = await ClubService.fetchClubs();
+    clubs = await ClubService.getClubs();
     clubs = clubs ?? List<Club>();
     await Future.delayed(Duration(milliseconds: 500));
     // await Future.delayed(Duration(milliseconds: 500), () => setState(() {}));
     return true;
   }
 
+  Expanded listClub() {
+    return Expanded(
+      child: RefreshIndicator(
+        key: _refresh,
+        child: FutureBuilder(
+          future: _fetchData(),
+          builder: (BuildContext context, AsyncSnapshot snapshot) =>
+              (snapshot.hasData) ? ListSection(clubs: clubs) : waitLoading(),
+        ),
+        onRefresh: _handleRefresh,
+      ),
+    );
+  }
+
+  Center waitLoading() {
+    return Center(
+      child: SpinKitWave(
+        color: orangePrimaryColor,
+        size: 40,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Expanded(
-          child: RefreshIndicator(
-            key: _refresh,
-            child: FutureBuilder(
-              future: _fetchData(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.hasData) {
-                  return ListSection(clubs: clubs);
-                } else {
-                  return Center(
-                    child: SpinKitWave(
-                      color: orangePrimaryColor,
-                      size: 40,
-                    ),
-                  );
-                }
-              },
-            ),
-            onRefresh: _handleRefresh,
-          ),
-        ),
+        listClub(),
       ],
     );
   }
-
 }

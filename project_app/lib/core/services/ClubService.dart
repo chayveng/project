@@ -8,7 +8,7 @@ import 'package:project_app/core/apis/Network/ClubNetwork.dart';
 import 'package:project_app/core/models/Club.dart';
 
 class ClubService {
-  static Future<List<Club>> fetchClubs() async {
+  static Future<List<Club>> getClubs() async {
     var response = await ClubNetwork.getAll();
     return clubsFormJson(response.data);
   }
@@ -26,7 +26,6 @@ class ClubService {
     var response = await ClubNetwork.getById(id: id);
     return clubFromJson(jsonEncode(response.data));
   }
-
 
   static Future<bool> create(
       {@required Club club, @required File image}) async {

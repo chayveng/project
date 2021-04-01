@@ -3,16 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/core/models/Field.dart';
+import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/core/services/ClubService.dart';
 import 'package:project_app/core/services/FieldServices.dart';
-import 'package:project_app/ui/components/get_image_network.dart';
-import 'package:project_app/ui/components/rounded_button.dart';
-import 'package:project_app/ui/screens/club/components/card_field.dart';
-import 'package:project_app/ui/screens/createClub/create_club.dart';
+import 'package:project_app/ui/screens/club/components/sectionFieldTime/section_field_time.dart';
+import 'package:project_app/ui/screens/club/components/sectionImage/section_image.dart';
 import 'package:project_app/ui/screens/createField/create_field.dart';
 
 import '../../../../constants.dart';
-import 'custom_top_bar.dart';
+import 'button_add_field.dart';
 
 class Body extends StatefulWidget {
   final int clubId;
@@ -29,25 +28,27 @@ class _BodyState extends State<Body> {
   final bool isOwner;
   Club club = new Club();
   List<Field> fields = new List<Field>();
+  List<Time> times = new List<Time>();
 
   _BodyState(this.clubId, this.isOwner);
 
   @override
   void initState() {
     fetchData();
+    Future.delayed(Duration(milliseconds: 500), () => setState(() {}));
     super.initState();
   }
 
-  Future<bool> fetchData() async {
-    fields = await FieldServices.fetchFieldClubId(clubId);
-    club = await ClubService.getById(id: clubId);
-    await Future.delayed(Duration(milliseconds: 500));
-    return true;
+  onGoBlack() {
+    setState(() {});
   }
 
-  Future<void> _delayed() async =>
-      await Future.delayed(Duration(milliseconds: 500));
-  // await Future.delayed(Duration(milliseconds: 500), () => setState(() {}));
+  Future<bool> fetchData() async {
+    club = await ClubService.getById(id: clubId);
+    fields = await FieldServices.getFieldClubId(club.id);
+    await Future.delayed(Duration(milliseconds: 1000));
+    return true;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,85 +60,51 @@ class _BodyState extends State<Body> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Stack(
-                  children: [
-                    Container(
-                      width: sized(context).width,
-                      height: sized(context).height * 0.4,
-                      child: GetImageNetwork(
-                        landscape: true,
-                        photosPath: club.photosPath,
-                      ),
-                    ),
-                    CustomTopBar(
-                      isOwner: isOwner,
-                      title: club.title,
-                      trailingTap: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => CreateClub(
-                              club: club,
-                              isOwner: true,
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ],
+                SectionImage(
+                  isOwner: isOwner,
+                  club: club,
                 ),
                 ...List.generate(
                   (fields == null) ? 0 : fields.length,
                   (index) {
-                    return Stack(
-                      children: [
-                        CardField(
-                          field: fields[index],
-                          onTap: () {
-                            print('onTap');
-                          },
-                        ),
-                        isOwner == true
-                            ? OwnerButton(
-                                onClose: () async {
-                                  print('close');
-                                  var res = await FieldServices.delete(
-                                      id: fields[index].id);
-                                  if (res) {
-                                    await fetchData();
-                                    setState(() {});
-                                  } else {
-                                    print('Fail');
-                                  }
-                                },
-                                onEdit: () {
-                                  print('edit');
-                                },
-                              )
-                            : SizedBox(),
-                      ],
+                    return SectionFieldTime(
+                      isOwner: isOwner,
+                      field: fields[index],
                     );
+                    // return Stack(
+                    //   children: [
+                    //     Column(
+                    //       children: [
+                    //         CardField(
+                    //           field: fields[index],
+                    //           onTap: () {
+                    //             print('onTap');
+                    //             showDialog(
+                    //               context: context,
+                    //               barrierDismissible: true,
+                    //               builder: (context) {
+                    //                 return DialogTimes(
+                    //                   fieldId: fields[index].id,
+                    //                   isOwner: isOwner,
+                    //                 );
+                    //               },
+                    //             );
+                    //           },
+                    //         ),
+                    //       ],
+                    //     ),
+                    //     isOwner
+                    //         ? OwnerButton(
+                    //             onClose: () async => await _onRemove(index),
+                    //             onEdit: () => _onEdit(context, index),
+                    //           )
+                    //         : SizedBox(),
+                    //   ],
+                    // );
                   },
                 ),
                 SizedBox(height: 10),
-                SizedBox(
-                  child: isOwner == true
-                      ? RoundedButton(
-                          text: 'Add Field',
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => CreateField(
-                                  isOwner: isOwner,
-                                  clubId: club.id,
-                                ),
-                              ),
-                            );
-                          },
-                        )
-                      : SizedBox(),
-                ),
+                ButtonAddField(isOwner: isOwner, club: club),
               ],
             ),
           );
@@ -149,6 +116,30 @@ class _BodyState extends State<Body> {
         }
       },
     );
+  }
+
+  void _onEdit(BuildContext context, int index) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => CreateField(
+          fieldId: fields[index].id,
+          clubId: club.id,
+          isCreate: true,
+        ),
+      ),
+    );
+  }
+
+  Future _onRemove(int index) async {
+    print('close');
+    var res = await FieldServices.delete(id: fields[index].id);
+    if (res) {
+      await fetchData();
+      setState(() {});
+    } else {
+      print('Fail');
+    }
   }
 }
 

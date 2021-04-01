@@ -13,11 +13,15 @@ import 'package:project_app/ui/screens/club/club_screen.dart';
 import 'field_image.dart';
 
 class FormCreate extends StatefulWidget {
+  final bool isCreate;
+  const FormCreate({Key key, this.isCreate}) : super(key: key);
+
   @override
-  _FormCreateState createState() => _FormCreateState();
+  _FormCreateState createState() => _FormCreateState(isCreate);
 }
 
 class _FormCreateState extends State<FormCreate> {
+  final bool isCreate;
   var _formKey = GlobalKey<FormState>();
   Club club = Club();
   File _image;
@@ -25,14 +29,87 @@ class _FormCreateState extends State<FormCreate> {
   double heightPadding = 15;
   bool _status = true;
 
+  _FormCreateState(this.isCreate);
+
   @override
   void initState() {
-    isCreate();
+    isCreated();
     Future.delayed(Duration(milliseconds: 200), () => setState(() {}));
     super.initState();
   }
 
-  Future<void> isCreate() async {
+  Future<void> _onUpdate(BuildContext context) async {
+    print('update');
+    _formKey.currentState.save();
+    if (await ClubService.update(club: club, image: _image)) {
+      Club _club = await ClubService.getByUserId(userId: club.userId);
+      await Future.delayed(Duration(milliseconds: 1500));
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ClubScreen(
+              clubId: _club.id,
+              isOwner: true,
+            ),
+          ),
+              (route) => false);
+    } else {
+      print('Update Fail');
+    }
+  }
+
+  Future<void> _onCreate(BuildContext context) async {
+    print('create');
+    _formKey.currentState.save();
+    if (await ClubService.create(club: club, image: _image)) {
+      Club _club = await ClubService.getByUserId(userId: club.userId);
+      await buildDialogLoading(context, 1500);
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => ClubScreen(
+            clubId: _club.id,
+            isOwner: true,
+          ),
+        ),
+      );
+    } else {
+      print('add fail');
+    }
+    setState(() {});
+  }
+
+
+  Future<void> chooseImage(ImageSource imageSource) async {
+    _image = (_image == null) ? null : _image;
+    try {
+      var image = await ImagePicker.pickImage(
+        source: imageSource,
+        maxWidth: 800.0,
+        maxHeight: 8000.0,
+        imageQuality: 75,
+      );
+      setState(() {
+        _image = image;
+      });
+    } catch (e) {
+      print("error");
+    }
+  }
+
+  void setDefaultInput() {
+    textCtl = {
+      'title': TextEditingController(text: club.title),
+      'detail': TextEditingController(text: club.detail),
+      'open': TextEditingController(text: club.open),
+      'price': TextEditingController(text: club.price),
+      'tel': TextEditingController(text: club.tel),
+    };
+  }
+  Widget _isCreate({bool isCreate}) => isCreate
+      ? RoundedButton(text: 'Update', onTap: () async => _onUpdate(context))
+      : RoundedButton(text: 'Create', onTap: () async => _onCreate(context));
+  Future<void> isCreated() async {
     var userId = await AuthService.getUserId();
     club = await ClubService.getByUserId(userId: userId);
     if (club.userId == null) {
@@ -111,84 +188,12 @@ class _FormCreateState extends State<FormCreate> {
               child: Container(
                 height: 55,
                 width: sized(context).width,
-                child: _isCreate(status: _status),
+                child: _isCreate(isCreate: isCreate),
               ),
             ),
           ],
         ),
       ),
     );
-  }
-
-  Widget _isCreate({bool status}) => status
-      ? RoundedButton(text: 'Update', onTap: () async => _onUpdate(context))
-      : RoundedButton(text: 'Create', onTap: () async => _onCreate(context));
-
-  Future<void> _onUpdate(BuildContext context) async {
-    print('update');
-    _formKey.currentState.save();
-    if (await ClubService.update(club: club, image: _image)) {
-      Club _club = await ClubService.getByUserId(userId: club.userId);
-      await Future.delayed(Duration(milliseconds: 1500));
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => ClubScreen(
-              clubId: _club.id,
-              isOwner: true,
-            ),
-          ),
-          (route) => false);
-    } else {
-      print('Update Fail');
-    }
-  }
-
-  Future<void> _onCreate(BuildContext context) async {
-    print('create');
-    _formKey.currentState.save();
-    if (await ClubService.create(club: club, image: _image)) {
-      Club _club = await ClubService.getByUserId(userId: club.userId);
-      await buildDialogLoading(context, 1500);
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => ClubScreen(
-            clubId: _club.id,
-            isOwner: true,
-          ),
-        ),
-      );
-    } else {
-      print('add fail');
-    }
-    setState(() {});
-  }
-
-  Future<void> chooseImage(ImageSource imageSource) async {
-    _image = (_image == null) ? null : _image;
-    try {
-      var image = await ImagePicker.pickImage(
-        source: imageSource,
-        maxWidth: 800.0,
-        maxHeight: 8000.0,
-        imageQuality: 75,
-      );
-      setState(() {
-        _image = image;
-      });
-    } catch (e) {
-      print("error");
-    }
-  }
-
-  void setDefaultInput() {
-    textCtl = {
-      'title': TextEditingController(text: club.title),
-      'detail': TextEditingController(text: club.detail),
-      'open': TextEditingController(text: club.open),
-      'price': TextEditingController(text: club.price),
-      'tel': TextEditingController(text: club.tel),
-    };
   }
 }
