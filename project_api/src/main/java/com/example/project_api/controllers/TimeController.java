@@ -3,9 +3,17 @@ package com.example.project_api.controllers;
 import com.example.project_api.models.beans.ApiResponse;
 import com.example.project_api.models.repository.TimeRepository;
 import com.example.project_api.models.tables.Time;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,18 +36,25 @@ public class TimeController {
 
     @PostMapping("/add")
     public Object add(@RequestBody Time time) {
-        Optional<Time> timeData = timeRepository.findByStartTimeAndEndTimeAndFieldId(time.getStartTime(),time.getEndTime(), time.getFieldId());
-        if (timeData.isEmpty()) {
-            time.setUserId(0);
-            timeRepository.save(time);
-            return new ApiResponse(1, "Add Time Succeed", timeRepository.findByStartTimeAndEndTime(time.getStartTime(), time.getEndTime()));
-        } else {
-            return new ApiResponse(0, "Time is exists", timeRepository.findByStartTimeAndEndTime(time.getStartTime(), time.getEndTime()));
+        timeRepository.save(time);
+        return new ApiResponse(1, "saved time", timeRepository.findByFieldId(time.getFieldId()));
+    }
+
+    @GetMapping("/booking/{timeId}/{userId}")
+    public Object booking(@PathVariable int timeId, @PathVariable int userId){
+        Optional<Time> timeData = timeRepository.findById(timeId);
+        if (timeData.isPresent()) {
+            Time _time = timeData.get();
+            _time.setUserId(userId);
+            timeRepository.save(_time);
+            return new ApiResponse(1, "booked", timeRepository.findByFieldId(timeId));
+        }else{
+            return  new ApiResponse(0, "booking is fail",null);
         }
     }
 
     @GetMapping("/getByUserId/{userId}")
-    public Object getByUserId(@PathVariable int userId) {
+    public Object getByUserId(@PathVariable long userId) {
         List<Time> timeData = timeRepository.findByUserId(userId);
         if (timeData != null) {
             return new ApiResponse(1, "Time By UserId", timeData);
@@ -50,7 +65,7 @@ public class TimeController {
 
 
     @GetMapping("/getByFieldId/{fieldId}")
-    public Object getByFieldId(@PathVariable int fieldId) {
+    public Object getByFieldId(@PathVariable long fieldId) {
         List<Time> times = timeRepository.findByFieldId(fieldId);
         if (times != null) {
             return new ApiResponse(1, "Time by field id", times);
@@ -69,5 +84,34 @@ public class TimeController {
         } else {
             return new ApiResponse(0, "Delete time fail");
         }
+    }
+
+    @GetMapping("/autoSave")
+    public Object autoSave(){
+        JSONParser parser = new JSONParser();
+        try {
+            String _fileName = "/Users/chayveng/Dev/project/project_api/src/main/java/com/example/project_api/js/times.json";
+            Object obj = parser.parse(new FileReader(_fileName));
+            JSONArray jsonObject = (JSONArray) obj;
+            JSONArray objList = jsonObject;
+            Iterator<JSONObject> iterator = objList.iterator();
+            while (iterator.hasNext()) {
+                JSONObject _jsonObject =(JSONObject) iterator.next();
+                Time time = new Time();
+                time.setFieldId((Long) _jsonObject.get("fieldId"));
+                time.setUserId((Long) _jsonObject.get("userId"));
+                time.setStartTime((String) _jsonObject.get("startTime"));
+                time.setEndTime((String) _jsonObject.get("endTime"));
+                time.setStatus((boolean) _jsonObject.get("status"));
+                timeRepository.save(time);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return timeRepository.findAll();
     }
 }

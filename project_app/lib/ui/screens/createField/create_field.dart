@@ -5,7 +5,7 @@ import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/core/services/ClubService.dart';
 import 'package:project_app/core/services/FieldServices.dart';
-import 'package:project_app/ui/screens/club/components/dialog_time_picker.dart';
+import 'package:project_app/ui/screens/club/components/dialogTimePicker/dialog_time_picker.dart';
 import 'package:project_app/ui/components/outline_field.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
 import 'package:project_app/ui/screens/club/club_screen.dart';
