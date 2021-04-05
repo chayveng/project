@@ -12,7 +12,7 @@ import 'package:project_app/ui/screens/createClub/create_club.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/other/components/button_menu.dart';
 
-import 'custom_dialog.dart';
+import 'dialog_logout.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -29,18 +29,18 @@ class _BodyState extends State<Body> {
   }
 
   Future<bool> fetchData() async {
-    int userId = await AuthService.getUserId();
-    user = await UserService.getById(userId: 1);
+    int userId = await UserService.getUserId();
+    user = await UserService.getById(userId: userId);
     await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
     return true;
   }
 
   Future<void> _onMyClub(BuildContext context) async {
-    int userId = await AuthService.getUserId();
+    int userId = await UserService.getUserId();
     Club club = await ClubService.getByUserId(userId: userId);
     await Future.delayed(Duration(milliseconds: 500));
     bool _isOwner = club.id != null ? true : false;
-    _isOwner == true
+    _isOwner
         ? Navigator.push(
             context,
             MaterialPageRoute(
@@ -61,7 +61,7 @@ class _BodyState extends State<Body> {
   Future _onLogout(BuildContext context) {
     return showDialog(
       context: context,
-      builder: (context) => CustomDialog(
+      builder: (context) => DialogLogout(
         itOk: () {
           print('logout');
           AuthService.logout();

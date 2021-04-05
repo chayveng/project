@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Time.dart';
-import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/core/services/TimeService.dart';
+import 'package:project_app/core/services/UserService.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class _BodyState extends State<Body> {
   }
 
   fetchData() async {
-    int userId = await AuthService.getUserId();
+    int userId = await UserService.getUserId();
     times = await TimeService.getByUserId(userId: userId);
     await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
   }

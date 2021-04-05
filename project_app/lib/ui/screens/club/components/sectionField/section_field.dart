@@ -32,6 +32,15 @@ class _SectionFieldState extends State<SectionField> {
     super.initState();
   }
 
+  Future<void> _onEdit({@required int fieldId}) async {
+    await showDialog(
+          context: context,
+          builder: (context) =>
+              DialogAdd(clubId: widget.clubId, fieldId: fieldId),
+        ) ??
+        fetchData();
+  }
+
   Future<void> _onRemoveField(
       {@required BuildContext context, @required int index}) async {
     print('onRemove');
@@ -83,8 +92,9 @@ class _SectionFieldState extends State<SectionField> {
             child: CardField(
               field: fields[index],
               isOwner: widget.isOwner,
+              onEdit: () async => await _onEdit(fieldId: fields[index].id),
               onRemoveField: () async =>
-                  _onRemoveField(context: context, index: index),
+                  await _onRemoveField(context: context, index: index),
             ),
           ),
           SectionTime(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CustomDialog extends StatelessWidget {
+class DialogLogout extends StatelessWidget {
   final VoidCallback itOk;
 
-  const CustomDialog({
+  const DialogLogout({
     Key key,
     this.itOk,
   }) : super(key: key);

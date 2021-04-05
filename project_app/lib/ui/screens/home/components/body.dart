@@ -18,22 +18,20 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    _fetchData();
+    fetchData();
     super.initState();
   }
 
   Future<Null> _handleRefresh() async {
-    _fetchData();
-    await Future.delayed(Duration(milliseconds: 500));
-    setState(() {});
+    fetchData();
+    await Future.delayed(Duration(milliseconds: 100),()=> setState((){}));
     return null;
   }
 
-  Future<bool> _fetchData() async {
+  Future<bool> fetchData() async {
     clubs = await ClubService.getClubs();
     clubs = clubs ?? List<Club>();
-    await Future.delayed(Duration(milliseconds: 500));
-    // await Future.delayed(Duration(milliseconds: 500), () => setState(() {}));
+    await Future.delayed(Duration(milliseconds: 100),() => setState((){}));
     return true;
   }
 
@@ -42,7 +40,7 @@ class _BodyState extends State<Body> {
       child: RefreshIndicator(
         key: _refresh,
         child: FutureBuilder(
-          future: _fetchData(),
+          future: fetchData(),
           builder: (BuildContext context, AsyncSnapshot snapshot) =>
               (snapshot.hasData) ? ListSection(clubs: clubs) : waitLoading(),
         ),

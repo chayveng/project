@@ -8,12 +8,14 @@ class CardField extends StatefulWidget {
   final Field field;
   final bool isOwner;
   final VoidCallback onRemoveField;
+  final VoidCallback onEdit;
 
   const CardField({
     Key key,
     @required this.field,
     @required this.isOwner,
     this.onRemoveField,
+    this.onEdit,
   }) : super(key: key);
 
   @override
@@ -22,6 +24,13 @@ class CardField extends StatefulWidget {
 
 class _CardFieldState extends State<CardField> {
   bool _status = false;
+
+  Widget buttonEdit() => widget.isOwner
+      ? IconButton(
+          icon: Icon(Icons.edit),
+          onPressed: widget.onEdit,
+        )
+      : SizedBox();
 
   Widget buttonRemove() => widget.isOwner
       ? IconButton(
@@ -50,6 +59,7 @@ class _CardFieldState extends State<CardField> {
         child: Row(
           children: [
             textField(),
+            buttonEdit(),
             buttonRemove(),
           ],
         ),

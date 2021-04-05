@@ -89,23 +89,19 @@ public class TimeController {
         }
     }
 
-    @GetMapping("/unBooking/{timeId}")
+    @GetMapping("/changStatus/{timeId}")
     public Object unBooking(@PathVariable int timeId){
         Optional<Time> timeData = timeRepository.findById(timeId);
-        Time _time = new Time();
-        _time.setStatus(false);
-
-        return " ";
-//        if (timeData.isPresent()) {
-//            Time _time = timeData.get();
-//            boolean _status = _time.isStatus();
-//            _time.setUserId(0);
-//            _time.setStatus(!_status);
-//            timeRepository.save(_time);
-//            return new ApiResponse(1,"Change status", timeRepository.findById(timeId));
-//        }else{
-//            return new ApiResponse(0, "Change status fail");
-//        }
+        if (timeData.isPresent()) {
+            Time _time = timeData.get();
+            boolean _status = _time.isStatus();
+            _time.setUserId(0);
+            _time.setStatus(!_status);
+            timeRepository.save(_time);
+            return new ApiResponse(1,"Change status", timeRepository.findById(timeId));
+        }else{
+            return new ApiResponse(0, "Change status fail");
+        }
     }
 
     @GetMapping("/autoSave")

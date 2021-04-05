@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import '../../../../../constants.dart';
 
-class DialogConfirm extends StatelessWidget {
+class DialogRemove extends StatelessWidget {
   final int fieldId;
   final int timeId;
   final VoidCallback isOk;
 
-  const DialogConfirm({
+  const DialogRemove({
     Key key,
     @required this.isOk,
     this.fieldId,

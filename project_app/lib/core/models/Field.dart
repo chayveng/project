@@ -39,7 +39,6 @@ class Field {
       };
 
   Map<String, dynamic> toMap() {
-    
     return {"test": ""};
   }
 

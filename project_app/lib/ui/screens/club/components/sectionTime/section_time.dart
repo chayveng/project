@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:project_app/core/apis/Network/TimeNetwork.dart';
+import 'package:project_app/core/apis/TimeApi.dart';
 import 'package:project_app/core/models/Time.dart';
-import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/core/services/TimeService.dart';
 import 'package:project_app/ui/screens/club/components/dialogTimePicker/dialog_time_picker.dart';
 import 'package:project_app/ui/screens/club/components/sectionTime/card_time.dart';
+import 'package:project_app/ui/screens/club/components/sectionTime/dialog_booking.dart';
 
 import '../../../../../constants.dart';
-import 'dialog_confirm.dart';
+import 'dialog_remove.dart';
 
 class SectionTime extends StatefulWidget {
   final bool isOwner;
@@ -40,7 +40,7 @@ class _SectionTimeState extends State<SectionTime> {
     await showDialog(
       context: context,
       builder: (context) =>
-          DialogConfirm(
+          DialogRemove(
             isOk: () async {
               if (await TimeService.delete(id: times[index].id)) {
                 await fetchData();
@@ -84,30 +84,31 @@ class _SectionTimeState extends State<SectionTime> {
   CardTime sectionTime({@required int index}) => CardTime(
         isOwner: widget.isOwner,
         time: times[index],
-        onTap: () async {
-          await showDialog(
-                context: context,
-                builder: (context) => DialogBooking(
-                  onBooking: () async {
-                    int userId = await AuthService.getUserId();
-                    await TimeService.booking(
-                      timeId: times[index].id,
-                      userId: userId,
-                    );
-                    Navigator.pop(context);
-                  },
-                ),
-              ) ??
-              fetchData();
-          // int userId = await AuthService.getUserId();
-          // int timeId = times[index].id;
-          // (await TimeService.booking(timeId: timeId, userId: userId))
-          //     ? print('booked')
-          //     : print('booking fail');
-          // print('is on tap');
-        },
+        onActiveIcon: () async => await _onActiveIcon(index),
+        onBooking: () async => _onBooking(index),
         onRemoveTime: () async => _onRemoveTime(index),
       );
+
+  Future<void> _onActiveIcon(int index) async {
+    var response = await TimeNetwork.changeStatus(timeId: times[index].id);
+    print(response);
+    fetchData();
+  }
+
+  Future _onBooking(int index) async {
+    widget.isOwner
+        ? print('is a owner')
+        : await showDialog(
+              context: context,
+              builder: (context) => DialogBooking(
+                onBooking: () async {
+                  await TimeService.booking(timeId: times[index].id);
+                  Navigator.pop(context);
+                },
+              ),
+            ) ??
+            fetchData();
+  }
 
   Future<void> fetchData() async {
     times = await TimeService.getByFieldId(fieldId: widget.fieldId);
@@ -134,25 +135,3 @@ class _SectionTimeState extends State<SectionTime> {
   }
 }
 
-class DialogBooking extends StatelessWidget {
-  final VoidCallback onBooking;
-
-  const DialogBooking({
-    Key key,
-    @required this.onBooking,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      child: Container(
-        height: 100,
-        child: RaisedButton(
-          child: Text('book'),
-          onPressed: onBooking,
-        ),
-      ),
-    );
-  }
-}

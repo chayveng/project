@@ -5,7 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../../../config/Config.dart';
+import '../../config/Config.dart';
 
 class ApiConnect {
   static Future<Object> get({@required path}) async {

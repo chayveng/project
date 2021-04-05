@@ -7,7 +7,8 @@ class CardTime extends StatelessWidget {
   final Time time;
   final VoidCallback onRemoveTime;
   final VoidCallback onCardTime;
-  final GestureTapCallback onTap;
+  final GestureTapCallback onBooking;
+  final VoidCallback onActiveIcon;
 
   CardTime({
     Key key,
@@ -15,7 +16,8 @@ class CardTime extends StatelessWidget {
     @required this.time,
     this.onRemoveTime,
     this.onCardTime,
-    this.onTap,
+    this.onBooking,
+    this.onActiveIcon,
   }) : super(key: key);
 
   Widget buttonRemove() => isOwner
@@ -24,7 +26,6 @@ class CardTime extends StatelessWidget {
           onPressed: onRemoveTime,
         )
       : SizedBox();
-
 
   Widget textTime() => Expanded(
         child: Text(
@@ -35,10 +36,20 @@ class CardTime extends StatelessWidget {
         ),
       );
 
-  Widget activeIcon() => Icon(
-        time.status ? Icons.album : Icons.album_outlined,
-        color: time.status ? Colors.redAccent : Colors.lightGreenAccent,
-      );
+  Widget activeIcon() {
+    return isOwner
+        ? IconButton(
+            icon: Icon(
+              time.status ? Icons.album : Icons.album_outlined,
+              color: time.status ? Colors.redAccent : Colors.lightGreenAccent,
+            ),
+            onPressed: onActiveIcon,
+          )
+        : Icon(
+            time.status ? Icons.album : Icons.album_outlined,
+            color: time.status ? Colors.redAccent : Colors.lightGreenAccent,
+          );
+  }
 
   Widget cardTime() => Container(
         height: 50,
@@ -56,7 +67,7 @@ class CardTime extends StatelessWidget {
   Widget build(BuildContext context) {
     return Material(
       child: InkWell(
-        onTap: onTap,
+        onTap: onBooking,
         child: cardTime(),
       ),
     );

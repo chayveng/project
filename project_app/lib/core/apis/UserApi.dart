@@ -4,8 +4,7 @@ import 'package:project_app/core/models/User.dart';
 
 import 'ApiConnect.dart';
 
-
-class UserNetwork {
+class UserApi {
   static Future<ApiResponse> index() async =>
       apiResponseFromJson(await ApiConnect.get(path: '/user/index'));
 
@@ -26,6 +25,4 @@ class UserNetwork {
 
   static Future<ApiResponse> getById({@required int userId}) async =>
       apiResponseFromJson(await ApiConnect.get(path: '/user/getById/$userId'));
-  // static Future<ApiResponse> getById({@required int id}) async =>
-  //     apiResponseFromJson(await ApiConnect.get(path: '/field/getById/$id'));
 }

@@ -4,7 +4,7 @@ import 'package:project_app/core/models/Field.dart';
 
 import 'ApiConnect.dart';
 
-class FieldNetwork{
+class FieldApi{
   static Future<ApiResponse> index() async =>
       apiResponseFromJson(await ApiConnect.get(path: '/field/index'));
 

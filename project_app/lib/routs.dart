@@ -17,7 +17,7 @@ final Map<String, WidgetBuilder> routes = {
   ProfileScreen.routeName: (context) => ProfileScreen(),
   BookingScreen.routeName: (context) => BookingScreen(),
   TestScreen.routeName: (context) => TestScreen(),
-  ClubScreen.routeName: (context) => ClubScreen(),
+  ClubScreen.routeName: (context) => ClubScreen(clubId: null,),
   OtherScreen.routeName: (context) => OtherScreen(),
 };
 

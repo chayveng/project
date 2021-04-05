@@ -1,9 +1,8 @@
-import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
-import 'package:project_app/core/apis/Network/TimeNetwork.dart';
+import 'package:project_app/core/apis/TimeApi.dart';
 import 'package:project_app/core/models/Time.dart';
-import 'package:project_app/core/services/AuthService.dart';
+import 'package:project_app/core/services/UserService.dart';
 
 class TimeService {
   static Future<List<Time>> getFields() async {
@@ -26,10 +25,10 @@ class TimeService {
     return (response.status == 1) ? true : false;
   }
 
-  static Future<bool> booking(
-      {@required int timeId, @required int userId}) async {
-    int userId = await AuthService.getUserId();
+  static Future<bool> booking({@required int timeId}) async {
+    int userId = await UserService.getUserId();
     var response = await TimeNetwork.booking(timeId: timeId, userId: userId);
+    print(response);
     return response.status == 1 ? true : false;
   }
 

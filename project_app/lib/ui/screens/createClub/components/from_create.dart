@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Club.dart';
-import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/core/services/ClubService.dart';
+import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/components/outline_field.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
 import 'package:project_app/ui/screens/club/club_screen.dart';
@@ -110,7 +110,7 @@ class _FormCreateState extends State<FormCreate> {
       ? RoundedButton(text: 'Update', onTap: () async => _onUpdate(context))
       : RoundedButton(text: 'Create', onTap: () async => _onCreate(context));
   Future<void> isCreated() async {
-    var userId = await AuthService.getUserId();
+    var userId = await UserService.getUserId();
     club = await ClubService.getByUserId(userId: userId);
     if (club.userId == null) {
       club.userId = userId;

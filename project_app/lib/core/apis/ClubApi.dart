@@ -5,7 +5,7 @@ import 'package:project_app/core/models/Club.dart';
 
 import 'ApiConnect.dart';
 
-class ClubNetwork {
+class ClubApi {
   static Future<ApiResponse> index() async =>
       apiResponseFromJson(await ApiConnect.get(path: '/club/index'));
 

@@ -4,17 +4,17 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:project_app/config/Config.dart';
-import 'package:project_app/core/apis/Network/ClubNetwork.dart';
+import 'package:project_app/core/apis/ClubApi.dart';
 import 'package:project_app/core/models/Club.dart';
 
 class ClubService {
   static Future<List<Club>> getClubs() async {
-    var response = await ClubNetwork.getAll();
+    var response = await ClubApi.getAll();
     return clubsFormJson(response.data);
   }
 
   static Future<Club> getByUserId({@required int userId}) async {
-    var response = await ClubNetwork.getByUserId(userId: userId);
+    var response = await ClubApi.getByUserId(userId: userId);
     if (response.status == 1) {
       return clubFromJson(jsonEncode(response.data));
     } else {
@@ -23,13 +23,13 @@ class ClubService {
   }
 
   static Future<Club> getById({@required int id})async{
-    var response = await ClubNetwork.getById(id: id);
+    var response = await ClubApi.getById(id: id);
     return clubFromJson(jsonEncode(response.data));
   }
 
   static Future<bool> create(
       {@required Club club, @required File image}) async {
-    var response = await ClubNetwork.addClub(club: club);
+    var response = await ClubApi.addClub(club: club);
     if (response.status == 1) {
       Club _club = clubFromJson(jsonEncode(response.data));
       ClubService.addImage(clubId: _club.id, image: image);
@@ -42,7 +42,7 @@ class ClubService {
 
   static Future<bool> update(
       {@required Club club, @required File image}) async {
-    var response = await ClubNetwork.update(club: club);
+    var response = await ClubApi.update(club: club);
     if(response.status == 1){
       if(image != null){
         Club _club = clubFromJson(jsonEncode(response.data));
@@ -63,7 +63,7 @@ class ClubService {
       );
       Map<String, dynamic> params = {"clubId": clubId, "fileImage": fileImage};
       FormData formData = FormData.fromMap(params);
-      var response = await ClubNetwork.addImage(data: formData);
+      var response = await ClubApi.addImage(data: formData);
       return (response.status == 1) ? true : false;
     } else {
       return true;
