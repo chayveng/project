@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:project_app/core/apis/Network/TimeNetwork.dart';
 import 'package:project_app/core/models/Time.dart';
+import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/core/services/TimeService.dart';
 import 'package:project_app/ui/screens/club/components/dialogTimePicker/dialog_time_picker.dart';
 import 'package:project_app/ui/screens/club/components/sectionTime/card_time.dart';
 
 import '../../../../../constants.dart';
+import 'dialog_confirm.dart';
 
 class SectionTime extends StatefulWidget {
   final bool isOwner;
@@ -37,7 +40,7 @@ class _SectionTimeState extends State<SectionTime> {
     await showDialog(
       context: context,
       builder: (context) =>
-          DialogConfirmRemoveTime(
+          DialogConfirm(
             isOk: () async {
               if (await TimeService.delete(id: times[index].id)) {
                 await fetchData();
@@ -81,8 +84,27 @@ class _SectionTimeState extends State<SectionTime> {
   CardTime sectionTime({@required int index}) => CardTime(
         isOwner: widget.isOwner,
         time: times[index],
-        onTap: () {
-          print('is on tap');
+        onTap: () async {
+          await showDialog(
+                context: context,
+                builder: (context) => DialogBooking(
+                  onBooking: () async {
+                    int userId = await AuthService.getUserId();
+                    await TimeService.booking(
+                      timeId: times[index].id,
+                      userId: userId,
+                    );
+                    Navigator.pop(context);
+                  },
+                ),
+              ) ??
+              fetchData();
+          // int userId = await AuthService.getUserId();
+          // int timeId = times[index].id;
+          // (await TimeService.booking(timeId: timeId, userId: userId))
+          //     ? print('booked')
+          //     : print('booking fail');
+          // print('is on tap');
         },
         onRemoveTime: () async => _onRemoveTime(index),
       );
@@ -112,27 +134,23 @@ class _SectionTimeState extends State<SectionTime> {
   }
 }
 
-class DialogConfirmRemoveTime extends StatelessWidget {
-  final int fieldId;
-  final int timeId;
-  final VoidCallback isOk;
+class DialogBooking extends StatelessWidget {
+  final VoidCallback onBooking;
 
-  const DialogConfirmRemoveTime({
+  const DialogBooking({
     Key key,
-    @required this.isOk,
-    this.fieldId,
-    this.timeId,
+    @required this.onBooking,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Dialog(
+      backgroundColor: Colors.transparent,
       child: Container(
-        width: sized(context).width,
-        height: 200,
+        height: 100,
         child: RaisedButton(
-          child: Text('Confirm'),
-          onPressed: isOk,
+          child: Text('book'),
+          onPressed: onBooking,
         ),
       ),
     );

@@ -23,4 +23,9 @@ class UserNetwork {
 
   static Future<ApiResponse> login({@required User user}) async =>
       apiResponseFromJson(await ApiConnect.post(path: '/user/login',body: user));
+
+  static Future<ApiResponse> getById({@required int userId}) async =>
+      apiResponseFromJson(await ApiConnect.get(path: '/user/getById/$userId'));
+  // static Future<ApiResponse> getById({@required int id}) async =>
+  //     apiResponseFromJson(await ApiConnect.get(path: '/field/getById/$id'));
 }

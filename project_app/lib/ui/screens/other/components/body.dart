@@ -1,9 +1,12 @@
-import 'package:flutter/foundation.dart';
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Club.dart';
+import 'package:project_app/core/models/User.dart';
 import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/core/services/ClubService.dart';
+import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/screens/club/club_screen.dart';
 import 'package:project_app/ui/screens/createClub/create_club.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
@@ -17,6 +20,20 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  User user = User();
+
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
+
+  Future<bool> fetchData() async {
+    int userId = await AuthService.getUserId();
+    user = await UserService.getById(userId: 1);
+    await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
+    return true;
+  }
 
   Future<void> _onMyClub(BuildContext context) async {
     int userId = await AuthService.getUserId();
@@ -61,6 +78,7 @@ class _BodyState extends State<Body> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          userInfo(),
           ButtonMenu(
             title: 'Profile',
             onPressed: () => print('onProfile'),
@@ -77,6 +95,35 @@ class _BodyState extends State<Body> {
           ),
         ],
       ),
+    );
+  }
+
+  Column userInfo() {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.all(10),
+          width: 150,
+          height: 150,
+          decoration: BoxDecoration(
+            color: creamPrimaryColor,
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
+          ),
+          child: Icon(
+            Icons.person,
+            color: Colors.black.withOpacity(0.5),
+            size: 150,
+          ),
+        ),
+        Text(
+          user.userName ?? '',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ],
     );
   }
 }

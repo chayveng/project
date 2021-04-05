@@ -21,4 +21,7 @@ class TimeNetwork {
 
   static Future<ApiResponse> delete({@required int id}) async =>
       apiResponseFromJson(await ApiConnect.get(path: '/time/delete/$id'));
+
+  static Future<ApiResponse> booking({@required int timeId, @required int userId}) async =>
+      apiResponseFromJson(await ApiConnect.get(path: '/time/booking/$timeId/$userId'));
 }

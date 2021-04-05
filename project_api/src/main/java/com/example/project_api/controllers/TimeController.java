@@ -40,18 +40,7 @@ public class TimeController {
         return new ApiResponse(1, "saved time", timeRepository.findByFieldId(time.getFieldId()));
     }
 
-    @GetMapping("/booking/{timeId}/{userId}")
-    public Object booking(@PathVariable int timeId, @PathVariable int userId){
-        Optional<Time> timeData = timeRepository.findById(timeId);
-        if (timeData.isPresent()) {
-            Time _time = timeData.get();
-            _time.setUserId(userId);
-            timeRepository.save(_time);
-            return new ApiResponse(1, "booked", timeRepository.findByFieldId(timeId));
-        }else{
-            return  new ApiResponse(0, "booking is fail",null);
-        }
-    }
+
 
     @GetMapping("/getByUserId/{userId}")
     public Object getByUserId(@PathVariable long userId) {
@@ -84,6 +73,39 @@ public class TimeController {
         } else {
             return new ApiResponse(0, "Delete time fail");
         }
+    }
+
+    @GetMapping("/booking/{timeId}/{userId}")
+    public Object booking(@PathVariable int timeId, @PathVariable int userId){
+        Optional<Time> timeData = timeRepository.findById(timeId);
+        if (timeData.isPresent()) {
+            Time _time = timeData.get();
+            _time.setUserId(userId);
+            _time.setStatus(true);
+            timeRepository.save(_time);
+            return new ApiResponse(1, "booked", timeRepository.findById(timeId));
+        }else{
+            return  new ApiResponse(0, "booking is fail");
+        }
+    }
+
+    @GetMapping("/unBooking/{timeId}")
+    public Object unBooking(@PathVariable int timeId){
+        Optional<Time> timeData = timeRepository.findById(timeId);
+        Time _time = new Time();
+        _time.setStatus(false);
+
+        return " ";
+//        if (timeData.isPresent()) {
+//            Time _time = timeData.get();
+//            boolean _status = _time.isStatus();
+//            _time.setUserId(0);
+//            _time.setStatus(!_status);
+//            timeRepository.save(_time);
+//            return new ApiResponse(1,"Change status", timeRepository.findById(timeId));
+//        }else{
+//            return new ApiResponse(0, "Change status fail");
+//        }
     }
 
     @GetMapping("/autoSave")

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:project_app/core/models/Time.dart';
+import 'package:project_app/core/services/TimeService.dart';
 
 import '../../../constants.dart';
 
@@ -33,30 +35,17 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final _formKey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-      child: Column(
-        children: [],
-      ),
-    );
-  }
-}
-
-class FormField extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      child: Column(
-        children: [
-          TextFormField(
-
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        RaisedButton(
+          onPressed: () async{
+            List<Time> times = await TimeService.getByUserId(userId: 0);
+            print(times);
+          },
+        ),
+      ],
     );
   }
 }
