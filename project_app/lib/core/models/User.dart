@@ -27,25 +27,24 @@ class User {
   String email;
 
   factory User.fromJson(Map<String, dynamic> json) => User(
-    id: json["id"],
-    userName: json["userName"],
-    passWord: json["passWord"],
-    firstName: json["firstName"],
-    lastName: json["lastName"],
-    tel: json["tel"],
-    email: json["email"],
-  );
+        id: json["id"],
+        userName: json["userName"],
+        passWord: json["passWord"],
+        firstName: json["firstName"],
+        lastName: json["lastName"],
+        tel: json["tel"],
+        email: json["email"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "userName": userName,
-    "passWord": passWord,
-    "firstName": firstName,
-    "lastName": lastName,
-    "tel": tel,
-    "email": email,
-  };
-
+        "id": id,
+        "userName": userName,
+        "passWord": passWord,
+        "firstName": firstName,
+        "lastName": lastName,
+        "tel": tel,
+        "email": email,
+      };
 
   @override
   String toString() {

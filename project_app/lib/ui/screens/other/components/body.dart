@@ -1,10 +1,19 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
-import 'package:project_app/ui/screens/create_club/create_club_screen.dart';
-import 'package:project_app/ui/screens/other/components/menu.dart';
-import 'package:project_app/ui/screens/other/components/top_other.dart';
-import '../../../../constants.dart';
-import '../../../../core/services/AuthService.dart';
+import 'package:project_app/constants.dart';
+import 'package:project_app/core/models/Club.dart';
+import 'package:project_app/core/models/User.dart';
+import 'package:project_app/core/services/AuthService.dart';
+import 'package:project_app/core/services/ClubService.dart';
+import 'package:project_app/core/services/UserService.dart';
+import 'package:project_app/ui/screens/club/club_screen.dart';
+import 'package:project_app/ui/screens/createClub/create_club.dart';
+import 'package:project_app/ui/screens/login/login_screen.dart';
+import 'package:project_app/ui/screens/other/components/button_menu.dart';
+import 'package:project_app/ui/screens/other/components/user_info.dart';
+
+import 'dialog_logout.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -12,61 +21,111 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  User user = User();
+
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
+
+  Future<bool> fetchData() async {
+    int userId = await UserService.getUserId();
+    user = await UserService.getById(userId: userId);
+    await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
+    return true;
+  }
+
+  Future<void> _onMyClub(BuildContext context) async {
+    int userId = await UserService.getUserId();
+    Club club = await ClubService.getByUserId(userId: userId);
+    await Future.delayed(Duration(milliseconds: 500));
+    bool _isOwner = club.id != null ? true : false;
+    _isOwner
+        ? Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ClubScreen(
+                clubId: club.id,
+                isOwner: _isOwner,
+              ),
+            ),
+          )
+        : Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => CreateClub(isOwner: _isOwner, club: club),
+            ),
+          );
+  }
+
+  Future _onLogout(BuildContext context) {
+    return showDialog(
+      context: context,
+      builder: (context) => DialogLogout(
+        itOk: () {
+          print('logout');
+          AuthService.logout();
+          Navigator.pushNamedAndRemoveUntil(
+              context, LoginScreen.routeName, (route) => false);
+        },
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size sized = MediaQuery.of(context).size;
-    return SingleChildScrollView(
+    return Container(
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          TopOther(),
-          Menu(title: 'Profile', onPressed: () {}),
-          Menu(
-            title: 'Club',
-            onPressed: () {
-              Navigator.push(
-                context,
-                PageTransition(
-                    child: CreateClub(), type: PageTransitionType.fade),
-              );
-            },
+          // userInfo(),
+          UserInfo(),
+          ButtonMenu(
+            title: 'Profile',
+            onPressed: () => print('onProfile'),
           ),
-          MenuLogout(),
+          ButtonMenu(
+            title: 'My club',
+            onPressed: () async => await _onMyClub(context),
+          ),
+          ButtonMenu(
+            title: 'Logout',
+            icon: Icons.logout,
+            textColor: Colors.red,
+            onPressed: () => _onLogout(context),
+          ),
         ],
       ),
     );
   }
-}
 
-class MenuLogout extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    Size sized = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.only(bottom: 2),
-      width: sized.width,
-      height: 65,
-      child: FlatButton(
-        padding: EdgeInsets.symmetric(vertical: 15, horizontal: 20),
-        color: creamPrimaryColor,
-        child: Row(
-          children: [
-            SizedBox(width: 20),
-            Expanded(
-              child: Text(
-                'Logout',
-                style: TextStyle(fontSize: 16, color: Colors.red),
-              ),
+  Column userInfo() {
+    return Column(
+      children: [
+        Container(
+          margin: EdgeInsets.all(10),
+          width: 150,
+          height: 150,
+          decoration: BoxDecoration(
+            color: creamPrimaryColor,
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
             ),
-            Icon(
-              Icons.logout,
-            ),
-          ],
+          ),
+          child: Icon(
+            Icons.person,
+            color: Colors.black.withOpacity(0.5),
+            size: 150,
+          ),
         ),
-        onPressed: () {
-          AuthService.logout();
-          Navigator.pushReplacementNamed(context, '/login');
-        },
-      ),
+        Text(
+          user.userName ?? '',
+          style: TextStyle(
+            fontSize: 16,
+          ),
+        ),
+      ],
     );
   }
 }

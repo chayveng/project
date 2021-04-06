@@ -2,11 +2,18 @@ package com.example.project_api.controllers;
 
 import com.example.project_api.models.beans.ApiResponse;
 import com.example.project_api.models.repository.FieldRepository;
-import com.example.project_api.models.tables.Club;
 import com.example.project_api.models.tables.Field;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Iterator;
 import java.util.Optional;
 
 @RestController
@@ -22,8 +29,13 @@ public class FieldController {
     }
 
     @GetMapping("/getByClubId/{clubId}")
-    public Object getByClubId(@PathVariable int clubId) {
+    public Object getByClubId(@PathVariable long clubId) {
         return new ApiResponse(1, "get by Club id", fieldRepository.findByClubId(clubId));
+    }
+
+    @GetMapping("/getById/{id}")
+    public Object getById(@PathVariable int id){
+        return new ApiResponse(1, "get by id", fieldRepository.findById(id));
     }
 
     @GetMapping("/getAll")
@@ -33,12 +45,12 @@ public class FieldController {
 
     @PostMapping("/add")
     public Object add(@RequestBody Field field) {
-        Optional<Field> fieldData = fieldRepository.findByFieldName(field.getFieldName());
+        Optional<Field> fieldData = fieldRepository.findByTitle(field.getTitle());
         if (fieldData.isEmpty()) {
             fieldRepository.save(field);
-            return new ApiResponse(1, "Add a field an succeed", fieldRepository.findByFieldName(field.getFieldName()));
+            return new ApiResponse(1, "Add a field an succeed", fieldRepository.findByTitle(field.getTitle()));
         } else {
-            return new ApiResponse(0, "Add a field fail");
+            return new ApiResponse(0, "Add a field fail", fieldRepository.findByTitle(field.getTitle()));
         }
     }
 
@@ -59,13 +71,43 @@ public class FieldController {
             for (int j = 0; j < num; j++) {
                 Field _field = new Field();
                 _field.setClubId(i);
-                _field.setFieldName("Field" + j);
+                _field.setTitle("Field" + j);
                 _field.setDetail("detail" + j);
-                _field.setStatus(true);
+                _field.setPrice("200 - 400");
+//                _field.setStatus(true);
                 fieldRepository.save(_field);
             }
         }
         return new ApiResponse(1, "dummy field: " + num + "unit", fieldRepository.findAll());
+    }
+
+    @GetMapping("/autoSave")
+    public Object autoSave(){
+        JSONParser parser = new JSONParser();
+        try {
+            String _fileName = "/Users/chayveng/Dev/project/project_api/src/main/java/com/example/project_api/js/fields.json";
+            Object obj = parser.parse(new FileReader(_fileName));
+            JSONArray jsonObject = (JSONArray) obj;
+            JSONArray objList = jsonObject;
+            Iterator<JSONObject> iterator = objList.iterator();
+            while (iterator.hasNext()) {
+                JSONObject _jsonObject =(JSONObject) iterator.next();
+
+                Field field = new Field();
+                field.setClubId((Long) _jsonObject.get("clubId"));
+                field.setTitle((String) _jsonObject.get("title"));
+                field.setDetail((String) _jsonObject.get("detail"));
+                field.setPrice((String) _jsonObject.get("price"));
+                fieldRepository.save(field);
+                }
+            } catch (ParseException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return fieldRepository.findAll();
     }
 
 }

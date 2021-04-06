@@ -46,14 +46,4 @@ class Time {
   String toString() {
     return 'Time{id: $id, fieldId: $fieldId, userId: $userId, startTime: $startTime, endTime: $endTime, status: $status}';
   }
-
-// @override
-// String toString() {
-//   return '\n  {\n     id: $id, \n'
-//       '     fieldId: $fieldId,\n'
-//       '     userId: $userId, \n'
-//       '     startTime: $startTime,\n'
-//       '     endTime: $endTime,\n'
-//       '     status: $status\n }\n';
-// }
 }

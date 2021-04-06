@@ -30,7 +30,7 @@ class _BodyState extends State<Body> {
                     'Login',
                     style: TextStyle(
                       fontSize: 40,
-                      color: greenPrimaryColor,
+                      color: navyPrimaryColor,
                       fontFamily: UiFont,
                       fontWeight: FontWeight.bold,
                     ),

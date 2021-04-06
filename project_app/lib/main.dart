@@ -1,17 +1,16 @@
+import 'dart:ui';
+
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:project_app/constants.dart';
 import 'package:project_app/routs.dart';
-import 'package:project_app/ui/screens/club/club_screen.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
 import 'package:project_app/ui/screens/testScreen/TestScreen.dart';
+
+import 'constants.dart';
 import 'core/services/AuthService.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   WidgetsFlutterBinding.ensureInitialized();
   Widget screen = LoginScreen();
   if (await AuthService.isLogin() == true) {
@@ -22,26 +21,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final Widget screen;
-
-  // final darkTheme = ThemeData(
-  //   primarySwatch: Colors.grey,
-  //   primaryColor: Colors.black,
-  //   brightness: Brightness.dark,
-  //   backgroundColor: const Color(0xFF212121),
-  //   accentColor: Colors.white,
-  //   accentIconTheme: IconThemeData(color: Colors.black),
-  //   dividerColor: Colors.black12,
-  // );
-  //
-  // final lightTheme = ThemeData(
-  //   primarySwatch: Colors.grey,
-  //   primaryColor: Colors.white,
-  //   brightness: Brightness.light,
-  //   backgroundColor: const Color(0xFFE5E5E5),
-  //   accentColor: Colors.black,
-  //   accentIconTheme: IconThemeData(color: Colors.white),
-  //   dividerColor: Colors.white54,
-  // );
 
   MyApp({
     Key key,
@@ -55,28 +34,33 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: UiFont,
         appBarTheme: AppBarTheme(
-          brightness: Brightness.light,
-          iconTheme: IconThemeData(color: greenPrimaryColor),
-          textTheme: TextTheme(
-            headline6: TextStyle(
-              fontSize: 22,
-              fontFamily: UiFont,
-              fontWeight: FontWeight.bold,
-              color: greenPrimaryColor,
-            ),
-          ),
           elevation: 0,
           centerTitle: true,
           color: creamPrimaryColor,
+          brightness: Brightness.light,
+          iconTheme: IconThemeData(
+            color: navyPrimaryColor,
+          ),
+          textTheme: TextTheme(
+            headline6: TextStyle(
+              fontSize: 18,
+              fontFamily: UiFont,
+              fontWeight: FontWeight.bold,
+              color: navyPrimaryColor,
+            ),
+          ),
         ),
       ),
       title: 'Flutter Demo',
       routes: routes,
-      // home: screen,
-      home: ClubScreen(isOwner: true,clubId: 1),
-      // home: FirstScreen(),
+      home: screen,
       // home: TestScreen(),
-      // home: MainScreen(),
+      // home: SelectField(),
+      // home: FirstScreen(),
+      // home: ClubScreen(),
+      // home: HomeScreen(),
+      // home: ProfileScreen(),
+      // home: LoginScreen(),
     );
   }
 }

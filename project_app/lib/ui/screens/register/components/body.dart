@@ -26,7 +26,7 @@ class _BodyState extends State<Body> {
                   Text(
                     'Register',
                     style: TextStyle(
-                        color: greenPrimaryColor,
+                        color: navyPrimaryColor,
                         fontSize: 40,
                         fontFamily: UiFont,
                         fontWeight: FontWeight.bold),

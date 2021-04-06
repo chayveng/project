@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 
-import '../../../constants.dart';
-import '../../../constants.dart';
-import '../../../constants.dart';
 import 'components/body.dart';
 
 class BookingScreen extends StatelessWidget {
@@ -15,7 +12,11 @@ class BookingScreen extends StatelessWidget {
       backgroundColor: grayPrimaryColor,
       appBar: AppBar(
         title: Text(
-          'Booking',
+          'Booking Screen',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: navyPrimaryColor,
+          ),
         ),
       ),
       body: Body(),

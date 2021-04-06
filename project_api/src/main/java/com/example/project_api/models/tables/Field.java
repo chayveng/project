@@ -14,16 +14,12 @@ import javax.persistence.*;
 public class Field {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(name = "club_id")
-    private int clubId;
-    @Column(name = "field_name")
-    private String fieldName;
-    @Column(name = "detail")
+    private long clubId;
+    private String title;
     private String detail;
-    @Column(name = "status")
-    private boolean status;
+    private String price;
+//    private boolean status;
 
 }

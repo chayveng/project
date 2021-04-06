@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/core/services/ClubService.dart';
+import 'package:project_app/ui/screens/home/components/card_club.dart';
 
 class FeedJsonData extends StatefulWidget {
   @override
@@ -21,7 +22,7 @@ class _FeedJsonDataState extends State<FeedJsonData> {
             height: sized.height,
             child: Center(
               child: FutureBuilder<List<Club>>(
-                future: ClubService.fetchClubs(),
+                future: ClubService.getClubs(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     return Container(
@@ -44,7 +45,6 @@ class _FeedJsonDataState extends State<FeedJsonData> {
     );
   }
 
-
   Future<Null> _handleRefresh() async {
     await Future.delayed(Duration(seconds: 1));
     setState(() {});
@@ -54,14 +54,10 @@ class _FeedJsonDataState extends State<FeedJsonData> {
   Widget _listSection({List<Club> clubs}) => ListView.builder(
         itemCount: clubs.length,
         itemBuilder: (context, index) {
-          // return CardField(
-          //    fieldName: clubs[index].title,
-          //   // detail: clubs[index].detail,
-          //   onTap: () {
-          //     print(clubs[index].title);
-          //   },
-          // );
-          return Container();
+          return CardClub(
+            club: clubs[index],
+            onTap: () {},
+          );
         },
       );
 }

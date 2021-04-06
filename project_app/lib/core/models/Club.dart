@@ -2,7 +2,8 @@ import 'dart:convert';
 
 Club clubFromJson(String str) => Club.fromJson(json.decode(str));
 
-List<Club> clubsFormJson(List lst) => lst.map((e) => clubFromJson(jsonEncode(e))).toList();
+List<Club> clubsFormJson(List lst) =>
+    lst.map((e) => clubFromJson(jsonEncode(e))).toList();
 
 String clubToJson(Club data) => json.encode(data.toJson());
 
@@ -22,7 +23,6 @@ class Club {
 
   int id;
 
-
   int userId;
   String title;
   String detail;
@@ -34,30 +34,30 @@ class Club {
   String photosPath;
 
   factory Club.fromJson(Map<String, dynamic> json) => Club(
-    id: json["id"],
-    userId: json["userId"],
-    title: json["title"],
-    detail: json["detail"],
-    address: json["address"],
-    open: json["open"],
-    price: json["price"],
-    tel: json["tel"],
-    map: json["map"],
-    photosPath: json["photosPath"],
-  );
+        id: json["id"],
+        userId: json["userId"],
+        title: json["title"],
+        detail: json["detail"],
+        address: json["address"],
+        open: json["open"],
+        price: json["price"],
+        tel: json["tel"],
+        map: json["map"],
+        photosPath: json["photosPath"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "userId": userId,
-    "title": title,
-    "detail": detail,
-    "address": address,
-    "open": open,
-    "price": price,
-    "tel": tel,
-    "map": map,
-    "photosPath": photosPath,
-  };
+        "id": id,
+        "userId": userId,
+        "title": title,
+        "detail": detail,
+        "address": address,
+        "open": open,
+        "price": price,
+        "tel": tel,
+        "map": map,
+        "photosPath": photosPath,
+      };
 
   @override
   String toString() {

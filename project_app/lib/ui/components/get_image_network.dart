@@ -19,17 +19,8 @@ class GetImageNetwork extends StatelessWidget {
     if (photosPath != null) {
       return Image.network(
         ClubService.mainImage(fileName: photosPath),
-          // width: double.infinity,
-          // height: double.infinity,
           fit: BoxFit.cover,
       );
-      // return FadeInImage.assetNetwork(
-      //   placeholder: defaultImagePath,
-      //   image: ClubService.mainImage(fileName: photosPath),
-      //   width: double.infinity,
-      //   height: double.infinity,
-      //   fit: BoxFit.fill,
-      // );
     } else {
       return Container(
         padding: EdgeInsets.all(12.0),

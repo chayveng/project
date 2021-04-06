@@ -1,42 +1,51 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:project_app/constants.dart';
-import 'package:project_app/ui/components/rounded_button.dart';
+import 'package:project_app/core/models/Time.dart';
+import 'package:project_app/core/services/TimeService.dart';
 
-class TestScreen extends StatefulWidget {
+import '../../../constants.dart';
+
+class TestScreen extends StatelessWidget {
   static String routeName = '/test_screen';
 
   @override
-  _TestScreenState createState() => _TestScreenState();
+  Widget build(BuildContext context) {
+    return Scaffold(
+      // appBar: AppBar(
+      //   elevation: 0,
+      //   title: Text(
+      //     'TestScreen',
+      //   ),
+      // ),
+
+      // body: FeedJsonData(),
+      // body: CustomTimePicker(),
+      // body: CustomAppBarListViewButton(),
+      // body: TimeListSection(),
+      // body: SizePositionPage(),
+      // body: SimpleAnimatedList(),
+      // body: SectionGreen(),
+      body: Body(),
+    );
+  }
 }
 
-class _TestScreenState extends State<TestScreen> {
-  bool status = false;
+class Body extends StatefulWidget {
+  @override
+  _BodyState createState() => _BodyState();
+}
 
-
+class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    Size sized = MediaQuery.of(context).size;
-    return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.red, // status bar color
-          brightness: Brightness.dark // status bar brightness
-          ),
-      // body: buildCenter(),
-      body: Column(
-        children: [
-          SizedBox(height: 30),
-          RoundedButton(
-            // text: 'null',
-            // onTap: () {
-            //   showDialog(context: context, builder: (context) => ());
-            // },
-          ),
-          SizedBox(height: 30),
-          // CustomCheckBox(),
-
-        ],
-      ),
+    return Column(
+      children: [
+        RaisedButton(
+          onPressed: () async{
+            List<Time> times = await TimeService.getByUserId(userId: 0);
+            print(times);
+          },
+        ),
+      ],
     );
   }
 }

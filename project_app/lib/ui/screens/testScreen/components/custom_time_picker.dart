@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:project_app/core/apis/Network/TimeNetwork.dart';
+import 'package:project_app/core/apis/TimeApi.dart';
 import 'package:project_app/core/models/Time.dart';
 
 class CustomTimePicker extends StatefulWidget {
@@ -86,7 +86,7 @@ class CustomDialog extends StatelessWidget {
                   _time.startTime = '${startTime['h']}:${startTime['m']}:00';
                   _time.endTime = '${endTime['h']}:${endTime['m']}:00';
                   print(_time);
-                  print(await TimeNetwork.add(_time));
+                  print(await TimeNetwork.add(time: _time));
                 }
               },
               child: Text('Ok'),

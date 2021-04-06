@@ -9,8 +9,6 @@ class OutlineField extends StatelessWidget {
   final FormFieldValidator validator;
   final int minLine;
   final TextEditingController controller;
-  final FocusNode focusNode;
-  final ValueChanged onFieldSubmitted;
 
   const OutlineField({
     Key key,
@@ -20,8 +18,6 @@ class OutlineField extends StatelessWidget {
     this.validator,
     this.minLine,
     this.controller,
-    this.focusNode,
-    this.onFieldSubmitted,
   }) : super(key: key);
 
   @override
@@ -30,13 +26,10 @@ class OutlineField extends StatelessWidget {
       controller: controller,
       maxLines: (minLine == null) ? 1 : minLine,
       decoration: InputDecoration(
-        // filled: true,
-        // fillColor: grayPrimaryColor.withOpacity(0.5),
+        filled: true,
+        fillColor: creamPrimaryColor,
         labelText: labelText,
-        labelStyle: TextStyle(
-            fontSize: 20,
-            color: greenPrimaryColor,
-            fontWeight: FontWeight.bold),
+        labelStyle: TextStyle(fontSize: 20, color: navyPrimaryColor),
         hintText: hintText,
         floatingLabelBehavior: FloatingLabelBehavior.always,
         contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
@@ -44,8 +37,6 @@ class OutlineField extends StatelessWidget {
         enabledBorder: buildOutlineInputBorder(),
       ),
       onSaved: onSaved,
-      focusNode: focusNode,
-      onFieldSubmitted: onFieldSubmitted,
     );
   }
 
@@ -53,7 +44,7 @@ class OutlineField extends StatelessWidget {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
-        color: greenPrimaryColor.withOpacity(0.5),
+        color: navyPrimaryColor.withOpacity(0.5),
         width: 3,
       ),
       gapPadding: 10,
