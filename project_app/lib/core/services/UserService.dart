@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:project_app/core/apis/UserApi.dart';
+import 'package:project_app/core/models/ApiResponse.dart';
 import 'package:project_app/core/models/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -18,5 +19,9 @@ class UserService{
     return userFromJson(jsonEncode(response.data));
   }
 
+  static Future<bool> update({@required User user}) async{
+    ApiResponse res = await UserApi.update(user: user);
+    return res.status == 1 ? true : false;
+  }
 
 }

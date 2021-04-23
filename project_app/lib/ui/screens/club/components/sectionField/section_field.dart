@@ -46,6 +46,7 @@ class _SectionFieldState extends State<SectionField> {
     print('onRemove');
     await showDialog(
           context: context,
+          barrierDismissible: false,
           builder: (context) {
             return DialogRemove(
               onPressed: () async {
@@ -68,10 +69,13 @@ class _SectionFieldState extends State<SectionField> {
   }
 
   Widget buttonAddField({@required BuildContext context}) => widget.isOwner
-      ? RoundedButton(
-          text: 'add field',
-          onTap: () async => await _onAdd(context),
-        )
+      ? Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: RoundedButton(
+            text: 'add field',
+            onTap: () async => await _onAdd(context),
+          ),
+      )
       : SizedBox();
 
   Widget listSection() => Column(
@@ -87,14 +91,17 @@ class _SectionFieldState extends State<SectionField> {
 
   Widget sectionField({@required int index}) => Column(
         children: [
-          GestureDetector(
-            onTap: () => setState(() => _status = !_status),
-            child: CardField(
-              field: fields[index],
-              isOwner: widget.isOwner,
-              onEdit: () async => await _onEdit(fieldId: fields[index].id),
-              onRemoveField: () async =>
-                  await _onRemoveField(context: context, index: index),
+          Padding(
+            padding: const EdgeInsets.only(top: 8,left: 8, right: 8),
+            child: GestureDetector(
+              onTap: () => setState(() => _status = !_status),
+              child: CardField(
+                field: fields[index],
+                isOwner: widget.isOwner,
+                onEdit: () async => await _onEdit(fieldId: fields[index].id),
+                onRemoveField: () async =>
+                    await _onRemoveField(context: context, index: index),
+              ),
             ),
           ),
           SectionTime(
@@ -106,7 +113,7 @@ class _SectionFieldState extends State<SectionField> {
       );
 
   Future<bool> fetchData() async {
-    fields = await FieldServices.getFieldClubId(widget.clubId);
+    fields = await FieldServices.getFieldsClubId(widget.clubId);
     await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
     return true;
   }
@@ -117,7 +124,7 @@ class _SectionFieldState extends State<SectionField> {
       child: Column(
         children: [
           listSection(),
-          SizedBox(height: 10),
+          // SizedBox(height: 10),
           buttonAddField(context: context),
         ],
       ),

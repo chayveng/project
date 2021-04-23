@@ -46,7 +46,7 @@ class ListSection extends StatelessWidget {
         Navigator.push(
           context,
           PageTransition(
-            child: ClubScreen(clubId: club.id ),
+            child: ClubScreen(clubId: club.id ,isOwner: false,),
             type: PageTransitionType.fade,
           ),
         );

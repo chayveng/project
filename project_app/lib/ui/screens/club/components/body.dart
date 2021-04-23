@@ -7,6 +7,7 @@ import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/core/services/ClubService.dart';
 import 'package:project_app/ui/screens/club/components/sectionField/section_field.dart';
 import 'package:project_app/ui/screens/club/components/sectionImage/section_image.dart';
+import 'package:project_app/ui/screens/club/components/sectionInfo.dart';
 
 import '../../../../constants.dart';
 
@@ -48,6 +49,7 @@ class _BodyState extends State<Body> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SectionImage(isOwner: widget.isOwner, club: club),
+                SectionInfo(club: club),
                 SectionField(clubId: widget.clubId, isOwner: widget.isOwner),
               ],
             ),

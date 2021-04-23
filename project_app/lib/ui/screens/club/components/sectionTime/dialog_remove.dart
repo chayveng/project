@@ -16,15 +16,31 @@ class DialogRemove extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Container(
-        width: sized(context).width,
-        height: 200,
-        child: RaisedButton(
-          child: Text('Confirm'),
-          onPressed: isOk,
+    return AlertDialog(
+      title: Text('Remove time'),
+      content: Text('Confirm remove time.'),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: InkWell(
+            onTap: () {Navigator.pop(context);},
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: orangePrimaryColor),
+            ),
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: InkWell(
+            onTap: isOk,
+            child: Text(
+              'Ok',
+              style: TextStyle(color: orangePrimaryColor),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

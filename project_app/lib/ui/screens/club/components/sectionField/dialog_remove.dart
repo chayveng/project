@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_app/core/services/FieldServices.dart';
 
 import '../../../../../constants.dart';
 
@@ -12,21 +13,31 @@ class DialogRemove extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      child: Container(
-        width: sized(context).width,
-        height: 200,
-        child: RaisedButton(
-          child: Text('Confirm'),
-          onPressed: onPressed,
-          // onPressed: () async {
-          //   print(fieldId);
-          //   var res = await FieldServices.delete(id: fieldId);
-          //   res ? print('deleted') : print('Fail');
-          //   Navigator.pop(context);
-          // },
+    return AlertDialog(
+      title: Text('Remove field'),
+      content: Text('Confirm remove'),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: InkWell(
+            onTap: () {Navigator.pop(context);},
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: orangePrimaryColor),
+            ),
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: InkWell(
+            onTap: onPressed,
+            child: Text(
+              'Ok',
+              style: TextStyle(color: orangePrimaryColor),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

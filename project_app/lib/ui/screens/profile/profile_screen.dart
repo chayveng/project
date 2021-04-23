@@ -11,13 +11,16 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  int _selectedIndex = 3;
+  // int _selectedIndex = 3;
   final Color colorBackground = whiteBackgroundColor;
+  bool _status = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(),
+      // backgroundColor: creamPrimaryColor,
+      backgroundColor: grayPrimaryColor,
+      body: Body(status: _status),
       // bottomNavigationBar: BottomBar(),
     );
   }

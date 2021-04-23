@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Time.dart';
 
 class CardTime extends StatelessWidget {
@@ -53,13 +54,18 @@ class CardTime extends StatelessWidget {
 
   Widget cardTime() => Container(
         height: 50,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            activeIcon(),
-            textTime(),
-            buttonRemove(),
-          ],
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 10),
+          decoration: BoxDecoration(color: creamPrimaryColor),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              activeIcon(),
+              SizedBox(width: 10),
+              textTime(),
+              buttonRemove(),
+            ],
+          ),
         ),
       );
 

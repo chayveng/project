@@ -39,6 +39,7 @@ class _SectionTimeState extends State<SectionTime> {
   Future<void> _onRemoveTime(int index) async {
     await showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (context) =>
           DialogRemove(
             isOk: () async {
@@ -65,11 +66,36 @@ class _SectionTimeState extends State<SectionTime> {
   }
 
   Widget buttonAddTime() => widget.isOwner
-      ? IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () async => _onAddTime(context: context),
+      ? ClipRRect(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
+          ),
+          child: Material(
+            color: creamPrimaryColor,
+            child: InkWell(
+              onTap: () async => _onAddTime(context: context),
+              child: Container(
+                width: sized(context).width * 0.9,
+                height: 42,
+                child: Center(
+                  child: Icon(Icons.add),
+                ),
+              ),
+            ),
+          ),
         )
-      : SizedBox();
+      : Container(
+          width: sized(context).width * 0.9,
+          height: 10,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            ),
+            color: creamPrimaryColor,
+          ),
+        );
 
   Widget listSection({@required BuildContext context}) => Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -85,7 +111,7 @@ class _SectionTimeState extends State<SectionTime> {
         isOwner: widget.isOwner,
         time: times[index],
         onActiveIcon: () async => await _onActiveIcon(index),
-        onBooking: () async => _onBooking(index),
+        onBooking: () async => times[index].status ? (){} : _onBooking(index),
         onRemoveTime: () async => _onRemoveTime(index),
       );
 
@@ -100,6 +126,7 @@ class _SectionTimeState extends State<SectionTime> {
         ? print('is a owner')
         : await showDialog(
               context: context,
+              barrierDismissible: false,
               builder: (context) => DialogBooking(
                 onBooking: () async {
                   await TimeService.booking(timeId: times[index].id);
@@ -118,9 +145,9 @@ class _SectionTimeState extends State<SectionTime> {
   @override
   Widget build(BuildContext context) {
     return AnimatedContainer(
-      width: sized(context).width,
+      width: sized(context).width * 0.9,
       height: (widget.status)
-          ? (widget.isOwner ? 50 : 0) + 50 * times.length.toDouble()
+          ? (widget.isOwner ? 50 : 10) + 50 * times.length.toDouble()
           : 0,
       duration: Duration(milliseconds: 100),
       child: SingleChildScrollView(
@@ -134,4 +161,3 @@ class _SectionTimeState extends State<SectionTime> {
     );
   }
 }
-

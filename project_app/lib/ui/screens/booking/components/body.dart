@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:project_app/constants.dart';
+import 'package:project_app/core/models/Club.dart';
+import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/models/Time.dart';
+import 'package:project_app/core/services/ClubService.dart';
+import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/core/services/TimeService.dart';
 import 'package:project_app/core/services/UserService.dart';
+import 'package:project_app/ui/screens/booking/components/not_booking.dart';
+import 'package:project_app/ui/screens/booking/components/section_club.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -10,6 +15,8 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
+  List<Club> clubs = new List<Club>();
+  List<Field> fields = new List<Field>();
   List<Time> times = new List<Time>();
 
   @override
@@ -19,83 +26,54 @@ class _BodyState extends State<Body> {
   }
 
   fetchData() async {
-    int userId = await UserService.getUserId();
-    times = await TimeService.getByUserId(userId: userId);
+    await fetchTimes();
+    await fetchFields();
+    await fetchClubs();
     await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: sized(context).width,
-      child: Column(
-        children: [
-          ...List.generate(
-            times.length ?? 0,
-            (index) => CardTime(
-              time: times[index],
-              onTap: () {
-                print('onTap');
-              },
-            ),
-          ),
-        ],
-      ),
-    );
+  Future<void> fetchClubs() async {
+    clubs = [];
+    List clubsId = [];
+    fields.map((e) => clubsId.add(e.clubId)).toList();
+    clubsId = clubsId.toSet().toList();
+    for (var i = 0; i < clubsId.length; i++) {
+      clubs.add(await ClubService.getById(id: clubsId[i]));
+    }
   }
-}
 
-class CardTime extends StatefulWidget {
-  final Time time;
-  final GestureTapCallback onTap;
+  Future<void> fetchFields() async {
+    fields = [];
+    List fieldsId = [];
+    times.map((e) => fieldsId.add(e.fieldId)).toList();
+    fieldsId = fieldsId.toSet().toList();
+    for (var i = 0; i < fieldsId.length; i++) {
+      fields.add(await FieldServices.getFieldById(id: fieldsId[i]));
+    }
+  }
 
-  const CardTime({
-    Key key,
-    @required this.time,
-    @required this.onTap,
-  }) : super(key: key);
-
-  @override
-  _CardTimeState createState() => _CardTimeState();
-}
-
-class _CardTimeState extends State<CardTime> {
-
-  @override
-  void initState() {
-    print('test initState');
-    super.initState();
+  Future<void> fetchTimes() async {
+    int userId = await UserService.getUserId();
+    times = await TimeService.getByUserId(userId: userId);
+    times.map((e) => print(e.fieldId));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top:8.0, left: 8.0,right: 8.0),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Material(
-          color: creamPrimaryColor,
-          child: InkWell(
-            onTap: widget.onTap,
+    return times.length == 0
+        ? NotBooking()
+        : SingleChildScrollView(
             child: Column(
               children: [
-                Container(
-                  padding: EdgeInsets.all(10),
-                  width: sized(context).width,
-                  child: Center(
-                    child: Text(
-                      '${widget.time.startTime} - ${widget.time.endTime}',
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    ),
+                Center(
+                  child: SectionClub(
+                    clubs: clubs,
+                    fields: fields,
+                    times: times,
                   ),
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
+          );
   }
 }

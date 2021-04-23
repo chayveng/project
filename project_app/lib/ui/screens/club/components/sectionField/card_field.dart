@@ -43,9 +43,30 @@ class _CardFieldState extends State<CardField> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(widget.field.title),
-            Text(widget.field.detail),
-            Text(widget.field.price),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: Text(
+                    widget.field.title,
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+                buttonEdit(),
+                buttonRemove(),
+
+              ],
+            ),
+            SizedBox(height: 8),
+            Text(
+              widget.field.detail,
+              style: TextStyle(fontSize: 20),
+            ),
+            SizedBox(height: 8),
+            Text(
+              widget.field.price,
+              style: TextStyle(fontSize: 20),
+            ),
           ],
         ),
       );
@@ -54,13 +75,15 @@ class _CardFieldState extends State<CardField> {
     return GestureDetector(
       onTap: () => setState(() => _status = !_status),
       child: Container(
+        padding: EdgeInsets.fromLTRB(15, 8, 8, 8),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: orangePrimaryColor.withOpacity(0.5),
+        ),
         width: sized(context).width,
-        color: Colors.redAccent,
         child: Row(
           children: [
             textField(),
-            buttonEdit(),
-            buttonRemove(),
           ],
         ),
       ),

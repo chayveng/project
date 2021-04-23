@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../../../constants.dart';
+
 class DialogBooking extends StatelessWidget {
   final VoidCallback onBooking;
 
@@ -10,15 +12,33 @@ class DialogBooking extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      child: Container(
-        height: 100,
-        child: RaisedButton(
-          child: Text('book'),
-          onPressed: onBooking,
+    return AlertDialog(
+      title: Text('Booking time'),
+      content: Text('Confirm booking time.'),
+      actions: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: InkWell(
+            onTap: () {
+              Navigator.pop(context);
+            },
+            child: Text(
+              'Cancel',
+              style: TextStyle(color: orangePrimaryColor),
+            ),
+          ),
         ),
-      ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: InkWell(
+            onTap: onBooking,
+            child: Text(
+              'Ok',
+              style: TextStyle(color: orangePrimaryColor),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

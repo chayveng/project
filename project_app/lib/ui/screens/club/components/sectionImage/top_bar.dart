@@ -53,10 +53,11 @@ class TopBar extends StatelessWidget {
       width: sized(context).width,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-            begin: Alignment(0, -1),
-            end: Alignment(0, 1),
-            colors: [Colors.black, Colors.transparent],
-            stops: [0, 1]),
+          begin: Alignment(0, -1),
+          end: Alignment(0, 1),
+          colors: [Colors.black, Colors.transparent],
+          stops: [0, 1],
+        ),
       ),
       child: Column(
         children: [

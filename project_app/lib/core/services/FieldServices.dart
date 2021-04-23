@@ -5,7 +5,7 @@ import 'package:project_app/core/apis/FieldApi.dart';
 import 'package:project_app/core/models/Field.dart';
 
 class FieldServices {
-  static Future<List<Field>> getFieldClubId(int clubId) async {
+  static Future<List<Field>> getFieldsClubId(int clubId) async {
     var response = await FieldApi.getByClubId(clubId: clubId);
     return fieldsFormJson(response.data);
   }

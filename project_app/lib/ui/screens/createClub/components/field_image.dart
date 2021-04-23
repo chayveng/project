@@ -24,8 +24,13 @@ class FieldImage extends StatelessWidget {
       width: sized(context).width,
       child: (image == null)
           ? GestureDetector(
-              child: GetImageNetwork(photosPath: photosPath),
+              // child: GetImageNetwork(photosPath: photosPath),
               // child: buildDefaultImage(),
+              child: Icon(
+                Icons.add_a_photo,
+                size: sized(context).width * 0.5,
+                color: Colors.black.withOpacity(0.5),
+              ),
               onTap: onTap,
             )
           : GestureDetector(

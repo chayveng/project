@@ -67,7 +67,7 @@ public class ClubController {
         }
     }
 
-    @PostMapping("/addImage/")
+    @PostMapping("/addImage")
     public Object addImage(@RequestParam int clubId,@RequestParam(value = "fileImage", required = false) MultipartFile fileImage){
         Random random = new Random();
         ApiResponse res = new ApiResponse();
