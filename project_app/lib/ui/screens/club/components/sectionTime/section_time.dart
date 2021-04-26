@@ -32,7 +32,6 @@ class _SectionTimeState extends State<SectionTime> {
 
   @override
   void initState() {
-    print(widget.isOwner);
     fetchData();
     super.initState();
   }
@@ -67,23 +66,22 @@ class _SectionTimeState extends State<SectionTime> {
   }
 
   Widget buttonAddTime() => widget.isOwner
-      ? Container(
-          width: sized(context).width * 0.9,
-          height: 42,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(10),
-              bottomRight: Radius.circular(10),
-            ),
-            color: creamPrimaryColor,
+      ? ClipRRect(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(10),
+            bottomRight: Radius.circular(10),
           ),
-          child: Center(
-            child: IconButton(
-              icon: Icon(
-                Icons.add,
-                color: navyPrimaryColor,
+          child: Material(
+            color: creamPrimaryColor,
+            child: InkWell(
+              onTap: () async => _onAddTime(context: context),
+              child: Container(
+                width: sized(context).width * 0.9,
+                height: 42,
+                child: Center(
+                  child: Icon(Icons.add),
+                ),
               ),
-              onPressed: () async => _onAddTime(context: context),
             ),
           ),
         )
@@ -113,7 +111,7 @@ class _SectionTimeState extends State<SectionTime> {
         isOwner: widget.isOwner,
         time: times[index],
         onActiveIcon: () async => await _onActiveIcon(index),
-        onBooking: () async => _onBooking(index),
+        onBooking: () async => times[index].status ? (){} : _onBooking(index),
         onRemoveTime: () async => _onRemoveTime(index),
       );
 

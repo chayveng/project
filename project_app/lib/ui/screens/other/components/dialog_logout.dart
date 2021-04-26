@@ -15,11 +15,17 @@ class DialogLogout extends StatelessWidget {
       actions: [
         FlatButton(
           onPressed: () => Navigator.pop(context),
-          child: Text("Cancel"),
+          child: Text(
+            "Cancel",
+            style: TextStyle(color: Colors.orange),
+          ),
         ),
         FlatButton(
           onPressed: itOk,
-          child: Text("Ok"),
+          child: Text(
+            "Ok",
+            style: TextStyle(color: Colors.orange),
+          ),
         ),
       ],
     );

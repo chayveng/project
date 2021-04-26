@@ -13,6 +13,7 @@ class RoundedField extends StatelessWidget {
   final IconData prefixIcon;
   final Widget suffixIcon;
   final bool obscureText;
+  final TextInputType keyboardType;
 
   const RoundedField({
     Key key,
@@ -24,7 +25,7 @@ class RoundedField extends StatelessWidget {
     this.onFieldSubmitted,
     this.prefixIcon,
     this.suffixIcon,
-    this.obscureText = false,
+    this.obscureText = false, this.keyboardType,
   }) : super(key: key);
 
   @override
@@ -42,6 +43,7 @@ class RoundedField extends StatelessWidget {
 
   TextFormField buildField() {
     return TextFormField(
+      keyboardType: keyboardType,
       onSaved: onSaved,
       validator: validator,
       // cursorColor: Colors.pinkAccent,

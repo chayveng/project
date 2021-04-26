@@ -113,7 +113,7 @@ class _SectionFieldState extends State<SectionField> {
       );
 
   Future<bool> fetchData() async {
-    fields = await FieldServices.getFieldClubId(widget.clubId);
+    fields = await FieldServices.getFieldsClubId(widget.clubId);
     await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
     return true;
   }

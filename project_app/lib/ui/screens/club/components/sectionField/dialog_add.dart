@@ -55,69 +55,49 @@ class _DialogAddState extends State<DialogAdd> {
   @override
   Widget build(BuildContext context) {
     setDefaultInput();
-    return Dialog(
-      backgroundColor: Colors.transparent,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-        ),
-        height: sized(context).height * 0.38,
-        padding: EdgeInsets.all(8),
-        child: Column(
-          children: [
-            Text(
-              'Add field',
-              style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                  color: navyPrimaryColor),
-            ),
-            SizedBox(height: 15),
-            Form(
-              key: _formKey,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(height: 10),
-                  OutlineField(
-                    labelText: 'Title',
-                    hintText: 'title',
-                    controller: textCtl['title'],
-                    onSaved: (input) => field.title = input,
-                  ),
-                  SizedBox(height: 10),
-                  OutlineField(
-                    labelText: 'Detail',
-                    hintText: 'detail',
-                    controller: textCtl['detail'],
-                    onSaved: (input) => field.detail = input,
-                  ),
-                  SizedBox(height: 10),
-                  OutlineField(
-                    labelText: 'Price',
-                    hintText: 'prince',
-                    controller: textCtl['price'],
-                    onSaved: (input) => field.price = input,
-                  ),
-                  SizedBox(height: 10),
-                  RoundedButton(
-                    text: (widget.isCreate) ? 'Update' : 'Create',
-                    onTap: () async {
-                      _formKey.currentState.save();
-                      field.clubId = widget.clubId;
-                      var res = await FieldServices.addField(field: field);
-                      await buildDialogLoading(context, 1000);
-                      Club _club = await ClubService.getById(id: field.clubId);
-                      (res == true)
-                          ? Navigator.pop(context)
-                          : print('Create fail');
-                    },
-                  ),
-                ],
+    return AlertDialog(
+      title: Text('Add Field'),
+      content: Form(
+        key: _formKey,
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(height: 10),
+              OutlineField(
+                labelText: 'Title',
+                hintText: 'title',
+                controller: textCtl['title'],
+                onSaved: (input) => field.title = input,
               ),
-            ),
-          ],
+              SizedBox(height: 10),
+              OutlineField(
+                labelText: 'Detail',
+                hintText: 'detail',
+                controller: textCtl['detail'],
+                onSaved: (input) => field.detail = input,
+              ),
+              SizedBox(height: 10),
+              OutlineField(
+                labelText: 'Price',
+                hintText: 'prince',
+                controller: textCtl['price'],
+                onSaved: (input) => field.price = input,
+              ),
+              SizedBox(height: 10),
+              RoundedButton(
+                text: (widget.isCreate) ? 'Update' : 'Create',
+                onTap: () async {
+                  _formKey.currentState.save();
+                  field.clubId = widget.clubId;
+                  var res = await FieldServices.addField(field: field);
+                  await buildDialogLoading(context, 1000);
+                  Club _club = await ClubService.getById(id: field.clubId);
+                  (res == true) ? Navigator.pop(context) : print('Create fail');
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -58,6 +58,20 @@ public class UserController {
         }
     }
 
+    @PostMapping("/update")
+    public Object update(@RequestBody User user) {
+        Optional<User> userData = userRepository.findById(user.getId());
+        if (userData.isPresent()) {
+//            return "Have";
+            userRepository.save(user);
+            return new ApiResponse(1, "update", userRepository.findById(user.getId()));
+        }else{
+//            return "No";
+            return new ApiResponse(0, "No User", null);
+        }
+    }
+
+
     @GetMapping("/autoSave")
     public Object autoSave(){
         JSONParser parser = new JSONParser();

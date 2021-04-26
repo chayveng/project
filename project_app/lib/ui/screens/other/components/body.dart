@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/core/models/User.dart';
 import 'package:project_app/core/services/AuthService.dart';
@@ -12,6 +11,7 @@ import 'package:project_app/ui/screens/createClub/create_club.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/other/components/button_menu.dart';
 import 'package:project_app/ui/screens/other/components/user_info.dart';
+import 'package:project_app/ui/screens/profile/profile_screen.dart';
 
 import 'dialog_logout.dart';
 
@@ -22,6 +22,7 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   User user = User();
+  bool _status = false;
 
   @override
   void initState() {
@@ -73,58 +74,41 @@ class _BodyState extends State<Body> {
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // userInfo(),
-          UserInfo(),
-          ButtonMenu(
-            title: 'Profile',
-            onPressed: () => print('onProfile'),
-          ),
-          ButtonMenu(
-            title: 'My club',
-            onPressed: () async => await _onMyClub(context),
-          ),
-          ButtonMenu(
-            title: 'Logout',
-            icon: Icons.logout,
-            textColor: Colors.red,
-            onPressed: () => _onLogout(context),
-          ),
-        ],
-      ),
+  Widget buttonLogout(BuildContext context) {
+    return ButtonMenu(
+      title: 'Logout',
+      icon: Icons.logout,
+      textColor: Colors.red,
+      onPressed: () => _onLogout(context),
     );
   }
 
-  Column userInfo() {
+  Widget buttonMyClub(BuildContext context) {
+    return ButtonMenu(
+      title: 'My club',
+      onPressed: () async => await _onMyClub(context),
+    );
+  }
+
+  Widget buttonProfile(BuildContext context) {
+    return ButtonMenu(
+      title: 'Profile',
+      onPressed: () async =>
+          await Navigator.push(context,
+              MaterialPageRoute(builder: (context) => ProfileScreen())) ??
+          fetchData(),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Container(
-          margin: EdgeInsets.all(10),
-          width: 150,
-          height: 150,
-          decoration: BoxDecoration(
-            color: creamPrimaryColor,
-            borderRadius: BorderRadius.all(
-              Radius.circular(20),
-            ),
-          ),
-          child: Icon(
-            Icons.person,
-            color: Colors.black.withOpacity(0.5),
-            size: 150,
-          ),
-        ),
-        Text(
-          user.userName ?? '',
-          style: TextStyle(
-            fontSize: 16,
-          ),
-        ),
+        UserInfo(user: user),
+        buttonProfile(context),
+        buttonMyClub(context),
+        buttonLogout(context),
       ],
     );
   }

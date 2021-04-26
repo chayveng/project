@@ -19,7 +19,9 @@ class DialogBooking extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: InkWell(
-            onTap: () {Navigator.pop(context);},
+            onTap: () {
+              Navigator.pop(context);
+            },
             child: Text(
               'Cancel',
               style: TextStyle(color: orangePrimaryColor),

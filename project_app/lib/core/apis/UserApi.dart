@@ -25,4 +25,7 @@ class UserApi {
 
   static Future<ApiResponse> getById({@required int userId}) async =>
       apiResponseFromJson(await ApiConnect.get(path: '/user/getById/$userId'));
+
+  static Future<ApiResponse> update({@required User user}) async =>
+      apiResponseFromJson(await ApiConnect.post(path: '/user/update', body: user));
 }

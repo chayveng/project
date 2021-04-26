@@ -18,36 +18,46 @@ class ButtonMenu extends StatelessWidget {
     this.iconColor = navyPrimaryColor,
   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: 50,
-      width: sized(context).width,
-      margin: EdgeInsets.only(top: 5),
-      child: FlatButton(
-        color: creamPrimaryColor,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    color: textColor,
-                  ),
-                ),
-              ),
-            ),
-            Icon(
-              icon,
-              color: iconColor,
-            ),
-          ],
+  Widget detail() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Expanded(
+          child: Text(
+            title,
+            style: TextStyle(color: textColor),
+          ),
         ),
-        onPressed: onPressed,
+        Icon(
+          icon,
+          color: iconColor,
+        )
+      ],
+    );
+  }
+
+  Padding cardMenu() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(10),
+        child: Material(
+          color: creamPrimaryColor,
+          child: InkWell(
+            onTap: onPressed,
+            child: Container(
+              height: 50,
+              padding: EdgeInsets.only(left: 20, right: 10),
+              child: detail(),
+            ),
+          ),
+        ),
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return cardMenu();
   }
 }
