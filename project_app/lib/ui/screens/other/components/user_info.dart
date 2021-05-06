@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/User.dart';
 
@@ -5,21 +7,30 @@ import '../../../../constants.dart';
 
 class UserInfo extends StatelessWidget {
   final User user;
+  final Uint8List userImage;
 
-  const UserInfo({Key key, this.user}) : super(key: key);
+  const UserInfo({Key key, this.user, this.userImage}) : super(key: key);
 
   Widget tel() {
     return Text(user.tel ?? '');
   }
 
-  Widget formName() {
-    return Row(
-      children: [
-        Text(user.firstName ?? ''),
-        SizedBox(width: 8),
-        Text(user.lastName ?? ''),
-      ],
+  Widget formName(BuildContext context) {
+    return Container(
+      width: sized(context).width * 0.5,
+      child: Text(
+        '${user.firstName ?? ''}\,${user.lastName ?? ''}',
+        maxLines: 1,
+        overflow: TextOverflow.ellipsis,
+      ),
     );
+    // return Row(
+    //   children: [
+    //     Text(user.firstName ?? ''),
+    //     SizedBox(width: 8),
+    //     Text(user.lastName ?? ''),
+    //   ],
+    // );
   }
 
   Widget username() {
@@ -33,7 +44,7 @@ class UserInfo extends StatelessWidget {
     );
   }
 
-  Expanded info() {
+  Expanded info(BuildContext context) {
     return Expanded(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +52,7 @@ class UserInfo extends StatelessWidget {
         children: [
           username(),
           SizedBox(height: 8),
-          formName(),
+          formName(context),
           SizedBox(height: 8),
           tel(),
         ],
@@ -49,7 +60,7 @@ class UserInfo extends StatelessWidget {
     );
   }
 
-  Widget userImage() {
+  Widget boxUserImage() {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
@@ -57,13 +68,13 @@ class UserInfo extends StatelessWidget {
         width: 100,
         child: Container(
           color: creamPrimaryColor,
-          child: Center(
-            child: Icon(
-              Icons.person,
-              size: 75,
-              color: navyPrimaryColor.withOpacity(0.8),
-            ),
-          ),
+          child: userImage != null
+              ? Image.memory(userImage, fit: BoxFit.cover,)
+              : Icon(
+                  Icons.person,
+                  color: navyPrimaryColor.withOpacity(0.7),
+                  size: 75,
+                ),
         ),
       ),
     );
@@ -76,9 +87,9 @@ class UserInfo extends StatelessWidget {
       width: sized(context).width,
       child: Row(
         children: [
-          userImage(),
+          boxUserImage(),
           SizedBox(width: 10),
-          info(),
+          info(context),
         ],
       ),
     );

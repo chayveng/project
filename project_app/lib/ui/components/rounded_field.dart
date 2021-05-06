@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 
-
 class RoundedField extends StatelessWidget {
   final String label;
   final String hintText;
@@ -13,6 +12,7 @@ class RoundedField extends StatelessWidget {
   final IconData prefixIcon;
   final Widget suffixIcon;
   final bool obscureText;
+  final TextInputType keyboardType;
 
   const RoundedField({
     Key key,
@@ -25,6 +25,7 @@ class RoundedField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.obscureText = false,
+    this.keyboardType,
   }) : super(key: key);
 
   @override
@@ -46,9 +47,8 @@ class RoundedField extends StatelessWidget {
       validator: validator,
       // cursorColor: Colors.pinkAccent,
       obscureText: obscureText,
-      style: TextStyle(
-        fontFamily: UiFont,
-      ),
+      keyboardType: keyboardType,
+      style: TextStyle(fontFamily: UiFont),
       decoration: InputDecoration(
         filled: true,
         fillColor: creamPrimaryColor,

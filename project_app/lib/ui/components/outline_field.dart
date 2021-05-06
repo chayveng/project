@@ -32,7 +32,7 @@ class OutlineField extends StatelessWidget {
         labelStyle: TextStyle(fontSize: 20, color: navyPrimaryColor),
         hintText: hintText,
         floatingLabelBehavior: FloatingLabelBehavior.always,
-        contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+        contentPadding: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
         focusedBorder: buildOutlineInputBorder(),
         enabledBorder: buildOutlineInputBorder(),
       ),
@@ -44,8 +44,9 @@ class OutlineField extends StatelessWidget {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(10),
       borderSide: BorderSide(
-        color: navyPrimaryColor.withOpacity(0.5),
-        width: 3,
+        color: orangePrimaryColor,
+        // color: navyPrimaryColor.withOpacity(0.5),
+        width: 2,
       ),
       gapPadding: 10,
     );

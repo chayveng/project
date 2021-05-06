@@ -1,11 +1,10 @@
 import 'dart:ui';
-
-
 import 'package:flutter/material.dart';
 import 'package:project_app/routs.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
 import 'package:project_app/ui/screens/testScreen/TestScreen.dart';
+import 'package:project_app/ui/screens/testScreen/googleMap/google_map_screen.dart';
 
 import 'constants.dart';
 import 'core/services/AuthService.dart';
@@ -53,8 +52,10 @@ class MyApp extends StatelessWidget {
       ),
       title: 'Flutter Demo',
       routes: routes,
-      home: screen,
-      // home: TestScreen(),
+      // home: screen(),
+      home: TestScreen(),
+      // home: LocationScreen(),
+      // home: GoogleMapScreen(),
       // home: SelectField(),
       // home: FirstScreen(),
       // home: ClubScreen(),

@@ -21,9 +21,6 @@ Opacity buildDefaultImage() {
   );
 }
 
-// await Future.delayed(Duration(milliseconds: 500), () => setState(() {}));
-
-
 Future buildDialogLoading(BuildContext context, int millisecond) {
   return showDialog(
       context: context,
@@ -36,7 +33,16 @@ Future buildDialogLoading(BuildContext context, int millisecond) {
       });
 }
 
+Widget testBox({double sized, Color color}) => Container(
+      height: sized ?? 200,
+      width: sized ?? 200,
+      color: color ?? Colors.redAccent,
+    );
 
+Widget testButton({String text, Function onPressed}) => ElevatedButton(
+      onPressed: onPressed ?? () => print(text ?? 'Test Button ><!'),
+      child: Text(text ?? 'Test Button'),
+    );
 
 const Color whiteBackgroundColor = Colors.white60;
 const Color blackPrimaryColor = Color(0xFF222831);

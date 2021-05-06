@@ -21,6 +21,7 @@ class _FormRegisterState extends State<FormRegister> {
     'pass': FocusNode(),
     'conPass': FocusNode(),
     'register': FocusNode(),
+    'tel': FocusNode(),
   };
 
   @override
@@ -34,6 +35,8 @@ class _FormRegisterState extends State<FormRegister> {
           buildFieldPassword(context),
           SizedBox(height: 20),
           buildFieldConfirmPassword(context),
+          SizedBox(height: 20),
+          buildFieldTel(context),
           SizedBox(height: 50),
           buildButtonRegister(),
           SizedBox(height: 30),
@@ -116,6 +119,29 @@ class _FormRegisterState extends State<FormRegister> {
     );
   }
 
+  RoundedField buildFieldTel(BuildContext context) {
+    return RoundedField(
+      keyboardType: TextInputType.number,
+      label: 'TEL \:',
+      hintText: 'Enter your tel',
+      onSaved: (input) => user.tel = input,
+      validator: (input) {
+        if(input.isEmpty){
+          return 'Please enter your tel' ;
+        }else if(input.length != 10){
+          return 'Tel must be at least 10 characters long';
+        }else{
+          return null;
+        }
+      },
+      focusNode: focusNode['tel'],
+      // onFieldSubmitted: (term) {
+      //   focusNode['user'].unfocus();
+      //   FocusScope.of(context).requestFocus(focusNode['pass']);
+      // },
+    );
+  }
+
   RoundedField buildFieldConfirmPassword(BuildContext context) {
     return RoundedField(
       label: 'CONFIRM - PASSWORD \:',
@@ -133,10 +159,10 @@ class _FormRegisterState extends State<FormRegister> {
         }
       },
       focusNode: focusNode['conPass'],
-      // onFieldSubmitted: (term) {
-      //   focusNode['conPass'].unfocus();
-      //   FocusScope.of(context).requestFocus(focusNode['register']);
-      // },
+      onFieldSubmitted: (term) {
+        focusNode['conPass'].unfocus();
+        FocusScope.of(context).requestFocus(focusNode['tel']);
+      },
     );
   }
 

@@ -11,6 +11,8 @@ class CardTime extends StatelessWidget {
   final GestureTapCallback onBooking;
   final VoidCallback onActiveIcon;
 
+  final VoidCallback onInfo;
+
   CardTime({
     Key key,
     @required this.isOwner,
@@ -19,7 +21,17 @@ class CardTime extends StatelessWidget {
     this.onCardTime,
     this.onBooking,
     this.onActiveIcon,
+    this.onInfo,
   }) : super(key: key);
+
+  Widget buttonInfo() {
+    return isOwner
+        ? IconButton(
+            icon: Icon(Icons.info_outline_rounded),
+            onPressed: onInfo,
+          )
+        : SizedBox();
+  }
 
   Widget buttonRemove() => isOwner
       ? IconButton(
@@ -63,6 +75,7 @@ class CardTime extends StatelessWidget {
               activeIcon(),
               SizedBox(width: 10),
               textTime(),
+              buttonInfo(),
               buttonRemove(),
             ],
           ),

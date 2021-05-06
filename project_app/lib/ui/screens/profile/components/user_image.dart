@@ -1,11 +1,22 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:project_app/constants.dart';
 
 class UserImage extends StatelessWidget {
   final String userName;
+  final Uint8List userImage;
+  final Uint8List image;
+  final GestureTapCallback onTap;
+  final bool status;
 
   const UserImage({
     Key key,
     @required this.userName,
+    this.userImage,
+    this.image,
+    this.onTap,
+    this.status,
   }) : super(key: key);
 
   @override
@@ -31,61 +42,73 @@ class UserImage extends StatelessWidget {
   Widget formUserImage() {
     return Stack(
       children: [
-        userImage(),
+        _userImage(),
         buttonImage(),
       ],
     );
   }
 
-  Column userImage() {
+  Column _userImage() {
     return Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                Container(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(15),
+                child: Container(
                   width: 100,
                   height: 100,
                   decoration: BoxDecoration(
-                    color: Colors.yellow,
-                    borderRadius: BorderRadius.circular(15),
+                    color: creamPrimaryColor,
                   ),
-                  child: Icon(
-                    Icons.person,
-                    size: 100,
-                    color: Colors.black.withOpacity(0.7),
-                  ),
+                  child: buildUserImage(),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
+      ],
+    );
+  }
+
+  Widget buildUserImage() {
+    if (image != null) {
+      return Image.memory(
+        image,
+        fit: BoxFit.cover,
       );
+    } else {
+      return Icon(
+        Icons.person,
+        size: 100,
+        color: navyPrimaryColor.withOpacity(0.7),
+      );
+    }
   }
 
   Widget buttonImage() {
-    return Positioned(
+    return status ? Positioned(
       bottom: 1,
       right: 1,
       child: ClipRRect(
         borderRadius: BorderRadius.circular(50),
         child: Material(
-          color: Colors.redAccent,
+          color: orangePrimaryColor,
           child: InkWell(
-            onTap: () {
-              print('on select image');
-            },
+            onTap: onTap,
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: Icon(
                 Icons.add_a_photo,
+                color: navyPrimaryColor,
                 size: 18,
               ),
             ),
           ),
         ),
       ),
-    );
+    ): SizedBox();
   }
 }
