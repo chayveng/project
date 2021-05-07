@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 
-
 class RoundedField extends StatelessWidget {
   final String label;
   final String hintText;
@@ -25,7 +24,8 @@ class RoundedField extends StatelessWidget {
     this.onFieldSubmitted,
     this.prefixIcon,
     this.suffixIcon,
-    this.obscureText = false, this.keyboardType,
+    this.obscureText = false,
+    this.keyboardType,
   }) : super(key: key);
 
   @override
@@ -43,14 +43,12 @@ class RoundedField extends StatelessWidget {
 
   TextFormField buildField() {
     return TextFormField(
-      keyboardType: keyboardType,
       onSaved: onSaved,
       validator: validator,
       // cursorColor: Colors.pinkAccent,
       obscureText: obscureText,
-      style: TextStyle(
-        fontFamily: UiFont,
-      ),
+      keyboardType: keyboardType,
+      style: TextStyle(fontFamily: UiFont),
       decoration: InputDecoration(
         filled: true,
         fillColor: creamPrimaryColor,

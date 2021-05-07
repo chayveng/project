@@ -21,11 +21,7 @@ class SectionField extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  SizedBox(width: 60),
-                  Text(
-                    fields[indexField].title,
-                    style: TextStyle(fontSize: 16),
-                  ),
+                  Text(fields[indexField].title),
                 ],
               ),
               SectionTime(

@@ -119,6 +119,29 @@ class _FormRegisterState extends State<FormRegister> {
     );
   }
 
+  RoundedField buildFieldTel(BuildContext context) {
+    return RoundedField(
+      keyboardType: TextInputType.number,
+      label: 'TEL \:',
+      hintText: 'Enter your tel',
+      onSaved: (input) => user.tel = input,
+      validator: (input) {
+        if(input.isEmpty){
+          return 'Please enter your tel' ;
+        }else if(input.length != 10){
+          return 'Tel must be at least 10 characters long';
+        }else{
+          return null;
+        }
+      },
+      focusNode: focusNode['tel'],
+      // onFieldSubmitted: (term) {
+      //   focusNode['user'].unfocus();
+      //   FocusScope.of(context).requestFocus(focusNode['pass']);
+      // },
+    );
+  }
+
   RoundedField buildFieldConfirmPassword(BuildContext context) {
     return RoundedField(
       label: 'CONFIRM - PASSWORD \:',
@@ -178,29 +201,6 @@ class _FormRegisterState extends State<FormRegister> {
         focusNode['user'].unfocus();
         FocusScope.of(context).requestFocus(focusNode['pass']);
       },
-    );
-  }
-
-  RoundedField buildFieldTel(BuildContext context) {
-    return RoundedField(
-      keyboardType: TextInputType.number,
-      label: 'TEL \:',
-      hintText: 'Enter your tel',
-      onSaved: (input) => user.tel = input,
-      validator: (input) {
-        if(input.isEmpty){
-          return 'Please enter your tel' ;
-        }else if(input.length < 10){
-          return 'Tel must be at least 10 characters long';
-        }else{
-          return null;
-        }
-      },
-      focusNode: focusNode['tel'],
-      // onFieldSubmitted: (term) {
-      //   focusNode['user'].unfocus();
-      //   FocusScope.of(context).requestFocus(focusNode['pass']);
-      // },
     );
   }
 }

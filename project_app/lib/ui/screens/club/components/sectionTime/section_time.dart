@@ -2,10 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_app/core/apis/TimeApi.dart';
 import 'package:project_app/core/models/Time.dart';
+import 'package:project_app/core/models/User.dart';
 import 'package:project_app/core/services/TimeService.dart';
+import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/screens/club/components/dialogTimePicker/dialog_time_picker.dart';
 import 'package:project_app/ui/screens/club/components/sectionTime/card_time.dart';
 import 'package:project_app/ui/screens/club/components/sectionTime/dialog_booking.dart';
+import 'package:project_app/ui/screens/club/components/sectionTime/dialog_info.dart';
 
 import '../../../../../constants.dart';
 import 'dialog_remove.dart';
@@ -111,9 +114,20 @@ class _SectionTimeState extends State<SectionTime> {
         isOwner: widget.isOwner,
         time: times[index],
         onActiveIcon: () async => await _onActiveIcon(index),
-        onBooking: () async => times[index].status ? (){} : _onBooking(index),
+        onBooking: () async => times[index].status ? () {} : _onBooking(index),
         onRemoveTime: () async => _onRemoveTime(index),
+        onInfo: () async => await _onInfo(index),
       );
+
+  Future<void> _onInfo(int index) async {
+    int userId = times[index].userId;
+    User _user =
+        userId != 0 ? await UserService.getById(userId: userId) : User();
+    showDialog(
+      context: context,
+      builder: (context) => DialogInfo(user: _user),
+    );
+  }
 
   Future<void> _onActiveIcon(int index) async {
     var response = await TimeNetwork.changeStatus(timeId: times[index].id);

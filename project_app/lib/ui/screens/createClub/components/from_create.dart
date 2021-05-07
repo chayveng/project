@@ -86,7 +86,7 @@ class _FormCreateState extends State<FormCreate> {
       var image = await ImagePicker.pickImage(
         source: imageSource,
         maxWidth: 800.0,
-        maxHeight: 8000.0,
+        maxHeight: 800.0,
         imageQuality: 75,
       );
       setState(() {

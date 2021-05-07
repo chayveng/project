@@ -59,16 +59,17 @@ class TopBar extends StatelessWidget {
           stops: [0, 1],
         ),
       ),
-      child: Column(
-        children: [
-          SafeArea(child: SizedBox()),
-          ListTile(
-            leading: buttonArrowBack(context: context),
-            title: textTitle(),
-            trailing: buttonEdit(),
-          ),
-          SizedBox(height: 30),
-        ],
+      child: SafeArea(
+        child: Column(
+          children: [
+            ListTile(
+              leading: buttonArrowBack(context: context),
+              title: textTitle(),
+              trailing: buttonEdit(),
+            ),
+            SizedBox(height: 30),
+          ],
+        ),
       ),
     );
   }

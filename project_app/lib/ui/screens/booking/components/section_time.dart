@@ -32,7 +32,6 @@ class SectionTime extends StatelessWidget {
   Widget cardTime(int indexTime) {
     return Text(
       '${times[indexTime].startTime} - ${times[indexTime].endTime}',
-      style: TextStyle(fontSize: 16),
     );
   }
 }

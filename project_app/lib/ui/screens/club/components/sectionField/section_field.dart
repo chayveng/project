@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
-import 'package:project_app/ui/screens/club/components/sectionTime/section_time.dart';
 
 import 'card_field.dart';
 import 'dialog_add.dart';
@@ -35,8 +34,12 @@ class _SectionFieldState extends State<SectionField> {
   Future<void> _onEdit({@required int fieldId}) async {
     await showDialog(
           context: context,
-          builder: (context) =>
-              DialogAdd(clubId: widget.clubId, fieldId: fieldId),
+          builder: (context) => DialogAdd(
+            clubId: widget.clubId,
+
+            fieldId: fieldId,
+            isCreate: true,
+          ),
         ) ??
         fetchData();
   }
@@ -70,12 +73,12 @@ class _SectionFieldState extends State<SectionField> {
 
   Widget buttonAddField({@required BuildContext context}) => widget.isOwner
       ? Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: RoundedButton(
+          padding: const EdgeInsets.all(8.0),
+          child: RoundedButton(
             text: 'add field',
             onTap: () async => await _onAdd(context),
           ),
-      )
+        )
       : SizedBox();
 
   Widget listSection() => Column(
@@ -92,7 +95,7 @@ class _SectionFieldState extends State<SectionField> {
   Widget sectionField({@required int index}) => Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(top: 8,left: 8, right: 8),
+            padding: const EdgeInsets.only(top: 8, left: 8, right: 8),
             child: GestureDetector(
               onTap: () => setState(() => _status = !_status),
               child: CardField(
@@ -103,11 +106,6 @@ class _SectionFieldState extends State<SectionField> {
                     await _onRemoveField(context: context, index: index),
               ),
             ),
-          ),
-          SectionTime(
-            status: _status,
-            isOwner: widget.isOwner,
-            fieldId: fields[index].id,
           ),
         ],
       );
@@ -124,7 +122,6 @@ class _SectionFieldState extends State<SectionField> {
       child: Column(
         children: [
           listSection(),
-          // SizedBox(height: 10),
           buttonAddField(context: context),
         ],
       ),

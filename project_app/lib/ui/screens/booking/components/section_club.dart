@@ -39,31 +39,25 @@ class SectionClub extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10),
         child: Material(
-          color: orangePrimaryColor.withOpacity(0.3),
+          color: creamPrimaryColor,
           child: Column(
             children: [
               imageBox(context: context,photoPath: clubs[indexClub].photosPath),
-              SizedBox(height: 10),
               Row(
                 children: [
-                  SizedBox(width: 10),
                   Text(
                     clubs[indexClub].title,
                     style: TextStyle(
-                      fontSize: 25,
+                      fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: navyPrimaryColor
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SectionField(
-                  clubId: clubs[indexClub].id,
-                  fields: fields,
-                  times: times,
-                ),
+              SectionField(
+                clubId: clubs[indexClub].id,
+                fields: fields,
+                times: times,
               ),
             ],
           ),

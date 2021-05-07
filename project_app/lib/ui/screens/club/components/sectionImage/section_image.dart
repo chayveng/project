@@ -21,7 +21,6 @@ class SectionImage extends StatefulWidget {
 }
 
 class _SectionImageState extends State<SectionImage> {
-
   void _onEdit({@required BuildContext context}) {
     Navigator.push(
       context,

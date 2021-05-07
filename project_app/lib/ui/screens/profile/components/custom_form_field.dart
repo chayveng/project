@@ -1,83 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/User.dart';
-import '../../../../constants.dart';
-import 'card_menu.dart';
 import 'package:validators/validators.dart';
 
-class CustomFormField extends StatefulWidget {
+import '../../../../constants.dart';
+import 'card_menu.dart';
+
+class CustomFormField extends StatelessWidget {
   final bool status;
   final User user;
+  final Map<String, dynamic> focusNode;
 
   const CustomFormField({
     Key key,
     @required this.status,
     @required this.user,
+    @required this.focusNode,
   }) : super(key: key);
 
-  @override
-  _CustomFormFieldState createState() => _CustomFormFieldState();
-}
-
-class _CustomFormFieldState extends State<CustomFormField> {
-  final double _sizedOfImageUser = 100;
-  Map<String, FocusNode> focusNode = {
-    'firstName': FocusNode(),
-    'lastName': FocusNode(),
-    'email': FocusNode(),
-    'tel': FocusNode(),
-  };
-
-  Widget tel() {
+  Widget tel(BuildContext context) {
     return CardMenu(
-      status: widget.status,
-      title: widget.user.tel,
+      status: status,
+      title: user.tel,
       hintText: 'Tel',
+      onSaved: (input) => user.tel = (input == '') ? null : input,
       keyboardType: TextInputType.number,
-      onSaved: (input) => widget.user.tel = (input == '') ? null : input,
       focusNode: focusNode['tel'],
       onFieldSubmitted: (term) {
         focusNode['tel'].unfocus();
       },
       validator: (input) {
-        if(input.isEmpty){
-          return 'Please enter your tel' ;
-        }else if(input.length < 10){
+        if (input.isEmpty) {
+          return 'Please enter your tel';
+        } else if (!isNumeric(input)) {
+          return 'Please enter Numeric';
+        } else if (input.length != 10) {
           return 'Tel must be at least 10 characters long';
-        }else{
+        } else {
           return null;
         }
       },
     );
   }
 
-  Widget email() {
+  Widget email(BuildContext context) {
     return CardMenu(
-      status: widget.status,
-      title: widget.user.email,
+      status: status,
+      title: user.email,
       hintText: 'Email',
-      keyboardType: TextInputType.emailAddress,
-      onSaved: (input) => widget.user.email = (input == '') ? null : input,
+      onSaved: (input) => user.email = (input == '') ? null : input,
       focusNode: focusNode['email'],
       onFieldSubmitted: (term) {
         focusNode['email'].unfocus();
         FocusScope.of(context).requestFocus(focusNode['tel']);
       },
-      validator: (input){
-        if(!isEmail(input)){
+      validator: (input) {
+        if (!isEmail(input)) {
           return 'Email is not correct.';
-        }else{
+        } else {
           return null;
         }
       },
     );
   }
 
-  Widget lastName() {
+  Widget lastName(BuildContext context) {
     return CardMenu(
-      status: widget.status,
-      title: widget.user.lastName,
+      status: status,
+      title: user.lastName,
       hintText: 'LastName',
-      onSaved: (input) => widget.user.lastName = (input == '') ? null : input,
+      onSaved: (input) => user.lastName = (input == '') ? null : input,
       focusNode: focusNode['lastName'],
       onFieldSubmitted: (term) {
         focusNode['lastName'].unfocus();
@@ -86,12 +77,12 @@ class _CustomFormFieldState extends State<CustomFormField> {
     );
   }
 
-  Widget firstName() {
+  Widget firstName(BuildContext context) {
     return CardMenu(
-      status: widget.status,
-      title: widget.user.firstName,
+      status: status,
+      title: user.firstName,
       hintText: 'FirstName',
-      onSaved: (input) => widget.user.firstName = input == '' ? null : input,
+      onSaved: (input) => user.firstName = input == '' ? null : input,
       focusNode: focusNode['firstName'],
       onFieldSubmitted: (term) {
         focusNode['firstName'].unfocus();
@@ -113,13 +104,10 @@ class _CustomFormFieldState extends State<CustomFormField> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            firstName(),
-            SizedBox(height: 20),
-            lastName(),
-            SizedBox(height: 20),
-            email(),
-            SizedBox(height: 20),
-            tel(),
+            firstName(context),
+            lastName(context),
+            email(context),
+            tel(context),
           ],
         ),
       ),

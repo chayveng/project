@@ -2,9 +2,7 @@ package com.example.project_api.controllers;
 
 import com.example.project_api.Config;
 import com.example.project_api.models.beans.ApiResponse;
-import com.example.project_api.models.tables.Club;
 import org.apache.commons.io.IOUtils;
-import org.springframework.boot.system.ApplicationPid;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -13,14 +11,12 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/testImage")
@@ -68,6 +64,31 @@ public class TestController {
             return inImg;
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        return null;
+    }
+    @ResponseBody
+    @RequestMapping(value = "/getAll", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
+    public List<byte[]> getImages() throws Exception {
+        String dirLocation = (Config.PATH + Config.PATH_TEST_IMAGE + "/test/");
+        List<byte[]> imgs = null;
+        try {
+            List<File> files = Files.list(Paths.get(dirLocation))
+                    .map(Path::toFile)
+                    .collect(Collectors.toList());
+
+//            files.forEach(System.out::println);
+            Object[] arr = files.toArray();
+            String path = arr[1].toString();
+            InputStream in = new FileInputStream(path);
+            var inImg = IOUtils.toByteArray(in);
+            in.close();
+            System.out.println();
+//            imgs.add(inImg);
+//            return imgs;
+            return Collections.singletonList(inImg);
+        } catch (IOException e) {
+            // Error while reading the directory
         }
         return null;
     }
