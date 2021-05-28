@@ -9,12 +9,12 @@ class ProfileScreen extends StatelessWidget {
   static String routeName = '/profile';
   final Uint8List userImage;
 
-  ProfileScreen({Key key,@required this.userImage}) : super(key: key);
+  ProfileScreen({Key key, this.userImage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: grayPrimaryColor,
+      backgroundColor: greyPrimaryColor,
       body: Body(status: false, userImage: userImage),
     );
   }

@@ -15,76 +15,61 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   List<Marker> handleMarker = [];
-  Location location = new Location();
-  LocationData currentLocation;
-  ClubLocation clubLct = new ClubLocation(
-    latitude: 16.431387560289423,
-    longitude: 102.81499053196279,
-  );
+  Location location = Location();
+  ClubLocation clubLocation = ClubLocation();
+  CameraPosition cameraPosition;
+  LatLng currentLocation;
 
   @override
   void initState() {
-    getCurrentLocation();
+    setLocation();
     super.initState();
   }
 
+  void setLocation() async {
+    LatLng myLocation = LatLng(16.431387560289423, 102.81499053196279);
+    LocationData lctLocation = await location.getLocation();
+    // currentLocation = LatLng(lctLocation.latitude, lctLocation.longitude);
+    currentLocation = myLocation;
+    cameraPosition = CameraPosition(target: currentLocation, zoom: 16.0);
+    await Future.delayed(Duration(milliseconds: 200), () => setState(() {}));
+    _defaultMarker();
+  }
+
+  void _defaultMarker() {
+    handleMarker.add(Marker(
+      markerId: MarkerId(currentLocation.toString()),
+      position: currentLocation,
+    ));
+  }
+
   void _handleTap(LatLng tappedPoint) {
-    print(tappedPoint);
     setState(() {
       handleMarker = [];
+      clubLocation.latitude = tappedPoint.latitude;
+      clubLocation.longitude = tappedPoint.longitude;
       handleMarker.add(
         Marker(
-            markerId: MarkerId(tappedPoint.toString()),
-            position: tappedPoint,
-            draggable: true,
-            onDragEnd: (dragEndPosition) {
-              print(dragEndPosition);
-            }),
+          markerId: MarkerId(tappedPoint.toString()),
+          position: tappedPoint,
+        ),
       );
+      print(clubLocation);
     });
   }
 
   Widget buildMap() {
-    LatLng latLng = LatLng(clubLct.latitude, clubLct.longitude);
-    CameraPosition cameraPosition = CameraPosition(target: latLng, zoom: 16.0);
-    return GoogleMap(
-      zoomGesturesEnabled: false,
-      initialCameraPosition: cameraPosition,
-      // mapType: MapType.normal,
-      // onMapCreated: (controller) {},
-      onTap: _handleTap,
-      markers: Set.from(handleMarker),
-      // markers: myMarker(),
-    );
-  }
-
-  Set<Marker> myMarker() {
-    return <Marker>[
-      Marker(
-          draggable: true,
-          markerId: MarkerId('myClub'),
-          position: LatLng(clubLct.latitude, clubLct.longitude),
-          infoWindow: InfoWindow(
-            title: 'Your mark',
-            snippet: 'lat = ${clubLct.latitude} , lng = ${clubLct.longitude}',
-          ),
-          onTap: () {
-            print(
-                'Marker lat = ${clubLct.latitude} , lng = ${clubLct.longitude}');
-          }),
-    ].toSet();
-  }
-
-  Future<void> getCurrentLocation() async {
-    clubLct = ClubLocation(
-      latitude: 16.431387560289423,
-      longitude: 102.81499053196279,
-    );
-    // clubLct = ClubLocation();
-    currentLocation = await location.getLocation();
-    // clubLct.latitude = currentLocation.latitude;
-    // clubLct.longitude = currentLocation.longitude;
-    setState(() {});
+    return currentLocation != null
+        ? GoogleMap(
+            zoomGesturesEnabled: true,
+            initialCameraPosition: cameraPosition,
+            onTap: _handleTap,
+            mapType: MapType.normal,
+            myLocationEnabled: true,
+            myLocationButtonEnabled: true,
+            markers: Set.from(handleMarker),
+          )
+        : CustomDialogLoading();
   }
 
   Widget buildSectionMap(BuildContext context) {
@@ -92,23 +77,7 @@ class _BodyState extends State<Body> {
       width: sized(context).width,
       height: sized(context).height * 0.5,
       color: Colors.white,
-      child: clubLct.latitude != null
-          ? Container(child: buildMap())
-          : CustomDialogLoading(),
-    );
-  }
-
-  Widget buildGetLocation() {
-    return ElevatedButton(
-      child: Text('get location'),
-      onPressed: () async => await getCurrentLocation(),
-    );
-  }
-
-  ElevatedButton buildSetState() {
-    return ElevatedButton(
-      onPressed: () => setState(() => print('SetState')),
-      child: Text('setState'),
+      child: buildMap(),
     );
   }
 
@@ -119,14 +88,18 @@ class _BodyState extends State<Body> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          buildSetState(),
+          TextField(
+            decoration: InputDecoration(
+              filled: true,
+              fillColor: Colors.white,
+              hintText: 'Search Location',
+            ),
+          ),
           buildSectionMap(context),
-          buildGetLocation(),
           ElevatedButton(
-            child: Text('My location'),
+            child: Text('handle tapped point'),
             onPressed: () {
-              LatLng latLng = LatLng(clubLct.latitude, clubLct.longitude);
-              print(latLng);
+              print(handleMarker);
             },
           ),
         ],

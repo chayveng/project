@@ -1,18 +1,21 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/routs.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
-import 'package:project_app/ui/screens/testScreen/TestScreen.dart';
-import 'package:project_app/ui/screens/testScreen/googleMap/google_map_screen.dart';
+import 'package:project_app/ui/screens/testScreen/newCreateClubScreen/new_create_club_screen.dart';
 
 import 'constants.dart';
 import 'core/services/AuthService.dart';
+import 'ui/screens/testScreen/TestScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Widget screen = LoginScreen();
   if (await AuthService.isLogin() == true) {
+    print('IsLogin: true');
+    print('UserId: ${await UserService.getUserId()}');
     screen = MainScreen();
   }
   runApp(MyApp(screen: screen));
@@ -52,8 +55,9 @@ class MyApp extends StatelessWidget {
       ),
       title: 'Flutter Demo',
       routes: routes,
-      // home: screen(),
+      // home: screen,
       home: TestScreen(),
+      // home: NewCreateClubScreen(),
       // home: LocationScreen(),
       // home: GoogleMapScreen(),
       // home: SelectField(),

@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../../../constants.dart';
 
-class CustomTopBar extends StatelessWidget {
+class CustomAppBar extends StatelessWidget {
   final bool status;
   final GestureTapCallback onEdit;
 
-  const CustomTopBar({
+  const CustomAppBar({
     Key key,
     @required this.status,
     @required this.onEdit,
@@ -14,54 +14,22 @@ class CustomTopBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: creamPrimaryColor,
-      child: SafeArea(
-        child: Container(
-          width: sized(context).width,
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              arrowBack(context),
-              title(),
-              edit(),
-            ],
-          ),
-        ),
-      ),
+    return AppBar(
+      title: Text('profile'),
+      actions: [edit()],
     );
   }
-
 
   Widget edit() {
-    return GestureDetector(
-      onTap: onEdit,
-      child: Icon(
-        status ? Icons.edit : Icons.edit_off,
-        color: navyPrimaryColor,
-        size: 22,
-      ),
-    );
-  }
-
-  Widget title() {
-    return Text(
-      'Profile',
-      style: TextStyle(
-        fontSize: 18,
-        fontWeight: FontWeight.bold,
-        color: navyPrimaryColor,
-      ),
-    );
-  }
-  Widget arrowBack(BuildContext context) {
-    return GestureDetector(
-      onTap: () => Navigator.pop(context),
-      child: Icon(
-        Icons.arrow_back_ios_rounded,
-        color: navyPrimaryColor,
-        size: 22,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: GestureDetector(
+        onTap: onEdit,
+        child: Icon(
+          status ? Icons.edit : Icons.edit_off,
+          color: navyPrimaryColor,
+          size: 22,
+        ),
       ),
     );
   }

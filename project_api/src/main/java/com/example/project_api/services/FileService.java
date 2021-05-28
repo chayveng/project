@@ -1,6 +1,7 @@
 package com.example.project_api.services;
 
 import com.example.project_api.Config;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,6 +11,39 @@ import java.nio.file.Paths;
 import java.util.Comparator;
 
 public class FileService {
+
+    public static boolean clearDir(String path){
+        if (!FileService.createDir(path)) {
+            FileService.deleteDir(path);
+            FileService.createDir(path);
+        }
+        return true;
+    }
+
+    public static boolean createDir(String path) {
+        String pathDir = new String(path);
+        File dir = new File(path);
+        if (!dir.exists()) {
+            dir.mkdirs();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static boolean deleteDir(String path) {
+        Path pathDir = Paths.get(path);
+        try {
+            Files.walk(pathDir)
+                    .sorted(Comparator.reverseOrder())
+                    .map(Path::toFile)
+                    .forEach(File::delete);
+            return true;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     static void createDirectory(String pathToBeCreate) {
         Path path = Paths.get(Config.PATH + pathToBeCreate);

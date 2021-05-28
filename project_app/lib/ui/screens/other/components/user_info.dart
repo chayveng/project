@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/User.dart';
@@ -19,18 +20,14 @@ class UserInfo extends StatelessWidget {
     return Container(
       width: sized(context).width * 0.5,
       child: Text(
-        '${user.firstName ?? ''}\,${user.lastName ?? ''}',
+        '${user.firstName ?? 'FirstName'}\, ${user.lastName ?? 'LastName'}',
+        style: TextStyle(
+          color: user.firstName == null ? Colors.black38 : Colors.black
+        ),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
     );
-    // return Row(
-    //   children: [
-    //     Text(user.firstName ?? ''),
-    //     SizedBox(width: 8),
-    //     Text(user.lastName ?? ''),
-    //   ],
-    // );
   }
 
   Widget username() {

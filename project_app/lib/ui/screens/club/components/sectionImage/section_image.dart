@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/ui/components/get_image_network.dart';
+import 'package:project_app/ui/screens/club/components/isCreate/create_club_screen.dart';
 import 'package:project_app/ui/screens/club/components/sectionImage/top_bar.dart';
 import 'package:project_app/ui/screens/createClub/create_club.dart';
 
@@ -25,13 +26,22 @@ class _SectionImageState extends State<SectionImage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => CreateClub(
-          club: widget.club,
-          isOwner: true,
+        builder: (context) => CreateClubScreen(
           isCreate: true,
+          clubId: widget.club.id,
         ),
       ),
     );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => CreateClub(
+    //       club: widget.club,
+    //       isOwner: true,
+    //       isCreate: true,
+    //     ),
+    //   ),
+    // );
   }
 
   Widget topBar({@required BuildContext context}) {

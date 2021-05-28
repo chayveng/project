@@ -21,4 +21,7 @@ public class User {
     private String tel;
     private String email;
 
+    @Lob
+    private byte[] file;
+
 }

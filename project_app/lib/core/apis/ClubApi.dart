@@ -18,9 +18,9 @@ class ClubApi {
   static Future<ApiResponse> getAll() async =>
       apiResponseFromJson(await ApiConnect.get(path: '/club/getAll'));
 
-  static Future<ApiResponse> addClub({@required Club club}) async =>
+  static Future<ApiResponse> create({@required Club club}) async =>
       apiResponseFromJson(
-          await ApiConnect.post(path: '/club/addClub', body: club));
+          await ApiConnect.post(path: '/club/create', body: club));
 
   static Future<ApiResponse> addImage({@required FormData data}) async {
     return apiResponseFromJson(

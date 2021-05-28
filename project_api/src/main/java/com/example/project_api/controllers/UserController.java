@@ -1,22 +1,23 @@
 package com.example.project_api.controllers;
 
-import com.example.project_api.Config;
 import com.example.project_api.models.beans.ApiResponse;
+import com.example.project_api.models.repository.UserImageRepository;
 import com.example.project_api.models.repository.UserRepository;
 import com.example.project_api.models.tables.User;
-import org.apache.commons.io.IOUtils;
+import com.example.project_api.models.tables.UserImage;
+import com.example.project_api.services.UserService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.*;
-import java.util.Iterator;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 @RequestMapping("/user")
@@ -25,10 +26,11 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("/index")
-    public Object getIndex() {
-        return new ApiResponse(1, "Index", "Index");
-    }
+    @Autowired
+    private UserService userServices;
+
+    @Autowired
+    private UserImageRepository userImageRepository;
 
     @GetMapping("/getById/{id}")
     public Object user(@PathVariable int id) {
@@ -42,68 +44,50 @@ public class UserController {
 
     @PostMapping("/register")
     public Object register(@RequestBody User user) {
-        Optional<User> userData = userRepository.findByUserName(user.getUserName());
-        if (userData.isEmpty()) {
-            userRepository.save(user);
-            return new ApiResponse(1, "Register success", userRepository.findByUserName(user.getUserName()));
-        } else {
-            return new ApiResponse(0, "User exists", null);
-        }
+        return userServices.register(user);
     }
 
     @PostMapping("/login")
     public Object login(@RequestBody User user) {
-        Optional<User> userData = userRepository.findByUserNameAndPassWord(user.getUserName(), user.getPassWord());
-        if (userData.isPresent()) {
-            return new ApiResponse(1, "Login success", userData);
-        } else {
-            return new ApiResponse(0, "Login fail");
-        }
+        return userServices.login(user);
     }
 
     @PostMapping("/update")
     public Object update(@RequestBody User user) {
-        Optional<User> userData = userRepository.findById(user.getId());
-        if (userData.isPresent()) {
-            userRepository.save(user);
-            return new ApiResponse(1, "update", userRepository.findById(user.getId()));
+        return userServices.update(user);
+    }
+
+    @PostMapping("/image-upload")
+    public ResponseEntity<?> store(@RequestParam int userId, @RequestParam("file") MultipartFile file) throws IOException {
+        UserImage userImage = userServices.imagesUpload(userId, file);
+        String fileDownloadUri = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/user/image-download/")
+                .path(userImage.getFileName())
+                .toUriString();
+        return ResponseEntity.ok(fileDownloadUri);
+    }
+
+    @GetMapping("/urlImage/{userId}")
+    public Object urlImage(@PathVariable int userId) {
+        Optional<UserImage> userImage = userImageRepository.findByUserId(userId);
+        if (userImage.isPresent()) {
+            return ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path("/user/image-download/")
+                    .path(userImage.get().getFileName().toString())
+                    .toUriString();
         } else {
-            return new ApiResponse(0, "No User", null);
+            return ResponseEntity.status(404).build();
         }
     }
 
-    @PostMapping("/addUserImage")
-    public Object addUserImage(@RequestParam int userId, @RequestParam(value = "fileImage", required = false) MultipartFile fileImage) {
-        ApiResponse response = new ApiResponse();
-        try {
-            String path = (Config.PATH + Config.PATH_USER_IMAGE + "/user/");
-            File fileToSave = new File(path + userId + ".png");
-            fileImage.transferTo(fileToSave);
-            response.setMessage("add imaged");
-            response.setStatus(1);
-        } catch (IOException e) {
-            e.printStackTrace();
-            response.setMessage("add image fail");
-            response.setStatus(0);
-        }
-        return response;
+
+    @GetMapping("/image-download/{fileName}")
+    public ResponseEntity<?> downloadFromDB(@PathVariable String fileName ) {
+        return userServices.imageDownload(fileName);
     }
 
-    @ResponseBody
-    @RequestMapping(value = "/getUserImage", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
-    public byte[] getImage(@RequestParam String imageName) throws Exception {
-        System.out.println(imageName);
-        try {
-            String path = (Config.PATH + Config.PATH_USER_IMAGE + "/user/");
-            InputStream in = new FileInputStream(path + imageName);
-            var inImg = IOUtils.toByteArray(in);
-            in.close();
-            return inImg;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     @GetMapping("/autoSave")
     public Object autoSave() {

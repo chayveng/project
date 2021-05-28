@@ -20,6 +20,5 @@ public class Field {
     private String title;
     private String detail;
     private String price;
-//    private boolean status;
 
 }

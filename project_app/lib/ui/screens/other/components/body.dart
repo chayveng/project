@@ -7,7 +7,8 @@ import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/core/services/ClubService.dart';
 import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/screens/club/club_screen.dart';
-import 'package:project_app/ui/screens/createClub/create_club.dart';
+import 'package:project_app/ui/screens/club/components/isCreate/create_club_screen.dart';
+import 'package:project_app/ui/screens/club/components/notCreate/not_create_screen.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/other/components/button_menu.dart';
 import 'package:project_app/ui/screens/other/components/user_info.dart';
@@ -34,9 +35,11 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> getUserImage() async {
-    String url = '${UserService.pathUserImage(await UserService.getUserId())}';
-    var res = await http.get(url);
-    _userImage = res.bodyBytes.isNotEmpty ? res.bodyBytes : null;
+   var fileImage  = await UserService.imageDownload(await UserService.getUserId());
+   _userImage = fileImage != null ? fileImage : null;
+    // String url = '${UserService.pathUserImage(await UserService.getUserId())}';
+    // var res = await http.get(url);
+    // _userImage = res.bodyBytes.isNotEmpty ? res.bodyBytes : null;
     await Future.delayed(Duration(milliseconds: 200), () => setState(() {}));
   }
 
@@ -51,6 +54,45 @@ class _BodyState extends State<Body> {
   Future<void> _onMyClub(BuildContext context) async {
     int userId = await UserService.getUserId();
     Club club = await ClubService.getByUserId(userId: userId);
+    await Future.delayed(Duration(milliseconds: 200));
+    bool _isCreate = club.id != null ? true : false;
+    _isCreate
+        ? Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ClubScreen(
+                clubId: club.id,
+                isOwner: true,
+              ),
+            ),
+          )
+        : Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => NotCreateScreen(),
+            ),
+          );
+    // _isOwner
+    //     ? Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //           builder: (context) => ClubScreen(
+    //             clubId: club.id,
+    //             isOwner: _isOwner,
+    //           ),
+    //         ),
+    //       )
+    //     : Navigator.push(
+    //         context,
+    //         MaterialPageRoute(
+    //           builder: (context) => NotCreateScreen(),
+    //         ),
+    //       );
+  }
+
+  Future<void> _onNeoMyClub(BuildContext context) async {
+    int userId = await UserService.getUserId();
+    Club club = await ClubService.getByUserId(userId: userId);
     await Future.delayed(Duration(milliseconds: 500));
     bool _isOwner = club.id != null ? true : false;
     _isOwner
@@ -63,12 +105,28 @@ class _BodyState extends State<Body> {
               ),
             ),
           )
+        // ? Navigator.push(
+        //     context,
+        //     MaterialPageRoute(
+        //       builder: (context) => ClubScreen(
+        //         clubId: club.id,
+        //         isOwner: _isOwner,
+        //       ),
+        //     ),
+        //   )
         : Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => CreateClub(isOwner: _isOwner, club: club),
+              builder: (context) => CreateClubScreen(),
+              // builder: (context) => CreateClub(isOwner: _isOwner, club: club),
             ),
           );
+    // : Navigator.push(
+    //   context,
+    //   MaterialPageRoute(
+    //     builder: (context) => CreateClub(isOwner: _isOwner, club: club),
+    //   ),
+    // );
   }
 
   Future _onLogout(BuildContext context) {
@@ -106,11 +164,13 @@ class _BodyState extends State<Body> {
       title: 'Profile',
       onPressed: () async =>
           await Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ProfileScreen(
-                        userImage: _userImage,
-                      ))) ??
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProfileScreen(
+                userImage: _userImage,
+              ),
+            ),
+          ) ??
           fetchData(),
     );
   }

@@ -10,7 +10,7 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: grayPrimaryColor,
+      backgroundColor: greyPrimaryColor,
       body: Body(),
     );
   }

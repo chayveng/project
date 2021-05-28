@@ -6,7 +6,6 @@ import 'components/body.dart';
 
 class ClubScreen extends StatelessWidget {
   static String routeName = '/club';
-
   final int clubId;
   final bool isOwner;
 
@@ -21,7 +20,7 @@ class ClubScreen extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
         SystemUiOverlayStyle(statusBarColor: Colors.white));
     return Scaffold(
-      backgroundColor: grayPrimaryColor,
+      backgroundColor: greyPrimaryColor,
       body: Body(clubId: clubId, isOwner: isOwner),
     );
   }

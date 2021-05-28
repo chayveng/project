@@ -10,8 +10,12 @@ import '../../config/Config.dart';
 class ApiConnect {
   static Future<Object> get({@required path}) async {
     var response = await http.get('${Config.API_URL}$path');
-    var res = jsonDecode(utf8.decode(response.bodyBytes));
-    return jsonEncode(res);
+    if (response.statusCode == 200) {
+      var res = jsonDecode(utf8.decode(response.bodyBytes));
+      return jsonEncode(res);
+    }else {
+      return null;
+    }
   }
 
   static Future<Object> post(
@@ -30,8 +34,12 @@ class ApiConnect {
     @required Object data,
   }) async {
     var dio = Dio();
-    Response response = await dio.post('${Config.API_URL}$path',data: data);
-    var res = jsonDecode(response.toString());
-    return jsonEncode(res);
+    var response = await dio.post(
+      '${Config.API_URL}$path',
+      data: data,
+    );
+    return response.statusCode == 200 ? response : null;
+    // var res = jsonDecode(response.toString());
+    // return jsonEncode(res);
   }
 }

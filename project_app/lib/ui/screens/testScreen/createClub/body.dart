@@ -28,7 +28,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> fetchData() async {
-    // int userId = await UsmerService.getUserId();
+    // int userId = await UserService.getUserId();
     club = await ClubService.getByUserId(userId: userId);
     club.userId = club.userId ?? userId;
     await Future.delayed(Duration(microseconds: 200), () => setState(() {}));
@@ -95,5 +95,4 @@ class _BodyState extends State<Body> {
       ],
     );
   }
-
 }
