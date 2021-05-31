@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/ui/screens/createClub/create_club.dart';
 import 'package:project_app/ui/screens/testScreen/googleMap/google_map_screen.dart';
+import 'package:project_app/ui/screens/testScreen/url_luncher/luncher.dart';
 import 'body.dart';
 
 class TestScreen extends StatelessWidget {
@@ -18,7 +19,8 @@ class TestScreen extends StatelessWidget {
       // body: SectionGreen(),
       // body: TestAddUserImage(),
       // body: CreateClubScreen(),
-      body: GoogleMapScreen(),
+      // body: GoogleMapScreen(),
+      body: LaunchUrl(),
       // body: Body(),
     );
   }
