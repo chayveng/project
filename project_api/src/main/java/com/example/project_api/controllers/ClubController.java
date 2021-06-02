@@ -37,7 +37,7 @@ public class ClubController {
     }
 
     @GetMapping("/getById/{id}")
-    public Object getById(@PathVariable int id) {
+    public Object getById(@PathVariable long id) {
         return new ApiResponse(1, "Get a club by id", clubRepository.findById(id));
     }
 
@@ -73,7 +73,7 @@ public class ClubController {
     }
 
     @PostMapping("/addImage")
-    public Object addImage(@RequestParam int clubId, @RequestParam(value = "fileImage", required = false) MultipartFile fileImage) {
+    public Object addImage(@RequestParam long clubId, @RequestParam(value = "fileImage", required = false) MultipartFile fileImage) {
         Random random = new Random();
         ApiResponse res = new ApiResponse();
         Optional<Club> clubData = clubRepository.findById(clubId);
@@ -116,7 +116,7 @@ public class ClubController {
     }
 
     @GetMapping("/delete/{id}")
-    public Object delete(@PathVariable int id) {
+    public Object delete(@PathVariable long id) {
         Optional<Club> clubData = clubRepository.findById(id);
         if (clubData.isPresent()) {
             clubRepository.deleteById(id);
@@ -201,7 +201,6 @@ public class ClubController {
     public List<String> deleteByClubId(@PathVariable int clubId) {
         var res = clubImageRepository.findByClubId(clubId);
         Collections.sort(res);
-        var lstSorted = res.stream().sorted().collect(Collectors.toList());
         List<String> urls = new ArrayList<>();
         for (var file : res) {
             Map<String, Object> lstMap = new HashMap<>();

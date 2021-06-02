@@ -16,7 +16,7 @@ class SectionField extends StatelessWidget {
   }) : super(key: key);
 
   Widget cardField(int indexField) {
-    return clubId == fields[indexField].clubId
+    return clubId == fields[indexField].userId
         ? Column(
             children: [
               Row(

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
+import 'package:project_app/core/models/Field.dart';
 
 class SectionGeneral extends StatelessWidget {
-  const SectionGeneral({Key key}) : super(key: key);
+  final Field field;
+
+  const SectionGeneral({Key key, @required this.field}) : super(key: key);
 
   Widget buildFormData({String title, String detail}) {
     return Column(
@@ -42,42 +45,42 @@ class SectionGeneral extends StatelessWidget {
         children: [
           buildFormData(
             title: 'Title',
-            detail: 'Arena plus',
+            detail: '${field.title}',
           ),
           buildFormData(
             title: 'Detail',
-            detail:
-                'ซอคเกอร์ คิวบ์ สาขา ม.ขอนแก่น เป็นสนามฟุตบอลหญ้าเทียม เปิดบริการ 24 ชั่วโมง มีทั้งIndoor และOutdoor ตั้งอยู่ใกล้กับ',
+            detail: '${field.detail}',
           ),
           buildFormData(
             title: 'Address',
             detail:
-                '3/7 ราษฎร์คนึง 8 ตำบล ศิลา อำเภอเมืองขอนแก่น ขอนแก่น 40000',
+                '${field.address}',
           ),
           buildFormData(
             title: 'office hours',
-            detail: '09:00 - 02:00',
+            detail: '${field.hours}',
           ),
           buildFormData(
             title: 'price range',
-            detail: '101-500 Baht',
+            detail: '${field.price}',
           ),
           buildFormData(
             title: 'Tal',
-            detail: '080-3114111',
+            detail: '${field.tel}',
           ),
           Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                buildTitle(iconData: Icons.location_on,text: 'Location'),
+                buildTitle(iconData: Icons.location_on, text: 'Location'),
                 SizedBox(height: 8.0),
                 Container(
                   width: sized(context).width,
                   height: 300,
                   color: Colors.grey.shade400,
-                  child: Center(child: Text('Map'),),
-
+                  child: Center(
+                    child: Text('Map'),
+                  ),
                 ),
               ],
             ),

@@ -23,7 +23,10 @@ class ApiConnect {
     var response = await http.post(
       '${Config.API_URL}$path',
       body: jsonEncode(body),
-      headers: {HttpHeaders.contentTypeHeader: ('application/json')},
+      // headers: {HttpHeaders.contentTypeHeader: ('application/json')},
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
     );
     var res = jsonDecode(utf8.decode(response.bodyBytes));
     return jsonEncode(res);

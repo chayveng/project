@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
+import 'package:project_app/core/models/Field.dart';
+import 'package:project_app/core/models/Time.dart';
+import 'package:project_app/core/services/TimeService.dart';
 import 'package:project_app/ui/screens/field/components/custom_tabBar.dart';
 import 'package:project_app/ui/screens/field/components/section_general.dart';
 import 'package:project_app/ui/screens/field/components/section_time.dart';
 
 class SectionDetail extends StatefulWidget {
-  const SectionDetail({Key key}) : super(key: key);
+  final List<String> tabBars;
+  final List<Widget> tabViews;
+
+  const SectionDetail({Key key, this.tabBars, this.tabViews}) : super(key: key);
 
   @override
   _SectionDetailState createState() => _SectionDetailState();
@@ -13,12 +19,20 @@ class SectionDetail extends StatefulWidget {
 
 class _SectionDetailState extends State<SectionDetail> {
   int _currentState = 0;
-  List<String> tabBars = ['General', 'Times'];
-  List<Widget> tabViews = [SectionGeneral(), SectionTimes()];
+
+
+  @override
+  void initState() {
+    fetchData();
+    super.initState();
+  }
+
+  Future<void> fetchData() async {
+  }
 
   void _onTapCurrent(int index) {
     setState(() {
-      _currentState = tabBars.indexOf(tabBars[index]);
+      _currentState = widget.tabBars.indexOf(widget.tabBars[index]);
     });
   }
 
@@ -26,7 +40,7 @@ class _SectionDetailState extends State<SectionDetail> {
     return Container(
       width: sized(context).width,
       child: Center(
-        child: tabViews[_currentState],
+        child: widget.tabViews[_currentState],
       ),
     );
   }
@@ -36,13 +50,13 @@ class _SectionDetailState extends State<SectionDetail> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ...List.generate(
-          tabBars.length,
+          widget.tabBars.length,
           (index) {
             return Expanded(
               child: InkWell(
                 onTap: () => _onTapCurrent(index),
                 child: CustomTabBar(
-                  tabBar: tabBars[index],
+                  tabBar: widget.tabBars[index],
                   current: _currentState == index ? true : false,
                 ),
               ),

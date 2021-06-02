@@ -60,7 +60,7 @@ class _BodyState extends State<Body> {
                 child: Text("Fields"),
                 onPressed: () {
                   print(fields);
-                  FieldServices.addField(field: field);
+                  // FieldServices.addField(field: field);
                   // fetchFields();
                   setState(() {});
                 },
@@ -77,7 +77,7 @@ class _BodyState extends State<Body> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("ID: ${fields[index].id}"),
-                        Text("ClubID: ${fields[index].clubId}"),
+                        Text("ClubID: ${fields[index].userId}"),
                         Text("${fields[index].title}"),
                         Text("${fields[index].detail}"),
                         Text("${fields[index].price}"),

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 Field fieldFromJson(String str) => Field.fromJson(json.decode(str));
 
-List<Field> fieldsFormJson(List lst) =>
+List<Field> fieldsFromJson(List lst) =>
     lst.map((e) => fieldFromJson(jsonEncode(e))).toList();
 
 String fieldToJson(Field data) => json.encode(data.toJson());
@@ -10,40 +10,48 @@ String fieldToJson(Field data) => json.encode(data.toJson());
 class Field {
   Field({
     this.id,
-    this.clubId,
+    this.userId,
     this.title,
     this.detail,
+    this.address,
+    this.tel,
+    this.hours,
     this.price,
   });
 
   int id;
-  int clubId;
+  int userId;
   String title;
   String detail;
+  String address;
+  String tel;
+  String hours;
   String price;
 
   factory Field.fromJson(Map<String, dynamic> json) => Field(
         id: json["id"],
-        clubId: json["clubId"],
+        userId: json["userId"],
         title: json["title"],
         detail: json["detail"],
+        address: json["address"],
+        tel: json["tel"],
+        hours: json["hours"],
         price: json["price"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "clubId": clubId,
+        "userId": userId,
         "title": title,
         "detail": detail,
+        "address": address,
+        "tel": tel,
+        "hours": hours,
         "price": price,
       };
 
-  Map<String, dynamic> toMap() {
-    return {"test": ""};
-  }
-
   @override
   String toString() {
-    return 'Field{id: $id, clubId: $clubId, title: $title, detail: $detail, price: $price}';
+    return 'Field{id: $id, userId: $userId, title: $title, detail: $detail, address: $address, tel: $tel, hours: $hours, price: $price}';
   }
 }

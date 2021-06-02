@@ -1,26 +1,35 @@
+import 'dart:typed_data';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:project_app/core/models/ApiResponse.dart';
 import 'package:project_app/core/models/Field.dart';
 
 import 'ApiConnect.dart';
 
-class FieldApi{
-  static Future<ApiResponse> index() async =>
-      apiResponseFromJson(await ApiConnect.get(path: '/field/index'));
+class FieldApi {
+  static Future<ApiResponse> create(Object body) async => apiResponseFromJson(
+      await ApiConnect.post(path: '/field/create', body: body));
 
-  static Future<ApiResponse> getByClubId({@required int clubId}) async =>
-      apiResponseFromJson(await ApiConnect.get(path: '/field/getByClubId/$clubId'));
+  static Future<ApiResponse> update(Object body) async => apiResponseFromJson(
+      await ApiConnect.post(path: '/field/update', body: body));
 
-  static Future<ApiResponse> getById({@required int id}) async =>
-  apiResponseFromJson(await ApiConnect.get(path: '/field/getById/$id'));
+  static Future<Object> uploadImages(FormData data) async {
+    return await ApiConnect.postDIO(path: '/field/upload-images', data: data);
+  }
 
-  static Future<ApiResponse> add({@required Field field}) async =>
-      apiResponseFromJson(await ApiConnect.post(path: '/field/add', body: field.toJson()));
+  static Future<Object> findById(int fieldId) async {
+    return apiResponseFromJson(
+      await ApiConnect.get(path: '/field/findById/$fieldId'),
+    );
+  }
+  static Future<Object> findAll() async {
+    return apiResponseFromJson(
+      await ApiConnect.get(path: '/field/findAll'),
+    );
+  }
 
-  static Future<ApiResponse> delete({@required int id}) async =>
-      apiResponseFromJson(await ApiConnect.post(path: '/field/delete/$id', body: null));
-
-  static Future<ApiResponse> getAll() async =>
-      apiResponseFromJson(await ApiConnect.get(path: '/field/getAll'));
-
+  static Future<ApiResponse> findByUserId(int userId) async =>
+      apiResponseFromJson(
+          await ApiConnect.get(path: '/field/findByUserId/$userId'));
 }

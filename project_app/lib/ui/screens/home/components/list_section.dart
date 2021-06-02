@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:project_app/core/models/Club.dart';
-import 'package:project_app/ui/screens/club/club_screen.dart';
 import 'package:project_app/ui/screens/home/components/search_bar.dart';
 
 import 'card_club.dart';
@@ -46,7 +45,7 @@ class ListSection extends StatelessWidget {
         Navigator.push(
           context,
           PageTransition(
-            child: ClubScreen(clubId: club.id ,isOwner: false,),
+            // child: ClubScreen(clubId: club.id ,isOwner: false,),
             type: PageTransitionType.fade,
           ),
         );

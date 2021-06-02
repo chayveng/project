@@ -33,7 +33,7 @@ public class UserController {
     private UserImageRepository userImageRepository;
 
     @GetMapping("/getById/{id}")
-    public Object user(@PathVariable int id) {
+    public Object user(@PathVariable long id) {
         return new ApiResponse(1, "userById: " + id, userRepository.findById(id));
     }
 

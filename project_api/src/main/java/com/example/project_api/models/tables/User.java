@@ -13,7 +13,7 @@ import javax.persistence.*;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private long id;
     private String userName;
     private String passWord;
     private String firstName;
@@ -22,6 +22,6 @@ public class User {
     private String email;
 
     @Lob
-    private byte[] file;
+    private byte[] image;
 
 }

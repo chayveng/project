@@ -9,9 +9,8 @@ import '../../../../constants.dart';
 
 class SectionImages extends StatefulWidget {
   final List<Uint8List> images;
-  final bool isEdit;
 
-  const SectionImages({Key key, this.images, this.isEdit}) : super(key: key);
+  const SectionImages({Key key, this.images}) : super(key: key);
 
   @override
   _SectionImagesState createState() => _SectionImagesState();
@@ -108,7 +107,7 @@ class _SectionImagesState extends State<SectionImages> {
             ],
           ),
         ),
-        widget.isEdit ? customBtn() : SizedBox(),
+        // widget.isEdit ? customBtn() : SizedBox(),
       ],
     );
   }
