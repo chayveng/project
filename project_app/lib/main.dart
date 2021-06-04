@@ -4,11 +4,10 @@ import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/routs.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
-import 'package:project_app/ui/screens/testScreen/newCreateClubScreen/new_create_club_screen.dart';
+import 'package:project_app/ui/screens/testScreen/TestScreen.dart';
 
 import 'constants.dart';
 import 'core/services/AuthService.dart';
-import 'ui/screens/testScreen/TestScreen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -57,15 +56,6 @@ class MyApp extends StatelessWidget {
       routes: routes,
       home: screen,
       // home: TestScreen(),
-      // home: NewCreateClubScreen(),
-      // home: LocationScreen(),
-      // home: GoogleMapScreen(),
-      // home: SelectField(),
-      // home: FirstScreen(),
-      // home: ClubScreen(),
-      // home: HomeScreen(),
-      // home: ProfileScreen(),
-      // home: LoginScreen(),
     );
   }
 }

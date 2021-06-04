@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
-import 'package:project_app/core/models/Club.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
+import 'package:project_app/ui/screens/field/create/dialog_loading/dialog_loading.dart';
 
 import 'custom_field.dart';
 
 class SectionGeneral extends StatefulWidget {
   final Field field;
   final bool isCreate;
-  final formKey;
+  final GlobalKey<FormState> formKey;
   final GestureTapCallback onSubmit;
 
   const SectionGeneral({
@@ -39,10 +39,27 @@ class _SectionGeneralState extends State<SectionGeneral> {
     textCtl = SetTools.setTextCtl(field: widget.field);
   }
 
+  Future<void> _onSubmit() async {
+    print('delay');
+    var onSubmit = widget.onSubmit;
+    print('delayed');
+    await Future.delayed(Duration(milliseconds: 500));
+    // Navigator.pop(context);
+  }
+
   Widget buildButton() {
     return RoundedButton(
       text: widget.isCreate ? 'Create' : 'Update',
-      onTap: widget.onSubmit,
+      // onTap: widget.onSubmit,
+      onTap: () async {
+        await showDialog(
+              context: context,
+              builder: (context) => DialogLoading(
+                onSubmit: _onSubmit(),
+              ),
+            ) ??
+            Navigator.pop(context);
+      },
     );
   }
 

@@ -6,7 +6,6 @@ import com.example.project_api.models.repository.ClubImageRepository;
 import com.example.project_api.models.repository.ClubRepository;
 import com.example.project_api.models.tables.Club;
 import com.example.project_api.models.tables.ClubImage;
-import com.example.project_api.models.tables.UserImage;
 import com.example.project_api.services.ClubService;
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;

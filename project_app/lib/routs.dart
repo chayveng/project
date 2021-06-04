@@ -7,6 +7,7 @@ import 'package:project_app/ui/screens/other/other_screen.dart';
 import 'package:project_app/ui/screens/profile/profile_screen.dart';
 import 'package:project_app/ui/screens/register/register_screen.dart';
 import 'package:project_app/ui/screens/testScreen/TestScreen.dart';
+import 'package:project_app/ui/screens/testScreen/body.dart';
 
 final Map<String, WidgetBuilder> routes = {
   MainScreen.routeName: (context) => MainScreen(),
@@ -19,5 +20,3 @@ final Map<String, WidgetBuilder> routes = {
   // ClubScreen.routeName: (context) => ClubScreen(clubId: null,),
   OtherScreen.routeName: (context) => OtherScreen(),
 };
-
-

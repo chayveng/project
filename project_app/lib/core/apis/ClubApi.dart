@@ -6,8 +6,9 @@ import 'package:project_app/core/models/Club.dart';
 import 'ApiConnect.dart';
 
 class ClubApi {
-  static Future<ApiResponse> index() async =>
-      apiResponseFromJson(await ApiConnect.get(path: '/club/index'));
+  static Future<ApiResponse> index() async {
+    return apiResponseFromJson(await ApiConnect.get(path: '/club/index'));
+  }
 
   static Future<ApiResponse> getById({@required int id}) async =>
       apiResponseFromJson(await ApiConnect.get(path: '/club/getById/$id'));

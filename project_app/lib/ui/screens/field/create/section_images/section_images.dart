@@ -8,14 +8,10 @@ import '../../../../../constants.dart';
 
 class SectionImages extends StatefulWidget {
   final List<Uint8List> images;
-  // final VoidCallback upload;
-  // final VoidCallback download;
 
   const SectionImages({
     Key key,
     @required this.images,
-    // @required this.upload,
-    // @required this.download,
   }) : super(key: key);
 
   @override

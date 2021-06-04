@@ -12,21 +12,23 @@ import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/UserService.dart';
 
 class FieldServices {
-
-  static Future<List<Field>> findAll()async{
+  static Future<List<Field>> findAll() async {
     ApiResponse response = await FieldApi.findAll();
     List<Field> fields = fieldsFromJson(response.data);
     return fields;
   }
 
-  static Future<Field> findById(int fieldId)async{
+  static Future<Field> findById(int fieldId) async {
     ApiResponse response = await FieldApi.findById(fieldId);
     Field field = fieldFromJson(jsonEncode(response.data));
     return field;
   }
 
   static Future<bool> create(
-      GlobalKey<FormState> formKey, Field field, List images) async {
+    GlobalKey<FormState> formKey,
+    Field field,
+    List images,
+  ) async {
     print('create');
     bool status = false;
     if (formKey.currentState.validate()) {
@@ -44,7 +46,10 @@ class FieldServices {
   }
 
   static Future<bool> update(
-      GlobalKey<FormState> formKey, Field field, List images) async {
+    GlobalKey<FormState> formKey,
+    Field field,
+    List images,
+  ) async {
     print('update');
     bool status = false;
     if (formKey.currentState.validate()) {
@@ -74,15 +79,15 @@ class FieldServices {
 
   static Future<List<Uint8List>> downloadImages(int fieldId) async {
     var images = [];
-       String path = '/field/urlImages/$fieldId';
-       var res = await ApiConnect.get(path: path);
-       List urlImages = jsonDecode(res);
-       for (var url in urlImages) {
-         await http.get(url).then((value) {
-           images.add(value.bodyBytes);
-         });
-       }
-       print(images.length);
+    String path = '/field/urlImages/$fieldId';
+    var res = await ApiConnect.get(path: path);
+    List urlImages = jsonDecode(res);
+    for (var url in urlImages) {
+      await http.get(url).then((value) {
+        images.add(value.bodyBytes);
+      });
+    }
+    print(images.length);
     return images;
   }
 

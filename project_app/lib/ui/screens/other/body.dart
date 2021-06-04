@@ -42,9 +42,6 @@ class _BodyState extends State<Body> {
   Future<void> getUserImage() async {
    var fileImage  = await UserService.imageDownload(await UserService.getUserId());
    _userImage = fileImage != null ? fileImage : null;
-    // String url = '${UserService.pathUserImage(await UserService.getUserId())}';
-    // var res = await http.get(url);
-    // _userImage = res.bodyBytes.isNotEmpty ? res.bodyBytes : null;
     await Future.delayed(Duration(milliseconds: 200), () => setState(() {}));
   }
 
@@ -112,7 +109,9 @@ class _BodyState extends State<Body> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        SizedBox(height: 30),
         UserInfo(user: user, userImage: _userImage),
+        SizedBox(height: 10),
         buttonProfile(context),
         buttonMyClub(context),
         buttonLogout(context),

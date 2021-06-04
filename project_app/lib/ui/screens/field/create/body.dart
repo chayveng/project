@@ -3,9 +3,12 @@ import 'dart:typed_data';
 
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/core/services/UserService.dart';
+import 'package:project_app/ui/components/custom_dialog_loading.dart';
+import 'package:project_app/ui/screens/field/create/dialog_loading/dialog_loading.dart';
 import 'package:project_app/ui/screens/field/create/section_general/section_general.dart';
 import 'package:project_app/ui/screens/field/create/section_images/section_images.dart';
 
@@ -31,37 +34,31 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> fetchData() async {
-    field.userId = widget.fieldId ?? await UserService.getUserId();
-    _downloadImages();
+    setData();
+    if (widget.fieldId != null) _downloadImages(widget.fieldId);
     setState(() {});
   }
 
-  Future<void> _downloadImages() async {
+  Future<void> setData() async {
+    field.userId = field.userId ?? await UserService.getUserId();
+    if (widget.fieldId != null)
+      field = await FieldServices.findById(widget.fieldId);
+    print(field);
+  }
+
+  Future<void> _downloadImages(int fieldId) async {
     images = [];
     images = await FieldServices.downloadImages(widget.fieldId);
     setState(() {});
-    // images = await FieldServices.downloadImages(widget.fieldId);
-    // print(images.length);
-    // if (widget.fieldId != null) {
-    //   images = [];
-    //   String path = '/field/urlImages/${widget.fieldId}';
-    //   var res = await ApiConnect.get(path: path);
-    //   List urlImages = jsonDecode(res);
-    //   for (var url in urlImages) {
-    //     await http.get(url).then((value) {
-    //       setState(() => images.add(value.bodyBytes));
-    //     });
-    //   }
-    // }
   }
 
   Future<void> _onSubmit() async {
     var res = widget.isCreate
         ? await FieldServices.create(_formKey, field, images)
         : await FieldServices.update(_formKey, field, images);
-    if (res) Navigator.pop(context);
-    // await _update();
-    // await _create();
+    await Future.delayed(Duration(milliseconds: 200));
+    print('onSubmit');
+    // if (res) Navigator.pop(context);
   }
 
   @override
@@ -69,15 +66,11 @@ class _BodyState extends State<Body> {
     return SingleChildScrollView(
       child: Column(
         children: [
-          ElevatedButton(
-            child: Text('print'),
-            onPressed: () async {},
-          ),
           SectionImages(images: images),
           SectionGeneral(
             field: field,
-            onSubmit: () async => await _onSubmit(),
-            isCreate: true,
+            onSubmit:() async => await _onSubmit(),
+            isCreate: widget.isCreate,
             formKey: _formKey,
           ),
         ],

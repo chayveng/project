@@ -57,6 +57,7 @@ class _BodyState extends State<Body> {
       await UserService.update(user: _user, image: _image)
           ? fetchData()
           : print('update fail');
+      Navigator.pop(context);
     }
   }
 
@@ -64,7 +65,6 @@ class _BodyState extends State<Body> {
     _formKey.currentState.reset();
     setState(() => _status = !_status);
   }
-
 
   Future<void> _chooseImage() async {
     var file = await chooseImage(ImageSource.gallery);
@@ -93,6 +93,7 @@ class _BodyState extends State<Body> {
             status: _status,
             onEdit: _onEdit,
           ),
+          SizedBox(height: 30),
           UserImage(
             userName: _user.userName,
             userImage: widget.userImage,
@@ -100,6 +101,7 @@ class _BodyState extends State<Body> {
             status: _status,
             onTap: () async => await _chooseImage(),
           ),
+          SizedBox(height: 20),
           CustomFormField(
             status: _status,
             user: _user,
