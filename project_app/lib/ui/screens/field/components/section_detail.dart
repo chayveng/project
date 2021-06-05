@@ -38,6 +38,7 @@ class _SectionDetailState extends State<SectionDetail> {
 
   Widget buildDetail(BuildContext context) {
     return Container(
+      color: creamPrimaryColor,
       width: sized(context).width,
       child: Center(
         child: widget.tabViews[_currentState],

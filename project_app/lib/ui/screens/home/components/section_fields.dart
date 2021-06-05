@@ -39,6 +39,7 @@ class _SectionFieldsState extends State<SectionFields> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: CardField(
+                  isOwner : false,
                   field: widget.fields[index],
                   onTap: () => _onTap(index),
                 ),

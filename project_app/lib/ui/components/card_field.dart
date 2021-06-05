@@ -7,8 +7,15 @@ import '../../constants.dart';
 class CardField extends StatefulWidget {
   final Field field;
   final GestureTapCallback onTap;
+  final bool isOwner;
+  final GestureTapCallback onRemove;
 
-  const CardField({Key key, @required this.field, @required this.onTap})
+  const CardField(
+      {Key key,
+      @required this.field,
+      @required this.onTap,
+      @required this.isOwner,
+      this.onRemove})
       : super(key: key);
 
   @override
@@ -33,38 +40,71 @@ class _CardFieldState extends State<CardField> {
           color: creamPrimaryColor,
           child: Column(
             children: [
-              Container(
-                width: sized(context).width,
-                height: 250,
-                child: Image.network(
-                  url,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: sized(context).width,
-                  height: 100,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        '${widget.field.title}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Text('${widget.field.hours}'),
-                      Text('${widget.field.price}'),
-                      Text('${widget.field.tel}'),
-                    ],
-                  ),
-                ),
-              ),
+              buildImage(url),
+              buildDetail(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Padding buildDetail() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: sized(context).width,
+        height: 100,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    '${widget.field.title}',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text('${widget.field.hours}'),
+                  Text('${widget.field.price}'),
+                  Text('${widget.field.tel}'),
+                ],
+              ),
+            ),
+            widget.isOwner
+                ? Container(
+                    padding: EdgeInsets.all(4),
+                    // width: 24,
+                    // height: 24,
+                    decoration: BoxDecoration(
+                      color: Colors.redAccent,
+                      shape: BoxShape.circle,
+                    ),
+                    child: InkWell(
+                      onTap: widget.onRemove,
+                      child: Icon(
+                        Icons.restore_from_trash,
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                : SizedBox(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container buildImage(String url) {
+    return Container(
+      width: sized(context).width,
+      height: 250,
+      child: Image.network(
+        url,
+        fit: BoxFit.cover,
       ),
     );
   }

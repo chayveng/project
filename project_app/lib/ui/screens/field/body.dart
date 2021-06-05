@@ -40,6 +40,7 @@ class _BodyState extends State<Body> {
     print('fetch');
     field = await FieldServices.findById(widget.fieldId);
     await downloadImages();
+    print(field.id);
     await Future.delayed(Duration(milliseconds: 1000), () => setState(() {}));
   }
 
@@ -63,11 +64,31 @@ class _BodyState extends State<Body> {
   Widget build(BuildContext context) {
     return Container(
       width: sized(context).width,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomAppBar(
+      child: Stack(
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Column(
+                  children: [
+                    SizedBox(height: 100),
+                    SectionImages(images: images),
+                    SectionDetail(
+                      tabBars: ['General', 'Times'],
+                      tabViews: [
+                        SectionGeneral(field: field),
+                        SectionTimes(times: [])
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 100,
+            child: CustomAppBar(
               isOwner: widget.isOwner,
               onEdit: () async {
                 print('to field screen');
@@ -83,13 +104,8 @@ class _BodyState extends State<Body> {
                     fetchData();
               },
             ),
-            SectionImages(images: images),
-            SectionDetail(
-              tabBars: ['General', 'Times'],
-              tabViews: [SectionGeneral(field: field), SectionTimes(times: [])],
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

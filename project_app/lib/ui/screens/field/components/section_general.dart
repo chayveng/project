@@ -44,6 +44,8 @@ class SectionGeneral extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          buildTitle(iconData: Icons.circle_notifications, text: 'General'),
+          SizedBox(height: 10),
           buildFormData(
             title: 'Title',
             detail: '${field.title}',
@@ -69,6 +71,7 @@ class SectionGeneral extends StatelessWidget {
             title: 'Tal',
             detail: '${field.tel}',
           ),
+          SizedBox(height: 10),
           Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

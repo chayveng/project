@@ -39,33 +39,58 @@ class _CardFieldState extends State<CardField> {
           color: creamPrimaryColor,
           child: Column(
             children: [
-              Container(
-                width: sized(context).width,
-                height: 250,
-                child: Image.network(
-                  url,
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  width: sized(context).width,
-                  height: 100,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('${widget.field.title}'),
-                      Text('${widget.field.hours}'),
-                      Text('${widget.field.price}'),
-                      Text('${widget.field.tel}'),
-                    ],
-                  ),
-                ),
-              ),
+              buildImage(url),
+              buildDetail(),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Padding buildDetail() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        width: sized(context).width,
+        height: 100,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            // Expanded(
+            //   child: Column(
+            //     crossAxisAlignment: CrossAxisAlignment.start,
+            //     children: [
+            //       Text('${widget.field.title}'),
+            //       Text('${widget.field.hours}'),
+            //       Text('${widget.field.price}'),
+            //       Text('${widget.field.tel}'),
+            //     ],
+            //   ),
+            // ),
+            Expanded(
+              child: Container(
+                width: 50,
+                height: 50,
+                child: IconButton(
+                  icon: Icon(Icons.restore_from_trash),
+                  onPressed: () {},
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Container buildImage(String url) {
+    return Container(
+      width: sized(context).width,
+      height: 250,
+      child: Image.network(
+        url,
+        fit: BoxFit.cover,
       ),
     );
   }

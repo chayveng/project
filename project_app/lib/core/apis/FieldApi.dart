@@ -32,4 +32,8 @@ class FieldApi {
   static Future<ApiResponse> findByUserId(int userId) async =>
       apiResponseFromJson(
           await ApiConnect.get(path: '/field/findByUserId/$userId'));
+
+  static Future<ApiResponse> delete(int fieldId) async =>
+      apiResponseFromJson(
+          await ApiConnect.get(path: '/field/delete/$fieldId'));
 }

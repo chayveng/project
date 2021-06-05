@@ -83,7 +83,7 @@ class _BodyState extends State<Body> {
 
   Widget buttonMyClub(BuildContext context) {
     return ButtonMenu(
-      title: 'My club',
+      title: 'My field',
       onPressed: () async => await _onMyClub(context),
     );
   }

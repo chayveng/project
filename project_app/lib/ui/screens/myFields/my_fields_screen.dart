@@ -27,8 +27,26 @@ class MyFieldsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: greyPrimaryColor,
+      // appBar: AppBar(
+      //   excludeHeaderSemantics: false,
+      //   primary: true,
+      //   title: Text('My Fields'),
+      //   actions: [
+      //     IconButton(
+      //       icon: Icon(Icons.add),
+      //       onPressed: () async {
+      //         await Navigator.push(
+      //               context,
+      //               MaterialPageRoute(
+      //                 builder: (context) => CreateFieldScreen(isCreate: true),
+      //               ),
+      //             ) ??
+      //             fetchData();
+      //       },
+      //     ),
+      //   ],
+      // ),
       body: Body(),
     );
   }
 }
-

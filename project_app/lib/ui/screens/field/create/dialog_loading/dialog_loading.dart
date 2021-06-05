@@ -3,7 +3,6 @@ import 'package:project_app/ui/components/custom_dialog_loading.dart';
 
 class DialogLoading extends StatefulWidget {
   final Future onSubmit;
-  // final GestureTapCallback onSubmit;
 
   const DialogLoading({Key key, @required this.onSubmit}) : super(key: key);
 
@@ -19,8 +18,14 @@ class _DialogLoadingState extends State<DialogLoading> {
   }
 
   Future<void> _onSubmit() async {
-    await widget.onSubmit;
-    Navigator.pop(context);
+    var res = await widget.onSubmit;
+    // print(res);
+    if (res == true) {
+      Navigator.pop(context,true);
+    }else{
+      Navigator.pop(context,false);
+
+    }
   }
 
   @override

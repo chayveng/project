@@ -47,26 +47,22 @@ class _SectionImagesState extends State<SectionImages> {
   }
 
   Widget indicator() {
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...List.generate(
-              widget.images.length,
-              (index) {
-                return Container(
-                width: 8.0,
-                height: 8.0,
-                margin: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
-                decoration: BoxDecoration(
-                  color: _current == index ? Colors.black87 : Colors.black12,
-                  shape: BoxShape.circle,
-                ),
-              );
-              },
+        ...List.generate(
+          widget.images.length,
+          (index) {
+            return Container(
+            width: 8.0,
+            height: 8.0,
+            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
+            decoration: BoxDecoration(
+              color: _current == index ? Colors.black87 : Colors.black12,
+              shape: BoxShape.circle,
             ),
-          ],
+          );
+          },
         ),
       ],
     );
@@ -96,19 +92,15 @@ class _SectionImagesState extends State<SectionImages> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: sized(context).width,
-          child: Column(
-            children: [
-              formImages(),
-              indicator(),
-            ],
-          ),
-        ),
-        // widget.isEdit ? customBtn() : SizedBox(),
-      ],
+    return Container(
+      height: 250,
+      width: sized(context).width,
+      child: Stack(
+        children: [
+          formImages(),
+          Align(alignment: Alignment.bottomCenter,child: indicator()),
+        ],
+      ),
     );
   }
 }
