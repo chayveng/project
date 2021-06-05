@@ -35,7 +35,7 @@ class _BodyState extends State<Body> {
   Future<void> fetchClubs() async {
     clubs = [];
     List clubsId = [];
-    fields.map((e) => clubsId.add(e.clubId)).toList();
+    fields.map((e) => clubsId.add(e.userId)).toList();
     clubsId = clubsId.toSet().toList();
     for (var i = 0; i < clubsId.length; i++) {
       clubs.add(await ClubService.getById(id: clubsId[i]));
@@ -48,7 +48,7 @@ class _BodyState extends State<Body> {
     times.map((e) => fieldsId.add(e.fieldId)).toList();
     fieldsId = fieldsId.toSet().toList();
     for (var i = 0; i < fieldsId.length; i++) {
-      fields.add(await FieldServices.getFieldById(id: fieldsId[i]));
+      // fields.add(await FieldServices.getFieldById(id: fieldsId[i]));
     }
   }
 

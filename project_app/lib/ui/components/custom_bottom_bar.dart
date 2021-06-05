@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
-import 'package:project_app/ui/screens/booking/booking_screen.dart';
 import 'package:project_app/ui/screens/home/home_screen.dart';
 import 'package:project_app/ui/screens/other/other_screen.dart';
 

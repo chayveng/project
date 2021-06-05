@@ -50,7 +50,7 @@ class CardMenu extends StatelessWidget {
       hintText: hintText,
       isDense: true,
       contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 14),
-      hintStyle: TextStyle(fontSize: 14),
+      hintStyle: TextStyle(fontSize: 14, color: Colors.black38),
       disabledBorder: UnderlineInputBorder(
           borderSide: BorderSide(width: 1, color: orangePrimaryColor)),
       focusedBorder: UnderlineInputBorder(

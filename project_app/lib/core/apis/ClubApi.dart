@@ -6,8 +6,9 @@ import 'package:project_app/core/models/Club.dart';
 import 'ApiConnect.dart';
 
 class ClubApi {
-  static Future<ApiResponse> index() async =>
-      apiResponseFromJson(await ApiConnect.get(path: '/club/index'));
+  static Future<ApiResponse> index() async {
+    return apiResponseFromJson(await ApiConnect.get(path: '/club/index'));
+  }
 
   static Future<ApiResponse> getById({@required int id}) async =>
       apiResponseFromJson(await ApiConnect.get(path: '/club/getById/$id'));
@@ -18,9 +19,9 @@ class ClubApi {
   static Future<ApiResponse> getAll() async =>
       apiResponseFromJson(await ApiConnect.get(path: '/club/getAll'));
 
-  static Future<ApiResponse> addClub({@required Club club}) async =>
+  static Future<ApiResponse> create({@required Club club}) async =>
       apiResponseFromJson(
-          await ApiConnect.post(path: '/club/addClub', body: club));
+          await ApiConnect.post(path: '/club/create', body: club));
 
   static Future<ApiResponse> addImage({@required FormData data}) async {
     return apiResponseFromJson(

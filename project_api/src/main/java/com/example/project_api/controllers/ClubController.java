@@ -2,8 +2,11 @@ package com.example.project_api.controllers;
 
 import com.example.project_api.Config;
 import com.example.project_api.models.beans.ApiResponse;
+import com.example.project_api.models.repository.ClubImageRepository;
 import com.example.project_api.models.repository.ClubRepository;
 import com.example.project_api.models.tables.Club;
+import com.example.project_api.models.tables.ClubImage;
+import com.example.project_api.services.ClubService;
 import org.apache.commons.io.IOUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -11,13 +14,14 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.io.*;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/club")
@@ -32,7 +36,7 @@ public class ClubController {
     }
 
     @GetMapping("/getById/{id}")
-    public Object getById(@PathVariable int id) {
+    public Object getById(@PathVariable long id) {
         return new ApiResponse(1, "Get a club by id", clubRepository.findById(id));
     }
 
@@ -41,13 +45,13 @@ public class ClubController {
         Optional<Club> clubData = clubRepository.findByUserId(userId);
         if (clubData.isPresent()) {
             return new ApiResponse(1, "Get By User Id", clubRepository.findById(clubData.get().getId()));
-        }else{
+        } else {
             return new ApiResponse(0, "Fail", null);
         }
     }
 
     @GetMapping("/getByTitle/{title}")
-    public Object getByTitle(@RequestParam String title){
+    public Object getByTitle(@RequestParam String title) {
         return new ApiResponse(1, "Get By Title", clubRepository.findByTitle(title));
     }
 
@@ -56,7 +60,7 @@ public class ClubController {
         return new ApiResponse(1, "Get clubs", clubRepository.findAll());
     }
 
-    @PostMapping("/addClub")
+    @PostMapping("/create")
     public Object add(@RequestBody Club club) {
         Optional<Club> data = clubRepository.findByTitle(club.getTitle());
         if (data.isEmpty()) {
@@ -68,13 +72,13 @@ public class ClubController {
     }
 
     @PostMapping("/addImage")
-    public Object addImage(@RequestParam int clubId,@RequestParam(value = "fileImage", required = false) MultipartFile fileImage){
+    public Object addImage(@RequestParam long clubId, @RequestParam(value = "fileImage", required = false) MultipartFile fileImage) {
         Random random = new Random();
         ApiResponse res = new ApiResponse();
         Optional<Club> clubData = clubRepository.findById(clubId);
 
         if (clubData.isPresent()) {
-            try{
+            try {
                 Club _club = clubData.get();
                 char a = (char) (random.nextInt(26) + 'a');
                 char b = (char) (random.nextInt(26) + 'a');
@@ -95,29 +99,6 @@ public class ClubController {
         return res;
     }
 
-//    @PostMapping("/add")
-//    public Object add( Club club, @RequestParam(value = "fileImage", required = false) MultipartFile fileImage) {
-//        ApiResponse res = new ApiResponse();
-//        Random random = new Random();
-//        try {
-//            if (fileImage != null) {
-//                char a = (char) (random.nextInt(26) + 'a');
-//                char b = (char) (random.nextInt(26) + 'a');
-//                club.setPhotosPath(String.valueOf(club.getId()) + String.valueOf(a) + String.valueOf(b) + ".png");
-//                File fileToSave = new File(Config.PATH_IMAGE + club.getId() + a + b + ".png");
-//                fileImage.transferTo(fileToSave);
-//                clubRepository.save(club);
-//                res.setStatus(1);
-//                res.setData("add success");
-//                res.setData(clubRepository.findByTitle(club.getTitle()));
-//            }
-//        } catch (Exception err) {
-//            res.setStatus(0);
-//            res.setMessage("add fail ");
-//        }
-//        return res;
-//    }
-
     @ResponseBody
     @RequestMapping(value = "/images", method = RequestMethod.GET, produces = MediaType.IMAGE_PNG_VALUE)
     public byte[] getImage(@RequestParam String imageName) throws Exception {
@@ -134,7 +115,7 @@ public class ClubController {
     }
 
     @GetMapping("/delete/{id}")
-    public Object delete(@PathVariable int id) {
+    public Object delete(@PathVariable long id) {
         Optional<Club> clubData = clubRepository.findById(id);
         if (clubData.isPresent()) {
             clubRepository.deleteById(id);
@@ -145,7 +126,7 @@ public class ClubController {
     }
 
     @PostMapping("/update")
-    public Object update( @RequestBody Club club) {
+    public Object update(@RequestBody Club club) {
         Optional<Club> clubData = clubRepository.findById(club.getId());
         if (clubData.isPresent()) {
             Club _club = clubData.get();
@@ -208,4 +189,67 @@ public class ClubController {
         return clubRepository.findAll();
     }
 
+
+    @Autowired
+    ClubService clubService;
+
+    @Autowired
+    ClubImageRepository clubImageRepository;
+
+    @GetMapping("/urlImages/{clubId}")
+    public List<String> deleteByClubId(@PathVariable int clubId) {
+        var res = clubImageRepository.findByClubId(clubId);
+        Collections.sort(res);
+        List<String> urls = new ArrayList<>();
+        for (var file : res) {
+            Map<String, Object> lstMap = new HashMap<>();
+            String fileDownloadUri = ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path("/club/image-download/")
+                    .path(file.getFileName())
+                    .toUriString();
+            urls.add(fileDownloadUri);
+        }
+        return urls;
+    }
+
+    @PostMapping("/image-upload")
+    public Map<String, Object> imageUpload(@RequestParam int clubId, @RequestParam("file") MultipartFile file) throws IOException {
+        ClubImage clubImage = clubService.imagesUpload(clubId, file);
+        String fileDownloadUri = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path("/club/image-download/")
+                .path(Objects.requireNonNull(file.getOriginalFilename()))
+//                .path(String.valueOf(clubId))
+                .toUriString();
+        Map<String, Object> fileMapping = new HashMap<>();
+        fileMapping.put("fileName", clubImage.getFileName());
+        fileMapping.put("uri", fileDownloadUri);
+        fileMapping.put("type", file.getContentType());
+        fileMapping.put("size", file.getSize());
+        return fileMapping;
+
+    }
+
+    @PostMapping("/image-uploads")
+    public List<?> imageUploads(@RequestParam int clubId, @RequestParam("files") MultipartFile[] files) {
+        var res = clubImageRepository.findByClubId(clubId);
+        for (var file : res) clubImageRepository.deleteById(file.getId());
+        return Arrays.asList(files)
+                .stream()
+                .map(file -> {
+                    try {
+                        return imageUpload(clubId, file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @GetMapping("/image-download/{fileName}")
+    public ResponseEntity<?> downloadFromDB(@PathVariable String fileName) {
+        return clubService.imageDownload(fileName);
+    }
 }

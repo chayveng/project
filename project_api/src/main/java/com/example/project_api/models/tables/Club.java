@@ -17,7 +17,7 @@ public class Club {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     private long userId;
     private String title;
     private String detail;

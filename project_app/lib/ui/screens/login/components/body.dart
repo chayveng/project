@@ -16,7 +16,7 @@ class _BodyState extends State<Body> {
         .of(context)
         .size;
     return Container(
-      color: grayPrimaryColor,
+      color: greyPrimaryColor,
       height: sized.height,
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: ListView(

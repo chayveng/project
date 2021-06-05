@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/User.dart';
 import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
@@ -39,8 +40,14 @@ class _BodyState extends State<Body> {
   @override
   void initState() {
     fetchData();
-    setUserImage();
     super.initState();
+  }
+
+  void fetchData() async {
+    _user = await UserService.getById(userId: await UserService.getUserId());
+    _image = widget.userImage ?? null;
+    await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
+    print(_user);
   }
 
   Future<void> _onUpdate() async {
@@ -50,6 +57,7 @@ class _BodyState extends State<Body> {
       await UserService.update(user: _user, image: _image)
           ? fetchData()
           : print('update fail');
+      Navigator.pop(context);
     }
   }
 
@@ -58,42 +66,18 @@ class _BodyState extends State<Body> {
     setState(() => _status = !_status);
   }
 
-  void fetchData() async {
-    _user = await UserService.getById(userId: await UserService.getUserId());
-    await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
-    print(_user);
+  Future<void> _chooseImage() async {
+    var file = await chooseImage(ImageSource.gallery);
+    if (file != null) setState(() => _image = file.readAsBytesSync());
   }
 
-  Future<void> setUserImage() async {
-    _image = widget.userImage ?? null;
-    await Future.delayed(Duration(milliseconds: 200), () => setState(() {}));
-  }
-
-  Future<void> chooseImage(ImageSource imageSource) async {
-    _image = (_image == null) ? null : _image;
-    try {
-      var image = await ImagePicker.pickImage(
-        source: imageSource,
-        maxWidth: 800.0,
-        maxHeight: 800.0,
-        imageQuality: 75,
-      );
-      setState(() {
-        _image = image.readAsBytesSync();
-      });
-    } catch (e) {
-      print("error");
-    }
-  }
-
-  Widget conFirmButton() {
+  Widget submitBtn() {
     return _status
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: RoundedButton(
               text: 'Confirm',
               onTap: () async => await _onUpdate(),
-
             ),
           )
         : SizedBox();
@@ -105,23 +89,25 @@ class _BodyState extends State<Body> {
       key: _formKey,
       child: Column(
         children: [
-          CustomTopBar(
+          CustomAppBar(
             status: _status,
             onEdit: _onEdit,
           ),
+          SizedBox(height: 30),
           UserImage(
             userName: _user.userName,
             userImage: widget.userImage,
             image: _image,
             status: _status,
-            onTap: () async => chooseImage(ImageSource.gallery),
+            onTap: () async => await _chooseImage(),
           ),
+          SizedBox(height: 20),
           CustomFormField(
             status: _status,
             user: _user,
             focusNode: focusNode,
           ),
-          conFirmButton(),
+          submitBtn(),
         ],
       ),
     );
