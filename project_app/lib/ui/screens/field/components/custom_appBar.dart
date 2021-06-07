@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_app/constants.dart';
 
 class CustomAppBar extends StatelessWidget {
   final bool isOwner;
@@ -9,6 +10,7 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: orangePrimaryColor,
       title: Text('Field'),
       actions: [
        isOwner ? IconButton(

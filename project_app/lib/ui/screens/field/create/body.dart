@@ -49,7 +49,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> _downloadImages(int fieldId) async {
-    var images = [];
+    // var images = [];
     String path = '/field/urlImages/$fieldId';
     var res = await ApiConnect.get(path: path);
     List urlImages = jsonDecode(res);

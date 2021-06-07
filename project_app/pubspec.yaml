@@ -43,6 +43,7 @@ dependencies:
   archive:
   carousel_slider:
   page_view_indicators:
+  intl:
 #  path_provider: ^2.0.1
 #  google_map_location_picker: ^4.1.7
 
@@ -84,6 +85,9 @@ flutter:
     - family: Comfortaa
       fonts:
         - asset: assets/fonts/Comfortaa/Comfortaa-VariableFont_wght.ttf
+    - family: Kanit
+      fonts:
+        - asset: assets/fonts/Kanit/Kanit-Regular.ttf
   #       - asset: fonts/Schyler-Regular.ttf
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
