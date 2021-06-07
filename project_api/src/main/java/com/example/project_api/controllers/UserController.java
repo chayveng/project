@@ -32,6 +32,11 @@ public class UserController {
     @Autowired
     private UserImageRepository userImageRepository;
 
+    @GetMapping("/index")
+    public Object index(){
+        return new ApiResponse(1, "index");
+    }
+
     @GetMapping("/getById/{id}")
     public Object user(@PathVariable long id) {
         return new ApiResponse(1, "userById: " + id, userRepository.findById(id));
