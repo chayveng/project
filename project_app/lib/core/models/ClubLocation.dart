@@ -6,19 +6,19 @@ String clubLocationToJson(ClubLocation data) => json.encode(data.toJson());
 
 class ClubLocation {
   ClubLocation({
-    // this.id,
+    this.id,
     this.clubId,
     this.latitude,
     this.longitude,
   });
 
-  // int id;
-  int clubId;
-  double latitude;
-  double longitude;
+  int? id;
+  int? clubId;
+  double? latitude;
+  double? longitude;
 
   factory ClubLocation.fromJson(Map<String, dynamic> json) => ClubLocation(
-    // id: json["id"],
+    id: json["id"],
     clubId: json["clubId"],
     latitude: json["latitude"],
     longitude: json["longitude"],

@@ -4,36 +4,34 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../../config/Config.dart';
+import '../Config.dart';
 
 class ApiConnect {
-  static Future<Object> get({@required path}) async {
-    var response = await http.get('${Config.API_URL}$path');
-    if (response.statusCode == 200) {
-      var res = jsonDecode(utf8.decode(response.bodyBytes));
-      return jsonEncode(res);
-    }else {
-      return null;
-    }
+  static Future<Object?> get({@required path}) async {
+    var url = Uri.parse('${Config.API_URL}$path');
+    var response = await http.get(url);
+    return utf8.decode(response.bodyBytes);
   }
 
-  static Future<Object> post(
-      {@required String path, @required Object body}) async {
+  static Future<Object?> post({
+    @required String? path,
+    @required Object? body,
+  }) async {
+    var url = Uri.parse('${Config.API_URL}$path');
     var response = await http.post(
-      '${Config.API_URL}$path',
+      url,
       body: jsonEncode(body),
       // headers: {HttpHeaders.contentTypeHeader: ('application/json')},
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
     );
-    var res = jsonDecode(utf8.decode(response.bodyBytes));
-    return jsonEncode(res);
+    return utf8.decode(response.bodyBytes);
   }
 
-  static Future<Object> postDIO({
-    @required String path,
-    @required Object data,
+  static Future<Object?> postDIO({
+    @required String? path,
+    @required Object? data,
   }) async {
     var dio = Dio();
     var response = await dio.post(

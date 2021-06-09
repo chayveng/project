@@ -104,12 +104,12 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
 // }
 
 class BottomNavIcon extends StatelessWidget {
-  final String label;
-  final IconData iconData;
-  final GestureTapCallback onTap;
+  final String? label;
+  final IconData? iconData;
+  final GestureTapCallback? onTap;
 
   const BottomNavIcon({
-    Key key,
+    Key? key,
     @required this.label,
     @required this.iconData,
     @required this.onTap,
@@ -130,7 +130,7 @@ class BottomNavIcon extends StatelessWidget {
             ),
             SizedBox(height: 2),
             Text(
-              label,
+              label!,
               style: TextStyle(
                 fontSize: 12,
                 color: navyPrimaryColor,

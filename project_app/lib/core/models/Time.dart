@@ -17,12 +17,12 @@ class Time {
     this.status,
   });
 
-  int id;
-  int fieldId;
-  int userId;
-  String startTime;
-  String endTime;
-  bool status;
+  int? id;
+  int? fieldId;
+  int? userId;
+  String? startTime;
+  String? endTime;
+  bool? status;
 
   factory Time.fromJson(Map<String, dynamic> json) => Time(
         id: json["id"],

@@ -3,14 +3,14 @@ import 'package:flutter/material.dart';
 import '../../../../constants.dart';
 
 class ButtonMenu extends StatelessWidget {
-  final String title;
-  final VoidCallback onPressed;
-  final IconData icon;
-  final Color textColor;
-  final Color iconColor;
+  final String? title;
+  final VoidCallback? onPressed;
+  final IconData? icon;
+  final Color? textColor;
+  final Color? iconColor;
 
   const ButtonMenu({
-    Key key,
+    Key? key,
     @required this.title,
     @required this.onPressed,
     this.icon = Icons.keyboard_arrow_right_rounded,
@@ -24,7 +24,7 @@ class ButtonMenu extends StatelessWidget {
       children: [
         Expanded(
           child: Text(
-            title,
+            title!,
             style: TextStyle(color: textColor),
           ),
         ),

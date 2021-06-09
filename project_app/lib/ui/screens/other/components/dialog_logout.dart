@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class DialogLogout extends StatelessWidget {
-  final VoidCallback itOk;
+  final VoidCallback? itOk;
 
   const DialogLogout({
-    Key key,
+    Key? key,
     this.itOk,
   }) : super(key: key);
 
@@ -13,11 +13,11 @@ class DialogLogout extends StatelessWidget {
     return AlertDialog(
       title: Text('Logout'),
       actions: [
-        FlatButton(
+        TextButton(
           onPressed: () => Navigator.pop(context),
           child: Text("Cancel"),
         ),
-        FlatButton(
+        TextButton(
           onPressed: itOk,
           child: Text("Ok"),
         ),

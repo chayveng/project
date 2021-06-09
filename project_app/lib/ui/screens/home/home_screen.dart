@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_app/constants.dart';
-import 'package:project_app/ui/screens/home/components/custom_search_bar.dart';
 
+import '../../../constants.dart';
 import 'body.dart';
 
 class HomeScreen extends StatefulWidget {

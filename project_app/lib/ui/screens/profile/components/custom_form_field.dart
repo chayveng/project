@@ -6,12 +6,12 @@ import '../../../../constants.dart';
 import 'card_menu.dart';
 
 class CustomFormField extends StatelessWidget {
-  final bool status;
-  final User user;
-  final Map<String, dynamic> focusNode;
+  final bool? status;
+  final User? user;
+  final Map<String, dynamic>? focusNode;
 
   const CustomFormField({
-    Key key,
+    Key? key,
     @required this.status,
     @required this.user,
     @required this.focusNode,
@@ -20,13 +20,13 @@ class CustomFormField extends StatelessWidget {
   Widget tel(BuildContext context) {
     return CardMenu(
       status: status,
-      title: user.tel,
+      title: user!.tel,
       hintText: 'Tel',
-      onSaved: (input) => user.tel = (input == '') ? null : input,
+      onSaved: (input) => user!.tel = (input == '') ? null : input,
       keyboardType: TextInputType.number,
-      focusNode: focusNode['tel'],
+      focusNode: focusNode!['tel'],
       onFieldSubmitted: (term) {
-        focusNode['tel'].unfocus();
+        focusNode!['tel'].unfocus();
       },
       validator: (input) {
         if (input.isEmpty) {
@@ -45,13 +45,13 @@ class CustomFormField extends StatelessWidget {
   Widget email(BuildContext context) {
     return CardMenu(
       status: status,
-      title: user.email,
+      title: user!.email,
       hintText: 'Email',
-      onSaved: (input) => user.email = (input == '') ? null : input,
-      focusNode: focusNode['email'],
+      onSaved: (input) => user!.email = (input == '') ? null : input,
+      focusNode: focusNode!['email'],
       onFieldSubmitted: (term) {
-        focusNode['email'].unfocus();
-        FocusScope.of(context).requestFocus(focusNode['tel']);
+        focusNode!['email'].unfocus();
+        FocusScope.of(context).requestFocus(focusNode!['tel']);
       },
       validator: (input) {
         if (!isEmail(input)) {
@@ -66,13 +66,13 @@ class CustomFormField extends StatelessWidget {
   Widget lastName(BuildContext context) {
     return CardMenu(
       status: status,
-      title: user.lastName,
+      title: user!.lastName,
       hintText: 'LastName',
-      onSaved: (input) => user.lastName = (input == '') ? null : input,
-      focusNode: focusNode['lastName'],
+      onSaved: (input) => user!.lastName = (input == '') ? null : input,
+      focusNode: focusNode!['lastName'],
       onFieldSubmitted: (term) {
-        focusNode['lastName'].unfocus();
-        FocusScope.of(context).requestFocus(focusNode['email']);
+        focusNode!['lastName'].unfocus();
+        FocusScope.of(context).requestFocus(focusNode!['email']);
       },
     );
   }
@@ -80,13 +80,13 @@ class CustomFormField extends StatelessWidget {
   Widget firstName(BuildContext context) {
     return CardMenu(
       status: status,
-      title: user.firstName,
+      title: user!.firstName,
       hintText: 'FirstName',
-      onSaved: (input) => user.firstName = input == '' ? null : input,
-      focusNode: focusNode['firstName'],
+      onSaved: (input) => user!.firstName = input == '' ? null : input,
+      focusNode: focusNode!['firstName'],
       onFieldSubmitted: (term) {
-        focusNode['firstName'].unfocus();
-        FocusScope.of(context).requestFocus(focusNode['lastName']);
+        focusNode!['firstName'].unfocus();
+        FocusScope.of(context).requestFocus(focusNode!['lastName']);
       },
     );
   }

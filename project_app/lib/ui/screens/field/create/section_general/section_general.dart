@@ -6,19 +6,18 @@ import 'package:project_app/ui/components/rounded_button.dart';
 import 'package:project_app/ui/screens/field/create/dialog_loading/dialog_loading.dart';
 import 'package:project_app/ui/screens/field/create/section_images/title_bar.dart';
 import 'package:project_app/ui/screens/field/create/section_location/section_location.dart';
-import 'package:project_app/ui/screens/googleMap/google_map_screen.dart';
 
 import 'custom_field.dart';
 
 class SectionGeneral extends StatefulWidget {
-  final Field field;
-  final FieldLocation fieldLocation;
-  final bool isCreate;
-  final GlobalKey<FormState> formKey;
-  final GestureTapCallback onSubmit;
+  final Field? field;
+  final FieldLocation? fieldLocation;
+  final bool? isCreate;
+  final GlobalKey<FormState>?formKey;
+  final GestureTapCallback? onSubmit;
 
   const SectionGeneral({
-    Key key,
+    Key? key,
     @required this.field,
     @required this.onSubmit,
     @required this.isCreate,
@@ -31,8 +30,8 @@ class SectionGeneral extends StatefulWidget {
 }
 
 class _SectionGeneralState extends State<SectionGeneral> {
-  Map<String, dynamic> focusNode;
-  Map<String, dynamic> textCtl;
+  Map<String, dynamic>? focusNode;
+  Map<String, dynamic>? textCtl;
   List<String> keys = ['title', 'detail', 'open', 'price', 'tel'];
 
   @override
@@ -42,7 +41,7 @@ class _SectionGeneralState extends State<SectionGeneral> {
 
   void setTool() {
     focusNode = SetTools.setFocusNode();
-    textCtl = SetTools.setTextCtl(field: widget.field);
+    // textCtl = SetTools.setTextCtl(field: widget.field!);
   }
 
   Future<void> _onSubmit() async {
@@ -55,7 +54,7 @@ class _SectionGeneralState extends State<SectionGeneral> {
 
   Widget buildButton() {
     return RoundedButton(
-      text: widget.isCreate ? 'Create' : 'Update',
+      text: widget.isCreate! ? 'Create' : 'Update',
       onTap: widget.onSubmit,
       // onTap: () async {
       //   await showDialog(
@@ -74,14 +73,14 @@ class _SectionGeneralState extends State<SectionGeneral> {
     return CustomField(
       labelText: 'Tel',
       hintText: 'tel',
-      onSaved: (input) => widget.field.tel = input,
-      onChanged: (input) => widget.field.tel = input,
+      onSaved: (input) => widget.field!.tel = input,
+      onChanged: (input) => widget.field!.tel = input,
       validator: (input) => input.isEmpty ? 'is Empty' : null,
-      controller: TextEditingController(text: widget.field.tel),
-      focusNode: focusNode[keys[index]],
+      controller: TextEditingController(text: widget.field!.tel),
+      focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
-        focusNode[keys[index]].unfocus();
-        FocusScope.of(context).requestFocus(focusNode[keys[index++]]);
+        focusNode![keys[index]].unfocus();
+        FocusScope.of(context).requestFocus(focusNode![keys[index++]]);
       },
     );
   }
@@ -91,15 +90,15 @@ class _SectionGeneralState extends State<SectionGeneral> {
     return CustomField(
       labelText: 'Price',
       hintText: 'price',
-      onSaved: (input) => widget.field.price = input,
-      onChanged: (input) => widget.field.price = input,
+      onSaved: (input) => widget.field!.price = input,
+      onChanged: (input) => widget.field!.price = input,
       validator: (input) => input.isEmpty ? 'is Empty' : null,
       keyboardType: TextInputType.datetime,
-      controller: TextEditingController(text: widget.field.price),
-      focusNode: focusNode[keys[index]],
+      controller: TextEditingController(text: widget.field!.price),
+      focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
-        focusNode[keys[index]].unfocus();
-        FocusScope.of(context).requestFocus(focusNode[keys[index++]]);
+        focusNode![keys[index]].unfocus();
+        FocusScope.of(context).requestFocus(focusNode![keys[index++]]);
       },
     );
   }
@@ -109,15 +108,15 @@ class _SectionGeneralState extends State<SectionGeneral> {
     return CustomField(
       labelText: 'Open Time',
       hintText: 'open-time',
-      onSaved: (input) => widget.field.hours = input,
-      onChanged: (input) => widget.field.hours = input,
+      onSaved: (input) => widget.field!.hours = input,
+      onChanged: (input) => widget.field!.hours = input,
       validator: (input) => input.isEmpty ? 'is Empty' : null,
       keyboardType: TextInputType.datetime,
-      controller: TextEditingController(text: widget.field.hours),
-      focusNode: focusNode[keys[index]],
+      controller: TextEditingController(text: widget.field!.hours),
+      focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
-        focusNode[keys[index]].unfocus();
-        FocusScope.of(context).requestFocus(focusNode[keys[index++]]);
+        focusNode![keys[index]].unfocus();
+        FocusScope.of(context).requestFocus(focusNode![keys[index++]]);
       },
     );
   }
@@ -128,14 +127,14 @@ class _SectionGeneralState extends State<SectionGeneral> {
       labelText: 'Detail',
       hintText: 'detail',
       maxLine: 5,
-      onSaved: (input) => widget.field.detail = input,
-      onChanged: (input) => widget.field.detail = input,
+      onSaved: (input) => widget.field!.detail = input,
+      onChanged: (input) => widget.field!.detail = input,
       validator: (input) => input.isEmpty ? 'is Empty' : null,
-      controller: TextEditingController(text: widget.field.detail),
-      focusNode: focusNode[keys[index]],
+      controller: TextEditingController(text: widget.field!.detail),
+      focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
-        focusNode[keys[index]].unfocus();
-        FocusScope.of(context).requestFocus(focusNode[keys[index++]]);
+        focusNode![keys[index]].unfocus();
+        FocusScope.of(context).requestFocus(focusNode![keys[index++]]);
       },
     );
   }
@@ -145,14 +144,14 @@ class _SectionGeneralState extends State<SectionGeneral> {
     return CustomField(
       labelText: 'Title',
       hintText: 'title',
-      onSaved: (input) => widget.field.title = input,
-      onChanged: (input) => widget.field.title = input,
+      onSaved: (input) => widget.field!.title = input,
+      onChanged: (input) => widget.field!.title = input,
       validator: (input) => input.isEmpty ? 'is Empty' : null,
-      controller: TextEditingController(text: widget.field.title),
-      focusNode: focusNode[keys[index]],
+      controller: TextEditingController(text: widget.field!.title),
+      focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
-        focusNode[keys[index]].unfocus();
-        FocusScope.of(context).requestFocus(focusNode[keys[index++]]);
+        focusNode![keys[index]].unfocus();
+        FocusScope.of(context).requestFocus(focusNode![keys[index++]]);
       },
     );
   }
@@ -169,9 +168,10 @@ class _SectionGeneralState extends State<SectionGeneral> {
             Container(
               padding: EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: creamPrimaryColor,
+                color: Colors.white,
                 borderRadius: BorderRadius.all(
                   Radius.circular(10),
+
                 ),
               ),
               child: Column(
@@ -216,9 +216,9 @@ class _SectionGeneralState extends State<SectionGeneral> {
 
   Container buildMap() {
     return Container(
-      padding: EdgeInsets.all(8),
+      // padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
-        color: creamPrimaryColor,
+        color: Colors.white,
         borderRadius: BorderRadius.all(
           Radius.circular(10),
         ),
@@ -240,7 +240,7 @@ class _SectionGeneralState extends State<SectionGeneral> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10),
               child: SectionLocation(
-                fieldLocation: widget.fieldLocation,
+                fieldLocation: widget.fieldLocation!,
               ),
             ),
           ),
@@ -251,16 +251,16 @@ class _SectionGeneralState extends State<SectionGeneral> {
 }
 
 class SetTools {
-  static Map<String, dynamic> setTextCtl({@required Field field}) {
-    return {
-      'title': TextEditingController(text: field.title ?? ''),
-      'detail': TextEditingController(text: field.detail ?? ''),
-      'address': TextEditingController(text: field.detail ?? ''),
-      'tel': TextEditingController(text: field.detail ?? ''),
-      'hours': TextEditingController(text: field.hours ?? ''),
-      'price': TextEditingController(text: field.price ?? ''),
-    };
-  }
+  // static Map<String, dynamic> setTextCtl({@required Field field}) {
+  //   return {
+  //     'title': TextEditingController(text: field.title ?? ''),
+  //     'detail': TextEditingController(text: field.detail ?? ''),
+  //     'address': TextEditingController(text: field.detail ?? ''),
+  //     'tel': TextEditingController(text: field.detail ?? ''),
+  //     'hours': TextEditingController(text: field.hours ?? ''),
+  //     'price': TextEditingController(text: field.price ?? ''),
+  //   };
+  // }
 
   static Map<String, dynamic> setFocusNode() {
     return {

@@ -13,7 +13,7 @@ class FormRegister extends StatefulWidget {
 
 class _FormRegisterState extends State<FormRegister> {
   User user = User();
-  String _confirmPass;
+  String? _confirmPass;
   bool _obscureText = true;
   var _formKey = GlobalKey<FormState>();
   Map<String, FocusNode> focusNode = {
@@ -49,10 +49,15 @@ class _FormRegisterState extends State<FormRegister> {
   Future<void> _onRegister() async {
     print('on register');
     // AuthService auth = AuthService();
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       await AuthService.register(user: user)
-          ? Navigator.pushReplacementNamed(context, LoginScreen.routeName)
+          ? Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LoginScreen(),
+              ),
+            )
           : _showDialog();
     }
   }
@@ -105,7 +110,12 @@ class _FormRegisterState extends State<FormRegister> {
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           onTap: () {
-            Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LoginScreen(),
+              ),
+            );
           },
         ),
       ],
@@ -126,15 +136,15 @@ class _FormRegisterState extends State<FormRegister> {
       hintText: 'Enter your tel',
       onSaved: (input) => user.tel = input,
       validator: (input) {
-        if(input.isEmpty){
-          return 'Please enter your tel' ;
-        }else if(input.length != 10){
+        if (input.isEmpty) {
+          return 'Please enter your tel';
+        } else if (input.length != 10) {
           return 'Tel must be at least 10 characters long';
-        }else{
+        } else {
           return null;
         }
       },
-      focusNode: focusNode['tel'],
+      focusNode: focusNode['tel']!,
       // onFieldSubmitted: (term) {
       //   focusNode['user'].unfocus();
       //   FocusScope.of(context).requestFocus(focusNode['pass']);
@@ -158,9 +168,9 @@ class _FormRegisterState extends State<FormRegister> {
           return null;
         }
       },
-      focusNode: focusNode['conPass'],
+      focusNode: focusNode['conPass']!,
       onFieldSubmitted: (term) {
-        focusNode['conPass'].unfocus();
+        focusNode['conPass']!.unfocus();
         FocusScope.of(context).requestFocus(focusNode['tel']);
       },
     );
@@ -182,9 +192,9 @@ class _FormRegisterState extends State<FormRegister> {
           return null;
         }
       },
-      focusNode: focusNode['pass'],
+      focusNode: focusNode['pass']!,
       onFieldSubmitted: (term) {
-        focusNode['pass'].unfocus();
+        focusNode['pass']!.unfocus();
         FocusScope.of(context).requestFocus(focusNode['conPass']);
       },
     );
@@ -196,9 +206,9 @@ class _FormRegisterState extends State<FormRegister> {
       hintText: 'Enter your username',
       onSaved: (input) => user.userName = input,
       validator: (input) => input.isEmpty ? 'Please enter your username' : null,
-      focusNode: focusNode['user'],
+      focusNode: focusNode['user']!,
       onFieldSubmitted: (term) {
-        focusNode['user'].unfocus();
+        focusNode['user']!.unfocus();
         FocusScope.of(context).requestFocus(focusNode['pass']);
       },
     );

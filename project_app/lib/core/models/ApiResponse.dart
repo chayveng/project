@@ -12,9 +12,9 @@ class ApiResponse {
     this.data,
   });
 
-  int status;
-  String message;
-  Object data;
+  int? status;
+  String? message;
+  Object? data;
 
 
   @override

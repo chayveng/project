@@ -11,12 +11,14 @@ import 'package:project_app/ui/screens/profile/components/custom_form_field.dart
 import 'package:project_app/ui/screens/profile/components/custom_top_bar.dart';
 import 'package:project_app/ui/screens/profile/components/user_image.dart';
 
+import 'components/new_user_image.dart';
+
 class Body extends StatefulWidget {
-  final bool status;
-  final Uint8List userImage;
+  final bool? status;
+  final Uint8List? userImage;
 
   Body({
-    Key key,
+    Key? key,
     @required this.status,
     @required this.userImage,
   }) : super(key: key);
@@ -29,7 +31,7 @@ class _BodyState extends State<Body> {
   final _formKey = GlobalKey<FormState>();
   bool _status = false;
   User _user = User();
-  Uint8List _image;
+  Uint8List? _image;
   Map<String, dynamic> focusNode = {
     'firstName': FocusNode(),
     'lastName': FocusNode(),
@@ -51,10 +53,10 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> _onUpdate() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       _status = !_status;
-      await UserService.update(user: _user, image: _image)
+      (await UserService.update(user: _user, image: _image))!
           ? fetchData()
           : print('update fail');
       Navigator.pop(context);
@@ -62,7 +64,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> _onEdit() async {
-    _formKey.currentState.reset();
+    _formKey.currentState!.reset();
     setState(() => _status = !_status);
   }
 
@@ -96,8 +98,7 @@ class _BodyState extends State<Body> {
           SizedBox(height: 30),
           UserImage(
             userName: _user.userName,
-            userImage: widget.userImage,
-            image: _image,
+            image: widget.userImage,
             status: _status,
             onTap: () async => await _chooseImage(),
           ),

@@ -25,8 +25,6 @@ class _FormLoginState extends State<FormLogin> {
 
   @override
   Widget build(BuildContext context) {
-    // Size sized = MediaQuery.of(context).size;
-
     return Form(
       key: _formKey,
       child: Column(
@@ -44,12 +42,13 @@ class _FormLoginState extends State<FormLogin> {
   }
 
   Future<void> _onLogin() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       await AuthService.login(user: user)
-          ? Navigator.pushNamedAndRemoveUntil(
-              context, MainScreen.routeName, (route) => false)
-          // ? Navigator. pushReplacementNamed(context, MainScreen.routeName)
+          ? Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => MainScreen()),
+              (route) => false)
           : _showDialog();
     }
   }
@@ -96,7 +95,12 @@ class _FormLoginState extends State<FormLogin> {
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           onTap: () {
-            Navigator.pushNamed(context, RegisterScreen.routeName);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => RegisterScreen(),
+              ),
+            );
           },
           autofocus: true,
         ),
@@ -126,7 +130,7 @@ class _FormLoginState extends State<FormLogin> {
           return null;
         }
       },
-      focusNode: focusNode['pass'],
+      focusNode: focusNode['pass']!,
     );
   }
 
@@ -136,9 +140,9 @@ class _FormLoginState extends State<FormLogin> {
       hintText: 'Enter your username',
       onSaved: (input) => user.userName = input,
       validator: (input) => input.isEmpty ? 'Please enter your username' : null,
-      focusNode: focusNode['user'],
+      focusNode: focusNode['user']!,
       onFieldSubmitted: (term) {
-        focusNode['user'].unfocus();
+        focusNode['user']!.unfocus();
         FocusScope.of(context).requestFocus(focusNode['pass']);
       },
     );

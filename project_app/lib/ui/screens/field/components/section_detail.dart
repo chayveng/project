@@ -1,17 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
-import 'package:project_app/core/models/Field.dart';
-import 'package:project_app/core/models/Time.dart';
-import 'package:project_app/core/services/TimeService.dart';
 import 'package:project_app/ui/screens/field/components/custom_tabBar.dart';
-import 'package:project_app/ui/screens/field/components/section_general.dart';
-import 'package:project_app/ui/screens/field/components/section_time.dart';
 
 class SectionDetail extends StatefulWidget {
-  final List<String> tabBars;
-  final List<Widget> tabViews;
+  final List<String>? tabBars;
+  final List<Widget>? tabViews;
 
-  const SectionDetail({Key key, this.tabBars, this.tabViews}) : super(key: key);
+  const SectionDetail({Key? key, this.tabBars, this.tabViews}) : super(key: key);
 
   @override
   _SectionDetailState createState() => _SectionDetailState();
@@ -32,16 +27,15 @@ class _SectionDetailState extends State<SectionDetail> {
 
   void _onTapCurrent(int index) {
     setState(() {
-      _currentState = widget.tabBars.indexOf(widget.tabBars[index]);
+      _currentState = widget.tabBars!.indexOf(widget.tabBars![index]);
     });
   }
 
   Widget buildDetail(BuildContext context) {
     return Container(
-      color: creamPrimaryColor,
       width: sized(context).width,
       child: Center(
-        child: widget.tabViews[_currentState],
+        child: widget.tabViews![_currentState],
       ),
     );
   }
@@ -51,13 +45,13 @@ class _SectionDetailState extends State<SectionDetail> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ...List.generate(
-          widget.tabBars.length,
+          widget.tabBars!.length,
           (index) {
             return Expanded(
               child: InkWell(
                 onTap: () => _onTapCurrent(index),
                 child: CustomTabBar(
-                  tabBar: widget.tabBars[index],
+                  tabBar: widget.tabBars![index],
                   current: _currentState == index ? true : false,
                 ),
               ),

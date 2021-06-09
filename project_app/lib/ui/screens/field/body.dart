@@ -16,10 +16,11 @@ import 'components/section_detail.dart';
 import 'components/section_images.dart';
 
 class Body extends StatefulWidget {
-  final bool isOwner;
-  final int fieldId;
+  final bool? isOwner;
+  final int? fieldId;
 
-  const Body({Key key, @required this.isOwner, this.fieldId}) : super(key: key);
+  const Body({Key? key, @required this.isOwner, this.fieldId})
+      : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -32,64 +33,44 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
+    print(widget.fieldId);
     fetchData();
     super.initState();
   }
 
   Future<void> fetchData() async {
     print('fetch');
-    field = await FieldServices.findById(widget.fieldId);
-    await downloadImages();
-    print(field.id);
+    field = await FieldServices.findById(widget.fieldId!);
+    // await downloadImages();
     await Future.delayed(Duration(milliseconds: 1000), () => setState(() {}));
   }
 
-  Future<void> downloadImages() async {
-    images = [];
-    List urlImages = [];
-    if (widget.fieldId != null) {
-      String path = '/field/urlImages/${widget.fieldId}';
-      var res = await ApiConnect.get(path: path);
-      urlImages = jsonDecode(res);
-      for (var i = 0; i < urlImages.length; i++) {
-        print('add images');
-        var res = await http.get(urlImages[i]);
-        images.add(res.bodyBytes);
-        setState(() {});
-      }
-    }
-  }
+  // Future<void> downloadImages() async {
+  //   // images = [];
+  //   List urlImages = [];
+  //   if (widget.fieldId != null) {
+  //     String path = '/field/urlImages/${widget.fieldId}';
+  //     var res = await ApiConnect.get(path: path);urlImages = jsonDecode(res.toString());
+  //     for (var i = 0; i < urlImages.length; i++) {
+  //       var url = Uri.parse(urlImages[i]);
+  //       var res = await http.get(url);
+  //       images.add(res.bodyBytes);
+  //       setState(() {});
+  //     }
+  //   }
+  //   print('images: ${images.length}');
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: sized(context).width,
-      child: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Column(
-                  children: [
-                    SizedBox(height: 100),
-                    SectionImages(images: images),
-                    SectionDetail(
-                      tabBars: ['General', 'Times'],
-                      tabViews: [
-                        SectionGeneral(field: field),
-                        SectionTimes(times: [])
-                      ],
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-          Container(
-            height: 100,
-            child: CustomAppBar(
-              isOwner: widget.isOwner,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomAppBar(
+              isOwner: widget.isOwner!,
               onEdit: () async {
                 print('to field screen');
                 await Navigator.push(
@@ -97,15 +78,23 @@ class _BodyState extends State<Body> {
                       MaterialPageRoute(
                         builder: (context) => CreateFieldScreen(
                           isCreate: false,
-                          fieldId: field.id,
+                          fieldId: field.id!,
                         ),
                       ),
                     ) ??
                     fetchData();
               },
             ),
-          ),
-        ],
+            SectionImages(images: []),
+            SectionDetail(
+              tabBars: ['General', 'Times'],
+              tabViews: [
+                SectionGeneral(field: field),
+                SectionTimes(times: []),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -4,11 +4,11 @@ import 'package:project_app/constants.dart';
 import 'body.dart';
 
 class CreateFieldScreen extends StatelessWidget {
-  final bool isCreate;
-  final int fieldId;
+  final bool? isCreate;
+  final int? fieldId;
 
   const CreateFieldScreen({
-    Key key,
+    Key? key,
     @required this.isCreate,
     this.fieldId,
   }) : super(key: key);

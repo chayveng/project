@@ -12,10 +12,10 @@ class FieldLocation {
     this.lng,
   });
 
-  int id;
-  int fieldId;
-  double lat;
-  double lng;
+  int? id;
+  int? fieldId;
+  double? lat;
+  double? lng;
 
   factory FieldLocation.fromJson(Map<String, dynamic> json) => FieldLocation(
     id: json["id"],

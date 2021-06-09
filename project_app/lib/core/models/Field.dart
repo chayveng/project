@@ -19,14 +19,14 @@ class Field {
     this.price,
   });
 
-  int id;
-  int userId;
-  String title;
-  String detail;
-  String address;
-  String tel;
-  String hours;
-  String price;
+  int? id;
+  int? userId;
+  String? title;
+  String? detail;
+  String? address;
+  String? tel;
+  String? hours;
+  String? price;
 
   factory Field.fromJson(Map<String, dynamic> json) => Field(
         id: json["id"],

@@ -4,13 +4,13 @@ import '../../constants.dart';
 
 
 class RoundedButton extends StatelessWidget {
-  final String text;
-  final GestureTapCallback onTap;
-  final FocusNode focusNode;
+  final String? text;
+  final GestureTapCallback? onTap;
+  final FocusNode? focusNode;
   final bool autofocus;
 
   const RoundedButton({
-    Key key,
+    Key? key,
     @required this.text,
     @required this.onTap,
     this.focusNode,
@@ -33,7 +33,7 @@ class RoundedButton extends StatelessWidget {
             padding: EdgeInsets.only(top: 15, bottom: 15),
             child: Center(
               child: Text(
-                text,
+                text!,
                 style: TextStyle(
                   color: navyPrimaryColor,
                   fontSize: 16,

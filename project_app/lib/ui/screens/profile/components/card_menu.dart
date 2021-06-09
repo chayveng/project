@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import '../../../../constants.dart';
 
 class CardMenu extends StatelessWidget {
-  final bool status;
-  final String title;
-  final String hintText;
-  final FormFieldSetter onSaved;
-  final FormFieldValidator validator;
-  final FocusNode focusNode;
-  final ValueChanged onFieldSubmitted;
-  final TextInputType keyboardType;
+  final bool? status;
+  final String? title;
+  final String? hintText;
+  final FormFieldSetter? onSaved;
+  final FormFieldValidator? validator;
+  final FocusNode? focusNode;
+  final ValueChanged? onFieldSubmitted;
+  final TextInputType? keyboardType;
 
   const CardMenu({
-    Key key,
+    Key? key,
     @required this.status,
     @required this.title,
     this.onSaved,

@@ -7,16 +7,16 @@ import '../../../constants.dart';
 
 class MainScreen extends StatefulWidget {
   static String routeName = '/main';
-  final int currentIndex;
+  final int? currentIndex;
 
-  const MainScreen({Key key, this.currentIndex}) : super(key: key);
+  const MainScreen({Key? key, this.currentIndex}) : super(key: key);
   @override
   _MainScreenState createState() => _MainScreenState(currentIndex);
 }
 
 class _MainScreenState extends State<MainScreen> {
-  int currentIndex;
-  int _currentIndex = 0;
+  int? currentIndex;
+  int? _currentIndex = 0;
   final tabs = [
     HomeScreen(),
     BookingScreen(),
@@ -28,9 +28,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: tabs[currentIndex != null ? currentIndex : _currentIndex],
+      body: tabs[currentIndex != null ? currentIndex! : _currentIndex!],
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
+        currentIndex: _currentIndex!,
         backgroundColor: orangePrimaryColor,
         selectedItemColor: navyPrimaryColor,
         unselectedItemColor: navyPrimaryColor,
@@ -47,16 +47,16 @@ class _MainScreenState extends State<MainScreen> {
             label: 'booking',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: 'other',
-            backgroundColor: Colors.lightGreenAccent
+              icon: Icon(Icons.person_outline),
+              label: 'other',
+              backgroundColor: Colors.lightGreenAccent
           ),
         ],
         onTap: (index) {
           setState(() {
             _currentIndex = index;
             currentIndex = null;
-             // _currentIndex = currentIndex == null ? index : currentIndex;
+            // _currentIndex = currentIndex == null ? index : currentIndex;
           });
         },
       ),

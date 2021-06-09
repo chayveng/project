@@ -1,16 +1,8 @@
-import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:project_app/core/apis/ApiConnect.dart';
-import 'package:project_app/core/apis/FieldApi.dart';
-import 'package:project_app/core/models/ApiResponse.dart';
-import 'package:project_app/core/models/Club.dart';
-import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/models/User.dart';
 import 'package:project_app/core/services/AuthService.dart';
-import 'package:project_app/core/services/ClubService.dart';
-import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/core/services/UserService.dart';
 
 import 'package:project_app/ui/screens/login/login_screen.dart';
@@ -18,7 +10,6 @@ import 'package:project_app/ui/screens/myFields/my_fields_screen.dart';
 import 'package:project_app/ui/screens/other/components/button_menu.dart';
 import 'package:project_app/ui/screens/other/components/user_info.dart';
 import 'package:project_app/ui/screens/profile/profile_screen.dart';
-import 'package:http/http.dart' as http;
 
 import 'components/dialog_logout.dart';
 
@@ -28,9 +19,9 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  User user = User();
-  bool _status = false;
-  Uint8List _userImage;
+  User? user = User();
+  bool? _status = false;
+  Uint8List? _userImage;
 
   @override
   void initState() {
@@ -83,7 +74,7 @@ class _BodyState extends State<Body> {
 
   Widget buttonMyClub(BuildContext context) {
     return ButtonMenu(
-      title: 'My field',
+      title: 'My club',
       onPressed: () async => await _onMyClub(context),
     );
   }
@@ -96,7 +87,7 @@ class _BodyState extends State<Body> {
             context,
             MaterialPageRoute(
               builder: (context) => ProfileScreen(
-                userImage: _userImage,
+                userImage: _userImage!,
               ),
             ),
           ) ??
@@ -106,16 +97,18 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        SizedBox(height: 30),
-        UserInfo(user: user, userImage: _userImage),
-        SizedBox(height: 10),
-        buttonProfile(context),
-        buttonMyClub(context),
-        buttonLogout(context),
-      ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(height: 30),
+          UserInfo(user: user, userImage: _userImage),
+          SizedBox(height: 10),
+          buttonProfile(context),
+          buttonMyClub(context),
+          buttonLogout(context),
+        ],
+      ),
     );
   }
 }

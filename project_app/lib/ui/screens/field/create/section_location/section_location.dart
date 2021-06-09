@@ -7,9 +7,9 @@ import 'package:project_app/ui/components/custom_dialog_loading.dart';
 import '../../../../../constants.dart';
 
 class SectionLocation extends StatefulWidget {
-  final FieldLocation fieldLocation;
+  final FieldLocation? fieldLocation;
 
-  const SectionLocation({Key key,
+  const SectionLocation({Key? key,
     this.fieldLocation}) : super(key: key);
 
   @override
@@ -20,8 +20,8 @@ class _SectionLocationState extends State<SectionLocation> {
   List<Marker> handleMarker = [];
   Location location = Location();
   // FieldLocation fieldLocation = FieldLocation();
-  CameraPosition cameraPosition;
-  LatLng currentLocation;
+  CameraPosition? cameraPosition;
+  LatLng? currentLocation;
 
   @override
   void initState() {
@@ -32,11 +32,11 @@ class _SectionLocationState extends State<SectionLocation> {
   void setLocation() async {
     // LatLng myLocation = LatLng(16.431387560289423, 102.81499053196279);
     LocationData lctLocation = await location.getLocation();
-    currentLocation = LatLng(lctLocation.latitude, lctLocation.longitude);
-    widget.fieldLocation.lat= currentLocation.latitude;
-    widget.fieldLocation.lng= currentLocation.longitude;
+    currentLocation = LatLng(lctLocation.latitude!, lctLocation.longitude!);
+    widget.fieldLocation!.lat= currentLocation!.latitude;
+    widget.fieldLocation!.lng= currentLocation!.longitude;
     // currentLocation = myLocation;
-    cameraPosition = CameraPosition(target: currentLocation, zoom: 16.0);
+    cameraPosition = CameraPosition(target: currentLocation!, zoom: 16.0);
     await Future.delayed(Duration(milliseconds: 200), () => setState(() {}));
     _defaultMarker();
   }
@@ -44,15 +44,15 @@ class _SectionLocationState extends State<SectionLocation> {
   void _defaultMarker() {
     handleMarker.add(Marker(
       markerId: MarkerId(currentLocation.toString()),
-      position: currentLocation,
+      position: currentLocation!,
     ));
   }
 
   void _handleTap(LatLng tappedPoint) {
     setState(() {
       handleMarker = [];
-      widget.fieldLocation.lat = tappedPoint.latitude;
-      widget.fieldLocation.lng = tappedPoint.longitude;
+      widget.fieldLocation!.lat = tappedPoint.latitude;
+      widget.fieldLocation!.lng = tappedPoint.longitude;
       handleMarker.add(
         Marker(
           markerId: MarkerId(tappedPoint.toString()),
@@ -67,7 +67,7 @@ class _SectionLocationState extends State<SectionLocation> {
     return currentLocation != null
         ? GoogleMap(
             zoomGesturesEnabled: true,
-            initialCameraPosition: cameraPosition,
+            initialCameraPosition: cameraPosition!,
             onTap: _handleTap,
             mapType: MapType.normal,
             myLocationEnabled: true,

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class NotBooking extends StatelessWidget {
@@ -13,7 +15,11 @@ class NotBooking extends StatelessWidget {
             child: Image.asset('assets/images/non_booking.png'),
           ),
           SizedBox(height: 20),
-          Text('Not booking'),
+          Text(
+            'ยังไม่มีการจองสนาม',
+            style: TextStyle(
+                fontSize: 30, fontWeight: FontWeight.bold, fontFamily: 'Kanit'),
+          ),
         ],
       ),
     );

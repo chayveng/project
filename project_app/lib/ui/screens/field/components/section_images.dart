@@ -1,32 +1,31 @@
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../../../constants.dart';
 
 class SectionImages extends StatefulWidget {
-  final List<Uint8List> images;
+  final List<Uint8List>? images;
 
-  const SectionImages({Key key, this.images}) : super(key: key);
+  const SectionImages({Key? key, this.images}) : super(key: key);
 
   @override
   _SectionImagesState createState() => _SectionImagesState();
 }
 
 class _SectionImagesState extends State<SectionImages> {
-  int _current = 0;
+  int? _current = 0;
 
   Future<void> _chooseImage() async {
     File image = await chooseImage(ImageSource.gallery);
     if (image != null)
-      setState(() => widget.images.add(image.readAsBytesSync()));
+      setState(() => widget.images!.add(image.readAsBytesSync()));
   }
 
   void _removeImage() {
-    setState(() => widget.images.removeLast());
+    setState(() => widget.images!.removeLast());
   }
 
   Widget customBtn() {
@@ -47,60 +46,86 @@ class _SectionImagesState extends State<SectionImages> {
   }
 
   Widget indicator() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
-        ...List.generate(
-          widget.images.length,
-          (index) {
-            return Container(
-            width: 8.0,
-            height: 8.0,
-            margin: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
-            decoration: BoxDecoration(
-              color: _current == index ? Colors.black87 : Colors.black12,
-              shape: BoxShape.circle,
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ...List.generate(
+              widget.images!.length,
+              (index) {
+                return Container(
+                  width: 8.0,
+                  height: 8.0,
+                  margin: EdgeInsets.symmetric(vertical: 10, horizontal: 2),
+                  decoration: BoxDecoration(
+                    color: _current == index ? Colors.black87 : Colors.black12,
+                    shape: BoxShape.circle,
+                  ),
+                );
+              },
             ),
-          );
-          },
+          ],
         ),
       ],
     );
   }
 
+  // Widget formImages() {
+  //   return CarouselSlider(
+  //     options: CarouselOptions(
+  //       height: sized(context).height * 0.33,
+  //       viewportFraction: 1.0,
+  //       enableInfiniteScroll: false,
+  //       onPageChanged: (index, reason) {
+  //         setState(() => _current = index);
+  //       },
+  //     ),
+  //     items: widget.images!
+  //         .map(
+  //           (item) => Container(
+  //             width: double.infinity,
+  //             height: double.infinity,
+  //             child: Image.memory(item, fit: BoxFit.cover),
+  //           ),
+  //         )
+  //         .toList(),
+  //   );
+  // }
+
   Widget formImages() {
-    return CarouselSlider(
-      options: CarouselOptions(
-        height: sized(context).height * 0.33,
-        viewportFraction: 1.0,
-        enableInfiniteScroll: false,
-        onPageChanged: (index, reason) {
-          setState(() => _current = index);
-        },
-      ),
-      items: widget.images
-          .map(
-            (item) => Container(
-              width: double.infinity,
-              height: double.infinity,
-              child: Image.memory(item, fit: BoxFit.cover),
+    return widget.images != null
+        ? Container(
+            height: 250,
+            width: sized(context).width,
+            child: PageView.builder(
+              itemCount: widget.images!.length, // Can be null
+              itemBuilder: (context, index) {
+                return Image.memory(
+                  widget.images![index],
+                  fit: BoxFit.cover,
+                );
+              },
             ),
           )
-          .toList(),
-    );
+        : SizedBox();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 250,
-      width: sized(context).width,
-      child: Stack(
-        children: [
-          formImages(),
-          Align(alignment: Alignment.bottomCenter,child: indicator()),
-        ],
-      ),
+    return Column(
+      children: [
+        Container(
+          width: sized(context).width,
+          child: Column(
+            children: [
+              formImages(),
+              indicator(),
+            ],
+          ),
+        ),
+        // widget.isEdit ? customBtn() : SizedBox(),
+      ],
     );
   }
 }

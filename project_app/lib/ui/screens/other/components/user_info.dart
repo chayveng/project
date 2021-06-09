@@ -7,23 +7,26 @@ import 'package:project_app/core/models/User.dart';
 import '../../../../constants.dart';
 
 class UserInfo extends StatelessWidget {
-  final User user;
-  final Uint8List userImage;
+  final User? user ;
+  final Uint8List? userImage;
 
-  const UserInfo({Key key, this.user, this.userImage}) : super(key: key);
+  const UserInfo({
+    Key? key,
+    this.user,
+    this.userImage,
+  }) : super(key: key);
 
   Widget tel() {
-    return Text(user.tel ?? '');
+    return Text(user!.tel ?? '');
   }
 
   Widget formName(BuildContext context) {
     return Container(
       width: sized(context).width * 0.5,
       child: Text(
-        '${user.firstName ?? 'FirstName'}\, ${user.lastName ?? 'LastName'}',
+        '${user!.firstName ?? 'FirstName'}\, ${user!.lastName ?? 'LastName'}',
         style: TextStyle(
-          color: user.firstName == null ? Colors.black38 : Colors.black
-        ),
+            color: user!.firstName == null ? Colors.black38 : Colors.black),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       ),
@@ -32,7 +35,7 @@ class UserInfo extends StatelessWidget {
 
   Widget username() {
     return Text(
-      user.userName ?? '',
+      user!.userName ?? '',
       style: TextStyle(
         fontSize: 16,
         color: navyPrimaryColor,
@@ -66,7 +69,10 @@ class UserInfo extends StatelessWidget {
         child: Container(
           color: creamPrimaryColor,
           child: userImage != null
-              ? Image.memory(userImage, fit: BoxFit.cover,)
+              ? Image.memory(
+                  userImage!,
+                  fit: BoxFit.cover,
+                )
               : Icon(
                   Icons.person,
                   color: navyPrimaryColor.withOpacity(0.7),

@@ -1,21 +1,22 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:project_app/config/Config.dart';
 import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/apis/FieldApi.dart';
 import 'package:project_app/core/models/ApiResponse.dart';
 import 'package:project_app/core/models/Field.dart';
-import 'package:project_app/core/services/UserService.dart';
+
+import '../Config.dart';
 
 class FieldServices {
   static Future<List<Field>> findAll() async {
     ApiResponse response = await FieldApi.findAll();
-    List<Field> fields = fieldsFromJson(response.data);
-    return fields;
+    List dataList = jsonDecode(jsonEncode(response.data));
+    return fieldsFromJson(dataList);
   }
 
   static Future<Field> findById(int fieldId) async {
@@ -24,34 +25,37 @@ class FieldServices {
     return field;
   }
 
-  static Future<bool> create(Field field, List images) async {
+  static Future<bool> create(
+    Field field,
+    List images,
+  ) async {
     print('create');
     bool status = false;
-    await FieldApi.create(field).then((value) {
-      print(value);
-      if (value.status == 1) {
-        Field _field = fieldFromJson(jsonEncode(value.data));
-        uploadImages(_field.id, images);
-        status = true;
-      }
-      print(value);
-    });
-
+      await FieldApi.create(field).then((value) {
+        if (value.status == 1) {
+          Field _field = fieldFromJson(jsonEncode(value.data));
+          uploadImages(_field.id!, images);
+          status = true;
+        }
+        print(value);
+      });
     return status;
   }
 
-  static Future<bool> update(Field field, List images) async {
+  static Future<bool> update(
+    Field field,
+    List images,
+  ) async {
     print('update');
     bool status = false;
-    await FieldApi.update(field).then((value) {
-      if (value.status == 1) {
-        Field _field = fieldFromJson(jsonEncode(value.data));
-        uploadImages(_field.id, images);
-        status = true;
-      }
-      print(value);
-    });
-
+      await FieldApi.update(field).then((value) {
+        if (value.status == 1) {
+          Field _field = fieldFromJson(jsonEncode(value.data));
+          uploadImages(_field.id!, images);
+          status = true;
+        }
+        print(value);
+      });
     return status;
   }
 
@@ -67,10 +71,10 @@ class FieldServices {
   }
 
   static Future<List<Uint8List>> downloadImages(int fieldId) async {
-    var images = [];
+    List<Uint8List> images = [];
     String path = '/field/urlImages/$fieldId';
     var res = await ApiConnect.get(path: path);
-    List urlImages = jsonDecode(res);
+    List urlImages = jsonDecode(jsonEncode(res));
     for (var url in urlImages) {
       await http.get(url).then((value) {
         images.add(value.bodyBytes);
@@ -80,15 +84,14 @@ class FieldServices {
     return images;
   }
 
-  static Future<List<Field>> getByUserId() async {
-    int userId = await UserService.getUserId();
-    return await FieldApi.findByUserId(userId).then(
-      (value) => value.status == 1 ? fieldsFromJson(value.data) : [],
-    );
+  static Future<List<Field>> getByUserId(int userId) async {
+    ApiResponse response = await FieldApi.findByUserId(userId);
+    List dataList = jsonDecode(jsonEncode(response.data));
+    return fieldsFromJson(dataList);
   }
 
   static Future<String> firstImageUrl(int fieldId) async {
-    String url = '${Config.API_URL}/field/urlImages/$fieldId';
+    var url = Uri.parse('${Config.API_URL}/field/urlImages/$fieldId');
     var response = await http.get(url);
     List urlImages = jsonDecode(response.body);
     return urlImages[0];

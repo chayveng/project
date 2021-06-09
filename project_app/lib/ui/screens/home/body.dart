@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
+import 'package:project_app/ui/components/custom_widget_loading.dart';
 
-import '../../../constants.dart';
 import 'components/section_fields.dart';
 
 class Body extends StatefulWidget {
@@ -15,6 +13,62 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   List<Field> fields = [];
   var _refresh = GlobalKey<RefreshIndicatorState>();
+  // @override
+  // void initState() {
+  //   fetchData();
+  //   super.initState();
+  // }
+  //
+  // Future<Null> _handleRefresh() async {
+  //   fetchData();
+  //   await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
+  //   return null;
+  // }
+  //
+  // Future<bool> refresh() async {
+  //   await Future.delayed(Duration(milliseconds: 200));
+  //   return true;
+  // }
+  //
+  // Future<bool> fetchData() async {
+  //   fields = [];
+  //   fields = await FieldServices.findAll();
+  //   await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
+  //   return true;
+  // }
+  //
+  // List<Field> fields = [];
+  // var _refresh = GlobalKey<RefreshIndicatorState>();
+  //
+  // // Future refresh() async {
+  // //   print('refresh');
+  // //   await Future.delayed(
+  // //     Duration(milliseconds: 5000),
+  // //     () async => await fetchData(),
+  // //   );
+  // // }
+  //
+  // Future setData() async {
+  //   fields = [];
+  //   fields = await FieldServices.findAll();
+  //   await Future.delayed(Duration(milliseconds: 2000));
+  //   setState(() {});
+  // }
+  //
+  // Future<bool?> fetchData() async {
+  //   print('fetchData');
+  //   setData();
+  //   if (fields.length == 0) {
+  //     setData();
+  //     print(fields.length);
+  //     print(false);
+  //     return false;
+  //   } else {
+  //     print(fields.length);
+  //     print(true);
+  //     return true;
+  //   }
+  // }
 
   @override
   void initState() {
@@ -37,16 +91,8 @@ class _BodyState extends State<Body> {
     fields = [];
     fields = await FieldServices.findAll();
     await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
+    print(fields.length);
     return true;
-  }
-
-  Center waitLoading() {
-    return Center(
-      child: SpinKitWave(
-        color: orangePrimaryColor,
-        size: 40,
-      ),
-    );
   }
 
   @override
@@ -61,10 +107,13 @@ class _BodyState extends State<Body> {
               onRefresh: _handleRefresh,
               child: FutureBuilder(
                 future: refresh(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) =>
-                    (snapshot.hasData)
-                        ? SectionFields(fields: fields)
-                        : Center(child: waitLoading()),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (fields.isNotEmpty) {
+                    return SectionFields(fields: fields);
+                  } else {
+                    return CustomWidgetLoading();
+                  }
+                },
               ),
             ),
           ],

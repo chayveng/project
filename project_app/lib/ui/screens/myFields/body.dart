@@ -1,9 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:http/http.dart' as http;
-import 'package:project_app/config/Config.dart';
 import 'package:project_app/core/apis/FieldApi.dart';
-import 'package:project_app/core/models/ApiResponse.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/core/services/UserService.dart';
@@ -13,11 +9,8 @@ import 'package:project_app/ui/screens/field/create/create_field_screen.dart';
 import 'package:project_app/ui/screens/field/field_screen.dart';
 import 'package:project_app/ui/screens/myFields/components/custom_appbar.dart';
 
-import '../../../constants.dart';
-// import 'components/card_field.dart';
-
 class Body extends StatefulWidget {
-  const Body({Key key}) : super(key: key);
+  const Body({Key? key}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -66,7 +59,7 @@ class _BodyState extends State<Body> {
   }
 
   Future<bool> fetchData() async {
-    fields = await FieldServices.getByUserId();
+    fields = await FieldServices.getByUserId(await UserService.getUserId());
     await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
     print('fetchData');
     return true;

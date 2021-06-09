@@ -6,7 +6,7 @@ import '../../../../constants.dart';
 
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

@@ -5,28 +5,28 @@ import 'package:project_app/core/services/FieldServices.dart';
 import '../../constants.dart';
 
 class CardField extends StatefulWidget {
-  final Field field;
-  final GestureTapCallback onTap;
-  final bool isOwner;
-  final GestureTapCallback onRemove;
+  final Field? field;
+  final bool? isOwner;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onRemove;
 
-  const CardField(
-      {Key key,
-      @required this.field,
-      @required this.onTap,
-      @required this.isOwner,
-      this.onRemove})
-      : super(key: key);
+  const CardField({
+    Key? key,
+    @required this.field,
+    @required this.onTap,
+    @required this.isOwner,
+    this.onRemove,
+  }) : super(key: key);
 
   @override
   _CardFieldState createState() => _CardFieldState();
 }
 
 class _CardFieldState extends State<CardField> {
-  String urlImage;
+  String? urlImage;
 
   Future<bool> fetchData() async {
-    urlImage = await FieldServices.firstImageUrl(widget.field.id);
+    urlImage = await FieldServices.firstImageUrl(widget.field!.id!);
     await Future.delayed(Duration(milliseconds: 500));
     return true;
   }
@@ -63,18 +63,18 @@ class _CardFieldState extends State<CardField> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '${widget.field.title}',
+                    '${widget.field!.title}',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text('${widget.field.hours}'),
-                  Text('${widget.field.price}'),
-                  Text('${widget.field.tel}'),
+                  Text('${widget.field!.hours}'),
+                  Text('${widget.field!.price}'),
+                  Text('${widget.field!.tel}'),
                 ],
               ),
             ),
-            widget.isOwner
+            widget.isOwner!
                 ? Container(
                     padding: EdgeInsets.all(4),
                     // width: 24,
@@ -115,7 +115,7 @@ class _CardFieldState extends State<CardField> {
       future: fetchData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasData) {
-          return cardField(urlImage);
+          return cardField(urlImage!);
         } else {
           return Center(
             child: SizedBox(),

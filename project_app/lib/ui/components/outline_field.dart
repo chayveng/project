@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import '../../constants.dart';
 
 class OutlineField extends StatelessWidget {
-  final String labelText;
-  final String hintText;
-  final FormFieldSetter onSaved;
-  final FormFieldValidator validator;
-  final int minLine;
-  final TextEditingController controller;
+  final String? labelText;
+  final String? hintText;
+  final FormFieldSetter? onSaved;
+  final FormFieldValidator? validator;
+  final int? minLine;
+  final TextEditingController? controller;
 
   const OutlineField({
-    Key key,
+    Key? key,
     @required this.labelText,
     @required this.hintText,
     @required this.onSaved,

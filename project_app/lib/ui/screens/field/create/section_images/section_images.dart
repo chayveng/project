@@ -7,10 +7,10 @@ import 'package:project_app/ui/screens/field/create/section_images/title_bar.dar
 import '../../../../../constants.dart';
 
 class SectionImages extends StatefulWidget {
-  final List<Uint8List> images;
+  final List<Uint8List>? images;
 
   const SectionImages({
-    Key key,
+    Key? key,
     @required this.images,
   }) : super(key: key);
 
@@ -22,12 +22,12 @@ class _SectionImagesState extends State<SectionImages> {
   double inSidePadding = 8;
 
   Future<void> _remove(int index) async {
-    setState(() => widget.images.removeAt(index));
+    setState(() => widget.images!.removeAt(index));
   }
 
   Future<void> _addImage() async {
     var res = await chooseImage(ImageSource.gallery);
-    if (res != null) setState(() => widget.images.add(res.readAsBytesSync()));
+    if (res != null) setState(() => widget.images!.add(res.readAsBytesSync()));
   }
 
   Widget buildAddImage() {
@@ -54,7 +54,7 @@ class _SectionImagesState extends State<SectionImages> {
             width: double.infinity,
             height: double.infinity,
             child: Image.memory(
-              widget.images[index],
+              widget.images![index],
               fit: BoxFit.cover,
             ),
           ),
@@ -77,9 +77,9 @@ class _SectionImagesState extends State<SectionImages> {
   }
 
   Widget buildFormImage(int index) {
-    if (index < widget.images.length) {
+    if (index < widget.images!.length) {
       return buildImage(index);
-    } else if (index == widget.images.length) {
+    } else if (index == widget.images!.length) {
       return Center(
         child: buildAddImage(),
       );
@@ -114,7 +114,7 @@ class _SectionImagesState extends State<SectionImages> {
       padding: const EdgeInsets.all(8.0),
       child: Container(
         decoration: BoxDecoration(
-          color: creamPrimaryColor,
+          color: Colors.white,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Column(

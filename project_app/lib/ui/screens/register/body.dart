@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 
-import 'form_login.dart';
-
+import 'components/form_register.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -12,37 +11,34 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    Size sized = MediaQuery
-        .of(context)
-        .size;
-    return Container(
-      color: greyPrimaryColor,
-      height: sized.height,
-      padding: EdgeInsets.symmetric(horizontal: 20),
-      child: ListView(
-        children: [
-          Column(
+    Size sized = MediaQuery.of(context).size;
+    return ListView(
+      children: [
+        Container(
+          height: sized.height,
+          color: greyPrimaryColor,
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
             children: [
               SizedBox(height: sized.height * 0.1),
               Row(
                 children: [
                   Text(
-                    'Login',
+                    'Register',
                     style: TextStyle(
-                      fontSize: 40,
-                      color: navyPrimaryColor,
-                      fontFamily: UiFont,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        color: navyPrimaryColor,
+                        fontSize: 40,
+                        fontFamily: UiFont,
+                        fontWeight: FontWeight.bold),
                   ),
                 ],
               ),
               SizedBox(height: 35),
-              FormLogin(),
+              FormRegister(),
             ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

@@ -17,6 +17,6 @@ public class FieldLocation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     private long fieldId;
-    private String lat;
-    private String lng;
+    private String latitude;
+    private String longitude;
 }

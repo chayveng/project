@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Field.dart';
-import 'package:project_app/ui/screens/field/components/section_location.dart';
 
 class SectionGeneral extends StatelessWidget {
-  final Field field;
+  final Field? field;
 
-  const SectionGeneral({Key key, @required this.field}) : super(key: key);
+  const SectionGeneral({Key? key, @required this.field}) : super(key: key);
 
-  Widget buildFormData({String title, String detail}) {
+  Widget buildFormData({String? title, String? detail}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        buildTitle(text: title),
-        Text(detail),
+        buildTitle(text: title!),
+        Text(detail!),
       ],
     );
   }
 
-  Widget buildTitle({IconData iconData, String text}) {
+  Widget buildTitle({IconData? iconData, String? text}) {
     return Row(
       children: [
         iconData != null
@@ -28,7 +27,7 @@ class SectionGeneral extends StatelessWidget {
               )
             : SizedBox(),
         Text(
-          text,
+          text!,
           style: TextStyle(
             fontWeight: FontWeight.bold,
           ),
@@ -44,34 +43,31 @@ class SectionGeneral extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          buildTitle(iconData: Icons.circle_notifications, text: 'General'),
-          SizedBox(height: 10),
           buildFormData(
             title: 'Title',
-            detail: '${field.title}',
+            detail: '${field!.title}',
           ),
           buildFormData(
             title: 'Detail',
-            detail: '${field.detail}',
+            detail: '${field!.detail}',
           ),
           buildFormData(
             title: 'Address',
             detail:
-                '${field.address}',
+                '${field!.address}',
           ),
           buildFormData(
             title: 'office hours',
-            detail: '${field.hours}',
+            detail: '${field!.hours}',
           ),
           buildFormData(
             title: 'price range',
-            detail: '${field.price}',
+            detail: '${field!.price}',
           ),
           buildFormData(
             title: 'Tal',
-            detail: '${field.tel}',
+            detail: '${field!.tel}',
           ),
-          SizedBox(height: 10),
           Container(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,7 +78,9 @@ class SectionGeneral extends StatelessWidget {
                   width: sized(context).width,
                   height: 300,
                   color: Colors.grey.shade400,
-                  child: SectionLocation(),
+                  child: Center(
+                    child: Text('Map'),
+                  ),
                 ),
               ],
             ),

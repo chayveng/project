@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:project_app/ui/components/custom_dialog_loading.dart';
 
 class DialogLoading extends StatefulWidget {
-  final Future onSubmit;
+  final Future? onSubmit;
 
-  const DialogLoading({Key key, @required this.onSubmit}) : super(key: key);
+  const DialogLoading({Key? key, @required this.onSubmit}) : super(key: key);
 
   @override
   _DialogLoadingState createState() => _DialogLoadingState();

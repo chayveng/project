@@ -13,10 +13,10 @@ import 'package:project_app/ui/screens/field/create/section_general/section_gene
 import 'package:project_app/ui/screens/field/create/section_images/section_images.dart';
 
 class Body extends StatefulWidget {
-  final bool isCreate;
-  final int fieldId;
+  final bool? isCreate;
+  final int? fieldId;
 
-  const Body({Key key, this.isCreate, this.fieldId}) : super(key: key);
+  const Body({Key? key, this.isCreate, this.fieldId}) : super(key: key);
 
   @override
   _BodyState createState() => _BodyState();
@@ -37,29 +37,29 @@ class _BodyState extends State<Body> {
   Future<void> fetchData() async {
     print('fieldId = ${widget.fieldId}');
     setData();
-    if (widget.fieldId != null) _downloadImages(widget.fieldId);
+    if (widget.fieldId != null) _downloadImages(widget.fieldId!);
     setState(() {});
   }
 
   Future<void> setData() async {
     field.userId = field.userId ?? await UserService.getUserId();
     if (widget.fieldId != null)
-      field = await FieldServices.findById(widget.fieldId);
+      field = await FieldServices.findById(widget.fieldId!);
     print(field);
   }
 
   Future<void> _downloadImages(int fieldId) async {
     // var images = [];
-    String path = '/field/urlImages/$fieldId';
-    var res = await ApiConnect.get(path: path);
-    List urlImages = jsonDecode(res);
-    for (var url in urlImages) {
-      await http.get(url).then((value) {
-        images.add(value.bodyBytes);
-        setState(() {});
-      });
-    }
-    print(images.length);
+    // String path = '/field/urlImages/$fieldId';
+    // var res = await ApiConnect.get(path: path);
+    // List urlImages = jsonDecode(res);
+    // for (var url in urlImages) {
+    //   await http.get(url).then((value) {
+    //     images.add(value.bodyBytes);
+    //     setState(() {});
+    //   });
+    // }
+    // print(images.length);
     // images = [];
     // images = await FieldServices.downloadImages(widget.fieldId);
     // setState(() {});
@@ -67,7 +67,7 @@ class _BodyState extends State<Body> {
 
   Future<bool> _submit() async {
     bool status = false;
-    var res = widget.isCreate
+    var res = widget.isCreate!
         ? await FieldServices.create(field, images)
         : await FieldServices.update(field, images);
     await Future.delayed(Duration(milliseconds: 1000));
@@ -79,8 +79,8 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> _onSubmit() async {
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
       var res = await showDialog(
         context: context,
         builder: (context) => DialogLoading(
@@ -113,7 +113,7 @@ class _BodyState extends State<Body> {
             fieldLocation: fieldLocation,
             field: field,
             onSubmit: () async => await _onSubmit(),
-            isCreate: widget.isCreate,
+            isCreate: widget.isCreate!,
             formKey: _formKey,
           ),
         ],

@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import '../../../../constants.dart';
 
 class CustomAppBar extends StatelessWidget {
-  final bool status;
-  final GestureTapCallback onEdit;
+  final bool? status;
+  final GestureTapCallback? onEdit;
 
   const CustomAppBar({
-    Key key,
+    Key? key,
     @required this.status,
     @required this.onEdit,
   }) : super(key: key);
@@ -26,7 +26,7 @@ class CustomAppBar extends StatelessWidget {
       child: GestureDetector(
         onTap: onEdit,
         child: Icon(
-          status ? Icons.edit : Icons.edit_off,
+          status! ? Icons.edit : Icons.edit_off,
           color: navyPrimaryColor,
           size: 22,
         ),

@@ -1,9 +1,7 @@
-import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:project_app/ui/components/custom_dialog_loading.dart';
 
 const String UiFont = 'Comfortaa';
 
@@ -30,32 +28,16 @@ Opacity buildDefaultImage() {
   );
 }
 
-Future buildDialogLoading(BuildContext context, int millisecond) {
-  return showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) {
-        Future.delayed(Duration(milliseconds: millisecond), () {
-          Navigator.of(context).pop();
-        });
-        return CustomDialogLoading();
-      });
-}
 
-Widget testBox({double sized, Color color}) => Container(
-      height: sized ?? 200,
-      width: sized ?? 200,
-      color: color ?? Colors.redAccent,
-    );
-
-Widget testButton({String text, Function onPressed}) => ElevatedButton(
-      onPressed: onPressed ?? () => print(text ?? 'Test Button ><!'),
-      child: Text(text ?? 'Test Button'),
-    );
+Widget testBox({double? sized, Color? color}) => Container(
+  height: sized ?? 200,
+  width: sized ?? 200,
+  color: color ?? Colors.redAccent,
+);
 
 Future<File> chooseImage(ImageSource imageSource) async {
   ImagePicker imagePicker = ImagePicker();
-  File image;
+  File? image;
   try {
     var _image =  await imagePicker.getImage(source: imageSource);
     if (_image != null) {
@@ -66,17 +48,5 @@ Future<File> chooseImage(ImageSource imageSource) async {
   }catch (e){
     print('error chooseImage');
   }
-  return image;
+  return image!;
 }
-
-// Future<void> chooseImage(ImageSource imageSource) async {
-//   ImagePicker imagePicker = ImagePicker();
-//   try {
-//     var image = await imagePicker.getImage(source: imageSource);
-//     if (image != null) {
-//       setState(() => images.add(File(image.path)));
-//     }
-//   } catch (e) {
-//     print("error");
-//   }
-// }

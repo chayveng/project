@@ -1,13 +1,13 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:project_app/core/services/UserService.dart';
-import 'package:project_app/routs.dart';
+import 'package:project_app/routes.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
-import 'package:project_app/ui/screens/testScreen/TestScreen.dart';
+import 'package:project_app/ui/screens/test/text_screen.dart';
 
 import 'constants.dart';
 import 'core/services/AuthService.dart';
+import 'core/services/UserService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -21,10 +21,10 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  final Widget screen;
+  final Widget? screen;
 
   MyApp({
-    Key key,
+    Key? key,
     @required this.screen,
   }) : super(key: key);
 
@@ -54,8 +54,8 @@ class MyApp extends StatelessWidget {
       ),
       title: 'Flutter Demo',
       routes: routes,
-      // home: screen,
-      home: TestScreen(),
+      home: screen,
+      // home: TextScreen(),
     );
   }
 }

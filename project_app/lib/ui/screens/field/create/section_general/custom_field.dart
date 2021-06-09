@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 
 class CustomField extends StatelessWidget {
-  final String labelText;
-  final String hintText;
-  final FormFieldSetter onSaved;
-  final ValueChanged onChanged;
-  final FormFieldValidator validator;
-  final TextEditingController controller;
-  final FocusNode focusNode;
-  final ValueChanged onFieldSubmitted;
-  final TextInputType keyboardType;
-  final int maxLine;
+  final String? labelText;
+  final String? hintText;
+  final FormFieldSetter? onSaved;
+  final ValueChanged? onChanged;
+  final FormFieldValidator? validator;
+  final TextEditingController? controller;
+  final FocusNode? focusNode;
+  final ValueChanged? onFieldSubmitted;
+  final TextInputType? keyboardType;
+  final int? maxLine;
 
   const CustomField({
-    Key key,
+    Key? key,
     this.labelText,
     this.hintText,
     this.onSaved,
@@ -69,7 +69,7 @@ class CustomField extends StatelessWidget {
     );
   }
 
-  OutlineInputBorder buildOutlineInputBorder({Color color}) =>
+  OutlineInputBorder buildOutlineInputBorder({Color? color}) =>
       OutlineInputBorder(
         borderRadius: BorderRadius.all(Radius.circular(10)),
         borderSide: BorderSide(color: color != null ? color :orangePrimaryColor),

@@ -4,19 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 
 class UserImage extends StatelessWidget {
-  final String userName;
-  final Uint8List userImage;
-  final Uint8List image;
-  final GestureTapCallback onTap;
-  final bool status;
+  final String? userName;
+  final Uint8List? image;
+  final GestureTapCallback? onTap;
+  final bool? status;
 
   const UserImage({
-    Key key,
+    Key? key,
     @required this.userName,
-    this.userImage,
-    this.image,
+   @required this.image,
+    @required this.status,
     this.onTap,
-    this.status,
   }) : super(key: key);
 
   @override
@@ -76,7 +74,7 @@ class UserImage extends StatelessWidget {
   Widget buildUserImage() {
     if (image != null) {
       return Image.memory(
-        image,
+        image!,
         fit: BoxFit.cover,
       );
     } else {
@@ -89,7 +87,7 @@ class UserImage extends StatelessWidget {
   }
 
   Widget buttonImage() {
-    return status ? Positioned(
+    return status! ? Positioned(
       bottom: 1,
       right: 1,
       child: ClipRRect(

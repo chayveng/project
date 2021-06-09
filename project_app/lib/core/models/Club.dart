@@ -21,17 +21,16 @@ class Club {
     this.photosPath,
   });
 
-  int id;
-
-  int userId;
-  String title;
-  String detail;
-  dynamic address;
-  dynamic open;
-  dynamic price;
-  dynamic tel;
-  dynamic map;
-  String photosPath;
+  int? id;
+  int? userId;
+  String? title;
+  String? detail;
+  dynamic? address;
+  dynamic? open;
+  dynamic? price;
+  dynamic? tel;
+  dynamic? map;
+  String? photosPath;
 
   factory Club.fromJson(Map<String, dynamic> json) => Club(
         id: json["id"],

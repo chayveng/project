@@ -15,8 +15,8 @@ class AuthService {
     return _prefs.getBool(IS_LOGIN) ?? false;
   }
 
-  static Future<bool> register({@required User user}) async {
-    var res = await UserApi.register(user: user);
+  static Future<bool> register({@required User? user}) async {
+    var res = await UserApi.register(user: user!);
     if (res.status == 1) {
       return true;
     } else {
@@ -24,13 +24,13 @@ class AuthService {
     }
   }
 
-  static Future<bool> login({@required User user}) async {
-    var res = await UserApi.login(user: user);
+  static Future<bool> login({@required User? user}) async {
+    var res = await UserApi.login(user: user!);
     if (res.status == 1) {
       User userData = userFromJson(jsonEncode(res.data));
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      _prefs.setString(USERNAME, user.userName);
-      _prefs.setInt(USER_ID, userData.id);
+      _prefs.setString(USERNAME, user.userName!);
+      _prefs.setInt(USER_ID, userData.id!);
       _prefs.setBool(IS_LOGIN, true);
       print(res.message);
       return true;
@@ -45,6 +45,5 @@ class AuthService {
     _prefs.remove(IS_LOGIN);
     return await Future<void>.delayed(Duration(seconds: 1));
   }
-
 
 }
