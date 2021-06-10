@@ -2,7 +2,7 @@
 class Config {
 
   // static String API_URL = 'http://localhost:8080';
-  static String API_URL = 'http://172.24.160.160:8080';
+  static String API_URL = 'http://172.24.160.131:8080';
 
   // static final route = <String, WidgetBuilder>{
   //   '/home_screen': (BuildContext context) => HomeScreen(),
