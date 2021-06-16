@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/User.dart';
-import 'package:project_app/core/services/AuthService.dart';
+import 'package:project_app/core/services/UserService.dart';
+import 'package:project_app/ui/components/custom_alert_dialog.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
 import 'package:project_app/ui/components/rounded_field.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
@@ -48,10 +49,9 @@ class _FormRegisterState extends State<FormRegister> {
 
   Future<void> _onRegister() async {
     print('on register');
-    // AuthService auth = AuthService();
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      await AuthService.register(user: user)
+      await UserService.register(user: user)
           ? Navigator.push(
               context,
               MaterialPageRoute(
@@ -65,24 +65,29 @@ class _FormRegisterState extends State<FormRegister> {
   Future _showDialog() {
     return showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (BuildContext context) {
         print('User exists');
-        return AlertDialog(
-          title: Text('Username exists'),
-          content: Text('Pleas Try Again.'),
-          actions: [
-            FlatButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                "Ok",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-          ],
+        return CustomAlertDialog(
+          title: 'User exist',
+          content: 'Pleas try again',
+          showBtn: false,
         );
+        // return AlertDialog(
+        //   title: Text('Username exists'),
+        //   content: Text('Pleas Try Again.'),
+        //   actions: [
+        //     FlatButton(
+        //       onPressed: () {
+        //         Navigator.pop(context);
+        //       },
+        //       child: Text(
+        //         "Ok",
+        //         style: TextStyle(fontSize: 20),
+        //       ),
+        //     ),
+        //   ],
+        // );
       },
     );
   }

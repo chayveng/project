@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -28,24 +29,28 @@ Opacity buildDefaultImage() {
   );
 }
 
+Widget testButton({@required VoidCallback? onPressed, String? text}) {
+  return ElevatedButton(
+    onPressed: onPressed,
+    child: Text('${text != null ? text : 'Test Button'}'),
+  );
+}
 
 Widget testBox({double? sized, Color? color}) => Container(
-  height: sized ?? 200,
-  width: sized ?? 200,
-  color: color ?? Colors.redAccent,
-);
+      height: sized ?? 200,
+      width: sized ?? 200,
+      color: color ?? Colors.redAccent,
+    );
 
-Future<File> chooseImage(ImageSource imageSource) async {
+Future<File> chooseImage(ImageSource? imageSource) async {
   ImagePicker imagePicker = ImagePicker();
   File? image;
   try {
-    var _image =  await imagePicker.getImage(source: imageSource);
+    var _image = await imagePicker.getImage(source: imageSource!);
     if (_image != null) {
       image = File(_image.path);
-    }else{
-      image = null;
     }
-  }catch (e){
+  } catch (e) {
     print('error chooseImage');
   }
   return image!;

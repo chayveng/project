@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Field.dart';
+import 'package:project_app/ui/screens/field/section_location/section_location.dart';
 
 class SectionGeneral extends StatelessWidget {
   final Field? field;
@@ -53,8 +53,7 @@ class SectionGeneral extends StatelessWidget {
           ),
           buildFormData(
             title: 'Address',
-            detail:
-                '${field!.address}',
+            detail: '${field!.address}',
           ),
           buildFormData(
             title: 'office hours',
@@ -68,23 +67,8 @@ class SectionGeneral extends StatelessWidget {
             title: 'Tal',
             detail: '${field!.tel}',
           ),
-          Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                buildTitle(iconData: Icons.location_on, text: 'Location'),
-                SizedBox(height: 8.0),
-                Container(
-                  width: sized(context).width,
-                  height: 300,
-                  color: Colors.grey.shade400,
-                  child: Center(
-                    child: Text('Map'),
-                  ),
-                ),
-              ],
-            ),
-          ),
+          SizedBox(height: 20),
+          SectionLocation(location: field!.location),
         ],
       ),
     );

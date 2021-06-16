@@ -17,6 +17,7 @@ class Field {
     this.tel,
     this.hours,
     this.price,
+    this.location
   });
 
   int? id;
@@ -27,6 +28,7 @@ class Field {
   String? tel;
   String? hours;
   String? price;
+  String? location;
 
   factory Field.fromJson(Map<String, dynamic> json) => Field(
         id: json["id"],
@@ -37,6 +39,7 @@ class Field {
         tel: json["tel"],
         hours: json["hours"],
         price: json["price"],
+        location: json["location"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -48,10 +51,11 @@ class Field {
         "tel": tel,
         "hours": hours,
         "price": price,
+        "location": location,
       };
 
   @override
   String toString() {
-    return 'Field{id: $id, userId: $userId, title: $title, detail: $detail, address: $address, tel: $tel, hours: $hours, price: $price}';
+    return 'Field{id: $id, userId: $userId, title: $title, detail: $detail, address: $address, tel: $tel, hours: $hours, price: $price, location: $location}';
   }
 }

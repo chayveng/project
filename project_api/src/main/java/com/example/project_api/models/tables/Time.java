@@ -14,11 +14,9 @@ public class Time {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private long id;
     private long fieldId;
-    private long userId;
     private String startTime;
     private String endTime;
-    private boolean status;
 
 }

@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/apis/FieldApi.dart';
@@ -25,45 +23,31 @@ class FieldServices {
     return field;
   }
 
-  static Future<bool> create(
-    GlobalKey<FormState> formKey,
-    Field field,
-    List images,
-  ) async {
+  static Future<bool> create(Field? field, List<Uint8List>? images) async {
     print('create');
     bool status = false;
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      await FieldApi.create(field).then((value) {
-        if (value.status == 1) {
-          Field _field = fieldFromJson(jsonEncode(value.data));
-          uploadImages(_field.id!, images);
-          status = true;
-        }
-        print(value);
-      });
-    }
+    await FieldApi.create(field).then((value) {
+      if (value.status == 1) {
+        Field _field = fieldFromJson(jsonEncode(value.data));
+        uploadImages(_field.id!, images!);
+        status = true;
+      }
+      print(value);
+    });
     return status;
   }
 
-  static Future<bool> update(
-    GlobalKey<FormState> formKey,
-    Field field,
-    List images,
-  ) async {
+  static Future<bool> update(Field field, List images) async {
     print('update');
     bool status = false;
-    if (formKey.currentState!.validate()) {
-      formKey.currentState!.save();
-      await FieldApi.update(field).then((value) {
-        if (value.status == 1) {
-          Field _field = fieldFromJson(jsonEncode(value.data));
-          uploadImages(_field.id!, images);
-          status = true;
-        }
-        print(value);
-      });
-    }
+    await FieldApi.update(field).then((value) {
+      if (value.status == 1) {
+        Field _field = fieldFromJson(jsonEncode(value.data));
+        uploadImages(_field.id!, images);
+        status = true;
+      }
+      print(value);
+    });
     return status;
   }
 
@@ -82,13 +66,12 @@ class FieldServices {
     List<Uint8List> images = [];
     String path = '/field/urlImages/$fieldId';
     var res = await ApiConnect.get(path: path);
-    List urlImages = jsonDecode(jsonEncode(res));
-    for (var url in urlImages) {
-      await http.get(url).then((value) {
-        images.add(value.bodyBytes);
-      });
+    List urlImages = jsonDecode(res.toString());
+    for (var i = 0; i < urlImages.length; i++) {
+      var url = Uri.parse(urlImages[i]);
+      var res = await http.get(url);
+      images.add(res.bodyBytes);
     }
-    print(images.length);
     return images;
   }
 

@@ -40,7 +40,7 @@ dependencies:
   validators:
   google_maps_flutter:
   location:
-  geolocator:
+#  geolocator:
   archive:
 
 dev_dependencies:

@@ -31,8 +31,9 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> getUserImage() async {
-   var fileImage  = await UserService.imageDownload(await UserService.getUserId());
-   _userImage = fileImage != null ? fileImage : null;
+    var fileImage =
+        await UserService.imageDownload(await UserService.getUserId());
+    _userImage = fileImage != null ? fileImage : null;
     await Future.delayed(Duration(milliseconds: 200), () => setState(() {}));
   }
 
@@ -45,19 +46,22 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> _onMyClub(BuildContext context) async {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => MyFieldsScreen()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => MyFieldsScreen()));
   }
-
 
   Future _onLogout(BuildContext context) {
     return showDialog(
       context: context,
       builder: (context) => DialogLogout(
-        itOk: () {
+        itOk: () async {
           print('logout');
-          AuthService.logout();
-          Navigator.pushNamedAndRemoveUntil(
-              context, LoginScreen.routeName, (route) => false);
+          UserService.logout();
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => LoginScreen()),
+            (route) => false,
+          );
         },
       ),
     );
@@ -87,7 +91,7 @@ class _BodyState extends State<Body> {
             context,
             MaterialPageRoute(
               builder: (context) => ProfileScreen(
-                userImage: _userImage!,
+                userImage: _userImage,
               ),
             ),
           ) ??

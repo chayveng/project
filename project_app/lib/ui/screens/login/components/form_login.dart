@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/User.dart';
 import 'package:project_app/core/services/AuthService.dart';
+import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
 import 'package:project_app/ui/components/rounded_field.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
@@ -44,7 +45,7 @@ class _FormLoginState extends State<FormLogin> {
   Future<void> _onLogin() async {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      await AuthService.login(user: user)
+      await UserService.login(user: user)
           ? Navigator.pushAndRemoveUntil(
               context,
               MaterialPageRoute(builder: (context) => MainScreen()),

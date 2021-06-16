@@ -26,14 +26,18 @@ class CustomAlertDialog extends StatelessWidget {
       title: Text(title!),
       content: Text(content!),
       actions: [
-        showBtn! ? TextButton(
-          onPressed: onCancel,
-          child: Text(cancelBtn ?? 'Cancel'),
-        ) : SizedBox(),
-        showBtn! ? TextButton(
-          onPressed: onConfirm,
-          child: Text(confirmBtn ?? 'Confirm'),
-        ): SizedBox(),
+        showBtn!
+            ? TextButton(
+                onPressed: onCancel,
+                child: Text(cancelBtn ?? 'Cancel'),
+              )
+            : SizedBox(),
+        showBtn!
+            ? TextButton(
+                onPressed: onConfirm,
+                child: Text(confirmBtn ?? 'Confirm'),
+              )
+            : SizedBox(),
       ],
     );
   }

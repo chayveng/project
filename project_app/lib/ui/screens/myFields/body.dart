@@ -5,7 +5,8 @@ import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/components/card_field.dart';
 import 'package:project_app/ui/components/custom_alert_dialog.dart';
-import 'package:project_app/ui/screens/field/create/create_field_screen.dart';
+import 'package:project_app/ui/components/custom_dialog_loading.dart';
+import 'package:project_app/ui/screens/createField/create_field_screen.dart';
 import 'package:project_app/ui/screens/field/field_screen.dart';
 import 'package:project_app/ui/screens/myFields/components/custom_appbar.dart';
 
@@ -22,8 +23,13 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    fetchData();
+    // fetchData();
     super.initState();
+  }
+
+  Future<void> backWord() async {
+    await fetchData();
+    await Future.delayed(Duration(milliseconds: 300), () => setState(() {}));
   }
 
   Future _remove(int fieldId) async {
@@ -55,12 +61,13 @@ class _BodyState extends State<Body> {
             builder: (context) => CreateFieldScreen(isCreate: true),
           ),
         ) ??
-        fetchData();
+        backWord();
   }
 
   Future<bool> fetchData() async {
     fields = await FieldServices.getByUserId(await UserService.getUserId());
-    await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
+    await Future.delayed(Duration(milliseconds: 300));
+    // await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
     print('fetchData');
     return true;
   }
@@ -78,36 +85,48 @@ class _BodyState extends State<Body> {
   }
 
   Widget buildListFields(List fields) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SizedBox(height: 100),
-          ...List.generate(
-            fields.length,
-            (index) => Padding(
-              padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
-              child: CardField(
-                isOwner: true,
-                field: fields[index],
-                onTap: () => _onTap(index),
-                onRemove: () => _onRemove(fields[index].id),
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ...List.generate(
+              fields.length,
+              (index) => Padding(
+                padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
+                child: CardField(
+                  isOwner: true,
+                  field: fields[index],
+                  onTap: () => _onTap(index),
+                  onRemove: () => _onRemove(fields[index].id),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
+    );
+  }
+
+  Widget buildBody() {
+    return Column(
+      children: [
+        CustomAppbar(onPressed: onCreate),
+        buildListFields(fields),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        buildListFields(fields),
-        CustomAppbar(
-          onPressed: onCreate,
-        ),
-      ],
+    return FutureBuilder(
+      future: fetchData(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return buildBody();
+        } else {
+          return CustomDialogLoading();
+        }
+      },
     );
   }
 }

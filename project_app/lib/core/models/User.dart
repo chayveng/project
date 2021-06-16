@@ -37,13 +37,13 @@ class User {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id!,
-        "userName": userName!,
-        "passWord": passWord!,
-        "firstName": firstName!,
-        "lastName": lastName!,
-        "tel": tel!,
-        "email": email!,
+        "id": id,
+        "userName": userName,
+        "passWord": passWord,
+        "firstName": firstName,
+        "lastName": lastName,
+        "tel": tel,
+        "email": email,
       };
 
   @override

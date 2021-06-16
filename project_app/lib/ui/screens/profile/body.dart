@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
@@ -10,8 +11,6 @@ import 'package:project_app/ui/components/rounded_button.dart';
 import 'package:project_app/ui/screens/profile/components/custom_form_field.dart';
 import 'package:project_app/ui/screens/profile/components/custom_top_bar.dart';
 import 'package:project_app/ui/screens/profile/components/user_image.dart';
-
-import 'components/new_user_image.dart';
 
 class Body extends StatefulWidget {
   final bool? status;
@@ -32,6 +31,7 @@ class _BodyState extends State<Body> {
   bool _status = false;
   User _user = User();
   Uint8List? _image;
+
   Map<String, dynamic> focusNode = {
     'firstName': FocusNode(),
     'lastName': FocusNode(),
@@ -69,8 +69,8 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> _chooseImage() async {
-    var file = await chooseImage(ImageSource.gallery);
-    if (file != null) setState(() => _image = file.readAsBytesSync());
+    File file = await chooseImage(ImageSource.gallery);
+    setState(() => _image = file.readAsBytesSync());
   }
 
   Widget submitBtn() {
@@ -87,6 +87,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    // return Container();
     return Form(
       key: _formKey,
       child: Column(
@@ -98,7 +99,7 @@ class _BodyState extends State<Body> {
           SizedBox(height: 30),
           UserImage(
             userName: _user.userName,
-            image: widget.userImage,
+            image: _image,
             status: _status,
             onTap: () async => await _chooseImage(),
           ),
