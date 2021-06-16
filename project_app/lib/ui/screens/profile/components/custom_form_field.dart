@@ -97,7 +97,7 @@ class CustomFormField extends StatelessWidget {
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
       margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
       decoration: BoxDecoration(
-        color: creamPrimaryColor,
+        color: whiteColor,
         borderRadius: BorderRadius.circular(20),
       ),
       width: sized(context).width,

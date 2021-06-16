@@ -8,7 +8,7 @@ class OtherScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: greyPrimaryColor,
+      backgroundColor: greyColor,
       appBar: AppBar(
         title: Text(
           'Other Screen',

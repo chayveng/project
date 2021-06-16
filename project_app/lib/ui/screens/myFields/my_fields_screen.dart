@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_app/constants.dart';
 
 import 'body.dart';
 
@@ -8,6 +9,7 @@ class MyFieldsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: greyColor,
       // appBar: AppBar(
       //   title: Text('MyFields'),
       //   actions: [

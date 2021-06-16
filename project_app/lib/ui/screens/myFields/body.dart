@@ -92,7 +92,7 @@ class _BodyState extends State<Body> {
             ...List.generate(
               fields.length,
               (index) => Padding(
-                padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
+                padding: const EdgeInsets.only(left: 8, top: 18, right: 8),
                 child: CardField(
                   isOwner: true,
                   field: fields[index],

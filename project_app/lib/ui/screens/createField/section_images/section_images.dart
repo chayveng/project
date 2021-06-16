@@ -36,7 +36,7 @@ class _SectionImagesState extends State<SectionImages> {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        color: greyPrimaryColor,
+        color: greyColor,
         child: Icon(
           Icons.add_rounded,
           size: 28,
@@ -112,7 +112,7 @@ class _SectionImagesState extends State<SectionImages> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: creamPrimaryColor,
+        color: whiteColor,
         borderRadius: BorderRadius.circular(10),
       ),
       child: Column(

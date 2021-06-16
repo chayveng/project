@@ -104,7 +104,7 @@ class _SectionLocationState extends State<SectionLocation> {
       child: Container(
         width: sized(context).width,
         height: 300,
-        color: creamPrimaryColor,
+        color: whiteColor,
         child: Column(
           children: [
             TitleFormField(

@@ -20,8 +20,8 @@ class Time {
   int? id;
   int? fieldId;
   int? userId;
-  String? startTime;
-  String? endTime;
+  DateTime? startTime;
+  DateTime? endTime;
   bool? status;
 
   factory Time.fromJson(Map<String, dynamic> json) => Time(

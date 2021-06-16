@@ -134,7 +134,7 @@ class _SectionGeneralState extends State<SectionGeneral> {
           Container(
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: creamPrimaryColor,
+              color: whiteColor,
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),

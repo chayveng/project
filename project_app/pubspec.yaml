@@ -40,6 +40,7 @@ dependencies:
   validators:
   google_maps_flutter:
   location:
+  intl:
 #  geolocator:
   archive:
 
@@ -83,6 +84,9 @@ flutter:
      - family: Comfortaa
        fonts:
          - asset: assets/fonts/Comfortaa/Comfortaa-VariableFont_wght.ttf
+     - family: Kanit
+       fonts:
+         - asset: assets/fonts/Kanit/Kanit-Regular.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

@@ -10,6 +10,7 @@ class MainScreen extends StatefulWidget {
   final int? currentIndex;
 
   const MainScreen({Key? key, this.currentIndex}) : super(key: key);
+
   @override
   _MainScreenState createState() => _MainScreenState(currentIndex);
 }
@@ -30,27 +31,28 @@ class _MainScreenState extends State<MainScreen> {
     return Scaffold(
       body: tabs[currentIndex != null ? currentIndex! : _currentIndex!],
       bottomNavigationBar: BottomNavigationBar(
+        elevation: 0,
         currentIndex: _currentIndex!,
-        backgroundColor: orangePrimaryColor,
-        selectedItemColor: navyPrimaryColor,
-        unselectedItemColor: navyPrimaryColor,
+        backgroundColor: Colors.white,
+        selectedItemColor: orangeColor,
+        unselectedItemColor: Colors.black.withOpacity(0.3),
         type: BottomNavigationBarType.fixed,
-        // showUnselectedLabels: false,
+        showSelectedLabels: true,
+        showUnselectedLabels: false,
         items: [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
+            icon: Icon(Icons.home, size: 30),
             label: 'home',
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today_outlined),
+            icon: Icon(Icons.bookmark),
             label: 'booking',
           ),
           BottomNavigationBarItem(
-              icon: Icon(Icons.person_outline),
+              icon: Icon(Icons.person, size: 30),
               label: 'other',
-              backgroundColor: Colors.lightGreenAccent
-          ),
+              backgroundColor: Colors.lightGreenAccent),
         ],
         onTap: (index) {
           setState(() {

@@ -7,7 +7,7 @@ import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/ui/components/custom_dialog_loading.dart';
 import 'package:project_app/ui/screens/createField/create_field_screen.dart';
 import 'package:project_app/ui/screens/field/section_detail/section_general.dart';
-import 'package:project_app/ui/screens/field/section_detail/section_time.dart';
+import 'package:project_app/ui/screens/field/section_times/section_time.dart';
 
 import 'components/custom_appBar.dart';
 import 'section_detail/section_detail.dart';
