@@ -4,17 +4,19 @@ import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/ui/components/custom_alert_dialog.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
+import 'package:project_app/ui/screens/field/components/section_times/form_picker_date.dart';
+import 'package:project_app/ui/screens/field/components/section_times/form_picker_time.dart';
 
-class Body extends StatefulWidget {
+class SelectDateTime extends StatefulWidget {
   final List<Time>? times;
 
-  const Body({Key? key, this.times}) : super(key: key);
+  const SelectDateTime({Key? key, this.times}) : super(key: key);
 
   @override
-  _BodyState createState() => _BodyState();
+  _SelectDateTimeState createState() => _SelectDateTimeState();
 }
 
-class _BodyState extends State<Body> {
+class _SelectDateTimeState extends State<SelectDateTime> {
   DateTime? startTime;
   DateTime? endTime;
   Time _time = Time();
@@ -68,69 +70,57 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: 150,
-                  child: RoundedButton(
-                      text: getDate(startTime!),
-                      onTap: () {
-                        onPickDate(context);
-                      }),
-                ),
-                // Text('ถึง'),
-                // Container(
-                //   width: 150,
-                //   child: RoundedButton(
-                //       text: getDate(endTime, 'date'),
-                //       onTap: () {
-                //         pickDate(context,endTime);
-                //       }),
-                // ),
-              ],
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'Select time.',
+                style: TextStyle(fontSize: 22),
+              ),
+            ),
+            Center(
+              child: FormPickerDate(
+                onTap: () {
+                  onPickDate(context);
+                },
+                dateStr: getDate(startTime!),
+              ),
             ),
             SizedBox(height: 20),
-            // buildTimeList(),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Container(
-                  width: 150,
-                  child: RoundedButton(
-                    text: getTime(startTime!),
+                Expanded(
+                  child: FormPickerTime(
                     onTap: () {
                       onPickTimeStart();
                     },
+                    timeStr: getTime(startTime!),
                   ),
                 ),
                 Text('ถึง'),
-                Container(
-                  width: 150,
-                  child: RoundedButton(
-                    text: getTime(endTime!),
+                Expanded(
+                  child: FormPickerTime(
                     onTap: () {
                       onPickTimeEnd();
                     },
+                    timeStr: getTime(endTime!),
                   ),
                 ),
               ],
             ),
             SizedBox(height: 20),
-            Container(
-              width: 200,
-              child: RoundedButton(
-                text: 'Book',
-                onTap: () {
-                  onBooking();
-                },
-              ),
+            RoundedButton(
+              text: 'Book',
+              onTap: () {
+                onBooking();
+              },
             ),
-            // buildTimeList(),
           ],
         ),
       ),
@@ -164,6 +154,15 @@ class _BodyState extends State<Body> {
               times.add(newTime);
             });
             print(times.length);
+            await showDialog(
+                  context: context,
+                  builder: (context) => CustomAlertDialog(
+                    title: 'Booked',
+                    content: 'Bookeddd',
+                    onConfirm: () => Navigator.pop(context),
+                  ),
+                ) ??
+                Navigator.pop(context);
           } else {
             print('new time not ok');
             showDialog(
@@ -277,9 +276,10 @@ class _BodyState extends State<Body> {
     final newTime = await showTimePicker(
       initialEntryMode: TimePickerEntryMode.input,
       context: context,
-      initialTime: startTime != null
-          ? TimeOfDay(hour: startTime!.hour, minute: startTime!.minute)
-          : initialTime,
+      initialTime: initialTime,
+      // initialTime: startTime != null
+      //     ? TimeOfDay(hour: startTime!.hour, minute: startTime!.minute)
+      //     : initialTime,
       builder: (BuildContext context, Widget? child) {
         return MediaQuery(
           data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),

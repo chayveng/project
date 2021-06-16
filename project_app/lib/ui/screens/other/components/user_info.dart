@@ -67,7 +67,7 @@ class UserInfo extends StatelessWidget {
         height: 100,
         width: 100,
         child: Container(
-          color: creamPrimaryColor,
+          color: Colors.white,
           child: userImage != null
               ? Image.memory(
                   userImage!,

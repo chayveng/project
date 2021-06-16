@@ -3,7 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-const String UiFont = 'Comfortaa';
+const String UiFont = 'Kanit';
+// const String UiFont = 'Comfortaa';
 
 const String defaultImagePath = "assets/images/default/photo_symbol.png";
 const String defaultImagePathLandscape =

@@ -21,5 +21,6 @@ public class Field {
     private String tel;
     private String hours;
     private String price;
+    private String location;
 
 }

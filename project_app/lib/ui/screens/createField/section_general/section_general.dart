@@ -2,27 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/models/FieldLocation.dart';
-import 'package:project_app/ui/components/rounded_button.dart';
-import 'package:project_app/ui/screens/field/create/dialog_loading/dialog_loading.dart';
-import 'package:project_app/ui/screens/field/create/section_images/title_bar.dart';
-import 'package:project_app/ui/screens/field/create/section_location/section_location.dart';
+import 'package:project_app/ui/components/title_form_field.dart';
 
 import 'custom_field.dart';
 
 class SectionGeneral extends StatefulWidget {
   final Field? field;
-  final FieldLocation? fieldLocation;
   final bool? isCreate;
-  final GlobalKey<FormState>?formKey;
-  final GestureTapCallback? onSubmit;
+  final GlobalKey<FormState>? formKey;
 
   const SectionGeneral({
     Key? key,
     @required this.field,
-    @required this.onSubmit,
     @required this.isCreate,
     @required this.formKey,
-    @required this.fieldLocation,
   }) : super(key: key);
 
   @override
@@ -41,31 +34,6 @@ class _SectionGeneralState extends State<SectionGeneral> {
 
   void setTool() {
     focusNode = SetTools.setFocusNode();
-    // textCtl = SetTools.setTextCtl(field: widget.field!);
-  }
-
-  Future<void> _onSubmit() async {
-    print('delay');
-    var onSubmit = widget.onSubmit;
-    print('delayed');
-    await Future.delayed(Duration(milliseconds: 500));
-    // Navigator.pop(context);
-  }
-
-  Widget buildButton() {
-    return RoundedButton(
-      text: widget.isCreate! ? 'Create' : 'Update',
-      onTap: widget.onSubmit,
-      // onTap: () async {
-      //   await showDialog(
-      //         context: context,
-      //         builder: (context) => DialogLoading(
-      //           onSubmit: _onSubmit(),
-      //         ),
-      //       ) ??
-      //       Navigator.pop(context);
-      // },
-    );
   }
 
   Widget telField(BuildContext context) {
@@ -159,89 +127,40 @@ class _SectionGeneralState extends State<SectionGeneral> {
   @override
   Widget build(BuildContext context) {
     setTool();
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-      child: Form(
-        key: widget.formKey,
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(8),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(10),
-
-                ),
-              ),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Icon(Icons.circle_notifications),
-                      SizedBox(width: 10),
-                      Text(
-                        'General',
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 12),
-                  titleField(context),
-                  SizedBox(height: 8),
-                  detailField(context),
-                  SizedBox(height: 8),
-                  Row(
-                    children: [
-                      Expanded(child: openField(context)),
-                      SizedBox(width: 20),
-                      Expanded(child: priceField(context)),
-                    ],
-                  ),
-                  SizedBox(height: 8),
-                  telField(context),
-                  SizedBox(height: 8),
-                ],
-              ),
-            ),
-            SizedBox(height: 10),
-            buildMap(),
-            buildButton(),
-            SizedBox(height: 30),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Container buildMap() {
-    return Container(
-      // padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(
-          Radius.circular(10),
-        ),
-      ),
+    return Form(
+      key: widget.formKey,
       child: Column(
         children: [
-          Row(
-            children: [
-              Icon(Icons.add_location_alt),
-              SizedBox(width: 10),
-              Text(
-                'Location',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: SectionLocation(
-                fieldLocation: widget.fieldLocation!,
+          Container(
+            padding: EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: creamPrimaryColor,
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
               ),
+            ),
+            child: Column(
+              children: [
+                TitleFormField(
+                  iconData: Icons.circle_notifications,
+                  title: 'General',
+                ),
+                SizedBox(height: 12),
+                titleField(context),
+                SizedBox(height: 8),
+                detailField(context),
+                SizedBox(height: 8),
+                Row(
+                  children: [
+                    Expanded(child: openField(context)),
+                    SizedBox(width: 20),
+                    Expanded(child: priceField(context)),
+                  ],
+                ),
+                SizedBox(height: 8),
+                telField(context),
+                SizedBox(height: 8),
+              ],
             ),
           ),
         ],
@@ -251,17 +170,6 @@ class _SectionGeneralState extends State<SectionGeneral> {
 }
 
 class SetTools {
-  // static Map<String, dynamic> setTextCtl({@required Field field}) {
-  //   return {
-  //     'title': TextEditingController(text: field.title ?? ''),
-  //     'detail': TextEditingController(text: field.detail ?? ''),
-  //     'address': TextEditingController(text: field.detail ?? ''),
-  //     'tel': TextEditingController(text: field.detail ?? ''),
-  //     'hours': TextEditingController(text: field.hours ?? ''),
-  //     'price': TextEditingController(text: field.price ?? ''),
-  //   };
-  // }
-
   static Map<String, dynamic> setFocusNode() {
     return {
       'title': FocusNode(),

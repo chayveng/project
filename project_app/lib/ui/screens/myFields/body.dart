@@ -5,7 +5,7 @@ import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/components/card_field.dart';
 import 'package:project_app/ui/components/custom_alert_dialog.dart';
-import 'package:project_app/ui/screens/field/create/create_field_screen.dart';
+import 'package:project_app/ui/screens/createField/create_field_screen.dart';
 import 'package:project_app/ui/screens/field/field_screen.dart';
 import 'package:project_app/ui/screens/myFields/components/custom_appbar.dart';
 

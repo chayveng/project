@@ -1,20 +1,27 @@
 import 'package:flutter/material.dart';
 
 class CustomAppbar extends StatelessWidget {
-
   final VoidCallback? onPressed;
-
 
   const CustomAppbar({Key? key, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return         Align(
+    return Align(
       alignment: Alignment.topCenter,
       child: Container(
+        decoration: BoxDecoration(
+          boxShadow: [
+            BoxShadow(
+              color: Colors.grey.withOpacity(0.5),
+              spreadRadius: 2,
+              blurRadius: 7,
+              offset: Offset(0, 5), // changes position of shadow
+            ),
+          ],
+        ),
         height: 100,
         child: AppBar(
-
           excludeHeaderSemantics: false,
           primary: true,
           title: Text('My Fields'),

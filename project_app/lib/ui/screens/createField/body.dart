@@ -8,9 +8,13 @@ import 'package:project_app/core/models/FieldLocation.dart';
 import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/components/custom_alert_dialog.dart';
-import 'package:project_app/ui/screens/field/create/dialog_loading/dialog_loading.dart';
-import 'package:project_app/ui/screens/field/create/section_general/section_general.dart';
-import 'package:project_app/ui/screens/field/create/section_images/section_images.dart';
+import 'package:project_app/ui/components/custom_dialog_loading.dart';
+import 'package:project_app/ui/components/rounded_button.dart';
+import 'package:project_app/ui/screens/createField/section_general/section_general.dart';
+import 'package:project_app/ui/screens/createField/section_images/section_images.dart';
+import 'package:project_app/ui/screens/createField/section_location/section_location.dart';
+
+import 'dialog_loading/dialog_loading.dart';
 
 class Body extends StatefulWidget {
   final bool? isCreate;
@@ -30,15 +34,17 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    fetchData();
+    // fetchData();
     super.initState();
   }
 
-  Future<void> fetchData() async {
-    print('fieldId = ${widget.fieldId}');
+  Future<bool> fetchData() async {
+    // print('fieldId = ${widget.fieldId}');
     setData();
-    if (widget.fieldId != null) _downloadImages(widget.fieldId!);
-    setState(() {});
+    if (widget.fieldId != null) await _downloadImages();
+    await Future.delayed(Duration(milliseconds: 500));
+    return true;
+    // setState(() {});
   }
 
   Future<void> setData() async {
@@ -48,21 +54,10 @@ class _BodyState extends State<Body> {
     print(field);
   }
 
-  Future<void> _downloadImages(int fieldId) async {
-    // var images = [];
-    // String path = '/field/urlImages/$fieldId';
-    // var res = await ApiConnect.get(path: path);
-    // List urlImages = jsonDecode(res);
-    // for (var url in urlImages) {
-    //   await http.get(url).then((value) {
-    //     images.add(value.bodyBytes);
-    //     setState(() {});
-    //   });
-    // }
-    // print(images.length);
-    // images = [];
-    // images = await FieldServices.downloadImages(widget.fieldId);
-    // setState(() {});
+  Future<void> _downloadImages() async {
+    images.clear();
+    images = await FieldServices.downloadImages(widget.fieldId!);
+    print('images: ${images.length}');
   }
 
   Future<bool> _submit() async {
@@ -71,7 +66,6 @@ class _BodyState extends State<Body> {
         ? await FieldServices.create(field, images)
         : await FieldServices.update(field, images);
     await Future.delayed(Duration(milliseconds: 1000));
-    // print("submit ${res}");
     if (res == true) {
       status = true;
     }
@@ -87,7 +81,6 @@ class _BodyState extends State<Body> {
           onSubmit: _submit(),
         ),
       );
-      // print("res = ${res}");
       if (res == true) {
         Navigator.pop(context);
       } else {
@@ -103,21 +96,49 @@ class _BodyState extends State<Body> {
     }
   }
 
+  Widget submitBtn() {
+    return RoundedButton(
+      text: widget.isCreate! ? 'Create' : 'Update',
+      onTap: _onSubmit,
+    );
+  }
+
+  Widget buildBody(){
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SectionImages(images: images),
+            SizedBox(height: 10),
+            SectionGeneral(
+              field: field,
+              isCreate: widget.isCreate!,
+              formKey: _formKey,
+            ),
+            SizedBox(height: 10),
+            SectionLocation(field: field),
+            SizedBox(height: 10),
+            submitBtn(),
+            SafeArea(child: SizedBox()),
+          ],
+        ),
+      ),
+    );
+  }
+
+
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          SectionImages(images: images),
-          SectionGeneral(
-            fieldLocation: fieldLocation,
-            field: field,
-            onSubmit: () async => await _onSubmit(),
-            isCreate: widget.isCreate!,
-            formKey: _formKey,
-          ),
-        ],
-      ),
+    return FutureBuilder(
+      future: fetchData(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasData) {
+          return buildBody();
+        } else {
+          return CustomDialogLoading();
+        }
+      },
     );
   }
 }

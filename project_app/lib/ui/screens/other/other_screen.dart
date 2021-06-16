@@ -13,6 +13,7 @@ class OtherScreen extends StatelessWidget {
         title: Text(
           'Other Screen',
         ),
+        elevation: 4,
       ),
       body: Body(),
     );

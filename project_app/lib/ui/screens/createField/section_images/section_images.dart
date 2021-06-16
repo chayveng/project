@@ -2,9 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:project_app/ui/screens/field/create/section_images/title_bar.dart';
+import 'package:project_app/ui/screens/createField/section_images/title_bar.dart';
 
-import '../../../../../constants.dart';
+import '../../../../constants.dart';
+
 
 class SectionImages extends StatefulWidget {
   final List<Uint8List>? images;

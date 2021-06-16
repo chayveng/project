@@ -34,15 +34,25 @@ class _CardFieldState extends State<CardField> {
   Widget cardField(String url) {
     return InkWell(
       onTap: widget.onTap,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: Material(
-          color: creamPrimaryColor,
-          child: Column(
-            children: [
-              buildImage(url),
-              buildDetail(),
-            ],
+      child: Container(
+        decoration: BoxDecoration(boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 2,
+            blurRadius: 7,
+            offset: Offset(0, 5), // changes position of shadow
+          ),
+        ]),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Material(
+            color: Colors.white,
+            child: Column(
+              children: [
+                buildImage(url),
+                buildDetail(),
+              ],
+            ),
           ),
         ),
       ),

@@ -7,9 +7,9 @@ import 'package:project_app/constants.dart';
 import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
+import 'package:project_app/ui/screens/createField/create_field_screen.dart';
 import 'package:project_app/ui/screens/field/components/section_general.dart';
-import 'package:project_app/ui/screens/field/components/section_time.dart';
-import 'package:project_app/ui/screens/field/create/create_field_screen.dart';
+import 'package:project_app/ui/screens/field/components/section_times/section_time.dart';
 
 import 'components/custom_appBar.dart';
 import 'components/section_detail.dart';
