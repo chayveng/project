@@ -1,70 +1,115 @@
 package com.example.project_api.controllers;
 
 import com.example.project_api.models.beans.ApiResponse;
-import com.example.project_api.models.repository.FieldRepository;
 import com.example.project_api.models.tables.Field;
+import com.example.project_api.models.tables.FieldImage;
+import com.example.project_api.services.FieldImageService;
+import com.example.project_api.services.FieldService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.util.Optional;
+import java.io.IOException;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/field")
 public class FieldController {
 
     @Autowired
-    private FieldRepository fieldRepository;
+    private FieldService fieldService;
+
+    @Autowired
+    private FieldImageService imageService;
 
     @GetMapping("/index")
     public Object index() {
-        return new ApiResponse(1, "Field API");
+        return "index";
     }
 
-    @GetMapping("/getByClubId/{clubId}")
-    public Object getByClubId(@PathVariable int clubId) {
-        return new ApiResponse(1, "get by Club id", fieldRepository.findByClubId(clubId));
+    @GetMapping("/findAll")
+    public Object findAll() {
+        return fieldService.findAll();
     }
 
-    @GetMapping("/getAll")
-    public Object getAll() {
-        return new ApiResponse(1, "get All", fieldRepository.findAll());
+    @GetMapping("/findByUserId/{userId}")
+    public Object findByUserId(@PathVariable long userId) {
+        return fieldService.findByUserId(userId);
     }
 
-    @PostMapping("/add")
-    public Object add(@RequestBody Field field) {
-        Optional<Field> fieldData = fieldRepository.findByTitle(field.getTitle());
-        if (fieldData.isEmpty()) {
-            fieldRepository.save(field);
-            return new ApiResponse(1, "Add a field an succeed", fieldRepository.findByTitle(field.getTitle()));
-        } else {
-            return new ApiResponse(0, "Add a field fail");
+    @GetMapping("/findById/{fieldId}")
+    public Object findById(@PathVariable long fieldId) {
+        return fieldService.findById(fieldId);
+    }
+
+
+    @PostMapping("/create")
+    public Object create(@RequestBody Field field) {
+        return fieldService.create(field);
+    }
+
+    @PostMapping("/update")
+    public Object update(@RequestBody Field field) {
+        return fieldService.update(field);
+    }
+
+    @GetMapping("/delete/{fieldId}")
+    public Object delete(@PathVariable long fieldId) {
+        return fieldService.delete(fieldId);
+    }
+
+    @PostMapping("/upload-image")
+    public String uploadImage(@RequestParam long fieldId, @RequestParam("file") MultipartFile file) throws IOException {
+        if (imageService.uploadImage(fieldId, file)) {
+            return ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path("/field/download-image/" + fieldId + "/")
+                    .path(Objects.requireNonNull(file.getOriginalFilename()))
+                    .toUriString();
         }
+        return "Error Upload-image";
     }
 
-    @PostMapping("/delete/{id}")
-    public Object delete(@PathVariable int id) {
-        Optional<Field> fieldData = fieldRepository.findById(id);
-        if (fieldData.isPresent()) {
-            fieldRepository.deleteById(id);
-            return new ApiResponse(1, "Delete succeed");
-        } else {
-            return new ApiResponse(0, "Delete fail");
-        }
+    @PostMapping("/upload-images")
+    public List<?> uploadImages(@RequestParam long fieldId, @RequestParam("files") MultipartFile[] files) throws IOException {
+        imageService.deleteImages(fieldId);
+        return Arrays.stream(files)
+                .map(file -> {
+                    try {
+                        return uploadImage(fieldId, file);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return null;
+                })
+                .collect(Collectors.toList());
     }
 
-    @GetMapping("/dummy/{num}")
-    public Object dummy(@PathVariable int num) {
-        for (int i = 0; i < num; i++) {
-            for (int j = 0; j < num; j++) {
-                Field _field = new Field();
-                _field.setClubId(i);
-                _field.setTitle("Field" + j);
-                _field.setDetail("detail" + j);
-                _field.setStatus(true);
-                fieldRepository.save(_field);
+    @GetMapping("/download-image/{fieldId}/{fileName}")
+    public ResponseEntity<?> downloadFromDB(@PathVariable long fieldId, @PathVariable String fileName) {
+        return imageService.downloadImage(fieldId, fileName);
+    }
+
+    @GetMapping("/urlImages/{fieldId}")
+    public List<?> urlImages(@PathVariable long fieldId) {
+        List<FieldImage> images = imageService.findByFieldId(fieldId);
+        Collections.sort(images);
+        List<String> urlImages = new ArrayList<>();
+        if (!images.isEmpty()) {
+            for (var file : images) {
+                String urlImage = ServletUriComponentsBuilder
+                        .fromCurrentContextPath()
+                        .path("/field/download-image/" + fieldId + "/")
+                        .path(file.getFileName())
+                        .toUriString();
+                urlImages.add(urlImage);
             }
+            return urlImages;
         }
-        return new ApiResponse(1, "dummy field: " + num + "unit", fieldRepository.findAll());
+        return null;
     }
 
 }

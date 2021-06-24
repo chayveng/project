@@ -1,30 +1,25 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:project_app/constants.dart';
 
-import 'components/body.dart';
+import '../../../constants.dart';
+import 'body.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   static String routeName = '/home';
+
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final double iconSize = 40;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        leading: Icon(Icons.search),
-        iconTheme: IconThemeData(color: navyPrimaryColor),
-        backgroundColor: creamPrimaryColor,
-        title: Text(
-          'Home',
-          style: TextStyle(
-            color: navyPrimaryColor,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-      ),
-      backgroundColor: grayPrimaryColor,
+      backgroundColor: greyColor,
+      // appBar: AppBar(
+      //   title: Text('Home'),
+      // ),
       body: Body(),
     );
   }

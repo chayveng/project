@@ -2,6 +2,9 @@ import 'dart:convert';
 
 Time timeFromJson(String str) => Time.fromJson(json.decode(str));
 
+List<Time> timesFormJson(List lst) =>
+    lst.map((e) => timeFromJson(jsonEncode(e))).toList();
+
 String timeToJson(Time data) => json.encode(data.toJson());
 
 class Time {
@@ -14,12 +17,12 @@ class Time {
     this.status,
   });
 
-  int id;
-  int fieldId;
-  int userId;
-  String startTime;
-  String endTime;
-  bool status;
+  int? id;
+  int? fieldId;
+  int? userId;
+  String? startTime;
+  String? endTime;
+  bool? status;
 
   factory Time.fromJson(Map<String, dynamic> json) => Time(
         id: json["id"],
@@ -43,14 +46,4 @@ class Time {
   String toString() {
     return 'Time{id: $id, fieldId: $fieldId, userId: $userId, startTime: $startTime, endTime: $endTime, status: $status}';
   }
-
-// @override
-// String toString() {
-//   return '\n  {\n     id: $id, \n'
-//       '     fieldId: $fieldId,\n'
-//       '     userId: $userId, \n'
-//       '     startTime: $startTime,\n'
-//       '     endTime: $endTime,\n'
-//       '     status: $status\n }\n';
-// }
 }

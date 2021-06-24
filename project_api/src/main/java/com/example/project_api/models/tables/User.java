@@ -12,13 +12,16 @@ import javax.persistence.*;
 @Entity(name = "user")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
     private String userName;
     private String passWord;
     private String firstName;
     private String lastName;
     private String tel;
     private String email;
+
+    @Lob
+    private byte[] image;
 
 }

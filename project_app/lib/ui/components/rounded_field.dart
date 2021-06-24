@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../../constants.dart';
 
-
 class RoundedField extends StatelessWidget {
-  final String label;
-  final String hintText;
-  final FormFieldSetter onSaved;
-  final FormFieldValidator validator;
-  final FocusNode focusNode;
-  final ValueChanged onFieldSubmitted;
-  final IconData prefixIcon;
-  final Widget suffixIcon;
-  final bool obscureText;
+  final String? label;
+  final String? hintText;
+  final FormFieldSetter? onSaved;
+  final FormFieldValidator? validator;
+  final FocusNode? focusNode;
+  final ValueChanged? onFieldSubmitted;
+  final IconData? prefixIcon;
+  final Widget? suffixIcon;
+  final bool? obscureText;
+  final TextInputType? keyboardType;
 
   const RoundedField({
-    Key key,
+    Key? key,
     @required this.label,
     @required this.hintText,
     this.onSaved,
@@ -25,6 +25,7 @@ class RoundedField extends StatelessWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.obscureText = false,
+    this.keyboardType,
   }) : super(key: key);
 
   @override
@@ -45,10 +46,9 @@ class RoundedField extends StatelessWidget {
       onSaved: onSaved,
       validator: validator,
       // cursorColor: Colors.pinkAccent,
-      obscureText: obscureText,
-      style: TextStyle(
-        fontFamily: UiFont,
-      ),
+      obscureText: obscureText!,
+      keyboardType: keyboardType,
+      style: TextStyle(fontFamily: UiFont),
       decoration: InputDecoration(
         filled: true,
         fillColor: creamPrimaryColor,
@@ -76,7 +76,7 @@ class RoundedField extends StatelessWidget {
     return Row(
       children: [
         Text(
-          label,
+          label!,
           style: TextStyle(
             fontSize: 14,
             color: blackPrimaryColor,

@@ -12,24 +12,14 @@ class ApiResponse {
     this.data,
   });
 
-  int status;
-  String message;
-  Object data;
+  int? status;
+  String? message;
+  Object? data;
 
 
   @override
   String toString() {
     return 'ApiResponse{status: $status, message: $message, data: $data}';
-  }
-
-  void display(){
-    print(
-        'ApiResponse{\n'
-            '\"status\": $status\,\n'
-            '\"message\": \"$message\"\,\n'
-            '\"data\": $data\,\n'
-            '}'
-    );
   }
 
   factory ApiResponse.fromJson(Map<String, dynamic> json) => ApiResponse(

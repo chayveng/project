@@ -1,24 +1,21 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 
-import 'components/body.dart';
+import 'body.dart';
 
-class ProfileScreen extends StatefulWidget {
-  static String routeName = '/profile';
+class ProfileScreen extends StatelessWidget {
+  static String? routeName = '/profile';
+  final Uint8List? userImage;
 
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
-
-class _ProfileScreenState extends State<ProfileScreen> {
-  int _selectedIndex = 3;
-  final Color colorBackground = whiteBackgroundColor;
+  ProfileScreen({Key? key, this.userImage}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Body(),
-      // bottomNavigationBar: BottomBar(),
+      backgroundColor: greyColor,
+      body: Body(status: false, userImage: userImage),
     );
   }
 }

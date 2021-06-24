@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/User.dart';
-import 'package:project_app/core/services/AuthService.dart';
+import 'package:project_app/core/services/UserService.dart';
+import 'package:project_app/ui/components/custom_alert_dialog.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
 import 'package:project_app/ui/components/rounded_field.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
@@ -13,7 +14,7 @@ class FormRegister extends StatefulWidget {
 
 class _FormRegisterState extends State<FormRegister> {
   User user = User();
-  String _confirmPass;
+  String? _confirmPass;
   bool _obscureText = true;
   var _formKey = GlobalKey<FormState>();
   Map<String, FocusNode> focusNode = {
@@ -21,6 +22,7 @@ class _FormRegisterState extends State<FormRegister> {
     'pass': FocusNode(),
     'conPass': FocusNode(),
     'register': FocusNode(),
+    'tel': FocusNode(),
   };
 
   @override
@@ -34,6 +36,8 @@ class _FormRegisterState extends State<FormRegister> {
           buildFieldPassword(context),
           SizedBox(height: 20),
           buildFieldConfirmPassword(context),
+          SizedBox(height: 20),
+          buildFieldTel(context),
           SizedBox(height: 50),
           buildButtonRegister(),
           SizedBox(height: 30),
@@ -45,11 +49,15 @@ class _FormRegisterState extends State<FormRegister> {
 
   Future<void> _onRegister() async {
     print('on register');
-    // AuthService auth = AuthService();
-    if (_formKey.currentState.validate()) {
-      _formKey.currentState.save();
-      await AuthService.register(user: user)
-          ? Navigator.pushReplacementNamed(context, LoginScreen.routeName)
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      await UserService.register(user: user)
+          ? Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LoginScreen(),
+              ),
+            )
           : _showDialog();
     }
   }
@@ -57,24 +65,29 @@ class _FormRegisterState extends State<FormRegister> {
   Future _showDialog() {
     return showDialog(
       context: context,
-      barrierDismissible: false,
+      barrierDismissible: true,
       builder: (BuildContext context) {
         print('User exists');
-        return AlertDialog(
-          title: Text('Username exists'),
-          content: Text('Pleas Try Again.'),
-          actions: [
-            FlatButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Text(
-                "Ok",
-                style: TextStyle(fontSize: 20),
-              ),
-            ),
-          ],
+        return CustomAlertDialog(
+          title: 'User exist',
+          content: 'Pleas try again',
+          showBtn: false,
         );
+        // return AlertDialog(
+        //   title: Text('Username exists'),
+        //   content: Text('Pleas Try Again.'),
+        //   actions: [
+        //     FlatButton(
+        //       onPressed: () {
+        //         Navigator.pop(context);
+        //       },
+        //       child: Text(
+        //         "Ok",
+        //         style: TextStyle(fontSize: 20),
+        //       ),
+        //     ),
+        //   ],
+        // );
       },
     );
   }
@@ -102,7 +115,12 @@ class _FormRegisterState extends State<FormRegister> {
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           onTap: () {
-            Navigator.pushReplacementNamed(context, LoginScreen.routeName);
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LoginScreen(),
+              ),
+            );
           },
         ),
       ],
@@ -113,6 +131,29 @@ class _FormRegisterState extends State<FormRegister> {
     return RoundedButton(
       text: 'Register',
       onTap: _onRegister,
+    );
+  }
+
+  RoundedField buildFieldTel(BuildContext context) {
+    return RoundedField(
+      keyboardType: TextInputType.number,
+      label: 'TEL \:',
+      hintText: 'Enter your tel',
+      onSaved: (input) => user.tel = input,
+      validator: (input) {
+        if (input.isEmpty) {
+          return 'Please enter your tel';
+        } else if (input.length != 10) {
+          return 'Tel must be at least 10 characters long';
+        } else {
+          return null;
+        }
+      },
+      focusNode: focusNode['tel']!,
+      // onFieldSubmitted: (term) {
+      //   focusNode['user'].unfocus();
+      //   FocusScope.of(context).requestFocus(focusNode['pass']);
+      // },
     );
   }
 
@@ -132,11 +173,11 @@ class _FormRegisterState extends State<FormRegister> {
           return null;
         }
       },
-      focusNode: focusNode['conPass'],
-      // onFieldSubmitted: (term) {
-      //   focusNode['conPass'].unfocus();
-      //   FocusScope.of(context).requestFocus(focusNode['register']);
-      // },
+      focusNode: focusNode['conPass']!,
+      onFieldSubmitted: (term) {
+        focusNode['conPass']!.unfocus();
+        FocusScope.of(context).requestFocus(focusNode['tel']);
+      },
     );
   }
 
@@ -145,7 +186,7 @@ class _FormRegisterState extends State<FormRegister> {
       label: 'PASSWORD \:',
       hintText: 'Enter your password',
       obscureText: _obscureText,
-      onSaved: (input) => user.password = input,
+      onSaved: (input) => user.passWord = input,
       validator: (input) {
         _confirmPass = input;
         if (input.isEmpty) {
@@ -156,9 +197,9 @@ class _FormRegisterState extends State<FormRegister> {
           return null;
         }
       },
-      focusNode: focusNode['pass'],
+      focusNode: focusNode['pass']!,
       onFieldSubmitted: (term) {
-        focusNode['pass'].unfocus();
+        focusNode['pass']!.unfocus();
         FocusScope.of(context).requestFocus(focusNode['conPass']);
       },
     );
@@ -168,11 +209,11 @@ class _FormRegisterState extends State<FormRegister> {
     return RoundedField(
       label: 'USERNAME \:',
       hintText: 'Enter your username',
-      onSaved: (input) => user.username = input,
+      onSaved: (input) => user.userName = input,
       validator: (input) => input.isEmpty ? 'Please enter your username' : null,
-      focusNode: focusNode['user'],
+      focusNode: focusNode['user']!,
       onFieldSubmitted: (term) {
-        focusNode['user'].unfocus();
+        focusNode['user']!.unfocus();
         FocusScope.of(context).requestFocus(focusNode['pass']);
       },
     );

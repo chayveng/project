@@ -1,25 +1,31 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:project_app/constants.dart';
-import 'package:project_app/routs.dart';
+import 'package:project_app/routes.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
+import 'package:project_app/ui/screens/test/text_screen.dart';
 
+import 'constants.dart';
 import 'core/services/AuthService.dart';
+import 'core/services/UserService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Widget screen = MainScreen();
   Widget screen = LoginScreen();
   if (await AuthService.isLogin() == true) {
+    print('IsLogin: true');
+    print('UserId: ${await UserService.getUserId()}');
     screen = MainScreen();
   }
   runApp(MyApp(screen: screen));
 }
 
 class MyApp extends StatelessWidget {
-  final Widget screen;
+  final Widget? screen;
 
   MyApp({
-    Key key,
+    Key? key,
     @required this.screen,
   }) : super(key: key);
 
@@ -32,19 +38,26 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           elevation: 0,
           centerTitle: true,
-          color: creamPrimaryColor,
+          color: whiteColor,
+          // color: creamPrimaryColor,
+          brightness: Brightness.light,
+          iconTheme: IconThemeData(
+            color: navyPrimaryColor,
+          ),
+          textTheme: TextTheme(
+            headline6: TextStyle(
+              fontSize: 18,
+              fontFamily: UiFont,
+              fontWeight: FontWeight.bold,
+              color: navyPrimaryColor,
+            ),
+          ),
         ),
       ),
       title: 'Flutter Demo',
       routes: routes,
       home: screen,
-      // home: SelectField(),
-      // home: FirstScreen(),
-      // home: ClubScreen(),
-      // home: HomeScreen(),
-      // home: ProfileScreen(),
-      // home: LoginScreen(),
-      // home: TestScreen(),
+      // home: TextScreen(),
     );
   }
 }

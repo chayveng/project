@@ -1,39 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:project_app/core/models/Field.dart';
 
-import '../../../constants.dart';
-import 'components/body.dart';
+import 'body.dart';
 
 class FieldScreen extends StatelessWidget {
-  static String routeName = '/field';
-
-  final Field field;
+  final bool? isOwner;
+  final int? fieldId;
 
   const FieldScreen({
-    Key key,
-    this.field,
+    Key? key,
+    @required this.isOwner,
+    @required this.fieldId,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: buildAppBar(),
-      body: Body(field: field),
-    );
-  }
-
-  AppBar buildAppBar() {
-    return AppBar(
-      // elevation: 0,
-      iconTheme: IconThemeData(color: navyPrimaryColor),
-      title: Text(
-        field.title,
-        style: TextStyle(
-          color: navyPrimaryColor,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-      backgroundColor: creamPrimaryColor,
+      body: Body(isOwner: isOwner,fieldId: fieldId),
     );
   }
 }

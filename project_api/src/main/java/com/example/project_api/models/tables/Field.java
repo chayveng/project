@@ -1,24 +1,26 @@
 package com.example.project_api.models.tables;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
+
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "field")
 public class Field {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    private int clubId;
+    @Column
+    private long id;
+    private long userId;
     private String title;
     private String detail;
-    private boolean status;
+    private String address;
+    private String tel;
+    private String hours;
+    private String price;
+    private String location;
 
 }
