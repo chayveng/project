@@ -25,15 +25,35 @@ public class TimeService {
     public ApiResponse findByFieldId(long fieldId) {
         List<Time> newTimes = new ArrayList<>();
         List<Time> Times = repository.findByFieldId(fieldId);
-        Date date= new Date();
+        Date date = new Date();
         long time = date.getTime();
         Timestamp current = new Timestamp(time);
-        for(var element: Times) {
+        for (var element : Times) {
             Timestamp _startTime = Timestamp.valueOf(element.getStartTime());
             Timestamp _endTime = Timestamp.valueOf(element.getEndTime());
             if (_startTime.before(current) && _endTime.before(current)) {
                 repository.deleteById(element.getId());
-            }else{
+            } else {
+                newTimes.add(element);
+            }
+        }
+        return new ApiResponse(1, "findByFieldId", newTimes);
+    }
+
+    public ApiResponse testFindByFieldId(long fieldId, String currentTime) {
+        List<Time> newTimes = new ArrayList<>();
+        List<Time> Times = repository.findByFieldId(fieldId);
+//        Date date = new Date();
+//        long time = date.getTime();
+//        Timestamp current = new Timestamp(time);
+        Timestamp current = Timestamp.valueOf(currentTime);
+        for (var element : Times) {
+            Timestamp _startTime = Timestamp.valueOf(element.getStartTime());
+            Timestamp _endTime = Timestamp.valueOf(element.getEndTime());
+            if (_startTime.before(current) && _endTime.before(current)) {
+                System.out.println("No");
+//                repository.deleteById(element.getId());
+            } else {
                 newTimes.add(element);
             }
         }
@@ -44,14 +64,28 @@ public class TimeService {
         return new ApiResponse(1, "created", repository.save(time));
     }
 
-    public Object deleteById(long timeId){
+    public Object deleteById(long timeId) {
         Optional<Time> timeData = repository.findById(timeId);
         if (timeData.isPresent()) {
             repository.deleteById(timeId);
             return new ApiResponse(1, "delete by id: " + timeId);
-        }else{
+        } else {
             return new ApiResponse(0, "no time at id: " + timeId);
         }
     }
 
+    public Object autoSave() {
+        List<Time> times = repository.findByFieldId(99);
+        for (var _time : times) {
+            repository.deleteById(_time.getId());
+        }
+        for (int i = 0; i < 10; i++) {
+            Time time = new Time();
+            time.setFieldId(99);
+            time.setStartTime("2020-05-05 0" + i + ":00:00");
+            time.setEndTime("2020-05-05 0" + String.valueOf(i+1) + ":00:00");
+            repository.save(time);
+        }
+        return repository.findByFieldId(99);
+    }
 }

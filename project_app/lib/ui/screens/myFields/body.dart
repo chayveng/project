@@ -43,7 +43,7 @@ class _BodyState extends State<Body> {
   }
 
   Future _onRemove(int fieldId) async {
-    showDialog(
+   await showDialog(
       context: context,
       builder: (context) => CustomAlertDialog(
         title: 'Remove',
@@ -51,7 +51,7 @@ class _BodyState extends State<Body> {
         onConfirm: () => _remove(fieldId),
         onCancel: () => Navigator.pop(context),
       ),
-    );
+    ) ?? fetchData();
   }
 
   Future onCreate() async {

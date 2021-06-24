@@ -37,6 +37,7 @@ class FieldServices {
     return status;
   }
 
+
   static Future<bool> update(Field field, List images) async {
     print('update');
     bool status = false;

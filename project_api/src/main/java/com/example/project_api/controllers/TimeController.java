@@ -20,8 +20,8 @@ public class TimeController {
         return service.findAll();
     }
 
-    @GetMapping("/findByFieldId/{timeId}")
-    public Object findByFieldId(@RequestBody long fieldId){
+    @GetMapping("/findByFieldId/{fieldId}")
+    public Object findByFieldId(@PathVariable long fieldId){
         return service.findByFieldId(fieldId);
     }
 
@@ -33,6 +33,17 @@ public class TimeController {
     @GetMapping("/deleteById/{timeId}")
     public Object deleteById(@PathVariable long timeId){
         return service.deleteById(timeId);
+    }
+
+    @GetMapping("/testFindByFieldId/{fieldId}/{currentTime}")
+    public Object testFindByFieldId(@PathVariable long fieldId,@PathVariable String currentTime){
+//        return currentTime;
+        return service.testFindByFieldId(fieldId, currentTime);
+    }
+
+    @GetMapping("/autoSave")
+    public Object autoSave(){
+        return service.autoSave();
     }
 }
 
