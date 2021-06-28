@@ -15,35 +15,23 @@ class AuthService {
     return _prefs.getBool(IS_LOGIN) ?? false;
   }
 
-  static Future<bool> register({@required User? user}) async {
-    var res = await UserApi.register(user: user!);
-    if (res.status == 1) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   static Future<bool> login({@required User? user}) async {
-    var res = await UserApi.login(user: user!);
-    if (res.status == 1) {
-      User userData = userFromJson(jsonEncode(res.data));
+    try {
       SharedPreferences _prefs = await SharedPreferences.getInstance();
-      _prefs.setString(USERNAME, user.userName!);
-      _prefs.setInt(USER_ID, userData.id!);
+      _prefs.setString(USERNAME, user!.userName!);
+      _prefs.setInt(USER_ID, user.id!);
       _prefs.setBool(IS_LOGIN, true);
-      print(res.message);
       return true;
-    } else {
+    } catch (e) {
+      print(e);
       return false;
     }
   }
 
-  static Future<void> logout() async {
-    print('Logged Out');
+  static Future<bool> logout() async {
     SharedPreferences _prefs = await SharedPreferences.getInstance();
     _prefs.remove(IS_LOGIN);
-    return await Future<void>.delayed(Duration(seconds: 1));
+    await Future<void>.delayed(Duration(seconds: 1));
+    return true;
   }
-
 }

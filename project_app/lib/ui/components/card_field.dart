@@ -3,6 +3,7 @@ import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
 
 import '../../constants.dart';
+import 'custom_widget_loading.dart';
 
 class CardField extends StatefulWidget {
   final Field? field;
@@ -24,6 +25,16 @@ class CardField extends StatefulWidget {
 
 class _CardFieldState extends State<CardField> {
   String? urlImage;
+  double? distance;
+
+  Future<bool> setDistance() async {
+    // print(widget.field!.location);
+    double? _distance = await findDistance(widget.field!.location!);
+    distance = _distance!;
+    // await Future.delayed(Duration(milliseconds: 1000));
+    print('${widget.field!.title}: ${distance}');
+    return true;
+  }
 
   Future<bool> fetchData() async {
     urlImage = await FieldServices.firstImageUrl(widget.field!.id!);
@@ -32,21 +43,24 @@ class _CardFieldState extends State<CardField> {
   }
 
   Widget cardField(String url) {
-    return InkWell(
-      onTap: widget.onTap,
-      child: Container(
-        decoration: BoxDecoration(boxShadow: [
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 2,
             blurRadius: 7,
-            offset: Offset(0, 5), // changes position of shadow
+            offset: Offset(0, 5),
           ),
-        ]),
+        ],
+      ),
+      child: InkWell(
+        onTap: widget.onTap,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Material(
-            color: Colors.white,
+            color: whiteColor,
+            // color: creamPrimaryColor,
             child: Column(
               children: [
                 buildImage(url),
@@ -75,12 +89,30 @@ class _CardFieldState extends State<CardField> {
                   Text(
                     '${widget.field!.title}',
                     style: TextStyle(
+                      color: orangeColor,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                   Text('${widget.field!.hours}'),
-                  Text('${widget.field!.price}'),
-                  Text('${widget.field!.tel}'),
+                  Text('${widget.field!.price} บาท'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('${widget.field!.tel}'),
+                      FutureBuilder(
+                        future: setDistance(),
+                        builder:
+                            (BuildContext context, AsyncSnapshot snapshot) {
+                          if (snapshot.hasData) {
+                            return Text('${distance!.floorToDouble()} กม.');
+                          } else {
+                            return SizedBox();
+                          }
+                        },
+                      )
+                    ],
+                  ),
                 ],
               ),
             ),

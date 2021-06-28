@@ -9,7 +9,6 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      elevation: 4,
       title: Text('Field'),
       actions: [
        isOwner! ? IconButton(

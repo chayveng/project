@@ -25,6 +25,7 @@ class UserApi {
 
   static Future<ApiResponse> register({@required User? user}) async {
     var apiConnect = await ApiConnect.post(path: '/user/register', body: user);
+    print(apiConnect);
     return apiResponseFromJson(apiConnect.toString());
   }
 
@@ -36,19 +37,5 @@ class UserApi {
   static Future<ApiResponse> update({@required User? user}) async {
     var apiConnect = await ApiConnect.post(path: '/user/update', body: user);
     return apiResponseFromJson(apiConnect.toString());
-    // return apiResponseFromJson(
-    //     await ApiConnect.post(path: '/user/update', body: user));
   }
-
-//************
-
-// static Future<ApiResponse> addImage({@required FormData data}) async =>
-//     apiResponseFromJson(
-//         // await ApiConnect.postDIO(path: '/club/addImage/', data: data));
-//         await ApiConnect.postDIO(path: '/user/addUserImage/', data: data));
-
-// static Future<ApiResponse> addImage({@required FormData data}) async {
-//   return apiResponseFromJson(
-//       await ApiConnect.postDIO(path: '/club/addImage/', data: data));
-// }
 }

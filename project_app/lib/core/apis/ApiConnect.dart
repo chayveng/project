@@ -20,6 +20,7 @@ class ApiConnect {
     var url = Uri.parse('${Config.API_URL}$path');
     var response = await http.post(
       url,
+      // body: body,
       body: jsonEncode(body),
       // headers: {HttpHeaders.contentTypeHeader: ('application/json')},
       headers: <String, String>{

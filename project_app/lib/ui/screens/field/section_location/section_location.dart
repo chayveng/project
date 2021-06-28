@@ -20,27 +20,22 @@ class _SectionLocationState extends State<SectionLocation> {
 
   @override
   void initState() {
-    // getLatLng('16.32423,106.3435');
-    getLatLng(widget.location);
+    // getLatLng('16.4889132,102.8447655');
+    getLatLng(widget.location!);
     super.initState();
   }
 
-  void getLatLng(String? lctData) {
-    print(widget.location);
-    String defaultLct = '16.34543,106.43535';
-    if(lctData != null){
-      defaultLct = lctData;
-    }
-    int index = defaultLct.indexOf(',');
-    double lat = double.parse(defaultLct.substring(0, index));
-    double lng = double.parse(defaultLct.substring(index + 1, defaultLct.length));
+  void getLatLng(String lctData) {
+    int index = lctData.indexOf(',');
+    double lat = double.parse(lctData.substring(0, index));
+    double lng = double.parse(lctData.substring(index + 1, lctData.length));
     setState(() => location = LatLng(lat, lng));
   }
 
   @override
   Widget build(BuildContext context) {
-    return buildCardMap(context);
-    // return widget.location != null ? buildCardMap(context) : SizedBox();
+    // return buildCardMap(context);
+    return widget.location != null ? buildCardMap(context) : SizedBox();
   }
 
   Widget buildCardMap(BuildContext context) {

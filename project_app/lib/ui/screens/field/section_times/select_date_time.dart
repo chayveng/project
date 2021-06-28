@@ -4,8 +4,8 @@ import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/ui/components/custom_alert_dialog.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
-import 'package:project_app/ui/screens/field/components/section_times/form_picker_date.dart';
-import 'package:project_app/ui/screens/field/components/section_times/form_picker_time.dart';
+import 'package:project_app/ui/screens/field/section_times/form_picker_date.dart';
+import 'package:project_app/ui/screens/field/section_times/form_picker_time.dart';
 
 class SelectDateTime extends StatefulWidget {
   final List<Time>? times;
@@ -17,6 +17,7 @@ class SelectDateTime extends StatefulWidget {
 }
 
 class _SelectDateTimeState extends State<SelectDateTime> {
+  DateTime? tester;
   DateTime? startTime;
   DateTime? endTime;
   Time _time = Time();
@@ -48,22 +49,21 @@ class _SelectDateTimeState extends State<SelectDateTime> {
     return SingleChildScrollView(
       child: times.length != 0
           ? Column(
-              children: [
-                ...List.generate(
-                  times.length,
-                  (index) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      // color: Colors.yellow,
-                      child: Text(
-                        '${setFormTime(times[index].startTime!)} - ${setFormTime(times[index].endTime!)}',
-                        style: TextStyle(fontSize: 24),
-                      ),
-                    ),
-                  ),
+        children: [
+          ...List.generate(
+            times.length,
+                (index) => Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                child: Text(
+                  '${setFormTime(times[index].startTime!)} - ${setFormTime(times[index].endTime!)}',
+                  style: TextStyle(fontSize: 24),
                 ),
-              ],
-            )
+              ),
+            ),
+          ),
+        ],
+      )
           : SizedBox(),
     );
   }
@@ -155,13 +155,13 @@ class _SelectDateTimeState extends State<SelectDateTime> {
             });
             print(times.length);
             await showDialog(
-                  context: context,
-                  builder: (context) => CustomAlertDialog(
-                    title: 'Booked',
-                    content: 'Bookeddd',
-                    onConfirm: () => Navigator.pop(context),
-                  ),
-                ) ??
+              context: context,
+              builder: (context) => CustomAlertDialog(
+                title: 'Booked',
+                content: 'Bookeddd',
+                onConfirm: () => Navigator.pop(context),
+              ),
+            ) ??
                 Navigator.pop(context);
           } else {
             print('new time not ok');
@@ -170,7 +170,7 @@ class _SelectDateTimeState extends State<SelectDateTime> {
               builder: (context) => CustomAlertDialog(
                 title: 'Error',
                 content:
-                    'Please select another time Because it has been booked.',
+                'Please select another time Because it has been booked.',
                 onConfirm: () {
                   Navigator.pop(context);
                 },

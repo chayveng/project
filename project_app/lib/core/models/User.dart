@@ -5,7 +5,7 @@ User userFromJson(String str) => User.fromJson(json.decode(str));
 List<User> usersFromJson(List lst) =>
     lst.map((e) => userFromJson(jsonEncode(e))).toList();
 
-String userToJson(User? data) => json.encode(data!.toJson());
+String userToJson(User data) => json.encode(data.toJson());
 
 class User {
   User({

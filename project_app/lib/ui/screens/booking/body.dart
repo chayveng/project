@@ -10,12 +10,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text(
-        'ยังไม่มีการจองสนาม',
-        style: TextStyle(
-            fontSize: 15,  fontFamily: 'Kanit'),
-      ),
-    );
+    return Center(child: Text('Booking'));
   }
 }

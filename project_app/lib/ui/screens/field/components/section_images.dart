@@ -71,28 +71,6 @@ class _SectionImagesState extends State<SectionImages> {
     );
   }
 
-  // Widget formImages() {
-  //   return CarouselSlider(
-  //     options: CarouselOptions(
-  //       height: sized(context).height * 0.33,
-  //       viewportFraction: 1.0,
-  //       enableInfiniteScroll: false,
-  //       onPageChanged: (index, reason) {
-  //         setState(() => _current = index);
-  //       },
-  //     ),
-  //     items: widget.images!
-  //         .map(
-  //           (item) => Container(
-  //             width: double.infinity,
-  //             height: double.infinity,
-  //             child: Image.memory(item, fit: BoxFit.cover),
-  //           ),
-  //         )
-  //         .toList(),
-  //   );
-  // }
-
   Widget formImages() {
     return widget.images != null
         ? Container(
@@ -100,12 +78,11 @@ class _SectionImagesState extends State<SectionImages> {
             width: sized(context).width,
             child: PageView.builder(
               itemCount: widget.images!.length, // Can be null
-              itemBuilder: (context, index) {
-                return Image.memory(
+              onPageChanged: (index) => setState(() => _current = index),
+              itemBuilder: (context, index) => Image.memory(
                   widget.images![index],
                   fit: BoxFit.cover,
-                );
-              },
+                ),
             ),
           )
         : SizedBox();

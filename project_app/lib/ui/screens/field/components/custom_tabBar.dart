@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_app/constants.dart';
 
 class CustomTabBar extends StatelessWidget {
   final String? tabBar;
@@ -18,7 +19,7 @@ class CustomTabBar extends StatelessWidget {
         ),
         Container(
           height: 2,
-          color: current! ? Colors.black87 : Colors.black12,
+          color: current! ? orangeColor : Colors.black12,
         ),
       ],
     );

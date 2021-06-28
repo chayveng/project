@@ -14,8 +14,8 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: greyPrimaryColor,
-      body: Body(status: false, userImage: userImage!),
+      backgroundColor: greyColor,
+      body: Body(status: false, userImage: userImage),
     );
   }
 }

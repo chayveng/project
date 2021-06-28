@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_app/ui/screens/field/components/section_times/select_date_time.dart';
+import 'package:project_app/ui/screens/field/section_times/select_date_time.dart';
 
 
 class CustomDialogDatetimePicker extends StatefulWidget {

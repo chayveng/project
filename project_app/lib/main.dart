@@ -11,6 +11,7 @@ import 'core/services/UserService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  // Widget screen = MainScreen();
   Widget screen = LoginScreen();
   if (await AuthService.isLogin() == true) {
     print('IsLogin: true');
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           elevation: 0,
           centerTitle: true,
-          color: creamPrimaryColor,
+          color: whiteColor,
+          // color: creamPrimaryColor,
           brightness: Brightness.light,
           iconTheme: IconThemeData(
             color: navyPrimaryColor,
@@ -54,8 +56,8 @@ class MyApp extends StatelessWidget {
       ),
       title: 'Flutter Demo',
       routes: routes,
-      home: screen,
-      // home: TextScreen(),
+      // home: screen,
+      home: TextScreen(),
     );
   }
 }

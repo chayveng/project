@@ -16,7 +16,7 @@ class _BodyState extends State<Body> {
       children: [
         Container(
           height: sized.height,
-          color: greyPrimaryColor,
+          color: greyColor,
           padding: EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             children: [

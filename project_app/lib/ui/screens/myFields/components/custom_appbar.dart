@@ -7,42 +7,16 @@ class CustomAppbar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.topCenter,
-      child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 7,
-              offset: Offset(0, 5), // changes position of shadow
-            ),
-          ],
+    return AppBar(
+      excludeHeaderSemantics: false,
+      primary: true,
+      title: Text('My Fields'),
+      actions: [
+        IconButton(
+          icon: Icon(Icons.add),
+          onPressed: onPressed,
         ),
-        height: 100,
-        child: AppBar(
-          excludeHeaderSemantics: false,
-          primary: true,
-          title: Text('My Fields'),
-          actions: [
-            IconButton(
-              icon: Icon(Icons.add),
-              onPressed: onPressed,
-              // onPressed: () async {
-              //   await Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //       builder: (context) =>
-              //           CreateFieldScreen(isCreate: true),
-              //     ),
-              //   ) ??
-              //       fetchData();
-              // },
-            ),
-          ],
-        ),
-      ),
+      ],
     );
   }
 }

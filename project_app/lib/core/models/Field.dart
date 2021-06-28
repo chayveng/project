@@ -31,28 +31,28 @@ class Field {
   String? location;
 
   factory Field.fromJson(Map<String, dynamic> json) => Field(
-    id: json["id"],
-    userId: json["userId"],
-    title: json["title"],
-    detail: json["detail"],
-    address: json["address"],
-    tel: json["tel"],
-    hours: json["hours"],
-    price: json["price"],
-    location: json["location"],
-  );
+        id: json["id"],
+        userId: json["userId"],
+        title: json["title"],
+        detail: json["detail"],
+        address: json["address"],
+        tel: json["tel"],
+        hours: json["hours"],
+        price: json["price"],
+        location: json["location"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "userId": userId,
-    "title": title,
-    "detail": detail,
-    "address": address,
-    "tel": tel,
-    "hours": hours,
-    "price": price,
-    "location": location,
-  };
+        "id": id,
+        "userId": userId,
+        "title": title,
+        "detail": detail,
+        "address": address,
+        "tel": tel,
+        "hours": hours,
+        "price": price,
+        "location": location,
+      };
 
   @override
   String toString() {

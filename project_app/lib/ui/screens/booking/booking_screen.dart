@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
+import 'package:project_app/ui/screens/booking/components/not_booking.dart';
 
 import 'body.dart';
 
@@ -9,7 +10,7 @@ class BookingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: greyPrimaryColor,
+      backgroundColor: greyColor,
       appBar: AppBar(
         title: Text(
           'Booking Screen',
@@ -19,7 +20,8 @@ class BookingScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: Body(),
+      body: NotBooking(),
+      // body: Body(),
     );
   }
 }

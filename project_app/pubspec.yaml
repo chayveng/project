@@ -40,9 +40,14 @@ dependencies:
   validators:
   google_maps_flutter:
   location:
+  intl:
 #  geolocator:
   archive:
-  intl:
+  flutter_launcher_icons:
+
+flutter_icons:
+  android: true
+  image_path: "assets/images/logo/logo.png"
 
 dev_dependencies:
   flutter_test:

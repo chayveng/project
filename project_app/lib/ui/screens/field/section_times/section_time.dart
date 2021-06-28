@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/ui/components/custom_alert_dialog.dart';
@@ -49,34 +48,37 @@ class _SectionTimesState extends State<SectionTimes> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              'go hello WORLD',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+    return Container(
+      color: greyColor,
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'เวลาที่ถูกจองแล้ว',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-          ),
-          showTimeBooked(context),
-          showTimeBooked(context),
-          showTimeBooked(context),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: RoundedButton(
-                text: 'book',
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) => CustomDialogDatetimePicker());
-                }),
-          ),
-        ],
+            showTimeBooked(context),
+            // showTimeBooked(context),
+            // showTimeBooked(context),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: RoundedButton(
+                  text: 'จอง',
+                  onTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => CustomDialogDatetimePicker());
+                  }),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -87,23 +89,13 @@ class _SectionTimesState extends State<SectionTimes> {
       child: Container(
         height: sized(context).height * 0.08,
         decoration: BoxDecoration(
-          // border: Border.all(width: 2,color: Colors.black12),
           borderRadius: BorderRadius.circular(10),
-          color: Colors.white,
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 2,
-              blurRadius: 7,
-              offset: Offset(0, 5), // changes position of shadow
-            ),
-          ],
+          color: whiteColor,
         ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Icon(
-              // Icons.bookmarks_sharp,
               Icons.event_busy,
               color: Colors.pink,
               size: 24.0,
@@ -119,7 +111,7 @@ class _SectionTimesState extends State<SectionTimes> {
             Container(
               padding: EdgeInsets.all(8),
               child: Text(
-                '23:44 - 23:00',
+                '15:00 - 17:00',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.bold,

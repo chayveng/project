@@ -2,10 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:project_app/ui/screens/createField/section_images/title_bar.dart';
+import 'package:project_app/ui/components/title_form_field.dart';
 
 import '../../../../constants.dart';
-
 
 class SectionImages extends StatefulWidget {
   final List<Uint8List>? images;
@@ -37,7 +36,7 @@ class _SectionImagesState extends State<SectionImages> {
       child: Container(
         width: double.infinity,
         height: double.infinity,
-        color: greyPrimaryColor,
+        color: greyColor,
         child: Icon(
           Icons.add_rounded,
           size: 28,
@@ -111,19 +110,16 @@ class _SectionImagesState extends State<SectionImages> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Column(
-          children: [
-            TitleBar(),
-            sectionImages(),
-          ],
-        ),
+    return Container(
+      decoration: BoxDecoration(
+        color: whiteColor,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        children: [
+          TitleFormField(iconData: Icons.image, title: 'Images'),
+          sectionImages(),
+        ],
       ),
     );
   }

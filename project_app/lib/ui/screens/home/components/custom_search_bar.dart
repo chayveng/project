@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 
 import '../../../../constants.dart';
-
 
 class CustomSearchBar extends StatelessWidget {
   const CustomSearchBar({
@@ -22,7 +20,15 @@ class CustomSearchBar extends StatelessWidget {
         borderRadius: BorderRadius.circular(10),
         child: Container(
           decoration: BoxDecoration(
-            color: creamPrimaryColor,
+            color: whiteColor,
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 7,
+                offset: Offset(0, 5),
+              ),
+            ],
             borderRadius: BorderRadius.circular(10),
           ),
           child: TextField(

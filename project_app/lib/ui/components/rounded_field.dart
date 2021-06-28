@@ -51,7 +51,7 @@ class RoundedField extends StatelessWidget {
       style: TextStyle(fontFamily: UiFont),
       decoration: InputDecoration(
         filled: true,
-        fillColor: creamPrimaryColor,
+        fillColor: whiteColor,
         hintText: hintText,
         enabledBorder: buildUnderlineInputBorder(),
         focusedBorder: buildUnderlineInputBorder(),

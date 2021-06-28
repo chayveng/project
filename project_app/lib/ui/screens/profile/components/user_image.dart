@@ -59,7 +59,7 @@ class UserImage extends StatelessWidget {
                   width: 100,
                   height: 100,
                   decoration: BoxDecoration(
-                    color: creamPrimaryColor,
+                    color: whiteColor,
                   ),
                   child: buildUserImage(),
                 ),

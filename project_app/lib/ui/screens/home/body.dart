@@ -13,62 +13,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   List<Field> fields = [];
   var _refresh = GlobalKey<RefreshIndicatorState>();
-  // @override
-  // void initState() {
-  //   fetchData();
-  //   super.initState();
-  // }
-  //
-  // Future<Null> _handleRefresh() async {
-  //   fetchData();
-  //   await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
-  //   return null;
-  // }
-  //
-  // Future<bool> refresh() async {
-  //   await Future.delayed(Duration(milliseconds: 200));
-  //   return true;
-  // }
-  //
-  // Future<bool> fetchData() async {
-  //   fields = [];
-  //   fields = await FieldServices.findAll();
-  //   await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
-  //   return true;
-  // }
-  //
-  // List<Field> fields = [];
-  // var _refresh = GlobalKey<RefreshIndicatorState>();
-  //
-  // // Future refresh() async {
-  // //   print('refresh');
-  // //   await Future.delayed(
-  // //     Duration(milliseconds: 5000),
-  // //     () async => await fetchData(),
-  // //   );
-  // // }
-  //
-  // Future setData() async {
-  //   fields = [];
-  //   fields = await FieldServices.findAll();
-  //   await Future.delayed(Duration(milliseconds: 2000));
-  //   setState(() {});
-  // }
-  //
-  // Future<bool?> fetchData() async {
-  //   print('fetchData');
-  //   setData();
-  //   if (fields.length == 0) {
-  //     setData();
-  //     print(fields.length);
-  //     print(false);
-  //     return false;
-  //   } else {
-  //     print(fields.length);
-  //     print(true);
-  //     return true;
-  //   }
-  // }
 
   @override
   void initState() {
@@ -91,7 +35,7 @@ class _BodyState extends State<Body> {
     fields = [];
     fields = await FieldServices.findAll();
     await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
-    print(fields.length);
+    print('Fields: ${fields.length}');
     return true;
   }
 
