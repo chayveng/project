@@ -56,8 +56,8 @@ class MyApp extends StatelessWidget {
       ),
       title: 'Flutter Demo',
       routes: routes,
-      // home: screen,
-      home: TextScreen(),
+      home: screen,
+      // home: TextScreen(),
     );
   }
 }

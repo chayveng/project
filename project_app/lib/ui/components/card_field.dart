@@ -104,7 +104,7 @@ class _CardFieldState extends State<CardField> {
                         future: setDistance(),
                         builder:
                             (BuildContext context, AsyncSnapshot snapshot) {
-                          if (snapshot.hasData) {
+                          if (snapshot.data == true) {
                             return Text('${distance!.floorToDouble()} กม.');
                           } else {
                             return SizedBox();

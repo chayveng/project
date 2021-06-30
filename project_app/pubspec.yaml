@@ -43,6 +43,7 @@ dependencies:
   intl:
 #  geolocator:
   archive:
+  url_launcher:
   flutter_launcher_icons:
 
 flutter_icons:
