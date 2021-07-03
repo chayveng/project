@@ -1,10 +1,15 @@
+import 'dart:convert';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intl/intl.dart';
 import 'package:project_app/constants.dart';
+import 'package:project_app/core/Config.dart';
+import 'package:http/http.dart' as http;
+import 'package:project_app/core/models/ApiResponse.dart';
 import 'package:project_app/core/models/Time.dart';
 
-import 'components/dialog_date_time_picker/dialog_date_time_picker.dart';
+import 'components/card_time.dart';
 
 class Body extends StatefulWidget {
   const Body({Key? key}) : super(key: key);
@@ -14,101 +19,76 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  List<Time> data = [];
-  DateTime? startTime, endTime;
+  List<Time> times = [];
+
+
+
+
+  getTimes() async {
+    times = [];
+    var url = Uri.parse('${Config.API_URL}/time/findByUserId/0');
+    await http.get(url).then((value) {
+      ApiResponse response = apiResponseFromJson(value.body);
+      var data = response.data;
+      List lst = jsonDecode(jsonEncode(data));
+      List<Time> _times = timesFormJson(lst);
+      setState(() {
+        times = _times;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
       width: sized(context).width,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          sectionTimes(),
-          ElevatedButton(
-            child: Text(startTime != null
-                ? setStartToEnd(startTime!, endTime!)
-                : 'Picker'),
-            onPressed: () async => await onPicker(),
-          ),
-          ElevatedButton(
-            child: Text('Booking'),
-            onPressed: () async => await onBooking(),
-          ),
-          Container(
-            child: Text(''),
-          ),
+          ElevatedButton(onPressed: getTimes, child: Text('')),
+          ElevatedButton(onPressed: getTimes, child: Text('')),
+          ...List.generate(times.length, (index) => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CardTime(time: times[index]),
+          )),
+          // cardTime(),
         ],
       ),
     );
-  }
-
-  onBooking() {
-    print('booking');
-    if (startTime != null && endTime != null) {
-      Time time = Time();
-      time.startTime = startTime.toString();
-      time.endTime = endTime.toString();
-      data.add(time);
-      startTime = null;
-      endTime = null;
-      setState(() {});
-    }
-  }
-
-  onPicker() async {
-    await showDialog(
-      barrierDismissible: false,
-      context: context,
-      builder: (context) => DialogDateTimePicker(
-        startTime: startTime,
-        endTime: endTime,
-      ),
-    ).then((value) {
-      print(value);
-      if (value != null) {
-        setState(() {
-          startTime = value['start'];
-          endTime = value['end'];
-        });
-      }
-    });
-  }
-
-  Widget sectionTimes() {
-    return data.length != 0
-        ? Column(
-            children: [
-              ...List.generate(
-                data.length,
-                (index) => Text(
-                    '${getTime(data[index].startTime!)} - ${getTime(data[index].endTime!)}'),
-                // Text('${data[index].startTime} - ${data[index].endTime}'),
-              ),
-            ],
-          )
-        : Text('null');
-  }
-
-  String getTime(String str) {
-    int index = str.indexOf(' ');
-    return str.substring(index + 1, index + 6);
-  }
-
-  String setStartToEnd(DateTime start, DateTime end) {
-    return '${setFormTime(startTime!)} - ${setFormTime(endTime!)}';
   }
 
   String setFormDate(DateTime date) => DateFormat('dd/MM/yyyy').format(date);
 
   String setFormTime(DateTime time) => DateFormat('HH:mm').format(time);
 
-  void printFormTime(DateTime start, DateTime end) {
-    print('${setFormTime(start)} - ${setFormTime(end)}');
+  String setTimeBetween(String start, String end){
+    return '$start - $end';
   }
 
-  void printFormDate(DateTime start, DateTime end) {
-    print('${setFormDate(start)} - ${setFormDate(end)}');
-  }
+  // void printFormTime(DateTime start, DateTime end) {
+  //   print('${setFormTime(start)} - ${setFormTime(end)}');
+  // }
+  //
+  // void printFormDate(DateTime start, DateTime end) {
+  //   print('${setFormDate(start)} - ${setFormDate(end)}');
+  // }
+
+  // Widget cardTime(Time time) {
+  //   String _date = setFormDate(DateTime.parse(time.startTime!));
+  //   String _time = '${setFormTime(DateTime.parse(time.startTime!))} ' +
+  //       '-' +
+  //       ' ${setFormTime(DateTime.parse(time.startTime!))}';
+  //   return Padding(
+  //     padding: const EdgeInsets.all(8.0),
+  //     child: Container(
+  //       child: Row(
+  //         mainAxisAlignment: MainAxisAlignment.spaceAround,
+  //         children: [
+  //           Text(_date),
+  //           Text(_time),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }

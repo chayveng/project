@@ -1,125 +1,51 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
-import 'package:project_app/core/models/Time.dart';
-import 'package:project_app/ui/components/custom_alert_dialog.dart';
-import 'package:project_app/ui/components/rounded_button.dart';
+import 'package:project_app/ui/screens/field/section_times/components/card_time.dart';
+import 'package:project_app/ui/screens/field/section_times/components/form_booking.dart';
+import 'package:project_app/ui/screens/field/section_times/neo_select_time/bottom_sheet_booking.dart';
 
-import 'custom_dialog_datetime_picker.dart';
-
-class SectionTimes extends StatefulWidget {
-  final List<Time>? times;
-
-  const SectionTimes({Key? key, this.times}) : super(key: key);
+class SectionTime extends StatefulWidget {
+  const SectionTime({Key? key}) : super(key: key);
 
   @override
-  _SectionTimesState createState() => _SectionTimesState();
+  _SectionTimeState createState() => _SectionTimeState();
 }
 
-class _SectionTimesState extends State<SectionTimes> {
-  DateTime? startTime;
-  DateTime? endTime;
-  Time _time = Time();
-  List<Time> times = [];
-  DateTime? _date;
+class _SectionTimeState extends State<SectionTime> {
+  DateTime start = DateTime.parse('2021-07-03 11:44');
+  DateTime end = DateTime.parse('2021-07-03 15:50');
 
-  Widget buildTimeList() {
-    return SingleChildScrollView(
-      child: times.length != 0
-          ? Column(
-              children: [
-                ...List.generate(
-                  times.length,
-                  (index) => Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      // color: Colors.yellow,
-                      child: Text(
-                        '',
-                        style: TextStyle(fontSize: 24),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          : SizedBox(),
+  Padding buildCardTime(DateTime start, DateTime end) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 8),
+      child: CardTime(startTime: start, endTime: end),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: greyColor,
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                'go hello WORLD',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            showTimeBooked(context),
-            showTimeBooked(context),
-            showTimeBooked(context),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: RoundedButton(
-                  text: 'book',
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) => CustomDialogDatetimePicker());
-                  }),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Padding showTimeBooked(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: sized(context).height * 0.08,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: whiteColor,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(
-              Icons.event_busy,
-              color: Colors.pink,
-              size: 24.0,
-            ),
-            Container(
-              decoration: BoxDecoration(),
-              padding: EdgeInsets.all(8),
-              child: Text(
-                '11/12/2020',
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                '23:44 - 23:00',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ],
-        ),
+      padding: const EdgeInsets.symmetric(horizontal: 8),
+      child: Column(
+        children: [
+          ElevatedButton(
+            onPressed: () {
+              showCupertinoModalPopup(
+                context: context,
+                builder: (context) => BottomSheetBooking(),
+              );
+            },
+            child: Text(''),
+          ),
+          buildCardTime(start, end),
+          buildCardTime(start, end),
+          buildCardTime(start, end),
+          buildCardTime(start, end),
+          buildCardTime(start, end),
+          buildCardTime(start, end),
+          buildCardTime(start, end),
+        ],
       ),
     );
   }

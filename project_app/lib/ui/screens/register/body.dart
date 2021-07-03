@@ -12,13 +12,13 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     Size sized = MediaQuery.of(context).size;
-    return ListView(
-      children: [
-        Container(
-          height: sized.height,
-          color: greyPrimaryColor,
-          padding: EdgeInsets.symmetric(horizontal: 20),
-          child: Column(
+    return Container(
+      height: sized.height,
+      color: greyPrimaryColor,
+      padding: EdgeInsets.symmetric(horizontal: 20),
+      child: ListView(
+        children: [
+          Column(
             children: [
               SizedBox(height: sized.height * 0.1),
               Row(
@@ -37,8 +37,8 @@ class _BodyState extends State<Body> {
               FormRegister(),
             ],
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

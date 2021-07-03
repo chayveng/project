@@ -88,7 +88,8 @@ class _BodyState extends State<Body> {
                     tabBars: ['General', 'Times'],
                     tabViews: [
                       SectionGeneral(field: field),
-                      SectionTimes(times: []),
+                      SectionTime(),
+                      // SectionTimes(times: []),
                     ],
                   ),
                 ],
@@ -114,3 +115,4 @@ class _BodyState extends State<Body> {
     );
   }
 }
+
