@@ -24,6 +24,30 @@ class CardField extends StatefulWidget {
 
 class _CardFieldState extends State<CardField> {
   String? urlImage;
+  double? distance;
+
+  @override
+  void initState() {
+    setDistance();
+    super.initState();
+  }
+
+  String getDistance(double distance) {
+    String str = distance.toString();
+    int index = str.indexOf('.');
+    return str.substring(0, index + 3);
+  }
+
+  Future<bool> setDistance() async {
+    double? _distance = await findDistance(widget.field!.location!);
+    setState(() {
+      distance = _distance!;
+    });
+    print('${widget.field!.title}: $distance');
+    await Future.delayed(Duration(milliseconds: 5000));
+    setState(() {});
+    return true;
+  }
 
   Future<bool> fetchData() async {
     urlImage = await FieldServices.firstImageUrl(widget.field!.id!);
@@ -33,7 +57,7 @@ class _CardFieldState extends State<CardField> {
 
   Widget cardField(String url) {
     return Container(
-      decoration:BoxDecoration(
+      decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
@@ -85,7 +109,28 @@ class _CardFieldState extends State<CardField> {
                   ),
                   Text('${widget.field!.hours}'),
                   Text('${widget.field!.price}'),
-                  Text('${widget.field!.tel}'),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('${widget.field!.tel}'),
+                      Text(distance != null
+                          ? '${getDistance(distance!)}'
+                          : 'null'),
+                      // FutureBuilder(
+                      //   future: setDistance(),
+                      //   builder:
+                      //       (BuildContext context, AsyncSnapshot snapshot) {
+                      //     if (snapshot.data == true) {
+                      //       return Text(
+                      //           '${getDistance(distance!)} กม.');
+                      //           // '${distance!.toString().substring(0, distance.toString().indexOf('.') + 3)} กม.');
+                      //     } else {
+                      //       return SizedBox();
+                      //     }
+                      //   },
+                      // ),
+                    ],
+                  ),
                 ],
               ),
             ),

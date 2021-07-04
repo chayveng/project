@@ -22,6 +22,11 @@ public class TimeService {
         return new ApiResponse(1, "findAll", repository.findAll());
     }
 
+    public ApiResponse findByUserId(long userId){
+        List<Time> times = repository.findByUserId(userId);
+        return new ApiResponse(1, "find by userId", times);
+    }
+
     public ApiResponse findByFieldId(long fieldId) {
         List<Time> newTimes = new ArrayList<>();
         List<Time> Times = repository.findByFieldId(fieldId);

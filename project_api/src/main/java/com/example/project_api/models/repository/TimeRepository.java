@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface TimeRepository extends JpaRepository<Time, Long> {
     List<Time> findByFieldId(long fieldId);
+    List<Time> findByUserId(long userId);
     boolean deleteByFieldId(long fieldId);
 
 }

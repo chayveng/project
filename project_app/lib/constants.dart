@@ -78,6 +78,7 @@ LatLng getLocation(String lct) {
 
 Future<double?> findDistance(String lct) async {
   LocationData currentLocation = (await findLocationData())!;
+  print(currentLocation);
   LatLng lctData = getLocation(lct);
   double _distance = calculateDistance(
     currentLocation.latitude!,

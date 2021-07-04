@@ -16,6 +16,7 @@ public class Time {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
     private long fieldId;
+    private long userId;
     private String startTime;
     private String endTime;
 

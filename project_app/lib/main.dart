@@ -11,7 +11,6 @@ import 'core/services/UserService.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // Widget screen = MainScreen();
   Widget screen = LoginScreen();
   if (await AuthService.isLogin() == true) {
     print('IsLogin: true');

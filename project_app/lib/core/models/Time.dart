@@ -14,7 +14,6 @@ class Time {
     this.userId,
     this.startTime,
     this.endTime,
-    this.status,
   });
 
   int? id;
@@ -22,7 +21,6 @@ class Time {
   int? userId;
   String? startTime;
   String? endTime;
-  bool? status;
 
   factory Time.fromJson(Map<String, dynamic> json) => Time(
         id: json["id"],
@@ -30,7 +28,6 @@ class Time {
         userId: json["userId"],
         startTime: json["startTime"],
         endTime: json["endTime"],
-        status: json["status"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -39,11 +36,10 @@ class Time {
         "userId": userId,
         "startTime": startTime,
         "endTime": endTime,
-        "status": status,
       };
 
   @override
   String toString() {
-    return 'Time{id: $id, fieldId: $fieldId, userId: $userId, startTime: $startTime, endTime: $endTime, status: $status}';
+    return 'Time{id: $id, fieldId: $fieldId, userId: $userId, startTime: $startTime, endTime: $endTime}';
   }
 }

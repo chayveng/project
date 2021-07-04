@@ -25,6 +25,11 @@ public class TimeController {
         return service.findByFieldId(fieldId);
     }
 
+    @GetMapping("/findByUserId/{userId}")
+    public Object findByUserId(@PathVariable long userId){
+        return service.findByUserId(userId);
+    }
+
     @PostMapping("/create")
     public Object create(@RequestBody Time time){
         return service.create(time);
@@ -37,7 +42,6 @@ public class TimeController {
 
     @GetMapping("/testFindByFieldId/{fieldId}/{currentTime}")
     public Object testFindByFieldId(@PathVariable long fieldId,@PathVariable String currentTime){
-//        return currentTime;
         return service.testFindByFieldId(fieldId, currentTime);
     }
 
