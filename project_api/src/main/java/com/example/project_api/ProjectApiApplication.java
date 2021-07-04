@@ -7,15 +7,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @SpringBootApplication
-public class Application {
+public class ProjectApiApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(ProjectApiApplication.class, args);
     }
 
     @GetMapping()
-    public String index(){
+    public String index() {
         return "Hello, API";
     }
-
 }
