@@ -1,10 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Time.dart';
-import 'package:project_app/ui/components/custom_alert_dialog.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
-
-import 'custom_dialog_datetime_picker.dart';
+import 'components/bottom_sheet_booking.dart';
 
 class SectionTimes extends StatefulWidget {
   final List<Time>? times;
@@ -72,9 +71,12 @@ class _SectionTimesState extends State<SectionTimes> {
               child: RoundedButton(
                   text: 'จอง',
                   onTap: () {
-                    showDialog(
+                    showCupertinoModalPopup(
                         context: context,
-                        builder: (context) => CustomDialogDatetimePicker());
+                        builder: (context) => BottomSheetBooking());
+                    // showDialog(
+                    //     context: context,
+                    //     builder: (context) => CustomDialogDatetimePicker());
                   }),
             ),
           ],
@@ -124,3 +126,4 @@ class _SectionTimesState extends State<SectionTimes> {
     );
   }
 }
+

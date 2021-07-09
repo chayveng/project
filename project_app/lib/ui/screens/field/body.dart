@@ -76,6 +76,7 @@ class _BodyState extends State<Body> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           CustomAppBar(
+            title: field.title,
             isOwner: widget.isOwner!,
             onEdit: () async => await _onEdit(),
           ),

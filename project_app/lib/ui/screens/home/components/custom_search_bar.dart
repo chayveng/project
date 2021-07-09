@@ -3,8 +3,9 @@ import 'package:flutter/material.dart';
 import '../../../../constants.dart';
 
 class CustomSearchBar extends StatelessWidget {
+  final GestureTapCallback? onTap;
   const CustomSearchBar({
-    Key? key,
+    Key? key, this.onTap,
   }) : super(key: key);
 
   @override
@@ -31,13 +32,16 @@ class CustomSearchBar extends StatelessWidget {
             ],
             borderRadius: BorderRadius.circular(10),
           ),
-          child: TextField(
-            decoration: InputDecoration(
-              hintText: 'Search',
-              enabledBorder: InputBorder.none,
-              focusedBorder: InputBorder.none,
-              prefixIcon: Icon(Icons.search),
-              contentPadding: EdgeInsets.only(top: 16),
+          child: InkWell(
+            onTap: onTap,
+            child: TextField(
+              decoration: InputDecoration(
+                hintText: 'Search',
+                enabledBorder: InputBorder.none,
+                focusedBorder: InputBorder.none,
+                prefixIcon: Icon(Icons.search),
+                contentPadding: EdgeInsets.only(top: 16),
+              ),
             ),
           ),
         ),

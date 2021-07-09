@@ -14,7 +14,6 @@ class CardTime extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: sized(context).width,
-      height: 150,
       margin: EdgeInsets.all(8),
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(

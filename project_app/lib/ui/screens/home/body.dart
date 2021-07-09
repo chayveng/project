@@ -3,6 +3,8 @@ import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/ui/components/custom_widget_loading.dart';
 
+import '../../../constants.dart';
+import 'components/search_engine.dart';
 import 'components/section_fields.dart';
 
 class Body extends StatefulWidget {
@@ -39,29 +41,60 @@ class _BodyState extends State<Body> {
     return true;
   }
 
+  List<String> list = List.generate(100, (index) => '$index');
+
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      top: true,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            RefreshIndicator(
-              key: _refresh,
-              onRefresh: _handleRefresh,
-              child: FutureBuilder(
-                future: refresh(),
-                builder: (BuildContext context, AsyncSnapshot snapshot) {
-                  if (fields.isNotEmpty) {
-                    return SectionFields(fields: fields);
-                  } else {
-                    return CustomWidgetLoading();
-                  }
-                },
-              ),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            color: Colors.yellow,
+            child: AppBar(
+              backgroundColor: whiteColor,
+              title: Text('หน้าหลัก'),
+              centerTitle: true,
+              actions: [
+                IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    print('search');
+                    showSearch(context: context, delegate: Search(fields));
+                  },
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+
+          Container(
+            height: sized(context).height,
+            child: SectionFields(fields: fields),
+          ),
+          // RefreshIndicator(
+          //   key: _refresh,
+          //   onRefresh: _handleRefresh,
+          //   child: FutureBuilder(
+          //     future: refresh(),
+          //     builder: (BuildContext context, AsyncSnapshot snapshot) {
+          //       // return Container(
+          //       //   height: sized(context).height,
+          //       //   child: ListView.builder(
+          //       //     itemCount: list.length,
+          //       //     itemBuilder: (context, index) => ListTile(
+          //       //       title: Text(list[index]),
+          //       //     ),
+          //       //   ),
+          //       // );
+          //       if (fields.isNotEmpty) {
+          //         // return Text('dddd');
+          //         // return SectionFields(fields: fields);
+          //       } else {
+          //         return CustomWidgetLoading();
+          //       }
+          //     },
+          //   ),
+          // ),
+        ],
       ),
     );
   }

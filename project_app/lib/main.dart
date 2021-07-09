@@ -34,12 +34,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primaryColor: orangePrimaryColor,
         fontFamily: UiFont,
         appBarTheme: AppBarTheme(
           elevation: 0,
           centerTitle: true,
           color: whiteColor,
-          // color: creamPrimaryColor,
           brightness: Brightness.light,
           iconTheme: IconThemeData(
             color: navyPrimaryColor,
