@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.project_app">
    <application
-        android:label="SoccerHub"
+        android:label="Soccer Hub"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity

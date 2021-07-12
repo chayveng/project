@@ -61,7 +61,6 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
                   child: Center(
                     child: Text(
                       '${DateFormat('dd-MM-yyyy').format(startTime!)}',
-                      // '${getDate(startTime!)}',
                       style: TextStyle(fontSize: 18),
                     ),
                   ),
@@ -71,19 +70,52 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  spinnerStartHour(),
-                  SizedBox(width: 5),
-                  Text(':', style: TextStyle(fontSize: 20)),
-                  SizedBox(width: 5),
-                  spinnerStartMin(),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 2, color: orangePrimaryColor),
+                    ),
+                    child: Row(
+                      children: [
+                        spinnerStartHour(),
+                        SizedBox(width: 5),
+                        Text(':', style: TextStyle(fontSize: 20)),
+                        SizedBox(width: 5),
+                        spinnerStartMin(),
+                      ],
+                    ),
+                  ),
                   SizedBox(width: 5),
                   Text('ถึง', style: TextStyle(fontSize: 20)),
                   SizedBox(width: 5),
-                  spinnerEndHour(),
-                  SizedBox(width: 5),
-                  Text(':', style: TextStyle(fontSize: 20)),
-                  SizedBox(width: 5),
-                  spinnerEndMin(),
+                  Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: 2, color: orangePrimaryColor),
+                    ),
+                    child: Row(
+                      children: [
+                        spinnerEndHour(),
+                        SizedBox(width: 5),
+                        Text(':', style: TextStyle(fontSize: 20)),
+                        SizedBox(width: 5),
+                        spinnerEndMin(),
+                      ],
+                    ),
+                  ),
+                  // spinnerStartHour(),
+                  // SizedBox(width: 5),
+                  // Text(':', style: TextStyle(fontSize: 20)),
+                  // SizedBox(width: 5),
+                  // spinnerStartMin(),
+                  // SizedBox(width: 5),
+                  // Text('ถึง', style: TextStyle(fontSize: 20)),
+                  // SizedBox(width: 5),
+                  // spinnerEndHour(),
+                  // SizedBox(width: 5),
+                  // Text(':', style: TextStyle(fontSize: 20)),
+                  // SizedBox(width: 5),
+                  // spinnerEndMin(),
                 ],
               ),
               SizedBox(height: 15),
@@ -125,7 +157,7 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 2, color: orangePrimaryColor),
+        // border: Border.all(width: 2, color: orangePrimaryColor),
       ),
       height: 100,
       width: 50,
@@ -157,7 +189,7 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 2, color: orangePrimaryColor),
+        // border: Border.all(width: 2, color: orangePrimaryColor),
       ),
       height: 100,
       width: 50,
@@ -189,7 +221,7 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 2, color: orangePrimaryColor),
+        // border: Border.all(width: 2, color: orangePrimaryColor),
       ),
       height: 100,
       width: 50,
@@ -221,7 +253,7 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
       decoration: BoxDecoration(
         color: whiteColor,
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: 2, color: orangePrimaryColor),
+        // border: Border.all(width: 2, color: orangePrimaryColor),
       ),
       height: 100,
       width: 50,
@@ -287,8 +319,8 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
     print(initialDate);
     print(startTime);
     final newDate = await showDatePicker(
-    // final newDate = await showRoundedDatePicker(
-    //   height: 300,
+      // final newDate = await showRoundedDatePicker(
+      //   height: 300,
       context: context,
       initialDate: DateTime.now(),
       // initialDate: startTime ?? initialDate,
