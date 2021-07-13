@@ -21,7 +21,7 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
   DateTime end = DateTime.parse('2021-07-03 15:50');
 
   @override
- void initState(){
+  void initState() {
     print(_time);
     super.initState();
   }
@@ -153,11 +153,8 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
     return value.toString().length < 2 ? '0$value' : value.toString();
   }
 
-  Widget spinner({
-    @required String? time,
-    @required String? current,
-    int? initial,
-  }) {
+  Widget spinner(
+      {@required String? time, @required String? current, int? initial}) {
     return Container(
       width: 28,
       height: 100,
@@ -177,7 +174,8 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
               setTowBit(_time[time][index]),
               style: TextStyle(
                 fontSize: 22,
-                color: _current[current] == index ? Colors.black : Colors.black38,
+                color:
+                    _current[current] == index ? Colors.black : Colors.black38,
               ),
             ),
           );
