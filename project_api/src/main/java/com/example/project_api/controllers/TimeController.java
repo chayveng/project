@@ -42,11 +42,6 @@ public class TimeController {
         return service.deleteById(timeId);
     }
 
-//    @GetMapping("/testFindByFieldId/{fieldId}/{currentTime}")
-//    public Object testFindByFieldId(@PathVariable long fieldId, @PathVariable String currentTime) {
-//        return service.testFindByFieldId(fieldId, currentTime);
-//    }
-
     @GetMapping("/autoSave")
     public Object autoSave() {
         return service.autoSave();

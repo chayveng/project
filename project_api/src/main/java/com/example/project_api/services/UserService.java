@@ -47,14 +47,12 @@ public class UserService {
     public ApiResponse update(User user) {
         Optional<User> userData = userRepository.findById(user.getId());
         if (userData.isPresent()) {
-
             userRepository.save(user);
             return new ApiResponse(1, "update", userRepository.findById(user.getId()));
         } else {
             return new ApiResponse(0, "No User", null);
         }
     }
-
 
     public UserImage imagesUpload(int userId, MultipartFile file) throws IOException {
         Optional<UserImage> userImage = userImageRepository.findByUserId(userId);
