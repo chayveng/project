@@ -29,29 +29,34 @@ public class TimeService {
     }
 
     public ApiResponse findByFieldId(long fieldId) {
-        List<Time> newTimes = new ArrayList<>();
-        List<Time> Times = repository.findByFieldId(fieldId);
-        Date date = new Date();
-        long time = date.getTime();
-        Timestamp current = new Timestamp(time);
-        for (var element : Times) {
-            Timestamp _startTime = Timestamp.valueOf(element.getStartTime());
-            Timestamp _endTime = Timestamp.valueOf(element.getEndTime());
-            if (_startTime.before(current) && _endTime.before(current)) {
-                repository.deleteById(element.getId());
-            } else {
-                newTimes.add(element);
-            }
-        }
-        return new ApiResponse(1, "findByFieldId : " + fieldId, newTimes);
+        List<Time> times = repository.findByFieldId(fieldId);
+        return new ApiResponse(1, "Find All", times);
     }
+//    public ApiResponse findByFieldId(long fieldId) {
+//        List<Time> newTimes = new ArrayList<>();
+//        List<Time> Times = repository.findByFieldId(fieldId);
+//        Date date = new Date();
+//        long time = date.getTime();
+//        Timestamp current = new Timestamp(time);
+//        for (var element : Times) {
+//            Timestamp _startTime = Timestamp.valueOf(element.getStartTime());
+//            Timestamp _endTime = Timestamp.valueOf(element.getEndTime());
+//            if (_startTime.before(current) && _endTime.before(current)) {
+//                repository.deleteById(element.getId());
+//            } else {
+//                newTimes.add(element);
+//            }
+//        }
+//        return new ApiResponse(1, "findByFieldId : " + fieldId, newTimes);
+//    }
 
-    public ApiResponse create(Map<String, Object> timeFromJson) {
-        Time time = Time.fromJson(timeFromJson);
+    public ApiResponse create(Time time) {
         List<Time> overlapTimes = repository.findOverlapTimes(time.getStartTime().toString(), time.getEndTime().toString(), time.getFieldId());
-        return overlapTimes.size() != 0
-                ? new ApiResponse(0, "create fail, time is overlap " + overlapTimes.size() + " item", overlapTimes)
-                : new ApiResponse(1, "create time success", repository.save(time));
+        if (time.getStartTime().isBefore(time.getEndTime()) && overlapTimes.size() == 0) {
+            return new ApiResponse(1, "create time success", repository.save(time));
+        } else {
+            return new ApiResponse(0, "create fail, time is overlap " + overlapTimes.size() + " item", overlapTimes);
+        }
     }
 
     public Object deleteById(long timeId) {

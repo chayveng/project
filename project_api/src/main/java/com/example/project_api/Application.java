@@ -5,7 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-//@RestController
+@RestController
 @SpringBootApplication
 public class Application {
 
@@ -13,8 +13,8 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-//    @GetMapping()
-//    public String index() {
-//        return "Hello, API";
-//    }
+    @GetMapping()
+    public String index() {
+        return "Hello, API";
+    }
 }
