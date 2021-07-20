@@ -31,7 +31,6 @@ class _SectionTimesState extends State<SectionTimes> {
                   (index) => Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      // color: Colors.yellow,
                       child: Text(
                         '',
                         style: TextStyle(fontSize: 24),
@@ -63,9 +62,9 @@ class _SectionTimesState extends State<SectionTimes> {
                 ),
               ),
             ),
-            showTimeBooked(context),
-            // showTimeBooked(context),
-            // showTimeBooked(context),
+            cardTimeBooked(context),
+            cardTimeBooked(context),
+            cardTimeBooked(context),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: RoundedButton(
@@ -85,7 +84,7 @@ class _SectionTimesState extends State<SectionTimes> {
     );
   }
 
-  Padding showTimeBooked(BuildContext context) {
+  Padding cardTimeBooked(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
@@ -120,10 +119,34 @@ class _SectionTimesState extends State<SectionTimes> {
                 ),
               ),
             ),
+            IconButton(
+              icon: Icon(Icons.info_outline_rounded),
+              onPressed: () {
+                print('show');
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: Center(
+                      child: Text(
+                        'ผู้จอง',
+                      ),
+                    ),
+                    content: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Text('userName'),
+                        Text('tel'),
+                      ],
+                    ),
+
+                  ),
+                  // builder: (context) => DialogInfo(user: _user),
+                );
+              },
+            ),
           ],
         ),
       ),
     );
   }
 }
-

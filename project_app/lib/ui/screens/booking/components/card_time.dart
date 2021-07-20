@@ -39,7 +39,7 @@ class CardTime extends StatelessWidget {
               color: orangeColor,
             ),
           ),
-          SizedBox(height: 10),
+          SizedBox(height: 15),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
