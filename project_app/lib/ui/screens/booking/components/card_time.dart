@@ -31,74 +31,89 @@ class CardTime extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          Text(
-            'ชื่อสนาม',
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
-              color: orangeColor,
-            ),
-          ),
+          buildTitle(),
           SizedBox(height: 15),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              Row(
-                children: [
-                  Icon(
-                    Icons.event_busy,
-                    color: Colors.pink,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    '01-11-2021',
-                    style: TextStyle(
-                      fontSize: 18,
-                    ),
-                  ),
-                  SizedBox(width: 30),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.access_alarm,
-                        color: Colors.redAccent,
-                      ),
-                      SizedBox(width: 5),
-                      Text(
-                        '12:00 - 13:00',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              buildDate(),
+              buildTime(),
             ],
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Icon(
-                Icons.location_pin,
-                color: orangeColor,
-              ),
-              TextButton(
-                onPressed: onTapMap,
-                child: Text(
-                  'แผนที่',
-                  style: TextStyle(
-                    color: navyPrimaryColor,
-                    fontSize: 16,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ),
-            ],
-          ),
+          buildMap(),
         ],
       ),
+    );
+  }
+
+  Text buildTitle() {
+    return Text(
+      'ชื่อสนาม',
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 20,
+        color: orangeColor,
+      ),
+    );
+  }
+
+  Row buildMap() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        Icon(
+          Icons.location_pin,
+          color: orangeColor,
+        ),
+        TextButton(
+          onPressed: onTapMap,
+          child: Text(
+            'แผนที่',
+            style: TextStyle(
+              color: navyPrimaryColor,
+              fontSize: 16,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row buildTime() {
+    return Row(
+      children: [
+        Icon(
+          Icons.access_alarm,
+          color: Colors.redAccent,
+        ),
+        SizedBox(width: 5),
+        Text(
+          '12:00 - 13:00',
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 18,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row buildDate() {
+    return Row(
+      children: [
+        Icon(
+          Icons.event_busy,
+          color: Colors.pink,
+        ),
+        SizedBox(width: 5),
+        Text(
+          '01-11-2021',
+          style: TextStyle(
+            fontSize: 18,
+          ),
+        ),
+      ],
     );
   }
 }

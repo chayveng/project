@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
+import 'package:project_app/ui/screens/field/section_times/components/card_time.dart';
 import 'components/bottom_sheet_booking.dart';
 
 class SectionTimes extends StatefulWidget {
@@ -62,9 +63,7 @@ class _SectionTimesState extends State<SectionTimes> {
                 ),
               ),
             ),
-            cardTimeBooked(context),
-            cardTimeBooked(context),
-            cardTimeBooked(context),
+            CardTime(date: '21-7-2021',startTime: '19:00',endTime: '20:00',isOwner: true,),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: RoundedButton(
@@ -84,69 +83,4 @@ class _SectionTimesState extends State<SectionTimes> {
     );
   }
 
-  Padding cardTimeBooked(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: sized(context).height * 0.08,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: whiteColor,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            Icon(
-              Icons.event_busy,
-              color: Colors.pink,
-              size: 24.0,
-            ),
-            Container(
-              decoration: BoxDecoration(),
-              padding: EdgeInsets.all(8),
-              child: Text(
-                '11/12/2020',
-                style: TextStyle(fontSize: 18),
-              ),
-            ),
-            Container(
-              padding: EdgeInsets.all(8),
-              child: Text(
-                '15:00 - 17:00',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            IconButton(
-              icon: Icon(Icons.info_outline_rounded),
-              onPressed: () {
-                print('show');
-                showDialog(
-                  context: context,
-                  builder: (context) => AlertDialog(
-                    title: Center(
-                      child: Text(
-                        'ผู้จอง',
-                      ),
-                    ),
-                    content: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Text('userName'),
-                        Text('tel'),
-                      ],
-                    ),
-
-                  ),
-                  // builder: (context) => DialogInfo(user: _user),
-                );
-              },
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

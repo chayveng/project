@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rounded_date_picker/flutter_rounded_date_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
+import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_fail.dart';
 
 import '../../../../../constants.dart';
 
@@ -124,7 +125,11 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
                 child: RoundedButton(
                     text: 'ยืนยัน',
                     onTap: () {
-                      _getDateTime();
+                      showDialog(
+                        barrierDismissible: false,
+                          context: context,
+                          builder: (context) => AlertDialogFail());
+                      // _getDateTime();
                     }),
               )
             ],
