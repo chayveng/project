@@ -1,59 +1,94 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:project_app/constants.dart';
-import 'package:project_app/ui/screens/field/section_times/components/card_time.dart';
+import 'package:project_app/core/models/Time.dart';
+import 'package:project_app/core/services/TimeService.dart';
+import 'package:project_app/core/services/UserService.dart';
+
+import 'package:project_app/ui/screens/field/section_times/components/button_booking.dart';
 import 'package:project_app/ui/screens/field/section_times/components/custom_colon.dart';
 
+import 'alert_dialog_fail.dart';
+
 class BottomSheetBooking extends StatefulWidget {
-  const BottomSheetBooking({Key? key}) : super(key: key);
+  final List? times;
+  final int? fieldId;
+  final int? userId;
+
+  const BottomSheetBooking({Key? key, this.times, this.fieldId, this.userId})
+      : super(key: key);
 
   @override
   _BottomSheetBookingState createState() => _BottomSheetBookingState();
 }
 
 class _BottomSheetBookingState extends State<BottomSheetBooking> {
-  final Map _timeSpinner = {
+  final Map _time = {
     'hour': List.generate(24, (index) => index),
-    'min': List.generate(60, (index) => index),
+    'min': List.generate(60, (index) => index * 10),
   };
   Map _current = {'startHour': 0, 'startMin': 0, 'endHour': 0, 'endMin': 0};
+  DateTime currentTime = DateTime.now();
   DateTime? startTime, endTime;
-  DateTime start = DateTime.parse('2021-07-03 11:44');
-  DateTime end = DateTime.parse('2021-07-03 15:50');
+  Time time = new Time();
 
-  @override
-  void initState() {
-    super.initState();
+  String setTowBit(int value) =>
+      value.toString().length < 2 ? '0$value' : value.toString();
+
+  String getDateTime(DateTime dateTime) =>
+      DateFormat('yyyy-MM-dd HH:mm').format(dateTime);
+
+  String getTime(DateTime time) => DateFormat('HH:mm').format(time);
+
+  String getDate(DateTime date) => DateFormat('dd-MM-yyyy').format(date);
+
+  _onBooking() async {
+    print('booking');
+    _setTime();
+    print(time);
+    if (await TimeService.create(time)) {
+      print('success');
+      Navigator.pop(context);
+    } else {
+      print('fail');
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialogFail(),
+      );
+    }
   }
 
-  Padding buildCardTime(DateTime start, DateTime end) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 8),
-      child: CardTime(startTime: start, endTime: end),
-    );
+  _setTime()  {
+    // int userId = await UserService.getUserId();
+    setState(()  {
+      startTime = DateTime(
+        currentTime.year,
+        currentTime.month,
+        currentTime.day,
+        _time['hour'][_current['startHour']],
+        _time['min'][_current['startMin']],
+      );
+      endTime = DateTime(
+        currentTime.year,
+        currentTime.month,
+        currentTime.day,
+        _time['hour'][_current['endHour']],
+        _time['min'][_current['endMin']],
+      );
+      time.fieldId = widget.fieldId;
+      time.userId = widget.userId;
+      time.startTime = getDateTime(startTime!);
+      time.endTime = getDateTime(endTime!);
+    });
   }
 
-  Widget formEnd() {
-    return Row(
-      children: [
-        spinner(time: 'hour', current: 'endHour'),
-        CustomColon(size: 3.5),
-        spinner(time: 'min', current: 'endMin'),
-      ],
-    );
+  _onDate() {
+    print('select date');
   }
-
-  Widget formStart() {
-    return Row(
-      children: [
-        spinner(time: 'hour', current: 'startHour'),
-        CustomColon(size: 3.5),
-        spinner(time: 'min', current: 'startMin')
-      ],
-    );
-  }
-
-  String setTowBit(String value) => value.length < 2 ? '0$value' : value;
 
   Widget spinner({
     @required String? time,
@@ -62,7 +97,6 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
     return Container(
       width: 33,
       height: 100,
-      color: Colors.blue.withOpacity(0.5),
       child: PageView.builder(
         pageSnapping: true,
         controller: PageController(
@@ -70,12 +104,12 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
           viewportFraction: 0.37,
         ),
         scrollDirection: Axis.vertical,
-        itemCount: _timeSpinner[time].length,
+        itemCount: _time[time].length,
         onPageChanged: (index) => setState(() => _current[current] = index),
         itemBuilder: (BuildContext context, int index) {
           return Center(
             child: Text(
-              setTowBit(_timeSpinner[time][index].toString()),
+              setTowBit(_time[time][index]),
               style: TextStyle(
                 fontSize: 22,
                 color:
@@ -88,65 +122,76 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
     );
   }
 
-  Expanded selectorTime(BuildContext context) {
-    return Expanded(
-      child: Column(
-        children: [
-          Text(
-            'booking',
-            style: TextStyle(
+  Widget formDate() {
+    return Container(
+      padding: EdgeInsets.all(6),
+      decoration: BoxDecoration(
+          color: orangePrimaryColor.withOpacity(0.5),
+          border: Border.all(width: 2, color: orangePrimaryColor),
+          borderRadius: BorderRadius.circular(8)),
+      child: InkWell(
+        onTap: _onDate,
+        child: Text(
+          DateFormat('dd-MM-yyyy').format(currentTime),
+          style: TextStyle(fontSize: 16),
+        ),
+      ),
+    );
+  }
 
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              formStart(),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text('-'),
-              ),
-              formEnd(),
-            ],
-          ),
+  Widget formEnd() {
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border.all(width: 2, color: orangePrimaryColor),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        children: [
+          spinner(time: 'hour', current: 'endHour'),
+          CustomColon(size: 3.5),
+          spinner(time: 'min', current: 'endMin'),
         ],
       ),
     );
   }
 
-  Expanded timeList() {
-    return Expanded(
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              ...List.generate(
-                10,
-                (index) => buildCardTime(start, end),
-              ),
-            ],
-          ),
-        ),
+  Widget formStart() {
+    return Container(
+      padding: EdgeInsets.all(8),
+      decoration: BoxDecoration(
+        border: Border.all(width: 2, color: orangePrimaryColor),
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        children: [
+          spinner(time: 'hour', current: 'startHour'),
+          CustomColon(size: 3.5),
+          spinner(time: 'min', current: 'startMin')
+        ],
       ),
     );
   }
 
-  Padding backIndicator(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: InkWell(
-        onTap: () => Navigator.pop(context),
-        child: Container(
-          width: sized(context).width * 0.2,
-          height: 5,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            color: Colors.black38,
-          ),
+  Widget sectionBooking(BuildContext context) {
+    return Column(
+      children: [
+        Text('จอง', style: TextStyle(fontSize: 24)),
+        SizedBox(height: 8),
+        formDate(),
+        SizedBox(height: 8),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            formStart(),
+            SizedBox(width: 8),
+            Text('ถึง'),
+            SizedBox(width: 8),
+            formEnd(),
+          ],
         ),
-      ),
+        ButtonBooking(onTap: () async => await _onBooking()),
+      ],
     );
   }
 
@@ -157,24 +202,19 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
         topLeft: Radius.circular(20),
         topRight: Radius.circular(20),
       ),
-      child: Container(
-        width: sized(context).width,
-        height: sized(context).height * 0.5,
-        color: Colors.white,
-        child: Material(
-          child: Column(
-            children: [
-              backIndicator(context),
-              timeList(),
-              selectorTime(context),
-              ElevatedButton(
-                onPressed: () {
-                  print(startTime);
-                },
-                child: Text('booking'),
+      child: Material(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            sectionBooking(context),
+            Container(
+              color: Colors.redAccent,
+              child: SafeArea(
+                bottom: true,
+                child: SizedBox(),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

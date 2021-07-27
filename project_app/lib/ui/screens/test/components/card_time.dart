@@ -13,10 +13,7 @@ class CardTime extends StatelessWidget {
     return '${DateFormat('dd/MM/yyyy').format(date)}';
   }
 
-  String getTime(String time) {
-    print(time);
-    return DateFormat('HH:mm').format(DateTime.parse(time));
-  }
+  String getTime(String time) => DateFormat('HH:mm').format(DateTime.parse(time));
 
   String setTimeBetween() {
     return '${getTime(time!.startTime!)} - ${getTime(time!.endTime!)}';

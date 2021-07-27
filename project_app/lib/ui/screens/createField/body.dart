@@ -48,7 +48,7 @@ class _BodyState extends State<Body> {
   Future<void> setData() async {
     field.userId = field.userId ?? await UserService.getUserId();
     if (widget.fieldId != null)
-      field = await FieldServices.findById(widget.fieldId!);
+      field = await FieldServices.findById(fieldId:widget.fieldId!);
     print(field);
   }
 

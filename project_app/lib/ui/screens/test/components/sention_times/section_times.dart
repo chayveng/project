@@ -44,7 +44,7 @@ class _SectionTimesState extends State<SectionTimes> {
                 apiResponseFromJson(apiConnect.toString());
                 List lst = jsonDecode(jsonEncode(apiResponse.data));
                 setState(() {
-                  times = timesFormJson(lst);
+                  times = timesFromJson(lst);
                 });
                 print(times.length);
               },

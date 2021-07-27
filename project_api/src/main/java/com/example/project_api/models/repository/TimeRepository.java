@@ -10,14 +10,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface TimeRepository extends JpaRepository<Time, Long> {
-    List<Time> findByFieldId(long fieldId);
-
     List<Time> findByUserId(long userId);
 
-    boolean deleteByFieldId(long fieldId);
+    boolean deleteByUserId(long fieldId);
+
+    @Query(value = "SELECT * FROM time ORDER BY startTime DESC", nativeQuery = true)
+    List<Time> findByFieldId(long fieldId);
 
     @Query(value = "SELECT * FROM time WHERE (endTime > :newStartTime AND startTime < :newEndTime) AND fieldId = :fieldId", nativeQuery = true)
     List<Time> findOverlapTimes(@Param("newStartTime") String startTime, @Param("newEndTime") String endTime, @Param("fieldId") long fieldId);
+
 
 }
 

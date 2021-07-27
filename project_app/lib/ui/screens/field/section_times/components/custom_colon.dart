@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomColon extends StatelessWidget {
   final double? size;
-  const CustomColon({Key? key, this.size}) : super(key: key);
+  const CustomColon({Key? key,@required this.size}) : super(key: key);
   Widget buildDot(){
     return Container(
       width: size!,
@@ -16,12 +16,16 @@ class CustomColon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [
-        buildDot(),
-        buildDot(),
-      ],
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: size!),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          buildDot(),
+          SizedBox(height: size!),
+          buildDot(),
+        ],
+      ),
     );
   }
 }

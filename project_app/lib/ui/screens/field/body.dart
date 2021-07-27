@@ -31,6 +31,7 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
+    print(widget.fieldId);
     // fetchData();
     super.initState();
   }
@@ -42,10 +43,9 @@ class _BodyState extends State<Body> {
 
   Future<bool> fetchData() async {
     print('fetch');
-    field = await FieldServices.findById(widget.fieldId!);
+    field = await FieldServices.findById(fieldId:widget.fieldId!);
     await downloadImages();
     await Future.delayed(Duration(milliseconds: 300));
-    // await Future.delayed(Duration(milliseconds: 1000), () => setState(() {}));
     return true;
   }
 
@@ -88,8 +88,10 @@ class _BodyState extends State<Body> {
                     tabBars: ['General', 'Times'],
                     tabViews: [
                       SectionGeneral(field: field),
-                      SectionTime(),
-                      // SectionTimes(times: []),
+                      SectionTime(
+                        isOwner: widget.isOwner,
+                        fieldId: widget.fieldId,
+                      ),
                     ],
                   ),
                 ],
@@ -115,4 +117,3 @@ class _BodyState extends State<Body> {
     );
   }
 }
-
