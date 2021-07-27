@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/core/models/User.dart';
@@ -44,19 +45,43 @@ class _AlertDialogInfoState extends State<AlertDialogInfo> {
   }
 
   Widget content() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Text(
-            '${timeGetTime(widget.time!.startTime!)} - ${timeGetTime(widget.time!.endTime!)}'),
-        Text('book by: ${user.userName}'),
-        Text('tel: ${user.tel}'),
-      ],
+    return Container(
+      padding: EdgeInsets.all(8),
+      width: sized(context).width,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Time: ${timeGetTime(widget.time!.startTime!)} - ${timeGetTime(widget.time!.endTime!)}',
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            'Book by: ${user.userName}',
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+          Text(
+            'Tel: ${user.tel}',
+            style: TextStyle(
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
     );
   }
 
   Widget title() {
-    return Text('Time Info');
+    return Text(
+      'Time Info',
+      style: TextStyle(
+        fontSize: 18,
+      ),
+    );
   }
 
   @override

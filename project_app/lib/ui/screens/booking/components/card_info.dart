@@ -112,6 +112,7 @@ class CardInfo extends StatelessWidget {
       margin: EdgeInsets.all(8),
       padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
+        border: Border.all(width: 3, color: orangePrimaryColor),
         borderRadius: BorderRadius.circular(8),
         color: whiteColor,
         boxShadow: [

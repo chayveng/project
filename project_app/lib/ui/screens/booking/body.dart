@@ -78,16 +78,18 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return times.length != 0 ? Column(
-      children: [
-        sectionInfo(),
-        Center(child: Text('Booking')),
-        ElevatedButton(
-          // onPressed: () => fetchData(),
-          onPressed: () => getFieldById(1),
-          child: Text(''),
-        ),
-      ],
+    return times.length != 0 ? SingleChildScrollView(
+      child: Column(
+        children: [
+          sectionInfo(),
+          // Center(child: Text('Booking')),
+          // ElevatedButton(
+          //   // onPressed: () => fetchData(),
+          //   onPressed: () => getFieldById(1),
+          //   child: Text(''),
+          // ),
+        ],
+      ),
     ): NotBooking();
   }
 }
