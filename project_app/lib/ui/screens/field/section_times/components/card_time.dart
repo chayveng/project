@@ -1,28 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
+import 'package:project_app/constants.dart';
 
 class CardTime extends StatelessWidget {
-  final DateTime? startTime;
-  final DateTime? endTime;
+  final String? startTime;
+  final String? endTime;
+  final String? date;
+  final bool? isOwner;
+  final GestureTapCallback? onInfo;
+  final GestureTapCallback? onDelete;
 
-  const CardTime({Key? key, this.startTime, this.endTime}) : super(key: key);
+  const CardTime({
+    Key? key,
+    this.startTime,
+    this.endTime,
+    this.date,
+    this.isOwner,
+    this.onInfo,
+    this.onDelete,
+  }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
-      child: Container(
-        padding: EdgeInsets.all(8),
-        color: Colors.yellow,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            formDate(),
-            formTime(),
-          ],
-        ),
-      ),
-    );
+  Widget buttonRemove() {
+    return isOwner!
+        ? InkWell(
+            onTap: onDelete,
+            child: Icon(Icons.delete),
+          )
+        : SizedBox();
+  }
+
+  Widget buttonInfo() {
+    return isOwner!
+        ? InkWell(
+            onTap: onInfo,
+            child: Icon(Icons.info_outline_rounded),
+          )
+        : SizedBox();
   }
 
   Widget formTime() => Row(
@@ -30,8 +42,7 @@ class CardTime extends StatelessWidget {
           Icon(Icons.timer),
           SizedBox(width: 10),
           Text(
-            '${getTime(startTime!)} - ${getTime(endTime!)}',
-            // '12:00 - 23:00',
+            "$startTime - $endTime",
             style: TextStyle(
               fontSize: 18,
             ),
@@ -44,8 +55,7 @@ class CardTime extends StatelessWidget {
           Icon(Icons.calendar_today_rounded),
           SizedBox(width: 10),
           Text(
-            '${getDate(startTime!)}',
-            // '12/05/2020',
+            '$date',
             style: TextStyle(
               color: Colors.black38,
             ),
@@ -53,11 +63,29 @@ class CardTime extends StatelessWidget {
         ],
       );
 
-  String getDate(DateTime dateTime) {
-    return DateFormat('dd-MM-yyyy').format(dateTime);
-  }
-
-  String getTime(DateTime dateTime) {
-    return DateFormat('HH:mm').format(dateTime);
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 2, color: orangePrimaryColor),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        padding: EdgeInsets.all(8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            formDate(),
+            SizedBox(width: 16),
+            formTime(),
+            SizedBox(width: 16),
+            buttonInfo(),
+            SizedBox(width: 16),
+            buttonRemove(),
+          ],
+        ),
+      ),
+    );
   }
 }

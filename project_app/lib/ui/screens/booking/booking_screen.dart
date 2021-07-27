@@ -20,8 +20,8 @@ class BookingScreen extends StatelessWidget {
           ),
         ),
       ),
-      body: NotBooking(),
-      // body: Body(),
+      // body: NotBooking(),
+      body: Body(),
     );
   }
 }

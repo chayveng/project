@@ -15,6 +15,7 @@ class SectionFields extends StatefulWidget {
 }
 
 class _SectionFieldsState extends State<SectionFields> {
+
   void _onTap(int index) {
     Navigator.push(
       context,
@@ -35,14 +36,14 @@ class _SectionFieldsState extends State<SectionFields> {
           widget.fields!.length,
           (index) => Column(
             children: [
-              index == 0 ? CustomSearchBar() : SizedBox(),
+              // index == 0 ? CustomSearchBar() : SizedBox(),
               Padding(
                 padding: const EdgeInsets.all(8.0),
+                // child: Text('${widget.fields![index].title}'),
                 child: CardField(
                   isOwner: false,
                   field: widget.fields![index],
                   onTap: () => _onTap(index),
-                  onRemove: () => print('remove'),
                 ),
               ),
             ],

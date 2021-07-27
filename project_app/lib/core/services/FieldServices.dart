@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/apis/FieldApi.dart';
@@ -17,8 +19,8 @@ class FieldServices {
     return fieldsFromJson(dataList);
   }
 
-  static Future<Field> findById(int fieldId) async {
-    ApiResponse response = await FieldApi.findById(fieldId);
+  static Future<Field> findById({@required int? fieldId}) async {
+    ApiResponse response = await FieldApi.findById(fieldId!);
     Field field = fieldFromJson(jsonEncode(response.data));
     return field;
   }
@@ -66,14 +68,18 @@ class FieldServices {
   static Future<List<Uint8List>> downloadImages(int fieldId) async {
     List<Uint8List> images = [];
     String path = '/field/urlImages/$fieldId';
-    var res = await ApiConnect.get(path: path);
-    List urlImages = jsonDecode(res.toString());
-    for (var i = 0; i < urlImages.length; i++) {
-      var url = Uri.parse(urlImages[i]);
-      var res = await http.get(url);
-      images.add(res.bodyBytes);
+     Object? res = await ApiConnect.get(path: path);
+    if (res != '') {
+      List urlImages = jsonDecode(res.toString());
+      for (var i = 0; i < urlImages.length; i++) {
+        var url = Uri.parse(urlImages[i]);
+        var res = await http.get(url);
+        images.add(res.bodyBytes);
+      }
+      return images;
+    }else{
+      return [];
     }
-    return images;
   }
 
   static Future<List<Field>> getByUserId(int userId) async {
