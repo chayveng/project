@@ -22,10 +22,13 @@ const Color creamPrimaryColor = Color(0xFFf7f6e7);
 const Color orangePrimaryColor = Color(0xFFf2a154);
 const Color navyPrimaryColor = Color(0xFF314e52);
 
-const Color orangeColor = Color.fromRGBO(253, 108, 43, 1);
-const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
-const Color greyColor = Color.fromRGBO(240, 240, 250, 1);
-const Color blackColor = Color.fromRGBO(33, 33, 33, 1);
+const Color orangeColor= Color.fromRGBO(253, 108, 43, 1);
+const Color whiteColor= Color.fromRGBO(255, 255, 255, 1);
+const Color greyColor= Color.fromRGBO(240, 240, 250, 1);
+const Color blackColor= Color.fromRGBO(33, 33, 33, 1);
+
+
+
 
 Size sized(BuildContext context) => MediaQuery.of(context).size;
 
@@ -75,15 +78,13 @@ LatLng getLocation(String lct) {
 
 Future<double?> findDistance(String lct) async {
   LocationData currentLocation = (await findLocationData())!;
+  print(currentLocation);
   LatLng lctData = getLocation(lct);
   double _distance = calculateDistance(
     currentLocation.latitude!,
     currentLocation.longitude!,
     lctData.latitude,
     lctData.longitude,
-  );
-  await Future.delayed(
-    Duration(milliseconds: 1000),
   );
   return _distance;
 }
@@ -96,7 +97,6 @@ Future<LocationData?> findLocationData() async {
     return null;
   }
 }
-
 double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
   double distance = 0;
   var p = 0.017453292519943295;

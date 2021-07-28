@@ -43,12 +43,11 @@ dependencies:
   intl:
 #  geolocator:
   archive:
-  url_launcher:
   flutter_launcher_icons:
-  flutter_rounded_date_picker: ^2.0.2
 
 flutter_icons:
   android: true
+  ios: true
   image_path: "assets/images/logo/logo.png"
 
 dev_dependencies:

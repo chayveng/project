@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
+import 'package:project_app/ui/components/card_field.dart';
 import 'package:project_app/ui/components/custom_widget_loading.dart';
+import 'package:project_app/ui/screens/home/components/custom_search_bar.dart';
 
 import '../../../constants.dart';
 import 'components/search_engine.dart';
@@ -25,6 +27,7 @@ class _BodyState extends State<Body> {
   Future<Null> _handleRefresh() async {
     fetchData();
     await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
+    setState(() {});
     return null;
   }
 
@@ -37,63 +40,30 @@ class _BodyState extends State<Body> {
     fields = [];
     fields = await FieldServices.findAll();
     await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
-    print('Fields: ${fields.length}');
+    // print('Fields: ${fields.length}');
     return true;
   }
-
-  List<String> list = List.generate(100, (index) => '$index');
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Column(
         children: [
-          Container(
-            color: Colors.yellow,
-            child: AppBar(
-              backgroundColor: whiteColor,
-              title: Text('หน้าหลัก'),
-              centerTitle: true,
-              actions: [
-                IconButton(
-                  icon: Icon(Icons.search),
-                  onPressed: () {
-                    print('search');
-                    showSearch(context: context, delegate: Search(fields));
-                  },
-                ),
-              ],
+          CustomSearchBar(fields: fields),
+          RefreshIndicator(
+            key: _refresh,
+            onRefresh: _handleRefresh,
+            child: FutureBuilder(
+              future: refresh(),
+              builder: (BuildContext context, AsyncSnapshot snapshot) {
+                if (fields.isNotEmpty) {
+                  return SectionFields(fields: fields);
+                } else {
+                  return CustomWidgetLoading();
+                }
+              },
             ),
           ),
-
-          Container(
-            height: sized(context).height,
-            child: SectionFields(fields: fields),
-          ),
-          // RefreshIndicator(
-          //   key: _refresh,
-          //   onRefresh: _handleRefresh,
-          //   child: FutureBuilder(
-          //     future: refresh(),
-          //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-          //       // return Container(
-          //       //   height: sized(context).height,
-          //       //   child: ListView.builder(
-          //       //     itemCount: list.length,
-          //       //     itemBuilder: (context, index) => ListTile(
-          //       //       title: Text(list[index]),
-          //       //     ),
-          //       //   ),
-          //       // );
-          //       if (fields.isNotEmpty) {
-          //         // return Text('dddd');
-          //         // return SectionFields(fields: fields);
-          //       } else {
-          //         return CustomWidgetLoading();
-          //       }
-          //     },
-          //   ),
-          // ),
         ],
       ),
     );

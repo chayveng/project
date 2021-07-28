@@ -4,7 +4,6 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/models/Field.dart';
-import 'package:project_app/core/models/FieldLocation.dart';
 import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/components/custom_alert_dialog.dart';
@@ -29,7 +28,6 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   final _formKey = GlobalKey<FormState>();
   Field field = Field();
-  FieldLocation fieldLocation = FieldLocation();
   List<Uint8List> images = [];
 
   @override
@@ -50,7 +48,7 @@ class _BodyState extends State<Body> {
   Future<void> setData() async {
     field.userId = field.userId ?? await UserService.getUserId();
     if (widget.fieldId != null)
-      field = await FieldServices.findById(widget.fieldId!);
+      field = await FieldServices.findById(fieldId:widget.fieldId!);
     print(field);
   }
 

@@ -1,85 +1,91 @@
 import 'package:flutter/material.dart';
-import 'package:project_app/ui/screens/field/section_times/components/dialog_info.dart';
-
-import '../../../../../constants.dart';
+import 'package:project_app/constants.dart';
 
 class CardTime extends StatelessWidget {
-  final String? date;
   final String? startTime;
   final String? endTime;
+  final String? date;
   final bool? isOwner;
+  final GestureTapCallback? onInfo;
+  final GestureTapCallback? onDelete;
 
   const CardTime({
     Key? key,
-    this.date,
     this.startTime,
     this.endTime,
+    this.date,
     this.isOwner,
+    this.onInfo,
+    this.onDelete,
   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        height: sized(context).height * 0.08,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          color: whiteColor,
-        ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-            buildDate(),
-            buildTime(),
-            buildButtonInfo(context),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildButtonInfo(BuildContext context) {
+  Widget buttonRemove() {
     return isOwner!
-        ? IconButton(
-            icon: Icon(Icons.info_outline_rounded),
-            onPressed: () => _onInfo(context),
+        ? InkWell(
+            onTap: onDelete,
+            child: Icon(Icons.delete),
           )
         : SizedBox();
   }
 
-  Text buildTime() {
-    return Text(
-      '${startTime!} - ${endTime!}',
-      style: TextStyle(
-        fontSize: 20,
-        fontWeight: FontWeight.bold,
+  Widget buttonInfo() {
+    return isOwner!
+        ? InkWell(
+            onTap: onInfo,
+            child: Icon(Icons.info_outline_rounded),
+          )
+        : SizedBox();
+  }
+
+  Widget formTime() => Row(
+        children: [
+          Icon(Icons.timer),
+          SizedBox(width: 10),
+          Text(
+            "$startTime - $endTime",
+            style: TextStyle(
+              fontSize: 18,
+            ),
+          ),
+        ],
+      );
+
+  Widget formDate() => Row(
+        children: [
+          Icon(Icons.calendar_today_rounded),
+          SizedBox(width: 10),
+          Text(
+            '$date',
+            style: TextStyle(
+              color: Colors.black38,
+            ),
+          ),
+        ],
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(width: 2, color: orangePrimaryColor),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        padding: EdgeInsets.all(8),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            formDate(),
+            SizedBox(width: 16),
+            formTime(),
+            SizedBox(width: 16),
+            buttonInfo(),
+            SizedBox(width: 16),
+            buttonRemove(),
+          ],
+        ),
       ),
-    );
-  }
-
-  Row buildDate() {
-    return Row(
-      children: [
-        Icon(
-          Icons.event_busy,
-          color: Colors.pink,
-          size: 24.0,
-        ),
-        SizedBox(width: 8),
-        Text(
-          date!,
-          style: TextStyle(fontSize: 18),
-        ),
-      ],
-    );
-  }
-
-  _onInfo(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) => DialogInfo(),
-      // builder: (context) => DialogInfo(user: _user),
     );
   }
 }

@@ -17,9 +17,17 @@ class CustomTabBar extends StatelessWidget {
             child: Text(tabBar!),
           ),
         ),
-        Container(
-          height: 2,
-          color: current! ? orangeColor : Colors.black12,
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: sized(context).width * 0.1,
+          ),
+          child: Container(
+            height: 5,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              color: current! ? orangeColor : Colors.transparent,
+            ),
+          ),
         ),
       ],
     );

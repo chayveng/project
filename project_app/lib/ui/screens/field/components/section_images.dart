@@ -72,7 +72,7 @@ class _SectionImagesState extends State<SectionImages> {
   }
 
   Widget formImages() {
-    return widget.images != null
+    return widget.images!.length != 0
         ? Container(
             height: 250,
             width: sized(context).width,
@@ -80,12 +80,21 @@ class _SectionImagesState extends State<SectionImages> {
               itemCount: widget.images!.length, // Can be null
               onPageChanged: (index) => setState(() => _current = index),
               itemBuilder: (context, index) => Image.memory(
-                  widget.images![index],
-                  fit: BoxFit.cover,
-                ),
+                widget.images![index],
+                fit: BoxFit.cover,
+              ),
             ),
           )
-        : SizedBox();
+        : Container(
+            height: 250,
+            width: sized(context).width,
+            child: Opacity(
+              opacity: 0.3,
+              child: Image.asset(
+                'assets/images/default/image_symbol_landscape.png',
+              ),
+            ),
+          );
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Field.dart';
-import 'package:project_app/core/models/FieldLocation.dart';
 import 'package:project_app/ui/components/title_form_field.dart';
 
 import 'custom_field.dart';

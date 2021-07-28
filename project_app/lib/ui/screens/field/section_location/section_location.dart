@@ -20,7 +20,6 @@ class _SectionLocationState extends State<SectionLocation> {
 
   @override
   void initState() {
-    // getLatLng('16.4889132,102.8447655');
     getLatLng(widget.location!);
     super.initState();
   }
@@ -34,7 +33,6 @@ class _SectionLocationState extends State<SectionLocation> {
 
   @override
   Widget build(BuildContext context) {
-    // return buildCardMap(context);
     return widget.location != null ? buildCardMap(context) : SizedBox();
   }
 
