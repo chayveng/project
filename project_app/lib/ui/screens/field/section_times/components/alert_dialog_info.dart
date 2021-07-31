@@ -33,15 +33,31 @@ class _AlertDialogInfoState extends State<AlertDialogInfo> {
   }
 
   Widget footer(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
-      children: [
-        InkWell(
-          onTap: () => Navigator.pop(context),
-          child: Text('Close'),
+    return InkWell(
+      onTap: () {
+        Navigator.pop(context);
+      },
+      child: Container(
+        width: sized(context).width * 0.8,
+        height: sized(context).height * 0.04,
+        decoration: BoxDecoration(
+          color: orangeColor.withOpacity(0.1),
+          border: Border(top: BorderSide(width: 1,color: orangeColor),),
         ),
-      ],
+        child: Center(
+          child: Text('ปิด'),
+        ),
+      ),
     );
+    // return Row(
+    //   mainAxisAlignment: MainAxisAlignment.end,
+    //   children: [
+    //     InkWell(
+    //       onTap: () => Navigator.pop(context),
+    //       child: Text('Close'),
+    //     ),
+    //   ],
+    // );
   }
 
   Widget content() {
@@ -53,19 +69,19 @@ class _AlertDialogInfoState extends State<AlertDialogInfo> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Time: ${timeGetTime(widget.time!.startTime!)} - ${timeGetTime(widget.time!.endTime!)}',
+            'เวลา : ${timeGetTime(widget.time!.startTime!)} - ${timeGetTime(widget.time!.endTime!)}',
             style: TextStyle(
               fontSize: 16,
             ),
           ),
           Text(
-            'Book by: ${user.userName}',
+            'ชื่อผู้จอง : ${user.userName}',
             style: TextStyle(
               fontSize: 16,
             ),
           ),
           Text(
-            'Tel: ${user.tel}',
+            'โทร : ${user.tel}',
             style: TextStyle(
               fontSize: 16,
             ),
@@ -77,9 +93,10 @@ class _AlertDialogInfoState extends State<AlertDialogInfo> {
 
   Widget title() {
     return Text(
-      'Time Info',
+      'ข้อมูลการจอง',
       style: TextStyle(
-        fontSize: 18,
+        fontSize: 20,
+        color: orangeColor,
       ),
     );
   }
@@ -92,6 +109,7 @@ class _AlertDialogInfoState extends State<AlertDialogInfo> {
         children: [
           title(),
           content(),
+          SizedBox(height: 15),
           footer(context),
         ],
       ),
