@@ -30,6 +30,7 @@ class _SectionTimeState extends State<SectionTime> {
 
   void fetchTimes() async {
     times.clear();
+    // times = await TimeService.findByFieldId(14);
     times = await TimeService.findByFieldId(widget.fieldId!);
     setState(() {});
     print(times.length);
