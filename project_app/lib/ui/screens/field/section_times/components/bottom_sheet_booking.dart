@@ -8,6 +8,8 @@ import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/core/services/TimeService.dart';
 import 'package:project_app/core/services/UserService.dart';
+import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_delete.dart';
+import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_info.dart';
 
 import 'package:project_app/ui/screens/field/section_times/components/button_booking.dart';
 import 'package:project_app/ui/screens/field/section_times/components/custom_colon.dart';
@@ -56,7 +58,9 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
     } else {
       print('fail');
       showDialog(
+        barrierDismissible: false,
         context: context,
+        // builder: (context) => AlertDialogInfo(time: time,),
         builder: (context) => AlertDialogFail(),
       );
     }
