@@ -11,7 +11,7 @@ class OtherScreen extends StatelessWidget {
       backgroundColor: greyColor,
       appBar: AppBar(
         title: Text(
-          'Other Screen',
+          'อื่น ๆ',
         ),
       ),
       body: Body(),

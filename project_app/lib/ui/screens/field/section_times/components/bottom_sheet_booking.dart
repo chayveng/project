@@ -8,6 +8,7 @@ import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/core/services/TimeService.dart';
 import 'package:project_app/core/services/UserService.dart';
+import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_confirm.dart';
 import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_delete.dart';
 import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_info.dart';
 
@@ -52,23 +53,47 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
     print('booking');
     _setTime();
     print(time);
-    if (await TimeService.create(time)) {
+    if (startTime!.isBefore(endTime!)) {
+      bool? res = await showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => DialogConfirm(
+          startTime: startTime,
+          endTime: endTime,
+          onTap: () async {
+            if (await TimeService.create(time)) {
+              Navigator.pop(context, true);
+            } else {
+              bool res = await showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) => AlertDialogFail(),
+              );
+              if (res) {
+                Navigator.pop(context);
+              }
+            }
+          },
+        ),
+      );
+      if (res != null) {
+        Navigator.pop(context);
+      }
       print('success');
-      Navigator.pop(context);
+      // Navigator.pop(context);
     } else {
       print('fail');
       showDialog(
         barrierDismissible: false,
         context: context,
-        // builder: (context) => AlertDialogInfo(time: time,),
         builder: (context) => AlertDialogFail(),
       );
     }
   }
 
-  _setTime()  {
+  _setTime() {
     // int userId = await UserService.getUserId();
-    setState(()  {
+    setState(() {
       startTime = DateTime(
         currentTime.year,
         currentTime.month,
@@ -90,9 +115,46 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
     });
   }
 
-  _onDate() {
-    print('select date');
+  Future<void> _selectDate(BuildContext context) async {
+     DateTime? pickedDate = (await showDatePicker(
+        context: context,
+        initialDate: currentTime,
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2050),
+        builder: (context, child) {
+          return Theme(
+              data: ThemeData.light().copyWith(
+                colorScheme: ColorScheme.light(
+                  primary: Colors.orangeAccent.withOpacity(0.9),
+                ),
+              ),
+              child: child!);
+        }));
+    if (pickedDate != null)
+      setState(() {
+        currentTime = pickedDate;
+      });
+    print(currentTime);
   }
+
+  // _onDate() {
+  //   print('select date');
+  //   showDatePicker(
+  //     context: context,
+  //     initialDate: DateTime.now(),
+  //     firstDate: DateTime.now(),
+  //     lastDate: DateTime(2030),
+  //     builder: (context, child) {
+  //       return Theme(
+  //           data: ThemeData.light().copyWith(
+  //             colorScheme: ColorScheme.light(
+  //               primary: Colors.orangeAccent.withOpacity(0.9),
+  //             ),
+  //           ),
+  //           child: child!);
+  //     },
+  //   );
+  // }
 
   Widget spinner({
     @required String? time,
@@ -134,7 +196,10 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
           border: Border.all(width: 2, color: orangePrimaryColor),
           borderRadius: BorderRadius.circular(8)),
       child: InkWell(
-        onTap: _onDate,
+        onTap: () {
+          print('select date');
+          _selectDate(context);
+        },
         child: Text(
           DateFormat('dd-MM-yyyy').format(currentTime),
           style: TextStyle(fontSize: 16),

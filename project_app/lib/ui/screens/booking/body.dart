@@ -6,6 +6,7 @@ import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/core/services/TimeService.dart';
 import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/screens/booking/components/not_booking.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'components/card_info.dart';
 
@@ -19,6 +20,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   List<Time> times = [];
   List<Field> fields = [];
+  String _launchUrl = 'https://www.google.com';
 
   @override
   void initState() {
@@ -30,14 +32,26 @@ class _BodyState extends State<Body> {
     print('go to map');
   }
 
+  Future<void> _launchInBrowser(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url,
+          forceSafariVC: false,
+          forceWebView: false,
+          headers: <String, String>{'header_key':'header_value'});
+    }else{
+      throw 'Could not launch $url';
+    }
+  }
+
+
   Future<void> fetchData() async {
     fields.clear();
     int userId = await UserService.getUserId();
     times = await TimeService.findByUserId(userId);
     List<int> fieldIds =
-    List.generate(times.length, (index) => times[index].fieldId!)
-        .toSet()
-        .toList();
+        List.generate(times.length, (index) => times[index].fieldId!)
+            .toSet()
+            .toList();
     fieldIds
         .map((e) async => fields.add(await FieldServices.findById(fieldId: e)))
         .toList();
@@ -53,43 +67,37 @@ class _BodyState extends State<Body> {
         _field = e;
       }
     }).toList();
-    return  _field;
+    return _field;
   }
 
   Widget sectionInfo() {
     return times.length != 0
         ? Container(
-      child: Column(
-        children: [
-          ...List.generate(
-            times.length,
-                (index) =>
-                CardInfo(
-                  field: getFieldById(times[index].fieldId!),
-                  time: times[index],
-                  onMap: _onMap,
+            child: Column(
+              children: [
+                ...List.generate(
+                  times.length,
+                  (index) => CardInfo(
+                    field: getFieldById(times[index].fieldId!),
+                    time: times[index],
+                  ),
                 ),
-          ),
-        ],
-      ),
-    )
+              ],
+            ),
+          )
         : SizedBox();
   }
 
   @override
   Widget build(BuildContext context) {
-    return times.length != 0 ? SingleChildScrollView(
-      child: Column(
-        children: [
-          sectionInfo(),
-          // Center(child: Text('Booking')),
-          // ElevatedButton(
-          //   // onPressed: () => fetchData(),
-          //   onPressed: () => getFieldById(1),
-          //   child: Text(''),
-          // ),
-        ],
-      ),
-    ): NotBooking();
+    return times.length != 0
+        ? SingleChildScrollView(
+            child: Column(
+              children: [
+                sectionInfo(),
+              ],
+            ),
+          )
+        : NotBooking();
   }
 }

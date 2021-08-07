@@ -38,26 +38,16 @@ class _AlertDialogInfoState extends State<AlertDialogInfo> {
         Navigator.pop(context);
       },
       child: Container(
-        width: sized(context).width * 0.8,
-        height: sized(context).height * 0.04,
+        height: 45,
         decoration: BoxDecoration(
           color: orangeColor.withOpacity(0.1),
           border: Border(top: BorderSide(width: 1,color: orangeColor),),
         ),
         child: Center(
-          child: Text('ปิด'),
+          child: Text('ปิด',style: TextStyle(fontSize: 16),),
         ),
       ),
     );
-    // return Row(
-    //   mainAxisAlignment: MainAxisAlignment.end,
-    //   children: [
-    //     InkWell(
-    //       onTap: () => Navigator.pop(context),
-    //       child: Text('Close'),
-    //     ),
-    //   ],
-    // );
   }
 
   Widget content() {

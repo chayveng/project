@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:project_app/core/models/Time.dart';
 
 import '../../../../../constants.dart';
 
-class AlertDialogDelete extends StatelessWidget {
+class DialogConfirm extends StatelessWidget {
   final Time? time;
-  final GestureTapCallback? onDelete;
+  final GestureTapCallback? onTap;
+  final DateTime? startTime;
+  final DateTime? endTime;
 
-  const AlertDialogDelete({Key? key, this.onDelete, this.time})
-      : super(key: key);
+
+  const DialogConfirm({Key? key, this.time, this.onTap, this.startTime, this.endTime,}) : super(key: key);
 
   Widget footer(BuildContext context) {
     return Row(
@@ -16,7 +19,7 @@ class AlertDialogDelete extends StatelessWidget {
       children: [
         Expanded(
           child: InkWell(
-            onTap: onDelete,
+            onTap: onTap,
             child: Container(
               height: 45,
               decoration: BoxDecoration(
@@ -59,17 +62,26 @@ class AlertDialogDelete extends StatelessWidget {
     );
   }
 
+  String getTime(){
+   var _startTime = DateFormat('HH:mm').format(startTime!);
+   var _endTime = DateFormat('HH:mm').format(endTime!);
+    return '${_startTime} - ${_endTime}';
+  }
+
   Widget content() {
     return Text(
-      '${timeGetTime(time!.startTime!)} - ${timeGetTime(time!.endTime!)}',
+      'เวลา  ${getTime()}',
       style: TextStyle(fontSize: 16),
     );
   }
 
   Widget title() {
-    return Text(
-      'ลบเวลา',
-      style: TextStyle(fontSize: 20, color: orangeColor),
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(
+        'ยืนยันการจอง',
+        style: TextStyle(fontSize: 20, color: orangeColor),
+      ),
     );
   }
 

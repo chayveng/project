@@ -86,6 +86,7 @@ class _SectionTimeState extends State<SectionTime> {
     return Container(
       child: Column(
         children: [
+          Text('เวลาที่ถูกจองแล้ว',style: TextStyle(fontSize: 18),),
           ...List.generate(
             times.length,
             (index) => buildCardTime(times[index]),

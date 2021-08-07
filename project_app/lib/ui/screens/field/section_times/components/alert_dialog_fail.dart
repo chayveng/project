@@ -7,19 +7,20 @@ class AlertDialogFail extends StatelessWidget {
 
   Widget footer(BuildContext context) => InkWell(
         onTap: () {
-          Navigator.pop(context);
+          Navigator.pop(context,true);
         },
-        child: Container(
-          width: sized(context).width * 0.7,
-          height: sized(context).height * 0.04,
-          decoration: BoxDecoration(
-            color: orangeColor.withOpacity(0.1),
-            border: Border(
-              top: BorderSide(width: 1, color: orangeColor),
+        child: Expanded(
+          child: Container(
+            height: 45,
+            decoration: BoxDecoration(
+              color: orangeColor.withOpacity(0.1),
+              border: Border(
+                top: BorderSide(width: 1, color: orangeColor),
+              ),
             ),
-          ),
-          child: Center(
-            child: Text('ตกลง'),
+            child: Center(
+              child: Text('ตกลง',style: TextStyle(fontSize: 16),),
+            ),
           ),
         ),
       );

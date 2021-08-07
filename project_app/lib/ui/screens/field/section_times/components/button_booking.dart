@@ -19,6 +19,7 @@ class ButtonBooking extends StatelessWidget {
             onTap: onTap,
             child: Container(
               width: sized(context).width * 0.5,
+              height: 45,
               padding: EdgeInsets.all(4),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(20),
