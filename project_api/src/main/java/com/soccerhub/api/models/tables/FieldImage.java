@@ -1,4 +1,4 @@
-package com.example.project_api.models.tables;
+package com.soccerhub.api.models.tables;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

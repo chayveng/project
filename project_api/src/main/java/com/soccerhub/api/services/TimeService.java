@@ -1,13 +1,11 @@
-package com.example.project_api.services;
+package com.soccerhub.api.services;
 
-import ch.qos.logback.core.joran.conditional.IfAction;
-import com.example.project_api.models.beans.ApiResponse;
-import com.example.project_api.models.repository.TimeRepository;
-import com.example.project_api.models.tables.Time;
+import com.soccerhub.api.models.beans.ApiResponse;
+import com.soccerhub.api.models.repository.TimeRepository;
+import com.soccerhub.api.models.tables.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;

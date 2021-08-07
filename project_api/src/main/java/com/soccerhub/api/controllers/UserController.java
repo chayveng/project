@@ -1,11 +1,12 @@
-package com.example.project_api.controllers;
+package com.soccerhub.api.controllers;
 
-import com.example.project_api.models.beans.ApiResponse;
-import com.example.project_api.models.repository.UserImageRepository;
-import com.example.project_api.models.repository.UserRepository;
-import com.example.project_api.models.tables.User;
-import com.example.project_api.models.tables.UserImage;
-import com.example.project_api.services.UserService;
+import com.soccerhub.api.config.Config;
+import com.soccerhub.api.models.beans.ApiResponse;
+import com.soccerhub.api.models.repository.UserImageRepository;
+import com.soccerhub.api.models.repository.UserRepository;
+import com.soccerhub.api.models.tables.User;
+import com.soccerhub.api.models.tables.UserImage;
+import com.soccerhub.api.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -63,7 +64,7 @@ public class UserController {
         UserImage userImage = userServices.imagesUpload(userId, file);
         String fileDownloadUri = ServletUriComponentsBuilder
                 .fromCurrentContextPath()
-                .path("/user/image-download/")
+                .path(Config.IMAGE_PATH)
                 .path(userImage.getFileName())
                 .toUriString();
         return ResponseEntity.ok(fileDownloadUri);
@@ -75,7 +76,7 @@ public class UserController {
         if (userImage.isPresent()) {
             return ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/user/image-download/")
+                    .path(Config.IMAGE_PATH)
                     .path(userImage.get().getFileName().toString())
 //                    .path(userImage.get().getFileName().toString())
                     .toUriString();

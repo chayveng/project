@@ -1,10 +1,10 @@
-package com.example.project_api.controllers;
+package com.soccerhub.api.controllers;
 
-import com.example.project_api.models.beans.ApiResponse;
-import com.example.project_api.models.tables.Field;
-import com.example.project_api.models.tables.FieldImage;
-import com.example.project_api.services.FieldImageService;
-import com.example.project_api.services.FieldService;
+import com.soccerhub.api.config.Config;
+import com.soccerhub.api.models.tables.Field;
+import com.soccerhub.api.models.tables.FieldImage;
+import com.soccerhub.api.services.FieldImageService;
+import com.soccerhub.api.services.FieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -66,7 +66,7 @@ public class FieldController {
         if (imageService.uploadImage(fieldId, file)) {
             return ServletUriComponentsBuilder
                     .fromCurrentContextPath()
-                    .path("/field/download-image/" + fieldId + "/")
+                    .path(Config.IMAGE_PATH + "/" + fieldId + "/")
                     .path(Objects.requireNonNull(file.getOriginalFilename()))
                     .toUriString();
         }
@@ -102,7 +102,7 @@ public class FieldController {
             for (var file : images) {
                 String urlImage = ServletUriComponentsBuilder
                         .fromCurrentContextPath()
-                        .path("/field/download-image/" + fieldId + "/")
+                        .path(Config.IMAGE_PATH + "/" + fieldId + "/")
                         .path(file.getFileName())
                         .toUriString();
                 urlImages.add(urlImage);

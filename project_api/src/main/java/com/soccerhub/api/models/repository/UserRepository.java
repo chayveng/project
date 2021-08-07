@@ -1,6 +1,6 @@
-package com.example.project_api.models.repository;
+package com.soccerhub.api.models.repository;
 
-import com.example.project_api.models.tables.User;
+import com.soccerhub.api.models.tables.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

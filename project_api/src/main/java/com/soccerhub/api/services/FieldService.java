@@ -1,8 +1,8 @@
-package com.example.project_api.services;
+package com.soccerhub.api.services;
 
-import com.example.project_api.models.beans.ApiResponse;
-import com.example.project_api.models.repository.FieldRepository;
-import com.example.project_api.models.tables.Field;
+import com.soccerhub.api.models.beans.ApiResponse;
+import com.soccerhub.api.models.repository.FieldRepository;
+import com.soccerhub.api.models.tables.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

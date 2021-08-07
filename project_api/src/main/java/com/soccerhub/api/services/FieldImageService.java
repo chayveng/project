@@ -1,7 +1,7 @@
-package com.example.project_api.services;
+package com.soccerhub.api.services;
 
-import com.example.project_api.models.repository.FieldImageRepository;
-import com.example.project_api.models.tables.FieldImage;
+import com.soccerhub.api.models.repository.FieldImageRepository;
+import com.soccerhub.api.models.tables.FieldImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class FieldImageService {
     }
 
     public boolean uploadImage(long fieldId, MultipartFile file) throws IOException {
-        FieldImage image = new com.example.project_api.models.tables.FieldImage();
+        FieldImage image = new FieldImage();
         image.setFieldId(fieldId);
         image.setFileName(file.getOriginalFilename());
         image.setFile(file.getBytes());

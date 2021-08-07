@@ -1,10 +1,10 @@
-package com.example.project_api.services;
+package com.soccerhub.api.services;
 
-import com.example.project_api.models.beans.ApiResponse;
-import com.example.project_api.models.repository.UserImageRepository;
-import com.example.project_api.models.repository.UserRepository;
-import com.example.project_api.models.tables.User;
-import com.example.project_api.models.tables.UserImage;
+import com.soccerhub.api.models.beans.ApiResponse;
+import com.soccerhub.api.models.repository.UserImageRepository;
+import com.soccerhub.api.models.repository.UserRepository;
+import com.soccerhub.api.models.tables.User;
+import com.soccerhub.api.models.tables.UserImage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
