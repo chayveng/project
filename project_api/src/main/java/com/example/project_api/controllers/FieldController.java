@@ -56,7 +56,7 @@ public class FieldController {
         return fieldService.update(field);
     }
 
-    @GetMapping("/delete/{fieldId}")
+    @DeleteMapping("/delete/{fieldId}")
     public Object delete(@PathVariable long fieldId) {
         return fieldService.delete(fieldId);
     }

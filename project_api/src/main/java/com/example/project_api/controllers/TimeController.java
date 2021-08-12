@@ -46,10 +46,15 @@ public class TimeController {
         return service.create(timeFromJson);
     }
 
-    @GetMapping("/deleteById/{timeId}")
+    @DeleteMapping("/deleteById/{timeId}")
     public Object deleteById(@PathVariable long timeId) {
         return service.deleteById(timeId);
     }
+
+//    @DeleteMapping("/deleteId/{timeId}")
+//    public Object deleteId(@PathVariable long timeId){
+//        return  "delete time id : " + timeId;
+//    }
 
     @GetMapping("/autoSave")
     public Object autoSave() {
