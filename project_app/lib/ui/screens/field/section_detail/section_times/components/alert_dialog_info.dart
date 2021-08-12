@@ -38,53 +38,70 @@ class _AlertDialogInfoState extends State<AlertDialogInfo> {
         Navigator.pop(context);
       },
       child: Container(
-        width: sized(context).width * 0.8,
-        height: sized(context).height * 0.04,
+        width: sized(context).width,
+        height: 45,
         decoration: BoxDecoration(
           color: orangeColor.withOpacity(0.1),
-          border: Border(top: BorderSide(width: 1,color: orangeColor),),
+          border: Border(
+            top: BorderSide(width: 1, color: orangeColor),
+          ),
         ),
         child: Center(
-          child: Text('ปิด'),
+          child: Text(
+            'ปิด',
+            style: TextStyle(fontSize: 16),
+          ),
         ),
       ),
     );
-    // return Row(
-    //   mainAxisAlignment: MainAxisAlignment.end,
-    //   children: [
-    //     InkWell(
-    //       onTap: () => Navigator.pop(context),
-    //       child: Text('Close'),
-    //     ),
-    //   ],
-    // );
   }
 
   Widget content() {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.all(12),
       width: sized(context).width,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'เวลา : ${timeGetTime(widget.time!.startTime!)} - ${timeGetTime(widget.time!.endTime!)}',
-            style: TextStyle(
-              fontSize: 16,
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text('เวลา : ',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              Text(
+                '${timeGetTime(widget.time!.startTime!)}+ - +${timeGetTime(widget.time!.endTime!)}',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
-          Text(
-            'ชื่อผู้จอง : ${user.userName}',
-            style: TextStyle(
-              fontSize: 16,
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text('ชื่อผู้จอง : ',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              Text(
+                '${user.userName}',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
-          Text(
-            'โทร : ${user.tel}',
-            style: TextStyle(
-              fontSize: 16,
-            ),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text('โทร :',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              Text(
+                '${user.tel}',
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -107,6 +124,7 @@ class _AlertDialogInfoState extends State<AlertDialogInfo> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
+          SizedBox(height: 8),
           title(),
           content(),
           SizedBox(height: 15),

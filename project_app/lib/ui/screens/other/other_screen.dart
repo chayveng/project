@@ -5,6 +5,7 @@ import 'body.dart';
 
 class OtherScreen extends StatelessWidget {
   static String routeName = '/other';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

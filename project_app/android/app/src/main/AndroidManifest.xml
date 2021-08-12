@@ -1,9 +1,16 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.project_app">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+
    <application
         android:label="Soccer Hub"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
+
+       <meta-data android:name="com.google.android.geo.API_KEY"
+                  android:value="AIzaSyANDoRJiom4nvR9iA9ExEto3aG0W8Yc5YI"/>
+
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
@@ -39,9 +46,9 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
-       <meta-data android:name="com.google.android.geo.API_KEY"
-                  android:value="AIzaSyCFxPkWUuRXz8ZR88BX8ewgYIFXtkpE380"/>
 
+<!--       <meta-data android:name="com.google.android.geo.API_KEY"-->
+<!--                  android:value="AIzaSyCFxPkWUuRXz8ZR88BX8ewgYIFXtkpE380"/>-->
 <!--       <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />-->
 <!--       <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>-->
 

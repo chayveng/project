@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:project_app/constants.dart';
 
 class UserImage extends StatelessWidget {
@@ -12,41 +13,53 @@ class UserImage extends StatelessWidget {
   const UserImage({
     Key? key,
     @required this.userName,
-   @required this.image,
+    @required this.image,
     @required this.status,
     this.onTap,
   }) : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        formUserImage(),
-        userText(),
-      ],
-    );
+  Widget buttonImage() {
+    return status!
+        ? Positioned(
+            bottom: 1,
+            right: 1,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(50),
+              child: Material(
+                color: orangePrimaryColor,
+                child: InkWell(
+                  onTap: onTap,
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Icon(
+                      Icons.add_a_photo,
+                      color: navyPrimaryColor,
+                      size: 18,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          )
+        : SizedBox();
   }
 
-  Widget userText() {
-    return Text(
-      userName ?? '',
-      style: TextStyle(
-        fontSize: 16,
-        fontWeight: FontWeight.bold,
-      ),
-    );
+  Widget buildUserImage() {
+    if (image != null) {
+      return Image.memory(
+        image!,
+        fit: BoxFit.cover,
+      );
+    } else {
+      return Icon(
+        Icons.person,
+        size: 100,
+        color: navyPrimaryColor.withOpacity(0.7),
+      );
+    }
   }
 
-  Widget formUserImage() {
-    return Stack(
-      children: [
-        _userImage(),
-        buttonImage(),
-      ],
-    );
-  }
-
-  Column _userImage() {
+  Widget _userImage() {
     return Column(
       children: [
         Padding(
@@ -71,42 +84,32 @@ class UserImage extends StatelessWidget {
     );
   }
 
-  Widget buildUserImage() {
-    if (image != null) {
-      return Image.memory(
-        image!,
-        fit: BoxFit.cover,
-      );
-    } else {
-      return Icon(
-        Icons.person,
-        size: 100,
-        color: navyPrimaryColor.withOpacity(0.7),
-      );
-    }
+  Widget formUserImage() {
+    return Stack(
+      children: [
+        _userImage(),
+        buttonImage(),
+      ],
+    );
   }
 
-  Widget buttonImage() {
-    return status! ? Positioned(
-      bottom: 1,
-      right: 1,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(50),
-        child: Material(
-          color: orangePrimaryColor,
-          child: InkWell(
-            onTap: onTap,
-            child: Padding(
-              padding: const EdgeInsets.all(5.0),
-              child: Icon(
-                Icons.add_a_photo,
-                color: navyPrimaryColor,
-                size: 18,
-              ),
-            ),
-          ),
-        ),
+  Widget userText() {
+    return Text(
+      userName ?? '',
+      style: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.bold,
       ),
-    ): SizedBox();
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        formUserImage(),
+        userText(),
+      ],
+    );
   }
 }

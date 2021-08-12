@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/core/services/TimeService.dart';
 import 'package:project_app/core/services/UserService.dart';
-import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_delete.dart';
-import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_info.dart';
-import 'package:project_app/ui/screens/field/section_times/components/button_booking.dart';
-import 'package:project_app/ui/screens/field/section_times/components/card_time.dart';
-import 'package:project_app/ui/screens/field/section_times/components/bottom_sheet_booking.dart';
+import 'package:project_app/ui/screens/field/components/title_bar.dart';
+
+import 'components/alert_dialog_delete.dart';
+import 'components/alert_dialog_info.dart';
+import 'components/bottom_sheet_booking.dart';
+import 'components/button_booking.dart';
+import 'components/card_time.dart';
 
 class SectionTime extends StatefulWidget {
   final bool? isOwner;
@@ -30,7 +32,6 @@ class _SectionTimeState extends State<SectionTime> {
 
   void fetchTimes() async {
     times.clear();
-    // times = await TimeService.findByFieldId(14);
     times = await TimeService.findByFieldId(widget.fieldId!);
     setState(() {});
     print(times.length);
@@ -84,27 +85,34 @@ class _SectionTimeState extends State<SectionTime> {
   }
 
   Widget sectionTimes() {
-    return Container(
-      child: Column(
-        children: [
-          ...List.generate(
-            times.length,
-            (index) => buildCardTime(times[index]),
-          ),
-        ],
-      ),
+    return Column(
+      children: [
+        ...List.generate(
+          times.length,
+          (index) => buildCardTime(times[index]),
+        ),
+      ],
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      child: Column(
-        children: [
-          ButtonBooking(onTap: _onBooking),
-          sectionTimes(),
-        ],
+      padding: const EdgeInsets.only(top: 8.0, left: 8.0, right: 8.0),
+      child: Container(
+        padding: EdgeInsets.all(8.0),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Column(
+          children: [
+            TitleBar(title: 'Times', icon: Icons.alarm_rounded),
+            SizedBox(height: 8),
+            ButtonBooking(onTap: _onBooking),
+            sectionTimes(),
+          ],
+        ),
       ),
     );
   }

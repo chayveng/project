@@ -9,12 +9,11 @@ class CustomSearchBar extends StatelessWidget {
 
   const CustomSearchBar({
     Key? key,
-    this.fields,
+   @required this.fields,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size sized = MediaQuery.of(context).size;
     return AppBar(
         backgroundColor: whiteColor,
         title: Text('หน้าหลัก'),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../../constants.dart';
 import 'body.dart';
 
 class FieldScreen extends StatelessWidget {
@@ -15,6 +16,7 @@ class FieldScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: greyColor,
       body: Body(isOwner: isOwner,fieldId: fieldId),
     );
   }

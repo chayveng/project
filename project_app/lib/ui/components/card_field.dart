@@ -78,6 +78,7 @@ class _CardFieldState extends State<CardField> {
                   ),
                   Text('${widget.field!.hours}'),
                   Text('${widget.field!.price}'),
+                  Text('${widget.field!.tel}'),
                 ],
               ),
             ),

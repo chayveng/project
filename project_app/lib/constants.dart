@@ -54,7 +54,7 @@ Widget testBox({double? sized, Color? color}) => Container(
       color: color ?? Colors.redAccent,
     );
 
-Future<File> chooseImage(ImageSource? imageSource) async {
+Future<File?> chooseImage(ImageSource? imageSource) async {
   ImagePicker imagePicker = ImagePicker();
   File? image;
   try {
@@ -65,7 +65,7 @@ Future<File> chooseImage(ImageSource? imageSource) async {
   } catch (e) {
     print('error chooseImage');
   }
-  return image!;
+  return image;
 }
 
 LatLng getLocation(String lct) {
@@ -97,6 +97,31 @@ Future<LocationData?> findLocationData() async {
     return null;
   }
 }
+
+LatLng decodeLctFromAPI(String lct) {
+  int comma = lct.indexOf(',');
+  double lat = double.parse(lct.substring(0, comma));
+  double lng = double.parse(lct.substring(comma + 1, lct.length - 1));
+  return LatLng(lat, lng);
+}
+
+String encodeLct(LatLng lct) {
+  return '${lct.longitude},${lct.longitude}';
+}
+
+
+Future getCurrentLocation() async {
+  Location location = Location();
+  try {
+    LocationData lct = await location.getLocation();
+    return lct;
+  } catch (e) {
+    print(e.toString());
+    return null;
+    // return LatLng(100, 100);
+  }
+}
+
 double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
   double distance = 0;
   var p = 0.017453292519943295;

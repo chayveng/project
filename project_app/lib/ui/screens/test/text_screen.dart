@@ -9,7 +9,7 @@ class TextScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Text Screen')),
+      // appBar: AppBar(title: Text('Text Screen')),
       // body: Container(),
       // body: TreeDirectory(),
       body: Body(),

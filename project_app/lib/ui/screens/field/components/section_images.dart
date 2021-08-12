@@ -19,7 +19,7 @@ class _SectionImagesState extends State<SectionImages> {
   int? _current = 0;
 
   Future<void> _chooseImage() async {
-    File image = await chooseImage(ImageSource.gallery);
+    var image = await chooseImage(ImageSource.gallery);
     if (image != null)
       setState(() => widget.images!.add(image.readAsBytesSync()));
   }
@@ -99,19 +99,15 @@ class _SectionImagesState extends State<SectionImages> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          width: sized(context).width,
-          child: Column(
-            children: [
-              formImages(),
-              indicator(),
-            ],
-          ),
-        ),
-        // widget.isEdit ? customBtn() : SizedBox(),
-      ],
+    return Container(
+      color: Colors.white,
+      width: sized(context).width,
+      child: Column(
+        children: [
+          formImages(),
+          indicator(),
+        ],
+      ),
     );
   }
 }

@@ -39,6 +39,25 @@ class FieldServices {
     return status;
   }
 
+  static Future<bool> deleteById(int fieldId) async {
+    print('delete by id');
+    bool status = false;
+    await FieldApi.delete(fieldId).then((value) {
+      if (value.status == 1) {
+        status = true;
+      }
+    });
+    // await FieldApi.create(field).then((value) {
+    //   if (value.status == 1) {
+    //     Field _field = fieldFromJson(jsonEncode(value.data));
+    //     uploadImages(_field.id!, images!);
+    //     status = true;
+    //   }
+    //   print(value);
+    // });
+    return status;
+  }
+
 
   static Future<bool> update(Field field, List images) async {
     print('update');

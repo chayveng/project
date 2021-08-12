@@ -44,6 +44,7 @@ class _SectionGeneralState extends State<SectionGeneral> {
       onChanged: (input) => widget.field!.tel = input,
       validator: (input) => input.isEmpty ? 'is Empty' : null,
       controller: TextEditingController(text: widget.field!.tel),
+      keyboardType: TextInputType.number,
       focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
         focusNode![keys[index]].unfocus();
@@ -60,7 +61,7 @@ class _SectionGeneralState extends State<SectionGeneral> {
       onSaved: (input) => widget.field!.price = input,
       onChanged: (input) => widget.field!.price = input,
       validator: (input) => input.isEmpty ? 'is Empty' : null,
-      keyboardType: TextInputType.datetime,
+      keyboardType: TextInputType.number,
       controller: TextEditingController(text: widget.field!.price),
       focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {

@@ -7,7 +7,7 @@ import 'ApiConnect.dart';
 
 class TimeApi {
   static Future<ApiResponse> deleteById(int timeId) async {
-    var apiConnect = await ApiConnect.get(path: '/time/deleteById/$timeId');
+    var apiConnect = await ApiConnect.delete(path: '/time/deleteById/$timeId');
     return apiResponseFromJson(apiConnect.toString());
   }
   static Future<ApiResponse> findByFieldId(int fieldId) async {
