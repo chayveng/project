@@ -1,11 +1,23 @@
 package com.example.project_api.services;
 
+import com.example.project_api.Config;
+import com.example.project_api.Constants;
 import com.example.project_api.models.beans.ApiResponse;
+import com.example.project_api.models.repository.FieldImageRepository;
 import com.example.project_api.models.repository.FieldRepository;
 import com.example.project_api.models.tables.Field;
+import com.example.project_api.models.tables.FieldImage;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.*;
 
 @Service
@@ -55,4 +67,95 @@ public class FieldService {
             return new ApiResponse(0, "no field");
         }
     }
+
+    // >> image service
+    final static String URL_DOWNLOAD = "/field/download-image/";
+
+    @Autowired
+    FieldImageRepository imageRepository;
+
+    public Object uploadImages(long fieldId, MultipartFile[] files) {
+        ApiResponse res = new ApiResponse(0, "uploads fail", null);
+        List<FieldImage> images = new ArrayList<FieldImage>();
+        boolean deleted = deleteImages(fieldId);
+        try {
+            for(int i = 0 ; i < files.length ; i++){
+                images.add(upload(i,fieldId, files[i]));
+            }
+            res = new ApiResponse(1, urlImages(fieldId).toString(), images);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    public FieldImage upload(int index,long fieldId, MultipartFile file) throws IOException {
+        Constants constants = new Constants();
+        FieldImage image = new FieldImage();
+        try {
+            byte[] bytes = file.getBytes();
+            String fileName = index + constants.randomString() + fieldId + ".png";
+            Path path = Paths.get(Config.FIELD_IMAGE_PATH + fileName);
+            Files.write(path, bytes);
+            image = imageRepository.save(new FieldImage(fieldId, fileName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return image;
+    }
+
+    public Object downloadImage(String fileName) {
+        ResponseEntity<Object> response = ResponseEntity.status(404).build();
+        try {
+            Path path = Paths.get(Config.FIELD_IMAGE_PATH + fileName);
+            byte[] imageData = Files.readAllBytes(path);
+            response = ResponseEntity
+                    .ok()
+                    .contentType(MediaType.parseMediaType(MediaType.IMAGE_PNG_VALUE))
+                    .body(imageData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
+    }
+
+    public List<String> urlImages(long FieldId) {
+        List<FieldImage> images = imageRepository.findByFieldId(FieldId);
+        List<String> urls = new ArrayList<String>();
+        if (images.size() != 0) {
+            for (FieldImage image : images) {
+                urls.add(urlImage(image.getFileName()).toString());
+            }
+            return urls;
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    public Object urlImage(String fileName) {
+        return ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path(URL_DOWNLOAD)
+                .path(fileName)
+                .toUriString();
+    }
+
+    public boolean deleteImages(long fieldId) {
+        boolean deleted = false;
+        List<FieldImage> images = imageRepository.findByFieldId(fieldId);
+        if (images.size() != 0) {
+            for (FieldImage image : images) {
+                try {
+                    Path path = Paths.get(Config.FIELD_IMAGE_PATH + image.getFileName());
+                    Files.deleteIfExists(path);
+                    imageRepository.deleteById(image.getId());
+                    deleted = true;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return deleted;
+    }
+    // << image service
 }

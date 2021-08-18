@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const String UiFont = 'Kanit';
 // const String UiFont = 'Comfortaa';
@@ -98,7 +99,7 @@ Future<LocationData?> findLocationData() async {
   }
 }
 
-LatLng decodeLctFromAPI(String lct) {
+LatLng decodeLct(String lct) {
   int comma = lct.indexOf(',');
   double lat = double.parse(lct.substring(0, comma));
   double lng = double.parse(lct.substring(comma + 1, lct.length - 1));
@@ -107,6 +108,16 @@ LatLng decodeLctFromAPI(String lct) {
 
 String encodeLct(LatLng lct) {
   return '${lct.longitude},${lct.longitude}';
+}
+
+Future<void> mapLauncher(double lat, double lng)async{
+  String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
+  String encodeUrl = Uri.encodeFull(googleUrl);
+  if (await canLaunch(encodeUrl)) {
+    await launch(encodeUrl);
+  }else{
+    throw "Could not open the map.";
+  }
 }
 
 

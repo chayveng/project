@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/ui/components/card_field.dart';
 import 'package:project_app/ui/screens/field/field_screen.dart';
@@ -62,7 +63,12 @@ class _SectionFieldsState extends State<SectionFields> {
             padding: EdgeInsets.all(0),
             itemCount: widget.fields!.length,
             itemBuilder: (context, index) {
-             return formCardField(index);
+              // return Container(
+              //   width: sized(context).width,
+              //   height: 250,
+              //   color: Colors.red,
+              // );
+              return formCardField(index);
             },
           ),
         ),

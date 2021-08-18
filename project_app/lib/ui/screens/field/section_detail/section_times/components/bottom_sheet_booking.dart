@@ -155,6 +155,15 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
     );
   }
 
+  Widget buttonBooking() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 55),
+      child: ButtonBooking(
+        onTap: () async => await _onBooking(),
+      ),
+    );
+  }
+
   Widget formDate() {
     return Container(
       padding: EdgeInsets.all(8),
@@ -224,7 +233,8 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
             formEnd(),
           ],
         ),
-        ButtonBooking(onTap: () async => await _onBooking()),
+        SizedBox(height: 8),
+        buttonBooking(),
       ],
     );
   }

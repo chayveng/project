@@ -65,7 +65,7 @@ class _SectionLocationState extends State<SectionLocation> {
 
   Future<bool> setCurrentLct() async {
     widget.field!.location != null
-        ? currentLct = decodeLctFromAPI(widget.field!.location!)
+        ? currentLct = decodeLct(widget.field!.location!)
         : await getCurrentLct();
     setCameraPosition(currentLct!);
     return true;

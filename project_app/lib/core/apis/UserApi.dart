@@ -38,4 +38,5 @@ class UserApi {
     var apiConnect = await ApiConnect.post(path: '/user/update', body: user);
     return apiResponseFromJson(apiConnect.toString());
   }
+
 }

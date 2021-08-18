@@ -17,29 +17,7 @@ class _BodyState extends State<Body> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            ...List.generate(
-              10,
-              (index) => Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  onTap: () {
-                    print(index);
-                  },
-                  child: Container(
-                    height: 50,
-                    width: sized(context).width,
-                    color: Colors.teal,
-                    child: Text('$index'),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
+      child: Text('body'),
     );
   }
 }
