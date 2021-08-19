@@ -1,10 +1,20 @@
-package com.example.project_api.controllers;
+package com.soccerhub.api.controllers;
 
+<<<<<<< HEAD:project_api/src/main/java/com/example/project_api/controllers/UserController.java
 import com.example.project_api.models.beans.ApiResponse;
 import com.example.project_api.models.repository.UserImageRepository;
 import com.example.project_api.models.repository.UserRepository;
 import com.example.project_api.models.tables.User;
 import com.example.project_api.services.UserService;
+=======
+import com.soccerhub.api.config.Config;
+import com.soccerhub.api.models.beans.ApiResponse;
+import com.soccerhub.api.models.repository.UserImageRepository;
+import com.soccerhub.api.models.repository.UserRepository;
+import com.soccerhub.api.models.tables.User;
+import com.soccerhub.api.models.tables.UserImage;
+import com.soccerhub.api.services.UserService;
+>>>>>>> master:project_api/src/main/java/com/soccerhub/api/controllers/UserController.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -55,6 +65,7 @@ public class UserController {
         return service.uploadImage(userId, file);
     }
 
+<<<<<<< HEAD:project_api/src/main/java/com/example/project_api/controllers/UserController.java
     @GetMapping("/download-image/{fileName}")
     public Object downloadImage(@PathVariable String fileName) {
         return service.downloadImage(fileName);
@@ -63,6 +74,32 @@ public class UserController {
     @GetMapping("/urlImage/{userId}")
     public Object urlImage(@PathVariable long userId) {
         return service.urlImage(userId);
+=======
+    @PostMapping("/image-upload")
+    public ResponseEntity<?> store(@RequestParam int userId, @RequestParam("file") MultipartFile file) throws IOException {
+        UserImage userImage = userServices.imagesUpload(userId, file);
+        String fileDownloadUri = ServletUriComponentsBuilder
+                .fromCurrentContextPath()
+                .path(Config.IMAGE_PATH)
+                .path(userImage.getFileName())
+                .toUriString();
+        return ResponseEntity.ok(fileDownloadUri);
+    }
+
+    @GetMapping("/urlImage/{userId}")
+    public Object urlImage(@PathVariable int userId) {
+        Optional<UserImage> userImage = userImageRepository.findByUserId(userId);
+        if (userImage.isPresent()) {
+            return ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path(Config.IMAGE_PATH)
+                    .path(userImage.get().getFileName().toString())
+//                    .path(userImage.get().getFileName().toString())
+                    .toUriString();
+        } else {
+            return ResponseEntity.status(404).build();
+        }
+>>>>>>> master:project_api/src/main/java/com/soccerhub/api/controllers/UserController.java
     }
 
     @DeleteMapping("/deleteImageByUserId/{userId}")

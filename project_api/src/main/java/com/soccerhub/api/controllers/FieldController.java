@@ -1,7 +1,15 @@
-package com.example.project_api.controllers;
+package com.soccerhub.api.controllers;
 
+<<<<<<< HEAD:project_api/src/main/java/com/example/project_api/controllers/FieldController.java
 import com.example.project_api.models.tables.Field;
 import com.example.project_api.services.FieldService;
+=======
+import com.soccerhub.api.config.Config;
+import com.soccerhub.api.models.tables.Field;
+import com.soccerhub.api.models.tables.FieldImage;
+import com.soccerhub.api.services.FieldImageService;
+import com.soccerhub.api.services.FieldService;
+>>>>>>> master:project_api/src/main/java/com/soccerhub/api/controllers/FieldController.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -50,7 +58,23 @@ public class FieldController {
 
     @DeleteMapping("/delete/{fieldId}")
     public Object delete(@PathVariable long fieldId) {
+<<<<<<< HEAD:project_api/src/main/java/com/example/project_api/controllers/FieldController.java
         return service.delete(fieldId);
+=======
+        return fieldService.delete(fieldId);
+    }
+
+    @PostMapping("/upload-image")
+    public String uploadImage(@RequestParam long fieldId, @RequestParam("file") MultipartFile file) throws IOException {
+        if (imageService.uploadImage(fieldId, file)) {
+            return ServletUriComponentsBuilder
+                    .fromCurrentContextPath()
+                    .path(Config.IMAGE_PATH + "/" + fieldId + "/")
+                    .path(Objects.requireNonNull(file.getOriginalFilename()))
+                    .toUriString();
+        }
+        return "Error Upload-image";
+>>>>>>> master:project_api/src/main/java/com/soccerhub/api/controllers/FieldController.java
     }
 
     // >> image controller
@@ -66,7 +90,25 @@ public class FieldController {
 
     @GetMapping("/urlImages/{fieldId}")
     public List<?> urlImages(@PathVariable long fieldId) {
+<<<<<<< HEAD:project_api/src/main/java/com/example/project_api/controllers/FieldController.java
         return service.urlImages(fieldId);
+=======
+        List<FieldImage> images = imageService.findByFieldId(fieldId);
+        Collections.sort(images);
+        List<String> urlImages = new ArrayList<>();
+        if (!images.isEmpty()) {
+            for (var file : images) {
+                String urlImage = ServletUriComponentsBuilder
+                        .fromCurrentContextPath()
+                        .path(Config.IMAGE_PATH + "/" + fieldId + "/")
+                        .path(file.getFileName())
+                        .toUriString();
+                urlImages.add(urlImage);
+            }
+            return urlImages;
+        }
+        return null;
+>>>>>>> master:project_api/src/main/java/com/soccerhub/api/controllers/FieldController.java
     }
     // << image controller
 

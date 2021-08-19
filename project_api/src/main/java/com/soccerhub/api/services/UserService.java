@@ -1,5 +1,6 @@
-package com.example.project_api.services;
+package com.soccerhub.api.services;
 
+<<<<<<< HEAD:project_api/src/main/java/com/example/project_api/services/UserService.java
 import com.example.project_api.Config;
 import com.example.project_api.Constants;
 import com.example.project_api.models.beans.ApiResponse;
@@ -7,6 +8,13 @@ import com.example.project_api.models.repository.UserImageRepository;
 import com.example.project_api.models.repository.UserRepository;
 import com.example.project_api.models.tables.User;
 import com.example.project_api.models.tables.UserImage;
+=======
+import com.soccerhub.api.models.beans.ApiResponse;
+import com.soccerhub.api.models.repository.UserImageRepository;
+import com.soccerhub.api.models.repository.UserRepository;
+import com.soccerhub.api.models.tables.User;
+import com.soccerhub.api.models.tables.UserImage;
+>>>>>>> master:project_api/src/main/java/com/soccerhub/api/services/UserService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

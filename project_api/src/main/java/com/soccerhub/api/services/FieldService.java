@@ -1,5 +1,6 @@
-package com.example.project_api.services;
+package com.soccerhub.api.services;
 
+<<<<<<< HEAD:project_api/src/main/java/com/example/project_api/services/FieldService.java
 import com.example.project_api.Config;
 import com.example.project_api.Constants;
 import com.example.project_api.models.beans.ApiResponse;
@@ -7,6 +8,11 @@ import com.example.project_api.models.repository.FieldImageRepository;
 import com.example.project_api.models.repository.FieldRepository;
 import com.example.project_api.models.tables.Field;
 import com.example.project_api.models.tables.FieldImage;
+=======
+import com.soccerhub.api.models.beans.ApiResponse;
+import com.soccerhub.api.models.repository.FieldRepository;
+import com.soccerhub.api.models.tables.Field;
+>>>>>>> master:project_api/src/main/java/com/soccerhub/api/services/FieldService.java
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

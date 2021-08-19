@@ -1,13 +1,11 @@
-package com.example.project_api.models.repository;
+package com.soccerhub.api.models.repository;
 
-import com.example.project_api.models.tables.Time;
+import com.soccerhub.api.models.tables.Time;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface TimeRepository extends JpaRepository<Time, Long> {
     List<Time> findByUserId(long userId);

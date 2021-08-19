@@ -1,26 +1,26 @@
-package com.example.project_api.models.tables;
+package com.soccerhub.api.models.tables;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "field_image")
-@NoArgsConstructor
+@Table(name = "user_image")
 @AllArgsConstructor
-public class FieldImage {
-
+@NoArgsConstructor
+public class UserImage {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    private long fieldId;
+    private long userId;
     private String fileName;
 
-    public FieldImage(long fieldId, String fileName) {
-        this.fieldId = fieldId;
+    public UserImage(long userId, String fileName) {
+        this.userId = userId;
         this.fileName = fileName;
     }
+
 }

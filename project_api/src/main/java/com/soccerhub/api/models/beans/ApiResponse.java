@@ -1,4 +1,4 @@
-package com.example.project_api.models.beans;
+package com.soccerhub.api.models.beans;
 
 import lombok.*;
 

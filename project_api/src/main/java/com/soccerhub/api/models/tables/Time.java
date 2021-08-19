@@ -1,4 +1,4 @@
-package com.example.project_api.models.tables;
+package com.soccerhub.api.models.tables;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
