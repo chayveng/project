@@ -6,11 +6,10 @@ import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/ui/components/custom_dialog_loading.dart';
 import 'package:project_app/ui/screens/createField/create_field_screen.dart';
-import 'package:project_app/ui/screens/field/section_detail/section_general.dart';
-import 'package:project_app/ui/screens/field/section_times/section_time.dart';
+import 'package:project_app/ui/screens/field/section_detail/section_detail.dart';
 
 import 'components/custom_appBar.dart';
-import 'section_detail/section_detail.dart';
+import 'section_detail/components/form_tab.dart';
 import 'components/section_images.dart';
 
 class Body extends StatefulWidget {
@@ -31,7 +30,7 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    print(widget.fieldId);
+    // print(widget.fieldId);
     // fetchData();
     super.initState();
   }
@@ -43,7 +42,7 @@ class _BodyState extends State<Body> {
 
   Future<bool> fetchData() async {
     print('fetch');
-    field = await FieldServices.findById(fieldId:widget.fieldId!);
+    field = await FieldServices.findById(fieldId: widget.fieldId!);
     await downloadImages();
     await Future.delayed(Duration(milliseconds: 300));
     return true;
@@ -69,35 +68,40 @@ class _BodyState extends State<Body> {
         backWord();
   }
 
+  Widget buildDetail() {
+    return Expanded(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            SectionImages(images: images),
+            SectionDetail(
+              field: field,
+              isOwner: widget.isOwner!,
+              fieldId: widget.fieldId!,
+            ),
+            SafeArea(top: false, child: SizedBox()),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget buildAppBar() {
+    return CustomAppBar(
+      title: field.title,
+      isOwner: widget.isOwner!,
+      onEdit: () async => await _onEdit(),
+    );
+  }
+
   Widget buildBody() {
     return Container(
       width: sized(context).width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomAppBar(
-            isOwner: widget.isOwner!,
-            onEdit: () async => await _onEdit(),
-          ),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SectionImages(images: images),
-                  SectionDetail(
-                    tabBars: ['General', 'Times'],
-                    tabViews: [
-                      SectionGeneral(field: field),
-                      SectionTime(
-                        isOwner: widget.isOwner,
-                        fieldId: widget.fieldId,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
+          buildAppBar(),
+          buildDetail(),
         ],
       ),
     );

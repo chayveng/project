@@ -7,7 +7,8 @@ import 'package:project_app/core/models/User.dart';
 import '../../../../constants.dart';
 
 class UserInfo extends StatelessWidget {
-  final User? user ;
+  final User? user;
+
   final Uint8List? userImage;
 
   const UserInfo({
@@ -23,12 +24,23 @@ class UserInfo extends StatelessWidget {
   Widget formName(BuildContext context) {
     return Container(
       width: sized(context).width * 0.5,
-      child: Text(
-        '${user!.firstName ?? 'FirstName'}\, ${user!.lastName ?? 'LastName'}',
-        style: TextStyle(
-            color: user!.firstName == null ? Colors.black38 : Colors.black),
-        maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+      child: Row(
+        children: [
+          Text(
+            '${user!.firstName ?? 'FirstName'}\,',
+            style: TextStyle(
+                color: user!.firstName == null ? Colors.black26 : Colors.black),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+          Text(
+            '  ${user!.lastName ?? 'LastName'}',
+            style: TextStyle(
+                color: user!.lastName == null ? Colors.black26 : Colors.black),
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ],
       ),
     );
   }
@@ -85,15 +97,22 @@ class UserInfo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
-      width: sized(context).width,
-      child: Row(
-        children: [
-          boxUserImage(),
-          SizedBox(width: 10),
-          info(context),
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        width: sized(context).width,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Row(
+          children: [
+            boxUserImage(),
+            SizedBox(width: 10),
+            info(context),
+          ],
+        ),
       ),
     );
   }

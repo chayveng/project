@@ -16,12 +16,11 @@ class FieldApi {
   }
 
   static Future<ApiResponse> delete(int fieldId) async {
-    var apiConnect = await ApiConnect.get(path: '/field/delete/$fieldId');
+    var apiConnect = await ApiConnect.delete(path: '/field/delete/$fieldId');
     return apiResponseFromJson(apiConnect.toString());
   }
   static Future<Object?> uploadImages(FormData data) async {
     return await ApiConnect.postDIO(path: '/field/upload-images', data: data);
-
   }
 
   static Future<ApiResponse> findById(int fieldId) async {

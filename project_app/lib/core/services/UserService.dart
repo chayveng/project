@@ -5,7 +5,6 @@ import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:project_app/core/Config.dart';
-import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/apis/UserApi.dart';
 import 'package:project_app/core/models/ApiResponse.dart';
 import 'package:project_app/core/models/User.dart';
@@ -54,7 +53,7 @@ class UserService {
     ApiResponse res = await UserApi.update(user: user);
     if (res.status == 1) {
       if (image != null) {
-        await imageUpload(userId: user!.id, image: image);
+        await imageUpload(user!.id!, image);
         return true;
       }
     } else {
@@ -62,15 +61,11 @@ class UserService {
     }
   }
 
-  static String pathUserImage(int userId) {
-    return '${Config.API_URL}/user/getUserImage?imageName=$userId.png';
-  }
-
-  static Future<bool?> imageUpload({int? userId, Uint8List? image}) async {
-    String url = '${Config.API_URL}/user/image-upload/';
+  static Future<bool?> imageUpload(int userId, Uint8List image) async {
+    String url = '${Config.API_URL}/user/upload-image';
     FormData data = FormData.fromMap({
       "userId": userId,
-      "file": MultipartFile.fromBytes(image!, filename: "$userId.png")
+      "file": MultipartFile.fromBytes(image, filename: "image.png"),
     });
     Dio dio = Dio();
     var response = await dio.post(url, data: data);
@@ -79,8 +74,13 @@ class UserService {
   }
 
   static Future<Uint8List?> imageDownload(int userId) async {
-    var url = Uri.parse("${Config.API_URL}/user/image-download/$userId.png");
+    var url = Uri.parse("${Config.API_URL}/user/urlImage/$userId");
     var response = await http.get(url);
-    return response.statusCode == 200 ? response.bodyBytes : null;
+    if (response.statusCode == 200) {
+      var res = await http.get(Uri.parse(response.body.toString()));
+      return res.bodyBytes;
+    } else {
+      return null;
+    }
   }
 }

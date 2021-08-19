@@ -13,6 +13,13 @@ class ApiConnect {
     return utf8.decode(response.bodyBytes);
   }
 
+  static Future<Object?> delete({@required path}) async {
+    var url = Uri.parse('${Config.API_URL}$path');
+    var response = await http.delete(url);
+    return utf8.decode(response.bodyBytes);
+  }
+
+
   static Future<Object?> post({
     @required String? path,
     @required Object? body,

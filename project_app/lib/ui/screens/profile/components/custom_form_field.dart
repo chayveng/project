@@ -5,7 +5,7 @@ import 'package:validators/validators.dart';
 import '../../../../constants.dart';
 import 'card_menu.dart';
 
-class CustomFormField extends StatelessWidget {
+class CustomFormField extends StatefulWidget {
   final bool? status;
   final User? user;
   final Map<String, dynamic>? focusNode;
@@ -17,16 +17,30 @@ class CustomFormField extends StatelessWidget {
     @required this.focusNode,
   }) : super(key: key);
 
+  @override
+  _CustomFormFieldState createState() => _CustomFormFieldState();
+}
+
+class _CustomFormFieldState extends State<CustomFormField> {
+  User? _user = User();
+
+  @override
+  initState() {
+    _user = widget.user;
+    super.initState();
+  }
+
   Widget tel(BuildContext context) {
     return CardMenu(
-      status: status,
-      title: user!.tel,
+      status: widget.status,
+      title: _user!.tel ?? widget.user!.tel,
+      onChanged: (value) => _user!.tel = value,
       hintText: 'Tel',
-      onSaved: (input) => user!.tel = (input == '') ? null : input,
+      onSaved: (input) => widget.user!.tel = (input == '') ? null : input,
       keyboardType: TextInputType.number,
-      focusNode: focusNode!['tel'],
+      focusNode: widget.focusNode!['tel'],
       onFieldSubmitted: (term) {
-        focusNode!['tel'].unfocus();
+        widget.focusNode!['tel'].unfocus();
       },
       validator: (input) {
         if (input.isEmpty) {
@@ -44,14 +58,15 @@ class CustomFormField extends StatelessWidget {
 
   Widget email(BuildContext context) {
     return CardMenu(
-      status: status,
-      title: user!.email,
+      status: widget.status,
+      title: _user!.email ?? widget.user!.email,
+      onChanged: (value) => _user!.email = value,
       hintText: 'Email',
-      onSaved: (input) => user!.email = (input == '') ? null : input,
-      focusNode: focusNode!['email'],
+      onSaved: (input) => widget.user!.email = (input == '') ? null : input,
+      focusNode: widget.focusNode!['email'],
       onFieldSubmitted: (term) {
-        focusNode!['email'].unfocus();
-        FocusScope.of(context).requestFocus(focusNode!['tel']);
+        widget.focusNode!['email'].unfocus();
+        FocusScope.of(context).requestFocus(widget.focusNode!['tel']);
       },
       validator: (input) {
         if (!isEmail(input)) {
@@ -65,29 +80,46 @@ class CustomFormField extends StatelessWidget {
 
   Widget lastName(BuildContext context) {
     return CardMenu(
-      status: status,
-      title: user!.lastName,
+      status: widget.status,
+      title: _user!.lastName ?? widget.user!.lastName,
+      onChanged: (value) => _user!.lastName = value,
       hintText: 'LastName',
-      onSaved: (input) => user!.lastName = (input == '') ? null : input,
-      focusNode: focusNode!['lastName'],
+      onSaved: (input) => widget.user!.lastName = (input == '') ? null : input,
+      focusNode: widget.focusNode!['lastName'],
       onFieldSubmitted: (term) {
-        focusNode!['lastName'].unfocus();
-        FocusScope.of(context).requestFocus(focusNode!['email']);
+        widget.focusNode!['lastName'].unfocus();
+        FocusScope.of(context).requestFocus(widget.focusNode!['email']);
       },
     );
   }
 
   Widget firstName(BuildContext context) {
     return CardMenu(
-      status: status,
-      title: user!.firstName,
+      status: widget.status,
+      title: _user!.firstName ?? widget.user!.firstName,
+      onChanged: (value) => _user!.firstName = value,
       hintText: 'FirstName',
-      onSaved: (input) => user!.firstName = input == '' ? null : input,
-      focusNode: focusNode!['firstName'],
+      onSaved: (input) => widget.user!.firstName = input == '' ? null : input,
+      focusNode: widget.focusNode!['firstName'],
       onFieldSubmitted: (term) {
-        focusNode!['firstName'].unfocus();
-        FocusScope.of(context).requestFocus(focusNode!['lastName']);
+        widget.focusNode!['firstName'].unfocus();
+        FocusScope.of(context).requestFocus(widget.focusNode!['lastName']);
       },
+    );
+  }
+  Row titleBar() {
+    return Row(
+      children: [
+        Icon(
+          Icons.info,
+          color: navyPrimaryColor,
+        ),
+        SizedBox(width: 10),
+        Text(
+          'ข้อมูลส่วนตัว',
+          style: TextStyle(color: navyPrimaryColor),
+        ),
+      ],
     );
   }
 
@@ -104,6 +136,7 @@ class CustomFormField extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
+            titleBar(),
             firstName(context),
             lastName(context),
             email(context),
@@ -113,4 +146,5 @@ class CustomFormField extends StatelessWidget {
       ),
     );
   }
+
 }

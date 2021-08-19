@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/ui/components/card_field.dart';
@@ -10,61 +12,56 @@ import 'components/search_engine.dart';
 import 'components/section_fields.dart';
 
 class Body extends StatefulWidget {
+  const Body({Key? key}) : super(key: key);
+
   @override
   _BodyState createState() => _BodyState();
 }
 
 class _BodyState extends State<Body> {
   List<Field> fields = [];
-  var _refresh = GlobalKey<RefreshIndicatorState>();
+  LatLng? currentLct;
 
   @override
   void initState() {
-    fetchData();
+    // fetchData();
+    getCurrentLct();
     super.initState();
   }
 
-  Future<Null> _handleRefresh() async {
-    fetchData();
-    await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
-    setState(() {});
-    return null;
+  Future getCurrentLct() async {
+    Location location = Location();
+    LocationData lctData = await location.getLocation();
+    currentLct = LatLng(lctData.latitude!, lctData.longitude!);
+    print(currentLct);
   }
 
-  Future<bool> refresh() async {
-    await Future.delayed(Duration(milliseconds: 200));
+  Future<bool> _refreshData(BuildContext context) async {
+    await fetchData();
     return true;
   }
 
   Future<bool> fetchData() async {
     fields = [];
     fields = await FieldServices.findAll();
-    await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
-    // print('Fields: ${fields.length}');
+    await Future.delayed(Duration(milliseconds: 300));
     return true;
   }
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          CustomSearchBar(fields: fields),
-          RefreshIndicator(
-            key: _refresh,
-            onRefresh: _handleRefresh,
-            child: FutureBuilder(
-              future: refresh(),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (fields.isNotEmpty) {
-                  return SectionFields(fields: fields);
-                } else {
-                  return CustomWidgetLoading();
-                }
-              },
-            ),
-          ),
-        ],
+    return RefreshIndicator(
+      color: orangePrimaryColor,
+      onRefresh: () async => await _refreshData(context),
+      child: FutureBuilder(
+        future: fetchData(),
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          if (snapshot.hasError) print(snapshot.hasError);
+          if (snapshot.hasData) print(snapshot.data);
+          return snapshot.hasData
+              ? SectionFields(fields: fields, currentLct: currentLct  )
+              : CustomWidgetLoading();
+        },
       ),
     );
   }

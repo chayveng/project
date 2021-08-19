@@ -1,11 +1,9 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:project_app/routes.dart';
-import 'package:project_app/ui/screens/field/field_screen.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
-import 'package:project_app/ui/screens/test/components/sention_times/section_times.dart';
-import 'package:project_app/ui/screens/test/text_screen.dart';
+import 'package:project_app/ui/screens/test/test_screen.dart';
 
 import 'constants.dart';
 import 'core/services/AuthService.dart';
@@ -57,9 +55,9 @@ class MyApp extends StatelessWidget {
       ),
       title: 'Flutter Demo',
       routes: routes,
-      // home: SectionTimes(),
       home: screen,
-      // home: TextScreen(),
+      // home: TestScreen(),
+      // home: TesterScreen(),
     );
   }
 }

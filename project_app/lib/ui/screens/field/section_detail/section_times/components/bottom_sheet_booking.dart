@@ -2,19 +2,25 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+
+// import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/core/services/TimeService.dart';
-import 'package:project_app/core/services/UserService.dart';
-import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_delete.dart';
-import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_info.dart';
 
-import 'package:project_app/ui/screens/field/section_times/components/button_booking.dart';
-import 'package:project_app/ui/screens/field/section_times/components/custom_colon.dart';
+// import 'package:project_app/core/services/UserService.dart';
+// import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_confirm.dart';
+// import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_delete.dart';
+// import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_info.dart';
+//
+// import 'package:project_app/ui/screens/field/section_times/components/button_booking.dart';
+// import 'package:project_app/ui/screens/field/section_times/components/custom_colon.dart';
 
+import 'alert_dialog_confirm.dart';
 import 'alert_dialog_fail.dart';
+import 'button_booking.dart';
+import 'custom_colon.dart';
 
 class BottomSheetBooking extends StatefulWidget {
   final List? times;
@@ -49,26 +55,32 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
   String getDate(DateTime date) => DateFormat('dd-MM-yyyy').format(date);
 
   _onBooking() async {
-    print('booking');
     _setTime();
     print(time);
-    if (await TimeService.create(time)) {
-      print('success');
-      Navigator.pop(context);
-    } else {
-      print('fail');
-      showDialog(
-        barrierDismissible: false,
-        context: context,
-        // builder: (context) => AlertDialogInfo(time: time,),
-        builder: (context) => AlertDialogFail(),
-      );
-    }
+    bool? callBack = await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) => AlertDialogConfirm(
+        startTime: startTime!,
+        endTime: endTime!,
+        onConfirm: () async => Navigator.pop(
+          context,
+          await TimeService.create(time),
+        ),
+      ),
+    );
+    if (callBack != null)
+      callBack
+          ? Navigator.pop(context)
+          : showDialog(
+              barrierDismissible: false,
+              context: context,
+              builder: (context) => AlertDialogFail(),
+            );
   }
 
-  _setTime()  {
-    // int userId = await UserService.getUserId();
-    setState(()  {
+  _setTime() {
+    setState(() {
       startTime = DateTime(
         currentTime.year,
         currentTime.month,
@@ -90,8 +102,25 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
     });
   }
 
-  _onDate() {
-    print('select date');
+  Future<void> _chooseDate(BuildContext context) async {
+    DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: currentTime,
+      firstDate: DateTime.now(),
+      lastDate: DateTime(2050),
+      builder: (context, child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.orangeAccent.withOpacity(0.9),
+            ),
+          ),
+          child: child!,
+        );
+      },
+    );
+    if (pickedDate != null) setState(() => currentTime = pickedDate);
+    print(currentTime);
   }
 
   Widget spinner({
@@ -126,15 +155,24 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
     );
   }
 
+  Widget buttonBooking() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 55),
+      child: ButtonBooking(
+        onTap: () async => await _onBooking(),
+      ),
+    );
+  }
+
   Widget formDate() {
     return Container(
-      padding: EdgeInsets.all(6),
+      padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
           color: orangePrimaryColor.withOpacity(0.5),
           border: Border.all(width: 2, color: orangePrimaryColor),
           borderRadius: BorderRadius.circular(8)),
       child: InkWell(
-        onTap: _onDate,
+        onTap: () => _chooseDate(context),
         child: Text(
           DateFormat('dd-MM-yyyy').format(currentTime),
           style: TextStyle(fontSize: 16),
@@ -180,6 +218,7 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
   Widget sectionBooking(BuildContext context) {
     return Column(
       children: [
+        SizedBox(height: 8),
         Text('จอง', style: TextStyle(fontSize: 24)),
         SizedBox(height: 8),
         formDate(),
@@ -194,7 +233,8 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
             formEnd(),
           ],
         ),
-        ButtonBooking(onTap: () async => await _onBooking()),
+        SizedBox(height: 8),
+        buttonBooking(),
       ],
     );
   }
@@ -207,18 +247,14 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
         topRight: Radius.circular(20),
       ),
       child: Material(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            sectionBooking(context),
-            Container(
-              color: Colors.redAccent,
-              child: SafeArea(
-                bottom: true,
-                child: SizedBox(),
-              ),
-            ),
-          ],
+        child: SafeArea(
+          top: false,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              sectionBooking(context),
+            ],
+          ),
         ),
       ),
     );

@@ -7,28 +7,20 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "field_image")
-public class FieldImage implements Comparable<FieldImage>{
+@NoArgsConstructor
+@AllArgsConstructor
+public class FieldImage {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-
-    @Column
     private long fieldId;
-
-    @Column
     private String fileName;
 
-    @Column
-    @Lob
-    private byte[] file;
-
-    @Override
-    public int compareTo(FieldImage o) {
-        return this.fileName.compareTo(o.fileName);
+    public FieldImage(long fieldId, String fileName) {
+        this.fieldId = fieldId;
+        this.fileName = fileName;
     }
-
 }

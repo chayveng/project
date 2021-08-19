@@ -105,7 +105,8 @@ class _BodyState extends State<Body> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 30),
+          // SizedBox(height: 30),
+          SizedBox(height: 20),
           UserInfo(user: user, userImage: _userImage),
           SizedBox(height: 10),
           buttonProfile(context),

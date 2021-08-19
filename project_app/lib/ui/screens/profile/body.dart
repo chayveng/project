@@ -69,8 +69,9 @@ class _BodyState extends State<Body> {
   }
 
   Future<void> _chooseImage() async {
-    File file = await chooseImage(ImageSource.gallery);
-    setState(() => _image = file.readAsBytesSync());
+    print('chooseImage');
+    var file = await chooseImage(ImageSource.gallery);
+    if (file != null) setState(() => _image = file.readAsBytesSync());
   }
 
   Widget submitBtn() {
@@ -87,7 +88,6 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    // return Container();
     return Form(
       key: _formKey,
       child: Column(
@@ -97,19 +97,25 @@ class _BodyState extends State<Body> {
             onEdit: _onEdit,
           ),
           SizedBox(height: 30),
-          UserImage(
-            userName: _user.userName,
-            image: _image,
-            status: _status,
-            onTap: () async => await _chooseImage(),
+          Expanded(
+            child: ListView(
+              children: [
+                UserImage(
+                  userName: _user.userName,
+                  image: _image,
+                  status: _status,
+                  onTap: () async => await _chooseImage(),
+                ),
+                SizedBox(height: 20),
+                CustomFormField(
+                  status: _status,
+                  user: _user,
+                  focusNode: focusNode,
+                ),
+                submitBtn(),
+              ],
+            ),
           ),
-          SizedBox(height: 20),
-          CustomFormField(
-            status: _status,
-            user: _user,
-            focusNode: focusNode,
-          ),
-          submitBtn(),
         ],
       ),
     );
