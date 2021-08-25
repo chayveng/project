@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -58,7 +57,6 @@ class FieldServices {
     return status;
   }
 
-
   static Future<bool> update(Field field, List images) async {
     print('update');
     bool status = false;
@@ -87,7 +85,7 @@ class FieldServices {
   static Future<List<Uint8List>> downloadImages(int fieldId) async {
     List<Uint8List> images = [];
     String path = '/field/urlImages/$fieldId';
-     Object? res = await ApiConnect.get(path: path);
+    Object? res = await ApiConnect.get(path: path);
     if (res != '') {
       List urlImages = jsonDecode(res.toString());
       for (var i = 0; i < urlImages.length; i++) {
@@ -96,7 +94,7 @@ class FieldServices {
         images.add(res.bodyBytes);
       }
       return images;
-    }else{
+    } else {
       return [];
     }
   }
@@ -111,6 +109,6 @@ class FieldServices {
     var url = Uri.parse('${Config.API_URL}/field/urlImages/$fieldId');
     var response = await http.get(url);
     List urlImages = jsonDecode(response.body);
-    return urlImages[0];
+    return "${Config.API_URL}/field/download-image/${urlImages[0]}";
   }
 }

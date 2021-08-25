@@ -8,7 +8,7 @@
 		<version>2.5.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.example</groupId>
+	<groupId>com.soccerhub</groupId>
 	<artifactId>project_api</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>project_api</name>
@@ -61,6 +61,7 @@
 	</dependencies>
 
 	<build>
+		<finalName>api</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
