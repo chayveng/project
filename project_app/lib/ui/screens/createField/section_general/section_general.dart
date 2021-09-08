@@ -38,12 +38,13 @@ class _SectionGeneralState extends State<SectionGeneral> {
   Widget telField(BuildContext context) {
     int index = 4;
     return CustomField(
-      labelText: 'Tel',
-      hintText: 'tel',
+      labelText: 'หมายเลขโทรศัพท์',
+      hintText: '0812345678',
       onSaved: (input) => widget.field!.tel = input,
       onChanged: (input) => widget.field!.tel = input,
-      validator: (input) => input.isEmpty ? 'is Empty' : null,
+      validator: (input) => input.isEmpty ? 'ข้อมูลว่าง' : null,
       controller: TextEditingController(text: widget.field!.tel),
+      keyboardType: TextInputType.number,
       focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
         focusNode![keys[index]].unfocus();
@@ -55,12 +56,12 @@ class _SectionGeneralState extends State<SectionGeneral> {
   Widget priceField(BuildContext context) {
     int index = 3;
     return CustomField(
-      labelText: 'Price',
-      hintText: 'price',
+      labelText: 'ราคา',
+      hintText: 'เช่น 600/700',
       onSaved: (input) => widget.field!.price = input,
       onChanged: (input) => widget.field!.price = input,
-      validator: (input) => input.isEmpty ? 'is Empty' : null,
-      keyboardType: TextInputType.datetime,
+      validator: (input) => input.isEmpty ? 'ข้อมูลว่าง' : null,
+      keyboardType: TextInputType.number,
       controller: TextEditingController(text: widget.field!.price),
       focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
@@ -73,11 +74,11 @@ class _SectionGeneralState extends State<SectionGeneral> {
   Widget openField(BuildContext context) {
     int index = 2;
     return CustomField(
-      labelText: 'Open Time',
-      hintText: 'open-time',
+      labelText: 'เวลาเปิด/ปิด',
+      hintText: '12:00-23:00',
       onSaved: (input) => widget.field!.hours = input,
       onChanged: (input) => widget.field!.hours = input,
-      validator: (input) => input.isEmpty ? 'is Empty' : null,
+      validator: (input) => input.isEmpty ? 'ข้อมูลว่าง' : null,
       keyboardType: TextInputType.datetime,
       controller: TextEditingController(text: widget.field!.hours),
       focusNode: focusNode![keys[index]],
@@ -91,12 +92,12 @@ class _SectionGeneralState extends State<SectionGeneral> {
   Widget detailField(BuildContext context) {
     int index = 1;
     return CustomField(
-      labelText: 'Detail',
-      hintText: 'detail',
+      labelText: 'รายละเอียดสนาม',
+      hintText: 'เช่น ขนาดสนาม 6-7 คน',
       maxLine: 5,
       onSaved: (input) => widget.field!.detail = input,
       onChanged: (input) => widget.field!.detail = input,
-      validator: (input) => input.isEmpty ? 'is Empty' : null,
+      validator: (input) => input.isEmpty ? 'ข้อมูลว่าง' : null,
       controller: TextEditingController(text: widget.field!.detail),
       focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
@@ -109,11 +110,11 @@ class _SectionGeneralState extends State<SectionGeneral> {
   Widget titleField(BuildContext context) {
     int index = 0;
     return CustomField(
-      labelText: 'Title',
-      hintText: 'title',
+      labelText: 'ชื่อสนาม',
+      hintText: 'ชื่อสนาม',
       onSaved: (input) => widget.field!.title = input,
       onChanged: (input) => widget.field!.title = input,
-      validator: (input) => input.isEmpty ? 'is Empty' : null,
+      validator: (input) => input.isEmpty ? 'ข้อมูลว่าง' : null,
       controller: TextEditingController(text: widget.field!.title),
       focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
@@ -142,7 +143,7 @@ class _SectionGeneralState extends State<SectionGeneral> {
               children: [
                 TitleFormField(
                   iconData: Icons.circle_notifications,
-                  title: 'General',
+                  title: 'ข้อมูลทั่วไป',
                 ),
                 SizedBox(height: 12),
                 titleField(context),

@@ -13,7 +13,7 @@ class NotBooking extends StatelessWidget {
             child: Image.asset('assets/images/non_booking.png'),
           ),
           SizedBox(height: 20),
-          Text('Not booking'),
+          Text('ไม่มีการจองสนาม',style: TextStyle(fontSize: 18),),
         ],
       ),
     );

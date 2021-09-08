@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/models/Time.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../constants.dart';
 
 class CardInfo extends StatefulWidget {
-  // final VoidCallback? onMap;
+  final VoidCallback? onMap;
   final Field? field;
   final Time? time;
 
   const CardInfo({
     Key? key,
-    // @required this.onMap,
+    @required this.onMap,
     this.field,
     this.time,
   }) : super(key: key);
@@ -22,7 +22,6 @@ class CardInfo extends StatefulWidget {
 }
 
 class _CardInfoState extends State<CardInfo> {
-
   Widget buildTitle() {
     return Text(
       widget.field!.title!,
@@ -34,8 +33,6 @@ class _CardInfoState extends State<CardInfo> {
     );
   }
 
-
-
   Widget buildMap() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -45,8 +42,7 @@ class _CardInfoState extends State<CardInfo> {
           color: orangeColor,
         ),
         TextButton(
-          onPressed: (){_launchInApp();},
-          // onPressed: (){_launchInBrowser();},
+          onPressed: widget.onMap,
           child: Text(
             'แผนที่',
             style: TextStyle(
@@ -138,38 +134,38 @@ class _CardInfoState extends State<CardInfo> {
     );
   }
 
-  Future<void> _launchInBrowser() async {
-    String location = widget.field!.location!;
-    int comma = location.indexOf(',');
-    double lat = double.parse(location.substring(0,comma));
-    double lng = double.parse(location.substring(comma + 1, location.length - 1));
-    String url = 'https://www.google.com/maps/@${lat},${lng},16z';
-    if (await canLaunch(url)) {
-      print('go');
-      await launch(
-          url,
-          forceSafariVC: false,
-          forceWebView: false,
-          headers: <String, String>{'header_key': 'header_value'});
-    } else {
-      print('nnn');
-      throw 'Could not launch $url';
-    }
-  }
+// Future<void> _launchInBrowser() async {
+//   String location = widget.field!.location!;
+//   int comma = location.indexOf(',');
+//   double lat = double.parse(location.substring(0,comma));
+//   double lng = double.parse(location.substring(comma + 1, location.length - 1));
+//   String url = 'https://www.google.com/maps/@${lat},${lng},16z';
+//   if (await canLaunch(url)) {
+//     print('go');
+//     await launch(
+//         url,
+//         forceSafariVC: false,
+//         forceWebView: false,
+//         headers: <String, String>{'header_key': 'header_value'});
+//   } else {
+//     print('nnn');
+//     throw 'Could not launch $url';
+//   }
+// }
 
-  Future<void> _launchInApp() async {
-    String location = widget.field!.location!;
-    int comma = location.indexOf(',');
-    double lat = double.parse(location.substring(0,comma));
-    double lng = double.parse(location.substring(comma + 1, location.length - 1));
-    String url = 'https://www.google.com/maps/@${lat},${lng},16z';
-    if (await canLaunch(url)) {
-      await launch(url,
-          forceSafariVC: true,
-          forceWebView: false,
-          headers: <String, String>{'header_key': 'header_value'});
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
+// Future<void> _launchInApp() async {
+//   String location = widget.field!.location!;
+//   int comma = location.indexOf(',');
+//   double lat = double.parse(location.substring(0,comma));
+//   double lng = double.parse(location.substring(comma + 1, location.length - 1));
+//   String url = 'https://www.google.com/maps/@${lat},${lng},16z';
+//   if (await canLaunch(url)) {
+//     await launch(url,
+//         forceSafariVC: true,
+//         forceWebView: false,
+//         headers: <String, String>{'header_key': 'header_value'});
+//   } else {
+//     throw 'Could not launch $url';
+//   }
+// }
 }

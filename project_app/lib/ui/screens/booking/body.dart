@@ -1,5 +1,8 @@
+
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
+import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/core/services/FieldServices.dart';
@@ -28,39 +31,21 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
-  _onMap() {
-    print('go to map');
-  }
-
-  Future<void> _launchInBrowser(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url,
-          forceSafariVC: false,
-          forceWebView: false,
-          headers: <String, String>{'header_key':'header_value'});
+  _onMap(int index) async {
+    Field field = getField(index);
+    if (field.location != null) {
+      String location = field.location!;
+      LatLng lct = decodeLct(location);
+      print(lct);
+   await mapLauncher(lct.latitude, lct.longitude);
     }else{
-      throw 'Could not launch $url';
+      print('location is null');
     }
+
   }
 
-
-  Future<void> fetchData() async {
-    fields.clear();
-    int userId = await UserService.getUserId();
-    times = await TimeService.findByUserId(userId);
-    List<int> fieldIds =
-        List.generate(times.length, (index) => times[index].fieldId!)
-            .toSet()
-            .toList();
-    fieldIds
-        .map((e) async => fields.add(await FieldServices.findById(fieldId: e)))
-        .toList();
-    await Future.delayed(Duration(milliseconds: 300), () => setState(() {}));
-    // print(times.length);
-    // print(fields.length);
-  }
-
-  Field getFieldById(int fieldId) {
+  Field getField(int index) {
+    int fieldId = times[index].fieldId!;
     Field _field = Field();
     fields.map((e) {
       if (e.id == fieldId) {
@@ -68,6 +53,20 @@ class _BodyState extends State<Body> {
       }
     }).toList();
     return _field;
+  }
+
+  Future<void> fetchData() async {
+    fields.clear();
+    int userId = await UserService.getUserId();
+    times = await TimeService.findByUserId(userId);
+    List<int> fieldIds =
+    List.generate(times.length, (index) => times[index].fieldId!)
+        .toSet()
+        .toList();
+    fieldIds
+        .map((e) async => fields.add(await FieldServices.findById(fieldId: e)))
+        .toList();
+    await Future.delayed(Duration(milliseconds: 300), () => setState(() {}));
   }
 
   Widget sectionInfo() {
@@ -78,7 +77,8 @@ class _BodyState extends State<Body> {
                 ...List.generate(
                   times.length,
                   (index) => CardInfo(
-                    field: getFieldById(times[index].fieldId!),
+                    onMap: () async => await _onMap(index),
+                    field: getField(index),
                     time: times[index],
                   ),
                 ),

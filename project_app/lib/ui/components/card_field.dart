@@ -28,7 +28,7 @@ class _CardFieldState extends State<CardField> {
 
   @override
   void initState() {
-    // print(widget.field);
+    print(widget.field);
     // setDistance();
     super.initState();
   }
@@ -49,11 +49,12 @@ class _CardFieldState extends State<CardField> {
   // }
 
   Future<bool> fetchData() async {
+    print('fetch data');
     urlImage = await FieldServices.firstImageUrl(widget.field!.id!);
-    await Future.delayed(Duration(milliseconds: 500));
+    print(urlImage);
+    await Future.delayed(Duration(milliseconds: 200));
     return true;
   }
-
 
   Widget buildDetail() {
     return Padding(
@@ -76,9 +77,9 @@ class _CardFieldState extends State<CardField> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  Text('${widget.field!.hours}'),
-                  Text('${widget.field!.price} บาท'),
-                  Text('${widget.field!.tel}'),
+                  Text('เปิด/ปิด ${widget.field!.hours}'),
+                  Text('ราคา ${widget.field!.price} บาท'),
+                  Text('โทร ${widget.field!.tel}'),
                 ],
               ),
             ),
@@ -155,12 +156,13 @@ class _CardFieldState extends State<CardField> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
       future: fetchData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.data == true) {
           return fromCardField();
         } else {
           return Center(

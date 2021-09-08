@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 const String UiFont = 'Kanit';
 // const String UiFont = 'Comfortaa';
@@ -54,7 +55,7 @@ Widget testBox({double? sized, Color? color}) => Container(
       color: color ?? Colors.redAccent,
     );
 
-Future<File> chooseImage(ImageSource? imageSource) async {
+Future<File?> chooseImage(ImageSource? imageSource) async {
   ImagePicker imagePicker = ImagePicker();
   File? image;
   try {
@@ -65,7 +66,7 @@ Future<File> chooseImage(ImageSource? imageSource) async {
   } catch (e) {
     print('error chooseImage');
   }
-  return image!;
+  return image;
 }
 
 LatLng getLocation(String lct) {
@@ -97,6 +98,41 @@ Future<LocationData?> findLocationData() async {
     return null;
   }
 }
+
+LatLng decodeLct(String lct) {
+  int comma = lct.indexOf(',');
+  double lat = double.parse(lct.substring(0, comma));
+  double lng = double.parse(lct.substring(comma + 1, lct.length - 1));
+  return LatLng(lat, lng);
+}
+
+String encodeLct(LatLng lct) {
+  return '${lct.longitude},${lct.longitude}';
+}
+
+Future<void> mapLauncher(double lat, double lng)async{
+  String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
+  String encodeUrl = Uri.encodeFull(googleUrl);
+  if (await canLaunch(encodeUrl)) {
+    await launch(encodeUrl);
+  }else{
+    throw "Could not open the map.";
+  }
+}
+
+
+Future getCurrentLocation() async {
+  Location location = Location();
+  try {
+    LocationData lct = await location.getLocation();
+    return lct;
+  } catch (e) {
+    print(e.toString());
+    return null;
+    // return LatLng(100, 100);
+  }
+}
+
 double calculateDistance(double lat1, double lng1, double lat2, double lng2) {
   double distance = 0;
   var p = 0.017453292519943295;

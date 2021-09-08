@@ -41,7 +41,6 @@ dependencies:
   google_maps_flutter:
   location:
   intl:
-#  geolocator:
   archive:
   flutter_launcher_icons:
   url_launcher:

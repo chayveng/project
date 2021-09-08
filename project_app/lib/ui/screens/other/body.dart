@@ -69,7 +69,7 @@ class _BodyState extends State<Body> {
 
   Widget buttonLogout(BuildContext context) {
     return ButtonMenu(
-      title: 'Logout',
+      title: 'ออกจากระบบ',
       icon: Icons.logout,
       textColor: Colors.red,
       onPressed: () => _onLogout(context),
@@ -78,14 +78,14 @@ class _BodyState extends State<Body> {
 
   Widget buttonMyClub(BuildContext context) {
     return ButtonMenu(
-      title: 'My club',
+      title: 'สนามของฉัน',
       onPressed: () async => await _onMyClub(context),
     );
   }
 
   Widget buttonProfile(BuildContext context) {
     return ButtonMenu(
-      title: 'Profile',
+      title: 'ข้อมูลส่วนตัว',
       onPressed: () async =>
           await Navigator.push(
             context,
@@ -105,7 +105,8 @@ class _BodyState extends State<Body> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 30),
+          // SizedBox(height: 30),
+          SizedBox(height: 20),
           UserInfo(user: user, userImage: _userImage),
           SizedBox(height: 10),
           buttonProfile(context),

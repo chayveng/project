@@ -18,7 +18,7 @@ class CreateFieldScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: greyColor,
       appBar: AppBar(
-        title: Text('Create Field'),
+        title: Text('สร้างสนาม'),
       ),
       body: Body(isCreate: isCreate, fieldId: fieldId),
     );

@@ -9,10 +9,12 @@ import '../../../../constants.dart';
 
 class SectionLocation extends StatefulWidget {
   final Field? field;
+  final LatLng? currentLct;
 
   const SectionLocation({
     Key? key,
     @required this.field,
+    this.currentLct,
   }) : super(key: key);
 
   @override
@@ -20,125 +22,99 @@ class SectionLocation extends StatefulWidget {
 }
 
 class _SectionLocationState extends State<SectionLocation> {
-  // LatLng myLocation = LatLng(16.431387560289423, 102.81499053196279);
   List<Marker> handleMarker = [];
   Location location = Location();
   CameraPosition? cameraPosition;
-  LatLng? currentLocation;
+  LatLng? currentLct;
 
   @override
   void initState() {
-    // setLocation();
+    print('from main: ${widget.currentLct}');
     super.initState();
   }
 
-  Future<bool> setLocation() async {
-    if (widget.field!.location != null) {
-      print('not null');
-      currentLocation = getLatLng(widget.field!.location!);
-      print(currentLocation);
-    } else {
-      print('null');
-      LocationData lctLocation = await location.getLocation();
-      currentLocation = LatLng(lctLocation.latitude!, lctLocation.longitude!);
-      print(currentLocation);
-    }
-    // if (widget.field!.location != null) {
-    //   print('lat lng null');
-    //   LocationData lctLocation = await location.getLocation();
-    //   currentLocation = LatLng(lctLocation.latitude!, lctLocation.longitude!);
-    //   print(currentLocation);
-    // } else if (widget.field!.location == 0) {
-    //   print('lat lng 0.0');
-    //   LocationData lctLocation = await location.getLocation();
-    //   currentLocation = LatLng(lctLocation.latitude!, lctLocation.longitude!);
-    //   print(currentLocation);
-    // }
-    // else {
-    //   print('Have');
-    //   currentLocation = getLatLng(widget.field!.location!);
-    // currentLocation = LatLng(widget.field!.lat!, widget.field!.lng!);
-    // _defaultMarker();
-    // }
-    // print('set Finish');
-    cameraPosition = CameraPosition(target: currentLocation!, zoom: 16.0);
-    await Future.delayed(Duration(milliseconds: 500));
-    return false;
-  }
-
-  LatLng getLatLng(String location) {
-    int index = location.indexOf(',');
-    double lat = double.parse(location.substring(0, index));
-    double lng = double.parse(location.substring(index + 1, location.length));
-    return LatLng(lat, lng);
-  }
-
-  void _defaultMarker() {
-    handleMarker.add(Marker(
-      markerId: MarkerId(currentLocation.toString()),
-      position: currentLocation!,
-    ));
+  Future getCurrentLct() async {
+    LocationData lct = await getCurrentLocation();
+    LatLng _currentLct = LatLng(lct.latitude!, lct.longitude!);
+    await Future.delayed(Duration(milliseconds: 300));
+    currentLct = _currentLct;
   }
 
   void _handleTap(LatLng tappedPoint) {
     setState(() {
       handleMarker = [];
       String _location = '${tappedPoint.latitude},${tappedPoint.longitude}';
-      print(_location);
-      widget.field!.location = _location;
-      // widget.field!.lat = tappedPoint.latitude;
-      // widget.field!.lng = tappedPoint.longitude;
       handleMarker.add(
         Marker(
+          draggable: true,
           markerId: MarkerId(tappedPoint.toString()),
           position: tappedPoint,
         ),
       );
-      // print(fieldLocation);
+      widget.field!.location = _location;
     });
+    print(widget.field);
   }
 
-  Widget sectionMap() {
+  void setCameraPosition(LatLng location) {
+    cameraPosition = CameraPosition(
+      target: currentLct!,
+      zoom: 16,
+    );
+  }
+
+  Future<bool> setCurrentLct() async {
+    widget.field!.location != null
+        ? currentLct = decodeLct(widget.field!.location!)
+        : await getCurrentLct();
+    setCameraPosition(currentLct!);
+    return true;
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
       child: Container(
         width: sized(context).width,
-        height: 300,
-        color: whiteColor,
+        height: 450,
+        color: Colors.white,
         child: Column(
           children: [
             TitleFormField(
               iconData: Icons.location_pin,
-              title: 'Location',
+              title: 'โลเคชั่นสนาม',
             ),
             Expanded(
-              child: GoogleMap(
-                zoomGesturesEnabled: true,
-                initialCameraPosition: cameraPosition!,
-                onTap: _handleTap,
-                mapType: MapType.normal,
-                myLocationEnabled: true,
-                myLocationButtonEnabled: true,
-                markers: Set.from(handleMarker),
+              child: FutureBuilder(
+                future: setCurrentLct(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return Padding(
+                      padding:
+                          EdgeInsets.only(left: 8.0, right: 8.0, bottom: 8.0),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: GoogleMap(
+                          initialCameraPosition: cameraPosition!,
+                          onTap: _handleTap,
+                          mapType: MapType.normal,
+                          myLocationEnabled: true,
+                          zoomGesturesEnabled: true,
+                          myLocationButtonEnabled: true,
+                          markers: Set.from(handleMarker),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return CustomDialogLoading();
+                  }
+                },
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: setLocation(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
-          return sectionMap();
-        } else {
-          return CustomDialogLoading();
-        }
-      },
     );
   }
 }

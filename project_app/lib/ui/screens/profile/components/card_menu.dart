@@ -7,6 +7,7 @@ class CardMenu extends StatelessWidget {
   final String? title;
   final String? hintText;
   final FormFieldSetter? onSaved;
+  final ValueChanged<String>? onChanged;
   final FormFieldValidator? validator;
   final FocusNode? focusNode;
   final ValueChanged? onFieldSubmitted;
@@ -22,6 +23,7 @@ class CardMenu extends StatelessWidget {
     this.focusNode,
     this.onFieldSubmitted,
     this.keyboardType,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -34,6 +36,7 @@ class CardMenu extends StatelessWidget {
   TextFormField customField() {
     return TextFormField(
       onSaved: onSaved,
+      onChanged: onChanged,
       validator: validator,
       controller: TextEditingController(text: title ?? ''),
       style: TextStyle(fontSize: 14),

@@ -1,7 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:location/location.dart';
+import 'package:project_app/constants.dart';
 import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
@@ -32,23 +35,20 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
-    // fetchData();
     super.initState();
   }
 
   Future<bool> fetchData() async {
-    // print('fieldId = ${widget.fieldId}');
     setData();
     if (widget.fieldId != null) await _downloadImages();
     await Future.delayed(Duration(milliseconds: 500));
     return true;
-    // setState(() {});
   }
 
   Future<void> setData() async {
     field.userId = field.userId ?? await UserService.getUserId();
     if (widget.fieldId != null)
-      field = await FieldServices.findById(fieldId:widget.fieldId!);
+      field = await FieldServices.findById(fieldId: widget.fieldId!);
     print(field);
   }
 
@@ -85,8 +85,8 @@ class _BodyState extends State<Body> {
         showDialog(
           context: context,
           builder: (context) => CustomAlertDialog(
-            title: 'Error',
-            content: 'Please chang your title name',
+            title: 'ผิดพลาด',
+            content: 'กรุณาใช้ชื่ออื่น',
             showBtn: false,
           ),
         );
@@ -96,17 +96,18 @@ class _BodyState extends State<Body> {
 
   Widget submitBtn() {
     return RoundedButton(
-      text: widget.isCreate! ? 'Create' : 'Update',
+      text: widget.isCreate! ? 'ยืนยัน' : 'อัพเดท',
       onTap: _onSubmit,
     );
   }
 
-  Widget buildBody(){
+  Widget buildBody() {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: SingleChildScrollView(
         child: Column(
           children: [
+            SizedBox(height: 8.0),
             SectionImages(images: images),
             SizedBox(height: 10),
             SectionGeneral(
@@ -124,7 +125,6 @@ class _BodyState extends State<Body> {
       ),
     );
   }
-
 
   @override
   Widget build(BuildContext context) {
