@@ -1,8 +1,10 @@
 package com.soccerhub.api.models.tables;
 
+import java.util.List;
 import lombok.*;
 
 import javax.persistence.*;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 @Data
 @Builder
