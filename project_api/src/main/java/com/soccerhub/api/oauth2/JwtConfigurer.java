@@ -19,4 +19,3 @@ public class JwtConfigurer extends SecurityConfigurerAdapter<DefaultSecurityFilt
         http.addFilterBefore(customFilter, UsernamePasswordAuthenticationFilter.class);
     }
 }
-
