@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:project_app/routes.dart';
+import 'package:project_app/tester.dart';
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/main/main_screen.dart';
 import 'package:project_app/ui/screens/test/test_screen.dart';
@@ -56,8 +57,8 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       routes: routes,
       home: screen,
-      // home: TestScreen(),
       // home: TesterScreen(),
+      // home: TestScreen(),
     );
   }
 }

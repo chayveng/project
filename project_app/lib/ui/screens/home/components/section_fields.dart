@@ -63,11 +63,6 @@ class _SectionFieldsState extends State<SectionFields> {
             padding: EdgeInsets.all(0),
             itemCount: widget.fields!.length,
             itemBuilder: (context, index) {
-              // return Container(
-              //   width: sized(context).width,
-              //   height: 250,
-              //   color: Colors.red,
-              // );
               return formCardField(index);
             },
           ),

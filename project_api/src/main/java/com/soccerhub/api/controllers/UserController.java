@@ -45,6 +45,11 @@ public class UserController {
     return service.register(user);
   }
 
+//  @PostMapping("/findByUsername")
+//  public Object login(@RequestParam String user){
+//    service.
+//    return "";
+//  }
 //    @PostMapping("/login")
 //    public Object login(@RequestBody User user) {
 //        return service.login(user);
