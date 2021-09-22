@@ -44,25 +44,34 @@ class _BodyState extends State<Body> {
   Future<bool> fetchData() async {
     fields = [];
     fields = await FieldServices.findAll();
-    await Future.delayed(Duration(milliseconds: 300));
+    // print(fields.length);
+    await Future.delayed(Duration(milliseconds: 500));
     return true;
   }
 
   @override
   Widget build(BuildContext context) {
+    // return Column(
+    //   children: [
+    //     ...List.generate(
+    //       fields.length,
+    //       (index) => Text('${fields[index].title}'),
+    //     ),
+    //   ],
+    // );
     return RefreshIndicator(
-      color: orangePrimaryColor,
-      onRefresh: () async => await _refreshData(context),
-      child: FutureBuilder(
-        future: fetchData(),
-        builder: (BuildContext context, AsyncSnapshot snapshot) {
-          if (snapshot.hasError) print(snapshot.hasError);
-          if (snapshot.hasData) print(snapshot.data);
-          return snapshot.hasData
-              ? SectionFields(fields: fields, currentLct: currentLct  )
-              : CustomWidgetLoading();
-        },
-      ),
+    color: orangePrimaryColor,
+    onRefresh: () async => await _refreshData(context),
+    child: FutureBuilder(
+      future: fetchData(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) print(snapshot.hasError);
+        if (snapshot.hasData) print(snapshot.data);
+        return snapshot.hasData
+            ? SectionFields(fields: fields, currentLct: currentLct  )
+            : CustomWidgetLoading();
+      },
+    ),
     );
   }
 }

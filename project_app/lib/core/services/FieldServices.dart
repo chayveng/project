@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
@@ -8,8 +9,10 @@ import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/apis/FieldApi.dart';
 import 'package:project_app/core/models/ApiResponse.dart';
 import 'package:project_app/core/models/Field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../Config.dart';
+import 'AuthService.dart';
 
 class FieldServices {
   static Future<List<Field>> findAll() async {
@@ -83,6 +86,8 @@ class FieldServices {
   }
 
   static Future<List<Uint8List>> downloadImages(int fieldId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    String? token = _pref.getString(AuthService.TOKEN);
     List<Uint8List> images = [];
     String path = '/field/urlImages/$fieldId';
     Object? res = await ApiConnect.get(path: path);
@@ -90,9 +95,12 @@ class FieldServices {
       List urlImages = jsonDecode(res.toString());
       for (var i = 0; i < urlImages.length; i++) {
         var url = Uri.parse(urlImages[i]);
-        var res = await http.get(url);
-        images.add(res.bodyBytes);
+        var response = await http.get(url, headers: {
+          HttpHeaders.authorizationHeader: token != null ? 'Bearer $token' : ''
+        });
+        images.add(response.bodyBytes);
       }
+      print('images: ${urlImages.length}');
       return images;
     } else {
       return [];
@@ -105,10 +113,15 @@ class FieldServices {
     return fieldsFromJson(dataList);
   }
 
-  static Future<String> firstImageUrl(int fieldId) async {
-    var url = Uri.parse('${Config.API_URL}/field/urlImages/$fieldId');
-    var response = await http.get(url);
-    List urlImages = jsonDecode(response.body);
-    return "${Config.API_URL}/field/download-image/${urlImages[0]}";
+  static Future<String?> firstImageUrl(int fieldId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    String? token = _pref.getString(AuthService.TOKEN);
+    var response = await ApiConnect.get(path: "/field/urlImages/$fieldId");
+    List urlList = jsonDecode(response.toString());
+    String urlImage = '';
+    if (urlList.length != 0) {
+      urlImage = urlList[0];
+    }
+    return urlImage != '' ? urlImage : null;
   }
 }

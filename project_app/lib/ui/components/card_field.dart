@@ -1,6 +1,12 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/models/Field.dart';
+import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/core/services/FieldServices.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants.dart';
 
@@ -25,13 +31,15 @@ class CardField extends StatefulWidget {
 class _CardFieldState extends State<CardField> {
   String? urlImage;
   double? distance;
+  String? token;
 
-  @override
-  void initState() {
-    print(widget.field);
-    // setDistance();
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   // print(widget.field);
+  //   // setDistance();
+  //   // fetchData();
+  //   super.initState();
+  // }
 
   // String getDistance(double distance) {
   //   String str = distance.toString();
@@ -49,9 +57,12 @@ class _CardFieldState extends State<CardField> {
   // }
 
   Future<bool> fetchData() async {
-    print('fetch data');
-    urlImage = await FieldServices.firstImageUrl(widget.field!.id!);
-    print(urlImage);
+    var _pref = await SharedPreferences.getInstance();
+    token = _pref.getString(AuthService.TOKEN);
+    var url = await FieldServices.firstImageUrl(widget.field!.id!);
+    if (url != '') {
+      urlImage = url;
+    }
     await Future.delayed(Duration(milliseconds: 200));
     return true;
   }
@@ -112,6 +123,10 @@ class _CardFieldState extends State<CardField> {
             height: 250,
             child: Image.network(
               urlImage!,
+              headers: {
+                HttpHeaders.authorizationHeader:
+                    token != null ? 'Bearer $token' : ''
+              },
               fit: BoxFit.cover,
             ),
           )

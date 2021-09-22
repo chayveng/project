@@ -126,9 +126,9 @@ public class FieldService {
         List<String> urls = new ArrayList<String>();
         if (images.size() != 0) {
             for (FieldImage image : images) {
-                  urls.add(image.getFileName());
-                  log.info(urlImage(image.getFileName()).toString());
-//                urls.add(urlImage(image.getFileName()).toString());
+//                  urls.add(image.getFileName());
+//                  log.info(urlImage(image.getFileName()).toString());
+                urls.add(urlImage(image.getFileName()).toString());
             }
             return urls;
         } else {
