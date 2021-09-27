@@ -86,7 +86,7 @@ class _BodyState extends State<Body> {
           context: context,
           builder: (context) => CustomAlertDialog(
             title: 'Error',
-            content: 'Please chang your title name',
+            content: 'Please change your title name',
             showBtn: false,
           ),
         );

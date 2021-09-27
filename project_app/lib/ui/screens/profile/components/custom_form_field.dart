@@ -68,13 +68,6 @@ class _CustomFormFieldState extends State<CustomFormField> {
         widget.focusNode!['email'].unfocus();
         FocusScope.of(context).requestFocus(widget.focusNode!['tel']);
       },
-      validator: (input) {
-        if (!isEmail(input)) {
-          return 'Email is not correct.';
-        } else {
-          return null;
-        }
-      },
     );
   }
 
