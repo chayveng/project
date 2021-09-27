@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/User.dart';
 import 'package:project_app/core/services/UserService.dart';
+import 'package:project_app/ui/components/custom_widget_loading.dart';
 import 'package:project_app/ui/components/rounded_button.dart';
 import 'package:project_app/ui/screens/profile/components/custom_form_field.dart';
 import 'package:project_app/ui/screens/profile/components/custom_top_bar.dart';
@@ -45,11 +46,12 @@ class _BodyState extends State<Body> {
     super.initState();
   }
 
-  void fetchData() async {
+  Future<bool> fetchData() async {
     _user = await UserService.getById(userId: await UserService.getUserId());
     _image = widget.userImage ?? null;
-    await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
+    await Future.delayed(Duration(milliseconds: 300));
     print(_user);
+    return true;
   }
 
   Future<void> _onUpdate() async {
@@ -86,8 +88,7 @@ class _BodyState extends State<Body> {
         : SizedBox();
   }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget sectionProfile() {
     return Form(
       key: _formKey,
       child: Column(
@@ -118,6 +119,18 @@ class _BodyState extends State<Body> {
           ),
         ],
       ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: fetchData(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) print(snapshot.hasError);
+        if (snapshot.hasData) print(snapshot.data);
+        return snapshot.hasData ? sectionProfile() : CustomWidgetLoading();
+      },
     );
   }
 }
