@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:project_app/constants.dart';
+
+import '../../../../constants.dart';
 
 class DialogLogout extends StatelessWidget {
   final VoidCallback? itOk;
@@ -16,17 +17,11 @@ class DialogLogout extends StatelessWidget {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: Text(
-            "ยกเลิก",
-            style: TextStyle(color: orangeColor),
-          ),
+          child: Text('ยกเลิก',style: TextStyle(color: orangeColor),),
         ),
         TextButton(
           onPressed: itOk,
-          child: Text(
-            "ยืนยัน",
-            style: TextStyle(color: orangeColor.withOpacity(0.8)),
-          ),
+          child: Text('ยืนยัน',style: TextStyle(color: orangeColor),),
         ),
       ],
     );

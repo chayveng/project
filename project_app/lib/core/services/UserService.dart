@@ -1,10 +1,12 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:project_app/core/Config.dart';
+import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/apis/UserApi.dart';
 import 'package:project_app/core/models/ApiResponse.dart';
 import 'package:project_app/core/models/User.dart';
@@ -31,9 +33,12 @@ class UserService {
   static Future<bool> login({@required User? user}) async {
     print('login');
     var response = await UserApi.login(user: user);
-    if (response.status == 1) {
-      User _user = userFromJson(jsonEncode(response.data));
-      await AuthService.login(user: _user);
+    Map res = jsonDecode(response.toString());
+    print(res['data']);
+    if (res['data'] == 1) {
+      await AuthService.setToken(token: res['token']);
+      User user = await UserService.getById(userId: res['userId']);
+      await AuthService.setUserData(user: user);
       return true;
     } else {
       return false;
@@ -67,17 +72,31 @@ class UserService {
       "userId": userId,
       "file": MultipartFile.fromBytes(image, filename: "image.png"),
     });
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    String? token = _pref.getString(AuthService.TOKEN);
     Dio dio = Dio();
-    var response = await dio.post(url, data: data);
+    var response = await dio.post(
+      url,
+      data: data,
+      options: Options(headers: {
+        HttpHeaders.authorizationHeader: token != null ? 'Bearer $token' : ''
+      }),
+    );
     print(response);
     return response.statusCode == 200 ? true : false;
   }
 
   static Future<Uint8List?> imageDownload(int userId) async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    String? token = _pref.getString(AuthService.TOKEN);
     var url = Uri.parse("${Config.API_URL}/user/urlImage/$userId");
-    var response = await http.get(url);
+    var response = await http.get(url, headers: {
+      HttpHeaders.authorizationHeader: token != null ? 'Bearer $token' : ''
+    });
     if (response.statusCode == 200) {
-      var res = await http.get(Uri.parse(response.body.toString()));
+      var res = await http.get(Uri.parse(response.body.toString()), headers: {
+        HttpHeaders.authorizationHeader: token != null ? 'Bearer $token' : ''
+      });
       return res.bodyBytes;
     } else {
       return null;

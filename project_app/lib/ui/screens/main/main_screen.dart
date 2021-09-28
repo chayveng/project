@@ -51,7 +51,7 @@ class _MainScreenState extends State<MainScreen> {
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 30),
-              label: 'อื่นๆ',
+              label: 'อื่น ๆ',
               backgroundColor: Colors.lightGreenAccent),
         ],
         onTap: (index) {

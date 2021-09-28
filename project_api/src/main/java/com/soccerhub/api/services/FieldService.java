@@ -7,6 +7,7 @@ import com.soccerhub.api.models.repository.FieldImageRepository;
 import com.soccerhub.api.models.repository.FieldRepository;
 import com.soccerhub.api.models.tables.Field;
 import com.soccerhub.api.models.tables.FieldImage;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+@Log4j2
 @Service
 public class FieldService {
 
@@ -124,6 +126,8 @@ public class FieldService {
         List<String> urls = new ArrayList<String>();
         if (images.size() != 0) {
             for (FieldImage image : images) {
+//                  urls.add(image.getFileName());
+//                  log.info(urlImage(image.getFileName()).toString());
                 urls.add(urlImage(image.getFileName()).toString());
             }
             return urls;

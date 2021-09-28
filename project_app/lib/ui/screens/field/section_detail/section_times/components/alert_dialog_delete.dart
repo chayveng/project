@@ -43,6 +43,7 @@ class AlertDialogDelete extends StatelessWidget {
                 color: orangeColor.withOpacity(0.1),
                 border: Border(
                   top: BorderSide(width: 1, color: orangeColor),
+                  left: BorderSide(width: 1, color: orangeColor),
                 ),
               ),
               child: Center(

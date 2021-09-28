@@ -7,6 +7,10 @@ import com.soccerhub.api.models.repository.UserImageRepository;
 import com.soccerhub.api.models.repository.UserRepository;
 import com.soccerhub.api.models.tables.User;
 import com.soccerhub.api.models.tables.UserImage;
+import com.soccerhub.api.oauth2.TokenService;
+import com.soccerhub.api.util.EncoderUtil;
+import java.util.HashMap;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +34,15 @@ public class UserService {
     @Autowired
     UserImageRepository imageRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private EncoderUtil encoderUtil;
+
+    @Autowired
+    private TokenService tokenService;
+
     public ApiResponse register(User user) {
         Optional<User> userData = repository.findByUserName(user.getUserName());
         if (userData.isEmpty()) {
@@ -40,13 +53,35 @@ public class UserService {
         }
     }
 
-    public ApiResponse login(User user) {
+    public ApiResponse login2(User user) {
         Optional<User> userData = repository.findByUserNameAndPassWord(user.getUserName(), user.getPassWord());
         if (userData.isPresent()) {
             return new ApiResponse(1, "Login success", userData);
         } else {
             return new ApiResponse(0, "Login fail");
         }
+    }
+
+    public Optional<Map<String, Object>> login(LoginBean loginBean) {
+        Optional<User> optUser = userRepository.findByUserName(loginBean.getUsername());
+        Map<String, Object> ret = new HashMap<>();
+        if (optUser.isPresent()) {
+            User user = optUser.get();
+            String userPassWord = user.getPassWord();
+
+            if (encoderUtil.passwordEncoder().matches(loginBean.getPassword(), userPassWord)) {
+                ret.put("data", 1);
+                ret.put("token", tokenService.createToken(user));
+                ret.put("userId", user.getId());
+                return Optional.of(ret);
+            } else {
+                ret.put("data", 0);
+                return Optional.of(ret);
+            }
+        }else {
+            ret.put("data", 0);
+        }
+        return Optional.of(ret);
     }
 
     public ApiResponse update(User user) {

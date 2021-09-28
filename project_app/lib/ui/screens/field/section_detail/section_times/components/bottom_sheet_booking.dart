@@ -1,25 +1,14 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-// import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:project_app/constants.dart';
 import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/core/services/TimeService.dart';
-import 'package:project_app/ui/screens/field/section_detail/section_times/components/alert_dialog_success.dart';
-
-// import 'package:project_app/core/services/UserService.dart';
-// import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_confirm.dart';
-// import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_delete.dart';
-// import 'package:project_app/ui/screens/field/section_times/components/alert_dialog_info.dart';
-//
-// import 'package:project_app/ui/screens/field/section_times/components/button_booking.dart';
-// import 'package:project_app/ui/screens/field/section_times/components/custom_colon.dart';
 
 import 'alert_dialog_confirm.dart';
 import 'alert_dialog_fail.dart';
+import 'alert_dialog_success.dart';
 import 'button_booking.dart';
 import 'custom_colon.dart';
 
@@ -73,15 +62,15 @@ class _BottomSheetBookingState extends State<BottomSheetBooking> {
     if (callBack != null)
       var object = callBack
           ? {
-              Navigator.pop(context),
-              showDialog(
-                  context: context, builder: (context) => DialogSuccess()),
-            }
+        Navigator.pop(context),
+        showDialog(
+            context: context, builder: (context) => DialogSuccess()),
+      }
           : showDialog(
-              barrierDismissible: false,
-              context: context,
-              builder: (context) => AlertDialogFail(),
-            );
+        barrierDismissible: false,
+        context: context,
+        builder: (context) => AlertDialogFail(),
+      );
   }
 
   _setTime() {

@@ -25,6 +25,7 @@ class _BodyState extends State<Body> {
   List<Field> fields = [];
 
   Future<void> backWord() async {
+    print('back word');
     await fetchData();
     await Future.delayed(Duration(milliseconds: 300), () => setState(() {}));
   }
@@ -108,7 +109,7 @@ class _BodyState extends State<Body> {
     return Expanded(
       child: Container(
         child: Center(
-          child: Text('ไม่มีสนาม'),
+          child: Text('Empty'),
         ),
       ),
     );

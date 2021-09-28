@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
@@ -8,6 +7,7 @@ import 'package:project_app/core/models/Time.dart';
 import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/core/services/TimeService.dart';
 import 'package:project_app/core/services/UserService.dart';
+import 'package:project_app/ui/components/custom_widget_loading.dart';
 import 'package:project_app/ui/screens/booking/components/not_booking.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -37,11 +37,10 @@ class _BodyState extends State<Body> {
       String location = field.location!;
       LatLng lct = decodeLct(location);
       print(lct);
-   await mapLauncher(lct.latitude, lct.longitude);
-    }else{
+      await mapLauncher(lct.latitude, lct.longitude);
+    } else {
       print('location is null');
     }
-
   }
 
   Field getField(int index) {
@@ -55,18 +54,19 @@ class _BodyState extends State<Body> {
     return _field;
   }
 
-  Future<void> fetchData() async {
+  Future<bool> fetchData() async {
     fields.clear();
     int userId = await UserService.getUserId();
     times = await TimeService.findByUserId(userId);
     List<int> fieldIds =
-    List.generate(times.length, (index) => times[index].fieldId!)
-        .toSet()
-        .toList();
+        List.generate(times.length, (index) => times[index].fieldId!)
+            .toSet()
+            .toList();
     fieldIds
         .map((e) async => fields.add(await FieldServices.findById(fieldId: e)))
         .toList();
-    await Future.delayed(Duration(milliseconds: 300), () => setState(() {}));
+    await Future.delayed(Duration(milliseconds: 300));
+    return true;
   }
 
   Widget sectionInfo() {
@@ -90,14 +90,23 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return times.length != 0
-        ? SingleChildScrollView(
-            child: Column(
-              children: [
-                sectionInfo(),
-              ],
-            ),
-          )
-        : NotBooking();
+    return FutureBuilder(
+      future: fetchData(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) print(snapshot.hasError);
+        if (snapshot.hasData) print(snapshot.data);
+        return snapshot.hasData
+            ? times.length != 0
+                ? SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        sectionInfo(),
+                      ],
+                    ),
+                  )
+                : NotBooking()
+            : CustomWidgetLoading();
+      },
+    );
   }
 }

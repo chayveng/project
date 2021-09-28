@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -29,14 +31,15 @@ class UserApi {
     return apiResponseFromJson(apiConnect.toString());
   }
 
-  static Future<ApiResponse> login({@required User? user}) async {
-    var apiConnect = await ApiConnect.post(path: '/user/login', body: user);
-    return apiResponseFromJson(apiConnect.toString());
+  static Future<Object?> login({@required User? user}) async {
+    var response = await ApiConnect.post(
+        path: '/authorize?username=${user!.userName}&password=${user.passWord}',
+        body: new User());
+    return response;
   }
 
   static Future<ApiResponse> update({@required User? user}) async {
     var apiConnect = await ApiConnect.post(path: '/user/update', body: user);
     return apiResponseFromJson(apiConnect.toString());
   }
-
 }

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:project_app/core/models/User.dart';
 import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/core/services/UserService.dart';
+import 'package:project_app/ui/components/custom_widget_loading.dart';
 
 import 'package:project_app/ui/screens/login/login_screen.dart';
 import 'package:project_app/ui/screens/myFields/my_fields_screen.dart';
@@ -23,26 +24,18 @@ class _BodyState extends State<Body> {
   bool? _status = false;
   Uint8List? _userImage;
 
-  @override
-  void initState() {
-    fetchData();
-    getUserImage();
-    super.initState();
+  Future<bool> fetchData() async {
+    await getUserImage();
+    int userId = await UserService.getUserId();
+    user = await UserService.getById(userId: userId);
+    await Future.delayed(Duration(milliseconds: 300));
+    return true;
   }
 
   Future<void> getUserImage() async {
     var fileImage =
         await UserService.imageDownload(await UserService.getUserId());
     _userImage = fileImage != null ? fileImage : null;
-    await Future.delayed(Duration(milliseconds: 200), () => setState(() {}));
-  }
-
-  Future<bool> fetchData() async {
-    await getUserImage();
-    int userId = await UserService.getUserId();
-    user = await UserService.getById(userId: userId);
-    await Future.delayed(Duration(milliseconds: 100), () => setState(() {}));
-    return true;
   }
 
   Future<void> _onMyClub(BuildContext context) async {
@@ -101,19 +94,28 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // SizedBox(height: 30),
-          SizedBox(height: 20),
-          UserInfo(user: user, userImage: _userImage),
-          SizedBox(height: 10),
-          buttonProfile(context),
-          buttonMyClub(context),
-          buttonLogout(context),
-        ],
-      ),
+    return FutureBuilder(
+      future: fetchData(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) print(snapshot.hasError);
+        if (snapshot.hasData) print(snapshot.data);
+        return snapshot.hasData
+            ? SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    // SizedBox(height: 30),
+                    SizedBox(height: 20),
+                    UserInfo(user: user, userImage: _userImage),
+                    SizedBox(height: 10),
+                    buttonProfile(context),
+                    buttonMyClub(context),
+                    buttonLogout(context),
+                  ],
+                ),
+              )
+            : CustomWidgetLoading();
+      },
     );
   }
 }

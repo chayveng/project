@@ -9,7 +9,6 @@ import 'package:project_app/ui/screens/createField/create_field_screen.dart';
 import 'package:project_app/ui/screens/field/section_detail/section_detail.dart';
 
 import 'components/custom_appBar.dart';
-import 'section_detail/components/form_tab.dart';
 import 'components/section_images.dart';
 
 class Body extends StatefulWidget {
@@ -28,13 +27,6 @@ class _BodyState extends State<Body> {
   bool isEdit = false;
   List<Uint8List> images = [];
 
-  @override
-  void initState() {
-    // print(widget.fieldId);
-    // fetchData();
-    super.initState();
-  }
-
   Future<void> backWord() async {
     await fetchData();
     await Future.delayed(Duration(milliseconds: 300), () => setState(() {}));
@@ -51,7 +43,6 @@ class _BodyState extends State<Body> {
   Future<void> downloadImages() async {
     images.clear();
     images = await FieldServices.downloadImages(widget.fieldId!);
-    print('images: ${images.length}');
   }
 
   Future<void> _onEdit() async {
@@ -112,7 +103,7 @@ class _BodyState extends State<Body> {
     return FutureBuilder(
       future: fetchData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasData) {
+        if (snapshot.data == true) {
           return buildBody();
         } else {
           return CustomDialogLoading();

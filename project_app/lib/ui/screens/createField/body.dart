@@ -85,8 +85,8 @@ class _BodyState extends State<Body> {
         showDialog(
           context: context,
           builder: (context) => CustomAlertDialog(
-            title: 'ผิดพลาด',
-            content: 'กรุณาใช้ชื่ออื่น',
+            title: 'Error',
+            content: 'Please change your title name',
             showBtn: false,
           ),
         );
@@ -96,7 +96,7 @@ class _BodyState extends State<Body> {
 
   Widget submitBtn() {
     return RoundedButton(
-      text: widget.isCreate! ? 'ยืนยัน' : 'อัพเดท',
+      text: widget.isCreate! ? 'สร้างสนาม' : 'อัพเดท',
       onTap: _onSubmit,
     );
   }

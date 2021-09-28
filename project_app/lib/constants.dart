@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'dart:math';
-import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,13 +22,10 @@ const Color creamPrimaryColor = Color(0xFFf7f6e7);
 const Color orangePrimaryColor = Color(0xFFf2a154);
 const Color navyPrimaryColor = Color(0xFF314e52);
 
-const Color orangeColor= Color.fromRGBO(253, 108, 43, 1);
-const Color whiteColor= Color.fromRGBO(255, 255, 255, 1);
-const Color greyColor= Color.fromRGBO(240, 240, 250, 1);
-const Color blackColor= Color.fromRGBO(33, 33, 33, 1);
-
-
-
+const Color orangeColor = Color.fromRGBO(253, 108, 43, 1);
+const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
+const Color greyColor = Color.fromRGBO(240, 240, 250, 1);
+const Color blackColor = Color.fromRGBO(33, 33, 33, 1);
 
 Size sized(BuildContext context) => MediaQuery.of(context).size;
 
@@ -59,7 +55,8 @@ Future<File?> chooseImage(ImageSource? imageSource) async {
   ImagePicker imagePicker = ImagePicker();
   File? image;
   try {
-    var _image = await imagePicker.getImage(source: imageSource!);
+    var _image = await imagePicker.getImage(
+        source: imageSource!, maxHeight: 1000, maxWidth: 1000);
     if (_image != null) {
       image = File(_image.path);
     }
@@ -110,16 +107,16 @@ String encodeLct(LatLng lct) {
   return '${lct.longitude},${lct.longitude}';
 }
 
-Future<void> mapLauncher(double lat, double lng)async{
-  String googleUrl = 'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
+Future<void> mapLauncher(double lat, double lng) async {
+  String googleUrl =
+      'https://www.google.com/maps/search/?api=1&query=$lat,$lng';
   String encodeUrl = Uri.encodeFull(googleUrl);
   if (await canLaunch(encodeUrl)) {
     await launch(encodeUrl);
-  }else{
+  } else {
     throw "Could not open the map.";
   }
 }
-
 
 Future getCurrentLocation() async {
   Location location = Location();

@@ -38,11 +38,11 @@ class _SectionGeneralState extends State<SectionGeneral> {
   Widget telField(BuildContext context) {
     int index = 4;
     return CustomField(
-      labelText: 'หมายเลขโทรศัพท์',
-      hintText: '0812345678',
+      labelText: 'เบอร์โทรติดต่อ',
+      hintText: 'เบอร์โทรติดต่อ',
       onSaved: (input) => widget.field!.tel = input,
       onChanged: (input) => widget.field!.tel = input,
-      validator: (input) => input.isEmpty ? 'ข้อมูลว่าง' : null,
+      validator: (input) => input.isEmpty ? 'is Empty' : null,
       controller: TextEditingController(text: widget.field!.tel),
       keyboardType: TextInputType.number,
       focusNode: focusNode![keys[index]],
@@ -60,7 +60,7 @@ class _SectionGeneralState extends State<SectionGeneral> {
       hintText: 'เช่น 600/700',
       onSaved: (input) => widget.field!.price = input,
       onChanged: (input) => widget.field!.price = input,
-      validator: (input) => input.isEmpty ? 'ข้อมูลว่าง' : null,
+      validator: (input) => input.isEmpty ? 'is Empty' : null,
       keyboardType: TextInputType.number,
       controller: TextEditingController(text: widget.field!.price),
       focusNode: focusNode![keys[index]],
@@ -75,10 +75,10 @@ class _SectionGeneralState extends State<SectionGeneral> {
     int index = 2;
     return CustomField(
       labelText: 'เวลาเปิด/ปิด',
-      hintText: '12:00-23:00',
+      hintText: 'เช่น 12:00-23:00',
       onSaved: (input) => widget.field!.hours = input,
       onChanged: (input) => widget.field!.hours = input,
-      validator: (input) => input.isEmpty ? 'ข้อมูลว่าง' : null,
+      validator: (input) => input.isEmpty ? 'is Empty' : null,
       keyboardType: TextInputType.datetime,
       controller: TextEditingController(text: widget.field!.hours),
       focusNode: focusNode![keys[index]],
@@ -93,11 +93,11 @@ class _SectionGeneralState extends State<SectionGeneral> {
     int index = 1;
     return CustomField(
       labelText: 'รายละเอียดสนาม',
-      hintText: 'เช่น ขนาดสนาม 6-7 คน',
+      hintText: 'เช่น สนามขนาด 7-9 คน',
       maxLine: 5,
       onSaved: (input) => widget.field!.detail = input,
       onChanged: (input) => widget.field!.detail = input,
-      validator: (input) => input.isEmpty ? 'ข้อมูลว่าง' : null,
+      validator: (input) => input.isEmpty ? 'is Empty' : null,
       controller: TextEditingController(text: widget.field!.detail),
       focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
@@ -114,7 +114,7 @@ class _SectionGeneralState extends State<SectionGeneral> {
       hintText: 'ชื่อสนาม',
       onSaved: (input) => widget.field!.title = input,
       onChanged: (input) => widget.field!.title = input,
-      validator: (input) => input.isEmpty ? 'ข้อมูลว่าง' : null,
+      validator: (input) => input.isEmpty ? 'is Empty' : null,
       controller: TextEditingController(text: widget.field!.title),
       focusNode: focusNode![keys[index]],
       onFieldSubmitted: (value) {
@@ -143,7 +143,7 @@ class _SectionGeneralState extends State<SectionGeneral> {
               children: [
                 TitleFormField(
                   iconData: Icons.circle_notifications,
-                  title: 'ข้อมูลทั่วไป',
+                  title: 'ข้อมูลสนาม',
                 ),
                 SizedBox(height: 12),
                 titleField(context),
