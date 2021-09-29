@@ -35,8 +35,11 @@ class _BodyState extends State<Body> {
   Future<bool> fetchData() async {
     print('fetch');
     field = await FieldServices.findById(fieldId: widget.fieldId!);
+    print('findById');
     await downloadImages();
+    print('downloadImages');
     await Future.delayed(Duration(milliseconds: 300));
+    print('delay');
     return true;
   }
 
@@ -100,10 +103,11 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    // return buildBody();
     return FutureBuilder(
       future: fetchData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.data == true) {
+        if (snapshot.hasData == true) {
           return buildBody();
         } else {
           return CustomDialogLoading();

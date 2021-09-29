@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/User.dart';
-import 'package:project_app/core/services/AuthService.dart';
 import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/components/custom_widget_loading.dart';
 
@@ -29,6 +28,13 @@ class _BodyState extends State<Body> {
     int userId = await UserService.getUserId();
     user = await UserService.getById(userId: userId);
     await Future.delayed(Duration(milliseconds: 300));
+    return true;
+  }
+
+  Future<bool> _refresh() async {
+    print('refresh');
+    setState(() {});
+    // await Future.delayed(Duration(milliseconds: 300));
     return true;
   }
 
@@ -88,7 +94,8 @@ class _BodyState extends State<Body> {
               ),
             ),
           ) ??
-          fetchData(),
+        _refresh()
+          // () => setState(() {}),
     );
   }
 
@@ -98,13 +105,12 @@ class _BodyState extends State<Body> {
       future: fetchData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) print(snapshot.hasError);
-        if (snapshot.hasData) print(snapshot.data);
+        // if (snapshot.hasData) print(snapshot.data);
         return snapshot.hasData
             ? SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    // SizedBox(height: 30),
                     SizedBox(height: 20),
                     UserInfo(user: user, userImage: _userImage),
                     SizedBox(height: 10),

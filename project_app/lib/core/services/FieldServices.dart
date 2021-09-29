@@ -90,17 +90,16 @@ class FieldServices {
     String? token = _pref.getString(AuthService.TOKEN);
     List<Uint8List> images = [];
     String path = '/field/urlImages/$fieldId';
-    Object? res = await ApiConnect.get(path: path);
-    if (res != '') {
-      List urlImages = jsonDecode(res.toString());
-      for (var i = 0; i < urlImages.length; i++) {
-        var url = Uri.parse(urlImages[i]);
-        var response = await http.get(url, headers: {
-          HttpHeaders.authorizationHeader: token != null ? 'Bearer $token' : ''
-        });
-        images.add(response.bodyBytes);
+    List? res = await ApiConnect.getImages(path: path);
+    List urls = [];
+    if (res.length != 0) {
+      for(String _url in res){
+        var url = Uri.parse("${Config.API_URL}$_url");
+          var response = await http.get(url, headers: {
+            HttpHeaders.authorizationHeader: token != null ? 'Bearer $token' : ''
+          });
+          images.add(response.bodyBytes);
       }
-      print('images: ${urlImages.length}');
       return images;
     } else {
       return [];
@@ -116,12 +115,13 @@ class FieldServices {
   static Future<String?> firstImageUrl(int fieldId) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
     String? token = _pref.getString(AuthService.TOKEN);
-    var response = await ApiConnect.get(path: "/field/urlImages/$fieldId");
-    List urlList = jsonDecode(response.toString());
+    List response =
+        await ApiConnect.getImages(path: "/field/urlImages/$fieldId");
+    List urls = [];
     String urlImage = '';
-    if (urlList.length != 0) {
-      urlImage = urlList[0];
+    if (response.length != 0) {
+      urlImage = ("${Config.API_URL}"+response[0]);
     }
-    return urlImage != '' ? urlImage : null;
+    return urlImage;
   }
 }

@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
@@ -49,8 +48,7 @@ class _BodyState extends State<Body> {
   Future<bool> fetchData() async {
     _user = await UserService.getById(userId: await UserService.getUserId());
     _image = widget.userImage ?? null;
-    await Future.delayed(Duration(milliseconds: 300));
-    // print(_user);
+    await Future.delayed(Duration(milliseconds: 300), () => setState(() {}));
     return true;
   }
 
@@ -124,13 +122,14 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: fetchData(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasError) print(snapshot.hasError);
-        if (snapshot.hasData) print(snapshot.data);
-        return snapshot.hasData ? sectionProfile() : CustomWidgetLoading();
-      },
-    );
+    return sectionProfile();
+    // return FutureBuilder(
+    //   future: fetchData(),
+    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //     if (snapshot.hasError) print(snapshot.hasError);
+    //     // if (snapshot.hasData) print(snapshot.data);
+    //     return snapshot.hasData ? sectionProfile() : CustomWidgetLoading();
+    //   },
+    // );
   }
 }

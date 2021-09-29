@@ -94,7 +94,8 @@ class UserService {
       HttpHeaders.authorizationHeader: token != null ? 'Bearer $token' : ''
     });
     if (response.statusCode == 200) {
-      var res = await http.get(Uri.parse(response.body.toString()), headers: {
+      var url = Uri.parse("${Config.API_URL}${response.body}");
+      var res = await http.get(url, headers: {
         HttpHeaders.authorizationHeader: token != null ? 'Bearer $token' : ''
       });
       return res.bodyBytes;

@@ -14,7 +14,7 @@ class _BodyState extends State<Body> {
     Size sized = MediaQuery.of(context).size;
     return Container(
       height: sized.height,
-      color: greyPrimaryColor,
+      color: greyColor,
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: ListView(
         children: [
