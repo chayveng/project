@@ -136,11 +136,12 @@ public class UserService {
     public Object urlImage(long userId) {
         Optional<UserImage> image = imageRepository.findByUserId(userId);
         if (image.isPresent()) {
-            return ServletUriComponentsBuilder
-                    .fromCurrentContextPath()
-                    .path(URL_DOWNLOAD)
-                    .path(image.get().getFileName().toString())
-                    .toUriString();
+            return URL_DOWNLOAD + image.get().getFileName();
+//            return ServletUriComponentsBuilder
+//                    .fromCurrentContextPath()
+//                    .path(URL_DOWNLOAD)
+//                    .path(image.get().getFileName().toString())
+//                    .toUriString();
         } else {
             return ResponseEntity.status(404).build();
         }

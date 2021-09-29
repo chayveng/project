@@ -137,11 +137,12 @@ public class FieldService {
     }
 
     public Object urlImage(String fileName) {
-        return ServletUriComponentsBuilder
-                .fromCurrentContextPath()
-                .path(URL_DOWNLOAD)
-                .path(fileName)
-                .toUriString();
+        return URL_DOWNLOAD + fileName;
+//        return ServletUriComponentsBuilder
+//                .fromCurrentContextPath()
+//                .path(URL_DOWNLOAD)
+//                .path(fileName)
+//                .toUriString();
     }
 
     public boolean deleteImages(long fieldId) {
