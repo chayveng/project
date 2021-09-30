@@ -67,7 +67,11 @@ class _SectionLocationState extends State<SectionLocation> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
+<<<<<<< HEAD
+            child: TitleBar(icon: Icons.location_pin, title: 'โลเคชั่น'),
+=======
             child: TitleBar(icon: Icons.location_pin, title: 'Location'),
+>>>>>>> master
           ),
           Padding(
             padding: EdgeInsets.only(left: 8.0, bottom: 8.0, right: 8.0),

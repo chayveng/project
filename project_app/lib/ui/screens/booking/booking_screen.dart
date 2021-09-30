@@ -13,7 +13,7 @@ class BookingScreen extends StatelessWidget {
       backgroundColor: greyColor,
       appBar: AppBar(
         title: Text(
-          'Booking Screen',
+          'สนามที่จอง',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             color: navyPrimaryColor,

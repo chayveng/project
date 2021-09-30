@@ -38,8 +38,13 @@ class _SectionGeneralState extends State<SectionGeneral> {
   Widget telField(BuildContext context) {
     int index = 4;
     return CustomField(
+<<<<<<< HEAD
+      labelText: 'เบอร์โทรติดต่อ',
+      hintText: 'เบอร์โทรติดต่อ',
+=======
       labelText: 'Tel',
       hintText: 'tel',
+>>>>>>> master
       onSaved: (input) => widget.field!.tel = input,
       onChanged: (input) => widget.field!.tel = input,
       validator: (input) => input.isEmpty ? 'is Empty' : null,
@@ -56,8 +61,13 @@ class _SectionGeneralState extends State<SectionGeneral> {
   Widget priceField(BuildContext context) {
     int index = 3;
     return CustomField(
+<<<<<<< HEAD
+      labelText: 'ราคา',
+      hintText: 'เช่น 600/700',
+=======
       labelText: 'Price',
       hintText: 'price',
+>>>>>>> master
       onSaved: (input) => widget.field!.price = input,
       onChanged: (input) => widget.field!.price = input,
       validator: (input) => input.isEmpty ? 'is Empty' : null,
@@ -74,8 +84,13 @@ class _SectionGeneralState extends State<SectionGeneral> {
   Widget openField(BuildContext context) {
     int index = 2;
     return CustomField(
+<<<<<<< HEAD
+      labelText: 'เวลาเปิด/ปิด',
+      hintText: 'เช่น 12:00-23:00',
+=======
       labelText: 'Open Time',
       hintText: 'open-time',
+>>>>>>> master
       onSaved: (input) => widget.field!.hours = input,
       onChanged: (input) => widget.field!.hours = input,
       validator: (input) => input.isEmpty ? 'is Empty' : null,
@@ -92,8 +107,13 @@ class _SectionGeneralState extends State<SectionGeneral> {
   Widget detailField(BuildContext context) {
     int index = 1;
     return CustomField(
+<<<<<<< HEAD
+      labelText: 'รายละเอียดสนาม',
+      hintText: 'เช่น สนามขนาด 7-9 คน',
+=======
       labelText: 'Detail',
       hintText: 'detail',
+>>>>>>> master
       maxLine: 5,
       onSaved: (input) => widget.field!.detail = input,
       onChanged: (input) => widget.field!.detail = input,
@@ -110,8 +130,13 @@ class _SectionGeneralState extends State<SectionGeneral> {
   Widget titleField(BuildContext context) {
     int index = 0;
     return CustomField(
+<<<<<<< HEAD
+      labelText: 'ชื่อสนาม',
+      hintText: 'ชื่อสนาม',
+=======
       labelText: 'Title',
       hintText: 'title',
+>>>>>>> master
       onSaved: (input) => widget.field!.title = input,
       onChanged: (input) => widget.field!.title = input,
       validator: (input) => input.isEmpty ? 'is Empty' : null,
@@ -143,7 +168,11 @@ class _SectionGeneralState extends State<SectionGeneral> {
               children: [
                 TitleFormField(
                   iconData: Icons.circle_notifications,
+<<<<<<< HEAD
+                  title: 'ข้อมูลสนาม',
+=======
                   title: 'General',
+>>>>>>> master
                 ),
                 SizedBox(height: 12),
                 titleField(context),

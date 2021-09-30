@@ -14,7 +14,11 @@ class _BodyState extends State<Body> {
     Size sized = MediaQuery.of(context).size;
     return Container(
       height: sized.height,
+<<<<<<< HEAD:project_app/lib/ui/screens/register/body.dart
+      color: greyColor,
+=======
       color: greyPrimaryColor,
+>>>>>>> master:project_app/lib/ui/screens/register/components/body.dart
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: ListView(
         children: [

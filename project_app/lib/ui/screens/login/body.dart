@@ -15,7 +15,11 @@ class _BodyState extends State<Body> {
         .of(context)
         .size;
     return Container(
+<<<<<<< HEAD:project_app/lib/ui/screens/login/body.dart
+      color: greyColor,
+=======
       color: greyPrimaryColor,
+>>>>>>> master:project_app/lib/ui/screens/login/components/body.dart
       height: sized.height,
       padding: EdgeInsets.symmetric(horizontal: 20),
       child: ListView(

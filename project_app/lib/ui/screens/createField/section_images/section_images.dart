@@ -117,7 +117,11 @@ class _SectionImagesState extends State<SectionImages> {
       ),
       child: Column(
         children: [
+<<<<<<< HEAD
+          TitleFormField(iconData: Icons.image, title: 'รูปสนาม'),
+=======
           TitleFormField(iconData: Icons.image, title: 'Images'),
+>>>>>>> master
           sectionImages(),
         ],
       ),

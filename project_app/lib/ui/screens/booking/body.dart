@@ -25,11 +25,19 @@ class _BodyState extends State<Body> {
   List<Field> fields = [];
   String _launchUrl = 'https://www.google.com';
 
+<<<<<<< HEAD
+  // @override
+  // void initState() {
+  //   fetchData();
+  //   super.initState();
+  // }
+=======
   @override
   void initState() {
     fetchData();
     super.initState();
   }
+>>>>>>> master
 
   _onMap(int index) async {
     Field field = getField(index);
@@ -94,7 +102,11 @@ class _BodyState extends State<Body> {
       future: fetchData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) print(snapshot.hasError);
+<<<<<<< HEAD
+        // if (snapshot.hasData) print(snapshot.data);
+=======
         if (snapshot.hasData) print(snapshot.data);
+>>>>>>> master
         return snapshot.hasData
             ? times.length != 0
                 ? SingleChildScrollView(
