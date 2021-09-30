@@ -96,11 +96,7 @@ class _BodyState extends State<Body> {
 
   Widget submitBtn() {
     return RoundedButton(
-<<<<<<< HEAD
       text: widget.isCreate! ? 'สร้างสนาม' : 'อัพเดท',
-=======
-      text: widget.isCreate! ? 'Create' : 'Update',
->>>>>>> master
       onTap: _onSubmit,
     );
   }

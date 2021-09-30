@@ -15,11 +15,7 @@ class CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-<<<<<<< HEAD
       title: Text('ข้อมูลส่วนตัว'),
-=======
-      title: Text('profile'),
->>>>>>> master
       actions: [edit()],
     );
   }

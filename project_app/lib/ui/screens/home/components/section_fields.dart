@@ -19,19 +19,11 @@ class SectionFields extends StatefulWidget {
 }
 
 class _SectionFieldsState extends State<SectionFields> {
-<<<<<<< HEAD
   // @override
   // void initState() {
   //   print(widget.fields!.length);
   //   super.initState();
   // }
-=======
-  @override
-  void initState() {
-    print(widget.fields!.length);
-    super.initState();
-  }
->>>>>>> master
 
   void _onTap(int index) {
     Navigator.push(

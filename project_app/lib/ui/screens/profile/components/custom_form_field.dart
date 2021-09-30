@@ -35,11 +35,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
       status: widget.status,
       title: _user!.tel ?? widget.user!.tel,
       onChanged: (value) => _user!.tel = value,
-<<<<<<< HEAD
       hintText: 'เบอร์โทรศัพท์',
-=======
-      hintText: 'Tel',
->>>>>>> master
       onSaved: (input) => widget.user!.tel = (input == '') ? null : input,
       keyboardType: TextInputType.number,
       focusNode: widget.focusNode!['tel'],
@@ -65,11 +61,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
       status: widget.status,
       title: _user!.email ?? widget.user!.email,
       onChanged: (value) => _user!.email = value,
-<<<<<<< HEAD
       hintText: 'อีเมลล์',
-=======
-      hintText: 'Email',
->>>>>>> master
       onSaved: (input) => widget.user!.email = (input == '') ? null : input,
       focusNode: widget.focusNode!['email'],
       onFieldSubmitted: (term) {
@@ -84,11 +76,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
       status: widget.status,
       title: _user!.lastName ?? widget.user!.lastName,
       onChanged: (value) => _user!.lastName = value,
-<<<<<<< HEAD
       hintText: 'นามสกุล',
-=======
-      hintText: 'LastName',
->>>>>>> master
       onSaved: (input) => widget.user!.lastName = (input == '') ? null : input,
       focusNode: widget.focusNode!['lastName'],
       onFieldSubmitted: (term) {
@@ -103,11 +91,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
       status: widget.status,
       title: _user!.firstName ?? widget.user!.firstName,
       onChanged: (value) => _user!.firstName = value,
-<<<<<<< HEAD
       hintText: 'ชื่อ',
-=======
-      hintText: 'FirstName',
->>>>>>> master
       onSaved: (input) => widget.user!.firstName = input == '' ? null : input,
       focusNode: widget.focusNode!['firstName'],
       onFieldSubmitted: (term) {

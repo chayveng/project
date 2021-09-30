@@ -83,11 +83,7 @@ class _SectionLocationState extends State<SectionLocation> {
           children: [
             TitleFormField(
               iconData: Icons.location_pin,
-<<<<<<< HEAD
               title: 'โลเคชั่น (ปักหมุด)',
-=======
-              title: 'Location',
->>>>>>> master
             ),
             Expanded(
               child: FutureBuilder(

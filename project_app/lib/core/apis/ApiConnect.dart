@@ -61,7 +61,6 @@ class ApiConnect {
     );
     return response.statusCode == 200 ? response : null;
   }
-<<<<<<< HEAD
 
   static Future<List> getImages({@required String? path}) async {
     SharedPreferences _pref = await SharedPreferences.getInstance();
@@ -73,6 +72,4 @@ class ApiConnect {
     List urls = jsonDecode(response.body);
     return urls;
   }
-=======
->>>>>>> master
 }

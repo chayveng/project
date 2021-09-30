@@ -24,11 +24,7 @@ class _SectionDetailState extends State<SectionDetail> {
   @override
   Widget build(BuildContext context) {
     return FormTab(
-<<<<<<< HEAD
       tabBars: ['ข้อมูลสนาม', 'เวลา'],
-=======
-      tabBars: ['General', 'Times'],
->>>>>>> master
       tabViews: [
         SectionGeneral(field: widget.field),
         SectionTime(isOwner: widget.isOwner, fieldId: widget.fieldId),
