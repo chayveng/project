@@ -12,7 +12,11 @@ public interface TimeRepository extends JpaRepository<Time, Long> {
 
     boolean deleteByUserId(long fieldId);
 
+<<<<<<< HEAD
     @Query(value = "SELECT * FROM time WHERE fieldId=:fieldId ORDER BY startTime ASC ", nativeQuery = true)
+=======
+    @Query(value = "SELECT * FROM time WHERE fieldId=:fieldId ORDER BY startTime DESC ", nativeQuery = true)
+>>>>>>> master
     List<Time> findByFieldId(@Param("fieldId") long fieldId);
 
     @Query(value = "SELECT * FROM time WHERE (endTime > :newStartTime AND startTime < :newEndTime) AND fieldId = :fieldId", nativeQuery = true)

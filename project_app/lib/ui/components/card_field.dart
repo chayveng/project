@@ -88,9 +88,15 @@ class _CardFieldState extends State<CardField> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+<<<<<<< HEAD
                   Text('เปิด/ปิด ${widget.field!.hours}'),
                   Text('ราคา ${widget.field!.price} บาท'),
                   Text('โทร ${widget.field!.tel}'),
+=======
+                  Text('${widget.field!.hours}'),
+                  Text('${widget.field!.price}'),
+                  Text('${widget.field!.tel}'),
+>>>>>>> master
                 ],
               ),
             ),

@@ -107,7 +107,11 @@ class _SectionTimeState extends State<SectionTime> {
         ),
         child: Column(
           children: [
+<<<<<<< HEAD
             TitleBar(title: 'เวลาที่ถูกจองแล้ว', icon: Icons.alarm_rounded),
+=======
+            TitleBar(title: 'Times', icon: Icons.alarm_rounded),
+>>>>>>> master
             SizedBox(height: 8),
             ButtonBooking(onTap: _onBooking),
             sectionTimes(),

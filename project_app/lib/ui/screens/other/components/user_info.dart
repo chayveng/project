@@ -27,14 +27,22 @@ class UserInfo extends StatelessWidget {
       child: Row(
         children: [
           Text(
+<<<<<<< HEAD
             '${user!.firstName ?? 'ชื่อ'}\,',
+=======
+            '${user!.firstName ?? 'FirstName'}\,',
+>>>>>>> master
             style: TextStyle(
                 color: user!.firstName == null ? Colors.black26 : Colors.black),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
           Text(
+<<<<<<< HEAD
             '  ${user!.lastName ?? 'นามสกุล'}',
+=======
+            '  ${user!.lastName ?? 'LastName'}',
+>>>>>>> master
             style: TextStyle(
                 color: user!.lastName == null ? Colors.black26 : Colors.black),
             maxLines: 1,

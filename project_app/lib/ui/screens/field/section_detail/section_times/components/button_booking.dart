@@ -24,7 +24,11 @@ class ButtonBooking extends StatelessWidget {
             ),
             child: Center(
               child: Text(
+<<<<<<< HEAD
                 'จอง',
+=======
+                'booking',
+>>>>>>> master
                 style: TextStyle(fontSize: 16),
               ),
             ),

@@ -42,16 +42,28 @@ class _MainScreenState extends State<MainScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.home, size: 30),
+<<<<<<< HEAD
             label: 'หน้าหลัก',
+=======
+            label: 'home',
+>>>>>>> master
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark),
+<<<<<<< HEAD
             label: 'สนามที่จอง',
           ),
           BottomNavigationBarItem(
               icon: Icon(Icons.person, size: 30),
               label: 'อื่น ๆ',
+=======
+            label: 'booking',
+          ),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.person, size: 30),
+              label: 'other',
+>>>>>>> master
               backgroundColor: Colors.lightGreenAccent),
         ],
         onTap: (index) {

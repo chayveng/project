@@ -10,7 +10,11 @@ class CustomAppbar extends StatelessWidget {
     return AppBar(
       excludeHeaderSemantics: false,
       primary: true,
+<<<<<<< HEAD
       title: Text('สนามของฉัน'),
+=======
+      title: Text('My Fields'),
+>>>>>>> master
       actions: [
         IconButton(
           icon: Icon(Icons.add),

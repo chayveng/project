@@ -45,6 +45,7 @@ class SectionInfo extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+<<<<<<< HEAD
           TitleBar(icon: Icons.info, title: 'ข้อมูลสนาม'),
           SizedBox(height: 8),
           buildFormData(title: 'ชื่อสนาม', detail: '${field!.title}'),
@@ -52,6 +53,16 @@ class SectionInfo extends StatelessWidget {
           buildFormData(title: 'เวลาเปิด/ปิด', detail: '${field!.hours}'),
           buildFormData(title: 'ราคา', detail: '${field!.price}'),
           buildFormData(title: 'โทร', detail: '${field!.tel}'),
+=======
+          TitleBar(icon: Icons.info, title: 'Info'),
+          SizedBox(height: 8),
+          buildFormData(title: 'Title', detail: '${field!.title}'),
+          buildFormData(title: 'Detail', detail: '${field!.detail}'),
+          buildFormData(title: 'Address', detail: '${field!.address}'),
+          buildFormData(title: 'office hours', detail: '${field!.hours}'),
+          buildFormData(title: 'price range', detail: '${field!.price}'),
+          buildFormData(title: 'Tal', detail: '${field!.tel}'),
+>>>>>>> master
         ],
       ),
     );

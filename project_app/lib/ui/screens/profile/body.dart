@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+import 'dart:io';
+>>>>>>> master
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
@@ -48,7 +52,12 @@ class _BodyState extends State<Body> {
   Future<bool> fetchData() async {
     _user = await UserService.getById(userId: await UserService.getUserId());
     _image = widget.userImage ?? null;
+<<<<<<< HEAD
     await Future.delayed(Duration(milliseconds: 300), () => setState(() {}));
+=======
+    await Future.delayed(Duration(milliseconds: 300));
+    // print(_user);
+>>>>>>> master
     return true;
   }
 
@@ -79,7 +88,11 @@ class _BodyState extends State<Body> {
         ? Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8.0),
             child: RoundedButton(
+<<<<<<< HEAD
               text: 'ยืนยัน',
+=======
+              text: 'Confirm',
+>>>>>>> master
               onTap: () async => await _onUpdate(),
             ),
           )
@@ -122,6 +135,7 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+<<<<<<< HEAD
     return sectionProfile();
     // return FutureBuilder(
     //   future: fetchData(),
@@ -131,5 +145,15 @@ class _BodyState extends State<Body> {
     //     return snapshot.hasData ? sectionProfile() : CustomWidgetLoading();
     //   },
     // );
+=======
+    return FutureBuilder(
+      future: fetchData(),
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.hasError) print(snapshot.hasError);
+        if (snapshot.hasData) print(snapshot.data);
+        return snapshot.hasData ? sectionProfile() : CustomWidgetLoading();
+      },
+    );
+>>>>>>> master
   }
 }
