@@ -50,7 +50,7 @@ class _BodyState extends State<Body> {
     _user = await UserService.getById(userId: await UserService.getUserId());
     _image = widget.userImage ?? null;
     await Future.delayed(Duration(milliseconds: 300));
-    print(_user);
+    // print(_user);
     return true;
   }
 

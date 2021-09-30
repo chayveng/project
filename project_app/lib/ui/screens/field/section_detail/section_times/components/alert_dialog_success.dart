@@ -51,7 +51,6 @@ class DialogSuccess extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          //     title(),
           SizedBox(height: 20),
           content(),
           SizedBox(height: 20),
