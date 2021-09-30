@@ -6,7 +6,6 @@ import 'package:dio/dio.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/cupertino.dart';
 import 'package:project_app/core/Config.dart';
-import 'package:project_app/core/apis/ApiConnect.dart';
 import 'package:project_app/core/apis/UserApi.dart';
 import 'package:project_app/core/models/ApiResponse.dart';
 import 'package:project_app/core/models/User.dart';
@@ -87,20 +86,16 @@ class UserService {
   }
 
   static Future<Uint8List?> imageDownload(int userId) async {
+    Uint8List? image;
     SharedPreferences _pref = await SharedPreferences.getInstance();
     String? token = _pref.getString(AuthService.TOKEN);
-    var url = Uri.parse("${Config.API_URL}/user/urlImage/$userId");
+    var url = Uri.parse("${Config.API_URL}/user/download-image/$userId");
     var response = await http.get(url, headers: {
       HttpHeaders.authorizationHeader: token != null ? 'Bearer $token' : ''
     });
     if (response.statusCode == 200) {
-      var url = Uri.parse("${Config.API_URL}${response.body}");
-      var res = await http.get(url, headers: {
-        HttpHeaders.authorizationHeader: token != null ? 'Bearer $token' : ''
-      });
-      return res.bodyBytes;
-    } else {
-      return null;
+      image = response.bodyBytes;
     }
+    return image;
   }
 }

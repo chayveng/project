@@ -45,16 +45,6 @@ public class UserController {
     return service.register(user);
   }
 
-//  @PostMapping("/findByUsername")
-//  public Object login(@RequestParam String user){
-//    service.
-//    return "";
-//  }
-//    @PostMapping("/login")
-//    public Object login(@RequestBody User user) {
-//        return service.login(user);
-//    }
-
   @PostMapping("/update")
   public Object update(@RequestBody User user) {
     return service.update(user);
@@ -67,14 +57,9 @@ public class UserController {
     return service.uploadImage(userId, file);
   }
 
-  @GetMapping("/download-image/{fileName}")
-  public Object downloadImage(@PathVariable String fileName) {
-    return service.downloadImage(fileName);
-  }
-
-  @GetMapping("/urlImage/{userId}")
-  public Object urlImage(@PathVariable long userId) {
-    return service.urlImage(userId);
+  @GetMapping("/download-image/{userId}")
+  public Object downloadImage(@PathVariable long userId) {
+    return service.downloadImage(userId);
   }
 
   @DeleteMapping("/deleteImageByUserId/{userId}")

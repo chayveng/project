@@ -100,7 +100,7 @@ public class UserService {
         if (!file.isEmpty()) {
             boolean deletes = deleteImage(userId);
             upload(userId, file);
-            res = new ApiResponse(1, urlImage(userId).toString(), imageRepository.findByUserId(userId));
+            res = new ApiResponse(1, "upload success", imageRepository.findByUserId(userId));
         }
         return res;
     }
@@ -118,9 +118,11 @@ public class UserService {
         }
     }
 
-    public Object downloadImage(String fileName) {
+    public Object downloadImage(long userId ) {
         ResponseEntity<Object> response = ResponseEntity.status(404).build();
         try {
+            Optional<UserImage> userImage = imageRepository.findByUserId(userId);
+            String fileName = userImage.get().getFileName();
             Path path = Paths.get(Config.USER_IMAGE_PATH + fileName);
             byte[] imageData = Files.readAllBytes(path);
             response = ResponseEntity
@@ -131,20 +133,6 @@ public class UserService {
             e.printStackTrace();
         }
         return response;
-    }
-
-    public Object urlImage(long userId) {
-        Optional<UserImage> image = imageRepository.findByUserId(userId);
-        if (image.isPresent()) {
-            return URL_DOWNLOAD + image.get().getFileName();
-//            return ServletUriComponentsBuilder
-//                    .fromCurrentContextPath()
-//                    .path(URL_DOWNLOAD)
-//                    .path(image.get().getFileName().toString())
-//                    .toUriString();
-        } else {
-            return ResponseEntity.status(404).build();
-        }
     }
 
     public boolean deleteImage(long userId) {

@@ -29,15 +29,15 @@ public class FieldService {
     private FieldRepository repository;
 
     public Object findAll() {
-        return new ApiResponse(1, "Field all",repository.findAll());
+        return new ApiResponse(1, "Field all", repository.findAll());
     }
 
     public Object findById(long fieldId) {
-        return new ApiResponse(1, "Field by id",repository.findById(fieldId));
+        return new ApiResponse(1, "Field by id", repository.findById(fieldId));
     }
 
     public Object findByUserId(long userId) {
-        return new ApiResponse(1, "Field by id",repository.findByUserId(userId));
+        return new ApiResponse(1, "Field by id", repository.findByUserId(userId));
     }
 
     public Object create(Field field) {
@@ -81,17 +81,17 @@ public class FieldService {
         List<FieldImage> images = new ArrayList<FieldImage>();
         boolean deleted = deleteImages(fieldId);
         try {
-            for(int i = 0 ; i < files.length ; i++){
-                images.add(upload(i,fieldId, files[i]));
+            for (int i = 0; i < files.length; i++) {
+                images.add(upload(i, fieldId, files[i]));
             }
-            res = new ApiResponse(1, urlImages(fieldId).toString(), images);
+            res = new ApiResponse(1, "upload success", images);
         } catch (IOException e) {
             e.printStackTrace();
         }
         return res;
     }
 
-    public FieldImage upload(int index,long fieldId, MultipartFile file) throws IOException {
+    public FieldImage upload(int index, long fieldId, MultipartFile file) throws IOException {
         Constants constants = new Constants();
         FieldImage image = new FieldImage();
         try {
@@ -104,6 +104,23 @@ public class FieldService {
             e.printStackTrace();
         }
         return image;
+    }
+
+    public Object downloadImages(long fieldId) {
+        ResponseEntity<Object> response = ResponseEntity.status(404).build();
+        try {
+            List<FieldImage> images = imageRepository.findByFieldId(fieldId);
+            String fileName = images.get(0).getFileName();
+            Path path = Paths.get(Config.FIELD_IMAGE_PATH + fileName);
+            byte[] imageData = Files.readAllBytes(path);
+            response = ResponseEntity
+                    .ok()
+                    .contentType(MediaType.parseMediaType(MediaType.IMAGE_PNG_VALUE))
+                    .body(imageData);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return response;
     }
 
     public Object downloadImage(String fileName) {
@@ -121,29 +138,42 @@ public class FieldService {
         return response;
     }
 
-    public List<String> urlImages(long FieldId) {
+    public List<String> fileNameImages(long FieldId) {
         List<FieldImage> images = imageRepository.findByFieldId(FieldId);
-        List<String> urls = new ArrayList<String>();
+        List<String> fileNameImages = new ArrayList<String>();
         if (images.size() != 0) {
             for (FieldImage image : images) {
-//                  urls.add(image.getFileName());
-//                  log.info(urlImage(image.getFileName()).toString());
-                urls.add(urlImage(image.getFileName()).toString());
+                fileNameImages.add(image.getFileName());
             }
-            return urls;
+            return fileNameImages;
         } else {
             return new ArrayList<>();
         }
     }
 
-    public Object urlImage(String fileName) {
-        return URL_DOWNLOAD + fileName;
-//        return ServletUriComponentsBuilder
-//                .fromCurrentContextPath()
-//                .path(URL_DOWNLOAD)
-//                .path(fileName)
-//                .toUriString();
-    }
+//    public List<String> urlImages(long FieldId) {
+//        List<FieldImage> images = imageRepository.findByFieldId(FieldId);
+//        List<String> urls = new ArrayList<String>();
+//        if (images.size() != 0) {
+//            for (FieldImage image : images) {
+////                  urls.add(image.getFileName());
+////                  log.info(urlImage(image.getFileName()).toString());
+//                urls.add(urlImage(image.getFileName()).toString());
+//            }
+//            return urls;
+//        } else {
+//            return new ArrayList<>();
+//        }
+//    }
+
+//    public Object urlImage(String fileName) {
+//        return URL_DOWNLOAD + fileName;
+////        return ServletUriComponentsBuilder
+////                .fromCurrentContextPath()
+////                .path(URL_DOWNLOAD)
+////                .path(fileName)
+////                .toUriString();
+//    }
 
     public boolean deleteImages(long fieldId) {
         boolean deleted = false;

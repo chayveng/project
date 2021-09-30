@@ -15,9 +15,6 @@ public class FieldController {
     @Autowired
     private FieldService service;
 
-//    @Autowired
-//    private FieldImageService imageService;
-
     @GetMapping("/index")
     public Object index() {
         return "index";
@@ -60,65 +57,13 @@ public class FieldController {
     }
 
     @GetMapping("/download-image/{fileName}")
-    public Object urlImages(@PathVariable String fileName) {
+    public Object downloadImage(@PathVariable String fileName) {
         return service.downloadImage(fileName);
     }
 
-    @GetMapping("/urlImages/{fieldId}")
-    public List<?> urlImages(@PathVariable long fieldId) {
-        return service.urlImages(fieldId);
+    @GetMapping("/fileNameImages/{fieldId}")
+    public List<?> fileNameImages(@PathVariable long fieldId) {
+        return service.fileNameImages(fieldId);
     }
     // << image controller
-
-//    @PostMapping("/upload-image")
-//    public String uploadImage(@RequestParam long fieldId, @RequestParam("file") MultipartFile file) throws IOException {
-//        if (imageService.uploadImage(fieldId, file)) {
-//            return ServletUriComponentsBuilder
-//                    .fromCurrentContextPath()
-//                    .path("/field/download-image/" + fieldId + "/")
-//                    .path(Objects.requireNonNull(file.getOriginalFilename()))
-//                    .toUriString();
-//        }
-//        return "Error Upload-image";
-//    }
-//
-//    @PostMapping("/upload-images")
-//    public List<?> uploadImages(@RequestParam long fieldId, @RequestParam("files") MultipartFile[] files) throws IOException {
-//        imageService.deleteImages(fieldId);
-//        return Arrays.stream(files)
-//                .map(file -> {
-//                    try {
-//                        return uploadImage(fieldId, file);
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                    return null;
-//                })
-//                .collect(Collectors.toList());
-//    }
-//
-//    @GetMapping("/download-image/{fieldId}/{fileName}")
-//    public ResponseEntity<?> downloadFromDB(@PathVariable long fieldId, @PathVariable String fileName) {
-//        return imageService.downloadImage(fieldId, fileName);
-//    }
-//
-//    @GetMapping("/urlImages/{fieldId}")
-//    public List<?> urlImages(@PathVariable long fieldId) {
-//        List<FieldImage> images = imageService.findByFieldId(fieldId);
-//        Collections.sort(images);
-//        List<String> urlImages = new ArrayList<>();
-//        if (!images.isEmpty()) {
-//            for (var file : images) {
-//                String urlImage = ServletUriComponentsBuilder
-//                        .fromCurrentContextPath()
-//                        .path("/field/download-image/" + fieldId + "/")
-//                        .path(file.getFileName())
-//                        .toUriString();
-//                urlImages.add(urlImage);
-//            }
-//            return urlImages;
-//        }
-//        return null;
-//    }
-//
 }
