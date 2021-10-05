@@ -54,15 +54,17 @@ class UserService {
     @required User? user,
     @required Uint8List? image,
   }) async {
+    bool status = false;
     ApiResponse res = await UserApi.update(user: user);
     if (res.status == 1) {
-      if (image != null) {
+      status = true;
+      if (image != null ) {
         await imageUpload(user!.id!, image);
-        return true;
       }
     } else {
-      return false;
+      status = false;
     }
+    return status;
   }
 
   static Future<bool?> imageUpload(int userId, Uint8List image) async {

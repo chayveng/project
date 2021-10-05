@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
+import 'package:project_app/core/Config.dart';
 import 'package:project_app/core/models/Field.dart';
 import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/ui/components/custom_dialog_loading.dart';
@@ -25,6 +26,7 @@ class Body extends StatefulWidget {
 class _BodyState extends State<Body> {
   Field field = Field();
   bool isEdit = false;
+  List<String> urlImages = [];
   List<Uint8List> images = [];
 
   Future<void> backWord() async {
@@ -35,17 +37,18 @@ class _BodyState extends State<Body> {
   Future<bool> fetchData() async {
     print('fetch');
     field = await FieldServices.findById(fieldId: widget.fieldId!);
-    print('findById');
     await downloadImages();
-    print('downloadImages');
-    await Future.delayed(Duration(milliseconds: 300));
-    print('delay');
     return true;
   }
 
   Future<void> downloadImages() async {
-    images.clear();
-    images = await FieldServices.downloadImages(widget.fieldId!);
+    urlImages.clear();
+    List filesName = await FieldServices.downloadFilesName(widget.fieldId!);
+    for (int i = 0; i < filesName.length; i++) {
+      urlImages.add(Config.API_URL + "/field/download-image/" + filesName[i]);
+    }
+
+    print(urlImages);
   }
 
   Future<void> _onEdit() async {
@@ -67,7 +70,7 @@ class _BodyState extends State<Body> {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SectionImages(images: images),
+            SectionImages(urlImages: urlImages),
             SectionDetail(
               field: field,
               isOwner: widget.isOwner!,

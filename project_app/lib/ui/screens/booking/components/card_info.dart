@@ -22,9 +22,14 @@ class CardInfo extends StatefulWidget {
 }
 
 class _CardInfoState extends State<CardInfo> {
+
   Widget buildTitle() {
+    String title = '';
+    if (widget.field!.title != null) {
+      title = widget.field!.title!;
+    }
     return Text(
-      widget.field!.title!,
+      title,
       style: TextStyle(
         fontWeight: FontWeight.bold,
         fontSize: 20,
@@ -65,7 +70,7 @@ class _CardInfoState extends State<CardInfo> {
         ),
         SizedBox(width: 5),
         Text(
-          '${timeGetTime(widget.time!.startTime!)} - ${timeGetTime(widget.time!.endTime!)}',
+          '${timeGetTime(widget.time!.startTime! )} - ${timeGetTime(widget.time!.endTime!)}',
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:project_app/constants.dart';
 
@@ -23,7 +24,10 @@ class CardTime extends StatelessWidget {
     return isOwner!
         ? InkWell(
             onTap: onDelete,
-            child: Icon(Icons.delete),
+            child: Icon(
+              Icons.delete,
+              color: Colors.redAccent,
+            ),
           )
         : SizedBox();
   }
@@ -32,7 +36,9 @@ class CardTime extends StatelessWidget {
     return isOwner!
         ? InkWell(
             onTap: onInfo,
-            child: Icon(Icons.info_outline_rounded),
+            child: Icon(
+              Icons.info_outline_rounded,
+            ),
           )
         : SizedBox();
   }
@@ -67,23 +73,33 @@ class CardTime extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10),
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(width: 2, color: orangePrimaryColor),
-          borderRadius: BorderRadius.circular(20),
-        ),
-        padding: EdgeInsets.all(8),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            formDate(),
-            SizedBox(width: 16),
-            formTime(),
-            SizedBox(width: 16),
-            buttonInfo(),
-            SizedBox(width: 16),
-            buttonRemove(),
-          ],
+      child: InkWell(
+        onTap: onInfo,
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(width: 2, color: orangePrimaryColor),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          padding: EdgeInsets.all(8),
+          child: Column(
+            children: [
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    formDate(),
+                    SizedBox(width: 16),
+                    formTime(),
+                    // SizedBox(width: 16),
+                    // buttonInfo(),
+                    SizedBox(width: 16),
+                    buttonRemove(),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
