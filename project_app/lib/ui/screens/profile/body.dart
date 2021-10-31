@@ -130,14 +130,14 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    // return sectionProfile();
-    return FutureBuilder(
-      future: fetchData(),
-      builder: (BuildContext context, AsyncSnapshot snapshot) {
-        if (snapshot.hasError) print(snapshot.hasError);
-        // if (snapshot.hasData) print(snapshot.data);
-        return snapshot.hasData ? sectionProfile() : CustomWidgetLoading();
-      },
-    );
+    return sectionProfile();
+    // return FutureBuilder(
+    //   future: fetchData(),
+    //   builder: (BuildContext context, AsyncSnapshot snapshot) {
+    //     if (snapshot.hasError) print(snapshot.hasError);
+    //     // if (snapshot.hasData) print(snapshot.data);
+    //     return snapshot.hasData ? sectionProfile() : CustomWidgetLoading();
+    //   },
+    // );
   }
 }

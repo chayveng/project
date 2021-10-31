@@ -7,7 +7,7 @@ public class Config {
             "/authorize",
             "/user/register",
             "/test/index",
-//            "/home/greeting"
+            "/home/greeting"
     };
 
 }
