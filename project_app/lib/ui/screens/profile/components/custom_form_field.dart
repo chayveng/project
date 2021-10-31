@@ -100,6 +100,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
       },
     );
   }
+
   Row titleBar() {
     return Row(
       children: [
@@ -128,16 +129,35 @@ class _CustomFormFieldState extends State<CustomFormField> {
       width: sized(context).width,
       child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             titleBar(),
-            firstName(context),
-            lastName(context),
-            email(context),
-            tel(context),
+            widget.status!
+                ? firstName(context)
+                : formInfo('${_user!.firstName ?? widget.user!.firstName}'),
+            widget.status!
+                ? lastName(context)
+                : formInfo('${_user!.lastName ?? widget.user!.lastName}'),
+            widget.status!
+                ? email(context)
+                : formInfo('${_user!.email ?? widget.user!.email}'),
+            widget.status!
+                ? tel(context)
+                : formInfo('${_user!.tel ?? widget.user!.tel}'),
           ],
         ),
       ),
     );
   }
 
+  Widget formInfo(String? str) {
+    String title = '';
+    if (str != null && str != 'null') {
+      title = str;
+    }
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Text(title),
+    );
+  }
 }

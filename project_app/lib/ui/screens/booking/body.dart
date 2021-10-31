@@ -25,12 +25,6 @@ class _BodyState extends State<Body> {
   List<Field> fields = [];
   String _launchUrl = 'https://www.google.com';
 
-  @override
-  void initState() {
-    fetchData();
-    super.initState();
-  }
-
   _onMap(int index) async {
     Field field = getField(index);
     if (field.location != null) {
@@ -62,9 +56,13 @@ class _BodyState extends State<Body> {
         List.generate(times.length, (index) => times[index].fieldId!)
             .toSet()
             .toList();
-    fieldIds
-        .map((e) async => fields.add(await FieldServices.findById(fieldId: e)))
-        .toList();
+    print(fieldIds);
+    for(int i = 0 ; i < fieldIds.length ; i++){
+      Field field  = Field();
+      field = await FieldServices.findById(fieldId: fieldIds[i]);
+      fields.add(field);
+    }
+    print(fields.length);
     await Future.delayed(Duration(milliseconds: 300));
     return true;
   }
@@ -94,9 +92,9 @@ class _BodyState extends State<Body> {
       future: fetchData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) print(snapshot.hasError);
-        if (snapshot.hasData) print(snapshot.data);
+        // if (snapshot.hasData) print(snapshot.data);
         return snapshot.hasData
-            ? times.length != 0
+            ?times.length != 0
                 ? SingleChildScrollView(
                     child: Column(
                       children: [

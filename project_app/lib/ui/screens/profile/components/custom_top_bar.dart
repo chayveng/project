@@ -16,7 +16,7 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: Text('ข้อมูลส่วนตัว'),
-      actions: [edit()],
+      // actions: [edit()],
     );
   }
 

@@ -70,7 +70,7 @@ class _AlertDialogInfoState extends State<AlertDialogInfo> {
               Text('เวลา : ',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
               Text(
-                '${timeGetTime(widget.time!.startTime!)}+ - +${timeGetTime(widget.time!.endTime!)}',
+                '${timeGetTime(widget.time!.startTime!)} - ${timeGetTime(widget.time!.endTime!)}',
                 style: TextStyle(
                   fontSize: 16,
                 ),
@@ -82,12 +82,12 @@ class _AlertDialogInfoState extends State<AlertDialogInfo> {
             children: [
               Text('ชื่อผู้จอง : ',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-              Text(
+             user.userName != null ? Text(
                 '${user.userName}',
                 style: TextStyle(
                   fontSize: 16,
                 ),
-              ),
+              ) : Text(''),
             ],
           ),
           Row(
@@ -95,12 +95,12 @@ class _AlertDialogInfoState extends State<AlertDialogInfo> {
             children: [
               Text('โทร :',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-              Text(
+             user.tel != null ? Text(
                 '${user.tel}',
                 style: TextStyle(
                   fontSize: 16,
                 ),
-              ),
+              ) : Text(''),
             ],
           ),
         ],

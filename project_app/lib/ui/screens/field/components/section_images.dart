@@ -3,13 +3,16 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:project_app/core/services/AuthService.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../constants.dart';
 
 class SectionImages extends StatefulWidget {
-  final List<Uint8List>? images;
+  final List? urlImages;
 
-  const SectionImages({Key? key, this.images}) : super(key: key);
+  const SectionImages({Key? key, this.urlImages})
+      : super(key: key);
 
   @override
   _SectionImagesState createState() => _SectionImagesState();
@@ -17,32 +20,19 @@ class SectionImages extends StatefulWidget {
 
 class _SectionImagesState extends State<SectionImages> {
   int? _current = 0;
+  String _token = '';
 
-  Future<void> _chooseImage() async {
-    var image = await chooseImage(ImageSource.gallery);
-    if (image != null)
-      setState(() => widget.images!.add(image.readAsBytesSync()));
+  @override
+  initState() {
+    getToken();
+    super.initState();
   }
 
-  void _removeImage() {
-    setState(() => widget.images!.removeLast());
-  }
-
-  Widget customBtn() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        IconButton(
-          icon: Icon(Icons.remove),
-          onPressed: () => _removeImage(),
-        ),
-        SizedBox(width: 10),
-        IconButton(
-          icon: Icon(Icons.add),
-          onPressed: () async => await _chooseImage(),
-        ),
-      ],
-    );
+  Future getToken() async {
+    SharedPreferences _pref = await SharedPreferences.getInstance();
+    String? token = _pref.getString(AuthService.TOKEN);
+    _token = token!;
+    setState(() {});
   }
 
   Widget indicator() {
@@ -52,7 +42,7 @@ class _SectionImagesState extends State<SectionImages> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ...List.generate(
-              widget.images!.length,
+              widget.urlImages!.length,
               (index) {
                 return Container(
                   width: 8.0,
@@ -72,17 +62,24 @@ class _SectionImagesState extends State<SectionImages> {
   }
 
   Widget formImages() {
-    return widget.images!.length != 0
+    return widget.urlImages!.length != 0
         ? Container(
             height: 250,
             width: sized(context).width,
             child: PageView.builder(
-              itemCount: widget.images!.length, // Can be null
+              itemCount: widget.urlImages!.length, // Can be null
               onPageChanged: (index) => setState(() => _current = index),
-              itemBuilder: (context, index) => Image.memory(
-                widget.images![index],
-                fit: BoxFit.cover,
-              ),
+              itemBuilder: (context, index) {
+                return Container(
+                    child: Image.network(
+                  widget.urlImages![index],
+                  fit: BoxFit.cover,
+                  headers: {
+                    HttpHeaders.authorizationHeader:
+                        _token != null ? 'Bearer $_token' : ''
+                  },
+                ));
+              },
             ),
           )
         : Container(

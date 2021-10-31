@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
@@ -42,6 +41,7 @@ class _BodyState extends State<Body> {
 
   @override
   void initState() {
+    print(_image);
     fetchData();
     super.initState();
   }
@@ -49,8 +49,7 @@ class _BodyState extends State<Body> {
   Future<bool> fetchData() async {
     _user = await UserService.getById(userId: await UserService.getUserId());
     _image = widget.userImage ?? null;
-    await Future.delayed(Duration(milliseconds: 300));
-    print(_user);
+    await Future.delayed(Duration(milliseconds: 300), () => setState(() {}));
     return true;
   }
 
@@ -58,6 +57,7 @@ class _BodyState extends State<Body> {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       _status = !_status;
+      print(_status);
       (await UserService.update(user: _user, image: _image))!
           ? fetchData()
           : print('update fail');
@@ -85,7 +85,13 @@ class _BodyState extends State<Body> {
               onTap: () async => await _onUpdate(),
             ),
           )
-        : SizedBox();
+        : Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: RoundedButton(
+              text: 'แก้ไข',
+              onTap: () async => await _onEdit(),
+            ),
+          );
   }
 
   Widget sectionProfile() {
@@ -124,11 +130,12 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    // return sectionProfile();
     return FutureBuilder(
       future: fetchData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) print(snapshot.hasError);
-        if (snapshot.hasData) print(snapshot.data);
+        // if (snapshot.hasData) print(snapshot.data);
         return snapshot.hasData ? sectionProfile() : CustomWidgetLoading();
       },
     );
