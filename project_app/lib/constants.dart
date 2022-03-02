@@ -26,6 +26,7 @@ const Color orangeColor = Color.fromRGBO(253, 108, 43, 1);
 const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);
 const Color greyColor = Color.fromRGBO(240, 240, 250, 1);
 const Color blackColor = Color.fromRGBO(33, 33, 33, 1);
+// const Color colorsAccept = Color.fromRGBO(33, 33, 33, 1);
 
 Size sized(BuildContext context) => MediaQuery.of(context).size;
 

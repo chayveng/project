@@ -8,6 +8,7 @@ import 'package:project_app/core/services/FieldServices.dart';
 import 'package:project_app/core/services/TimeService.dart';
 import 'package:project_app/core/services/UserService.dart';
 import 'package:project_app/ui/components/custom_widget_loading.dart';
+import 'package:project_app/ui/screens/booking/components/alert_dialog_cancel.dart';
 import 'package:project_app/ui/screens/booking/components/not_booking.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -22,8 +23,38 @@ class Body extends StatefulWidget {
 
 class _BodyState extends State<Body> {
   List<Time> times = [];
+  List<Time> timesNew = [];
+  List<Time> timesAccept = [];
+  List<Time> timesNotAccept = [];
   List<Field> fields = [];
   String _launchUrl = 'https://www.google.com';
+
+  sortTime() {
+    for (int i = 0; i < times.length; i++) {
+      if (times[i].status! == true) {
+        timesNew.add(times[i]);
+      }
+    }
+    for (int i = 0; i < times.length; i++) {
+      if (times[i].status! == false) {
+        timesNew.add(times[i]);
+      }
+    }
+    // setState(() {});
+  }
+
+  _onCancel(Time time) async {
+    await showDialog(
+      context: context,
+      builder: (context) => AlertDialogCancel(
+        time: time,
+        onCancel: () async {
+          await TimeService.deleteById(time.id!);
+          Navigator.pop(context);
+        },
+      ),
+    ).then((value) => setState(() {}));
+  }
 
   _onMap(int index) async {
     Field field = getField(index);
@@ -48,8 +79,10 @@ class _BodyState extends State<Body> {
     return _field;
   }
 
-  Future<bool> fetchData() async {
+  Future fetchData() async {
     fields.clear();
+    times.clear();
+    timesNew.clear();
     int userId = await UserService.getUserId();
     times = await TimeService.findByUserId(userId);
     List<int> fieldIds =
@@ -57,27 +90,29 @@ class _BodyState extends State<Body> {
             .toSet()
             .toList();
     print(fieldIds);
-    for(int i = 0 ; i < fieldIds.length ; i++){
-      Field field  = Field();
+    for (int i = 0; i < fieldIds.length; i++) {
+      Field field = Field();
       field = await FieldServices.findById(fieldId: fieldIds[i]);
       fields.add(field);
     }
+    sortTime();
     print(fields.length);
     await Future.delayed(Duration(milliseconds: 300));
     return true;
   }
 
   Widget sectionInfo() {
-    return times.length != 0
+    return timesNew.length != 0
         ? Container(
             child: Column(
               children: [
                 ...List.generate(
-                  times.length,
+                  timesNew.length,
                   (index) => CardInfo(
                     onMap: () async => await _onMap(index),
+                    onCancel: () async => _onCancel(timesNew[index]),
                     field: getField(index),
-                    time: times[index],
+                    time: timesNew[index],
                   ),
                 ),
               ],
@@ -94,7 +129,7 @@ class _BodyState extends State<Body> {
         if (snapshot.hasError) print(snapshot.hasError);
         // if (snapshot.hasData) print(snapshot.data);
         return snapshot.hasData
-            ?times.length != 0
+            ? timesNew.length != 0
                 ? SingleChildScrollView(
                     child: Column(
                       children: [

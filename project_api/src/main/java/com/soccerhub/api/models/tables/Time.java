@@ -26,6 +26,7 @@ public class Time {
     private LocalDateTime startTime;
     @JsonFormat(pattern="yyyy-MM-dd HH:mm")
     private LocalDateTime endTime;
+    private boolean status;
 
 
 

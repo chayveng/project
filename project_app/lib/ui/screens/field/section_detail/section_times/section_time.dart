@@ -23,6 +23,7 @@ class SectionTime extends StatefulWidget {
 
 class _SectionTimeState extends State<SectionTime> {
   List<Time> times = [];
+  List<Time> timesIsAccept = [];
 
   @override
   void initState() {
@@ -32,7 +33,13 @@ class _SectionTimeState extends State<SectionTime> {
 
   void fetchTimes() async {
     times.clear();
+    timesIsAccept.clear();
     times = await TimeService.findByFieldId(widget.fieldId!);
+    for(int i = 0; i< times.length; i++){
+      if (times[i].status == true) {
+        timesIsAccept.add(times[i]);
+      }
+    }
     setState(() {});
     print(times.length);
   }
@@ -88,8 +95,8 @@ class _SectionTimeState extends State<SectionTime> {
     return Column(
       children: [
         ...List.generate(
-          times.length,
-          (index) => buildCardTime(times[index]),
+          timesIsAccept.length,
+          (index) => buildCardTime(timesIsAccept[index]),
         ),
       ],
     );

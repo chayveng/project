@@ -7,8 +7,10 @@ class CardTime extends StatelessWidget {
   final String? endTime;
   final String? date;
   final bool? isOwner;
+  final bool? isReserve;
   final GestureTapCallback? onInfo;
   final GestureTapCallback? onDelete;
+  final GestureTapCallback? onAccept;
 
   const CardTime({
     Key? key,
@@ -18,7 +20,21 @@ class CardTime extends StatelessWidget {
     this.isOwner,
     this.onInfo,
     this.onDelete,
+    this.isReserve = false,
+    this.onAccept,
   }) : super(key: key);
+
+  Widget buttonReserve() {
+    return isReserve!
+        ? InkWell(
+            onTap: onAccept,
+            child: Icon(
+              Icons.add_task,
+              color: Colors.green,
+            ),
+          )
+        : SizedBox();
+  }
 
   Widget buttonRemove() {
     return isOwner!
@@ -95,6 +111,8 @@ class CardTime extends StatelessWidget {
                     // buttonInfo(),
                     SizedBox(width: 16),
                     buttonRemove(),
+                    SizedBox(width: 16),
+                    buttonReserve(),
                   ],
                 ),
               ),
