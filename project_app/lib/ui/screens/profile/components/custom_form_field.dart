@@ -27,6 +27,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
   @override
   initState() {
     _user = widget.user;
+    setState(() {});
     super.initState();
   }
 
@@ -134,30 +135,36 @@ class _CustomFormFieldState extends State<CustomFormField> {
             titleBar(),
             widget.status!
                 ? firstName(context)
-                : formInfo('${_user!.firstName ?? widget.user!.firstName}'),
+                : formInfo('ชื่อ:','${widget.user!.firstName}'),
             widget.status!
                 ? lastName(context)
-                : formInfo('${_user!.lastName ?? widget.user!.lastName}'),
+                : formInfo('สกุล:','${widget.user!.lastName}'),
             widget.status!
                 ? email(context)
-                : formInfo('${_user!.email ?? widget.user!.email}'),
+                : formInfo('อีเมล:','${widget.user!.email}'),
             widget.status!
                 ? tel(context)
-                : formInfo('${_user!.tel ?? widget.user!.tel}'),
+                : formInfo('โทร:','${widget.user!.tel}'),
           ],
         ),
       ),
     );
   }
 
-  Widget formInfo(String? str) {
-    String title = '';
+  Widget formInfo(String title ,String? str) {
+    String data = '';
     if (str != null && str != 'null') {
-      title = str;
+      data = str;
     }
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Text(title),
+      child: Row(
+        children: [
+          Text(title),
+          SizedBox(width: 8),
+          Text(data),
+        ],
+      ),
     );
   }
 }

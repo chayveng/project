@@ -10,8 +10,15 @@ class TimeService{
     return response.status == 1 ? true : false;
   }
 
-  static Future<bool> create(Time time) async{
-    var response = await TimeApi.create(time);
+  static Future<bool> createAccept(Time time) async{
+    var response = await TimeApi.createAccept(time);
+    print(response.message);
+    return response.status == 1 ? true : false;
+  }
+
+  static Future<bool> createNotAccept(Time time) async{
+    var response = await TimeApi.createNotAccept(time);
+    print(response.message);
     return response.status == 1 ? true : false;
   }
 
@@ -26,6 +33,11 @@ class TimeService{
     List dataList = jsonDecode(jsonEncode(res.data));
     List<Time> times = timesFromJson(dataList);
     return times;
+  }
+
+  static Future<ApiResponse> update(Time time) async{
+    ApiResponse res = await TimeApi.update(time);
+    return res;
   }
 
 }

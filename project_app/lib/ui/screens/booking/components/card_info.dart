@@ -7,12 +7,14 @@ import '../../../../constants.dart';
 
 class CardInfo extends StatefulWidget {
   final VoidCallback? onMap;
+  final GestureTapCallback? onCancel;
   final Field? field;
   final Time? time;
 
   const CardInfo({
     Key? key,
     @required this.onMap,
+    this.onCancel,
     this.field,
     this.time,
   }) : super(key: key);
@@ -22,41 +24,73 @@ class CardInfo extends StatefulWidget {
 }
 
 class _CardInfoState extends State<CardInfo> {
-
   Widget buildTitle() {
     String title = '';
     if (widget.field!.title != null) {
       title = widget.field!.title!;
     }
-    return Text(
-      title,
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 20,
-        color: orangeColor,
-      ),
+    return Stack(
+      alignment: AlignmentDirectional.center,
+      children: [
+        widget.time!.status! != false
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(
+                    Icons.bookmark_outlined,
+                    size: 28,
+                    color: Colors.lightGreenAccent[400],
+                  ),
+                ],
+              )
+            : SizedBox(),
+        Text(
+          title,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 20,
+            color: orangeColor,
+          ),
+        ),
+      ],
     );
   }
 
-  Widget buildMap() {
+  Widget buildFooter() {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.end,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Icon(
-          Icons.location_pin,
-          color: orangeColor,
-        ),
-        TextButton(
-          onPressed: widget.onMap,
-          child: Text(
-            'แผนที่',
-            style: TextStyle(
-              color: navyPrimaryColor,
-              fontSize: 16,
-              decoration: TextDecoration.underline,
+        Row(
+          children: [
+            Icon(
+              Icons.location_pin,
+              color: orangeColor,
             ),
-          ),
+            TextButton(
+              onPressed: widget.onMap,
+              child: Text(
+                'แผนที่',
+                style: TextStyle(
+                  color: navyPrimaryColor,
+                  fontSize: 16,
+                  decoration: TextDecoration.underline,
+                ),
+              ),
+            ),
+          ],
         ),
+        widget.time!.status != true
+            ? GestureDetector(
+                onTap: widget.onCancel,
+                child: Padding(
+                  padding: EdgeInsets.only(right: 8),
+                  child: Text(
+                    'ยกเลิกการจอง',
+                    style: TextStyle(color: Colors.red, fontSize: 18),
+                  ),
+                ),
+              )
+            : SizedBox(),
       ],
     );
   }
@@ -70,8 +104,9 @@ class _CardInfoState extends State<CardInfo> {
         ),
         SizedBox(width: 5),
         Text(
-          '${timeGetTime(widget.time!.startTime! )} - ${timeGetTime(widget.time!.endTime!)}',
+          '${timeGetTime(widget.time!.startTime!)} - ${timeGetTime(widget.time!.endTime!)}',
           style: TextStyle(
+            // color: widget.time!.status != false ? Colors.black : Colors.green,
             fontWeight: FontWeight.bold,
             fontSize: 18,
           ),
@@ -111,7 +146,7 @@ class _CardInfoState extends State<CardInfo> {
             buildTime(),
           ],
         ),
-        buildMap(),
+        buildFooter(),
       ],
     );
   }

@@ -10,17 +10,27 @@ class TimeApi {
     var apiConnect = await ApiConnect.delete(path: '/time/deleteById/$timeId');
     return apiResponseFromJson(apiConnect.toString());
   }
+
   static Future<ApiResponse> findByFieldId(int fieldId) async {
     var apiConnect = await ApiConnect.get(path: '/time/findByFieldId/$fieldId');
     return apiResponseFromJson(apiConnect.toString());
   }
 
-  static Future<ApiResponse> create(Time time) async {
-    var apiConnect = await ApiConnect.post(path: '/time/create', body: time);
+  static Future<ApiResponse> createAccept(Time time) async {
+    var apiConnect = await ApiConnect.post(path: '/time/createAccept', body: time);
+    return apiResponseFromJson(apiConnect.toString());
+  }
+  static Future<ApiResponse> createNotAccept(Time time) async {
+    var apiConnect = await ApiConnect.post(path: '/time/createNotAccept', body: time);
     return apiResponseFromJson(apiConnect.toString());
   }
 
-  static Future<ApiResponse> findByUserId(int userId)async{
+  static Future<ApiResponse> update(Time time) async {
+    var apiConnect = await ApiConnect.post(path: '/time/update', body: time);
+    return apiResponseFromJson(apiConnect.toString());
+  }
+
+  static Future<ApiResponse> findByUserId(int userId) async {
     var apiConnect = await ApiConnect.get(path: '/time/findByUserId/$userId');
     return apiResponseFromJson(apiConnect.toString());
   }

@@ -31,6 +31,11 @@ class _BodyState extends State<Body> {
     return true;
   }
 
+  Future<bool> waitingScreen () async {
+    await Future.delayed(Duration(milliseconds: 300));
+    fetchData();
+    return true;
+  }
   Future<bool> _refresh() async {
     print('refresh');
     setState(() {});
@@ -101,7 +106,9 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
+    // return buttonLogout(context);
     return FutureBuilder(
+      // future: waitingScreen(),
       future: fetchData(),
       builder: (BuildContext context, AsyncSnapshot snapshot) {
         if (snapshot.hasError) print(snapshot.hasError);

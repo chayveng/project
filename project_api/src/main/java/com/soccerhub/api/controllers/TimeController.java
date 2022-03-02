@@ -31,14 +31,23 @@ public class TimeController {
         return service.findByUserId(userId);
     }
 
-    @PostMapping("/create")
-    public Object create(@RequestBody Time timeFromJson){
-        return service.create(timeFromJson);
+    @PostMapping("/createAccept")
+    public Object createAccept(@RequestBody Time timeFromJson) {
+        return service.createAccept(timeFromJson);
     }
 
+    @PostMapping("/createNotAccept")
+    public Object createNotAccept(@RequestBody Time timeFromJson) {
+        return service.createNotAccept(timeFromJson);
+    }
     @DeleteMapping("/deleteById/{timeId}")
     public Object deleteById(@PathVariable long timeId) {
         return service.deleteById(timeId);
+    }
+
+    @PostMapping("/update")
+    public Object update(@RequestBody Time time) {
+        return service.update(time);
     }
 
 //    @DeleteMapping("/deleteId/{timeId}")
