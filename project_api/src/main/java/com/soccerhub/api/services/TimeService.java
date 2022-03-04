@@ -49,18 +49,18 @@ public class TimeService {
 //    }
 
     public ApiResponse createAccept(Time time) {
+//        return new ApiResponse(1, "uuuuu", time);
         List<Time> overlapTimes = repository.findOverlapTimes(time.getStartTime().toString(), time.getEndTime().toString(), time.getFieldId());
         if (time.getStartTime().isBefore(time.getEndTime()) && overlapTimes.size() == 0) {
             return new ApiResponse(1, "create not accept time success", repository.save(time));
-        }
-        else if (time.getStartTime().isAfter(time.getEndTime())) {
+        } else if (time.getStartTime().isAfter(time.getEndTime())) {
             return new ApiResponse(0, "create not accept fail, start time after end time");
-        }
-        else if (time.getStartTime().equals(time.getEndTime())) {
+        } else if (time.getStartTime().equals(time.getEndTime())) {
             return new ApiResponse(0, "create not accept fail, start time equal end time");
         } else {
-            return new ApiResponse(0, "create not accept fail, time is overlap");
+            return new ApiResponse(0, "create not accept fail, time is overlap " + "field_Id: " + time.getFieldId() + " overlapTime: " + overlapTimes.size());
         }
+
 //        if (time.getStartTime().isBefore(time.getEndTime()) && overlapTimes.size() == 0) {
 //            return new ApiResponse(1, "create time success", repository.save(time));
 //        } else {
@@ -71,11 +71,9 @@ public class TimeService {
     public ApiResponse createNotAccept(Time time) {
         if (time.getStartTime().isBefore(time.getEndTime())) {
             return new ApiResponse(1, "create not accept time success", repository.save(time));
-        }
-        else if (time.getStartTime().isAfter(time.getEndTime())) {
+        } else if (time.getStartTime().isAfter(time.getEndTime())) {
             return new ApiResponse(0, "create not accept fail, start time after end time");
-        }
-        else if (time.getStartTime().equals(time.getEndTime())) {
+        } else if (time.getStartTime().equals(time.getEndTime())) {
             return new ApiResponse(0, "create not accept fail, start time equal end time");
         } else {
             return new ApiResponse(0, "create not accept fail, time is overlap");
