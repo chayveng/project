@@ -16,5 +16,6 @@ public interface TimeRepository extends JpaRepository<Time, Long> {
     List<Time> findByFieldId(@Param("fieldId") long fieldId);
     @Query(value = "SELECT * FROM time WHERE (endTime > :newStartTime AND startTime < :newEndTime) AND fieldId = :fieldId AND status = true", nativeQuery = true)
     List<Time> findOverlapTimes(@Param("newStartTime") String startTime, @Param("newEndTime") String endTime, @Param("fieldId") long fieldId);
-
+    @Query(value = "SELECT * FROM time WHERE (endTime > :newStartTime AND startTime < :newEndTime)", nativeQuery = true)
+    List<Time> findOverlapTimesAll(@Param("newStartTime") String startTime, @Param("newEndTime") String endTime);
 }

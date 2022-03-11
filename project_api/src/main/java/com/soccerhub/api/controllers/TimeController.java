@@ -40,6 +40,7 @@ public class TimeController {
     public Object createNotAccept(@RequestBody Time timeFromJson) {
         return service.createNotAccept(timeFromJson);
     }
+
     @DeleteMapping("/deleteById/{timeId}")
     public Object deleteById(@PathVariable long timeId) {
         return service.deleteById(timeId);
@@ -48,6 +49,11 @@ public class TimeController {
     @PostMapping("/update")
     public Object update(@RequestBody Time time) {
         return service.update(time);
+    }
+
+    @PostMapping("/getOverLabTimes")
+    public Object getOverLabTimes(@RequestBody Time time) {
+        return service.getOverLabTimes(time);
     }
 
 //    @DeleteMapping("/deleteId/{timeId}")

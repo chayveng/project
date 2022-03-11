@@ -12,6 +12,8 @@ import 'package:project_app/core/services/FieldServices.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/Config.dart';
+import 'core/models/Field.dart';
+import 'core/models/Time.dart';
 import 'core/models/User.dart';
 
 class TesterScreen extends StatefulWidget {
@@ -33,6 +35,44 @@ class _TesterScreenState extends State<TesterScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            ElevatedButton(
+              child: Text('Over lab time'),
+              onPressed: () async {
+                var time = new Time(
+                  startTime: '2022-03-02 00:00',
+                  endTime: '2022-03-02 01:00',
+                );
+                var resFieldIdIsOverLab = await ApiConnect.post(
+                  path: '/time/getOverLabTimes',
+                  body: time,
+                );
+                // print(resFieldIdIsOverLab.toString());
+                var resFieldIdIsOverLabData = jsonDecode(resFieldIdIsOverLab.toString());
+                List fieldIdIsOverLab = resFieldIdIsOverLabData['data'];
+                print(fieldIdIsOverLab);
+                // fieldIdIsOverLab.map((e) => print(e)).toList();
+                var resField = await ApiConnect.get(path: '/field/findAll');
+                var resConvert = jsonDecode(resField.toString());
+                List lst = resConvert['data'];
+                List<Field> fields = fieldsFromJson(lst);
+                List fieldsId = [];
+                fields.map((e) => fieldsId.add(e.id)).toList();
+                List<Field> newFields = [];
+                for(int i = 0 ; i < fields.length ; i++){
+                  for(int j = 0 ; j < fieldIdIsOverLab.length; j++){
+                    if(fields[i].id != fieldIdIsOverLab[j]){
+                      newFields.add(fields[i]);
+                    }
+                  }
+                }
+                print(fieldsId);
+                // newFields.map((e) => print(e.id)).toList();
+                print(newFields.length);
+                // print(fields.length);
+                // fields.map((e) => print(e.id)).toList();
+
+              },
+            ),
             ElevatedButton(
               onPressed: () async {
                 User user = User();
@@ -66,9 +106,11 @@ class _TesterScreenState extends State<TesterScreen> {
               onPressed: () async {
                 String token =
                     "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYmNvb3BlciIsIk5BTUUiOiJkYmNvb3BlciIsImV4cCI6MTY0Nzc5NDY0NiwiaXNzIjoibnNjIn0.0Yd8rlbzg5Tj615EYsewdzxkTkFMJ0QQw8y-iG2ZwGEg_w68E-P-lfAnv5K1l4h19G-FGwOtPbqHw-n4zWCihQ";
-                SharedPreferences sharePref = await SharedPreferences.getInstance();
+                SharedPreferences sharePref =
+                    await SharedPreferences.getInstance();
                 // print(sharePref.getString(AuthService.TOKEN));
-                var url = Uri.parse("${Config.API_URL}/field/findAll"); // use get method
+                var url = Uri.parse(
+                    "${Config.API_URL}/field/findAll"); // use get method
                 var res = await FieldServices.findAll();
                 print(res);
               },

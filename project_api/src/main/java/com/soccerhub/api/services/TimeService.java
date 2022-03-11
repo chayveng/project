@@ -94,6 +94,21 @@ public class TimeService {
         return new ApiResponse(1, "update time", repository.save(time));
     }
 
+    public Object getOverLabTimes(Time time) {
+        List<Time> timeAll = repository.findAll();
+        List<Time> times = repository.findOverlapTimesAll(time.getStartTime().toString(), time.getEndTime().toString());
+        List<Long> fieldsId = new ArrayList<>();
+        for (int i = 0; i < times.size(); i++){
+            fieldsId.add(times.get(i).getFieldId());
+        }
+        LinkedHashSet<Long> set = new LinkedHashSet<>();
+        for (int i = 0; i < fieldsId.size(); i++){
+            set.add(fieldsId.get(i));
+        }
+//        return new ApiResponse(1, "Over Lab Times", times.size());
+        return new ApiResponse(1, "Over Lab Times", set);
+    }
+
     public Object autoSave() {
         List<Time> times = repository.findByFieldId(99);
         for (var _time : times) {
