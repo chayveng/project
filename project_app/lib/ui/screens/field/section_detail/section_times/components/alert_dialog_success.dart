@@ -32,7 +32,7 @@ class DialogSuccess extends StatelessWidget {
           Icon(Icons.alarm_on_outlined, color: Colors.green, size: 35),
           SizedBox(width: 20),
           Text(
-            'จองสำเร็จ',
+            'รอรับการยืนยัน',
             style: TextStyle(fontSize: 16),
           ),
         ],

@@ -22,7 +22,7 @@ class _TesterScreenState extends State<TesterScreen> {
       "D": 4.40,
       "E": 5.50,
     };
-    print('on button');
+    itemWidget.clear();
     item.forEach((key, value) => itemWidget.add(formItem(key, value)));
     setState(() {});
   }
@@ -30,6 +30,7 @@ class _TesterScreenState extends State<TesterScreen> {
   Widget formItem(var key, var value) {
     return ListTile(
       title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Text('$key', style: TextStyle(fontSize: 22)),
           Text('$value', style: TextStyle(fontSize: 22)),
