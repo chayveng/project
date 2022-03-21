@@ -36,6 +36,11 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         fontFamily: UiFont,
         appBarTheme: AppBarTheme(
+          titleTextStyle: TextStyle(
+            color: Colors.black,
+            fontFamily: UiFont,
+            fontSize: 18,
+          ),
           elevation: 0,
           centerTitle: true,
           color: whiteColor,
@@ -49,7 +54,8 @@ class MyApp extends StatelessWidget {
               fontSize: 18,
               fontFamily: UiFont,
               fontWeight: FontWeight.bold,
-              color: navyPrimaryColor,
+              color: Colors.black,
+              // color: navyPrimaryColor,
             ),
           ),
         ),

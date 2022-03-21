@@ -46,6 +46,10 @@ class Time {
         "status": status,
       };
 
+  String getDate()=> startTime.toString().substring(0,10);
+  String getStartTime()=> startTime.toString().substring(11,16);
+  String getEndTime()=> endTime.toString().substring(11,16);
+
   @override
   String toString() {
     return 'Time{id: $id, fieldId: $fieldId, userId: $userId, startTime: $startTime, endTime: $endTime, status: $status}';

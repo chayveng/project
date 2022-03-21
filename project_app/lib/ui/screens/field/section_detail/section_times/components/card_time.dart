@@ -29,7 +29,7 @@ class CardTime extends StatelessWidget {
         ? InkWell(
             onTap: onAccept,
             child: Icon(
-              Icons.alarm_on_outlined,
+              Icons.add_task,
               color: Colors.green,
             ),
           )

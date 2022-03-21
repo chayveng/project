@@ -1,20 +1,8 @@
 import 'dart:convert';
-import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'package:image_picker/image_picker.dart';
 import 'package:project_app/constants.dart';
-import 'package:project_app/core/apis/ApiConnect.dart';
-import 'package:project_app/core/services/AuthService.dart';
-import 'package:project_app/core/services/FieldServices.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'core/Config.dart';
-import 'core/models/Field.dart';
-import 'core/models/Time.dart';
-import 'core/models/User.dart';
 
 class TesterScreen extends StatefulWidget {
   const TesterScreen({Key? key}) : super(key: key);
@@ -24,98 +12,51 @@ class TesterScreen extends StatefulWidget {
 }
 
 class _TesterScreenState extends State<TesterScreen> {
-  List<Uint8List> images = [];
+  List<Widget> itemWidget = [];
+
+  _onButton() {
+    var item = {
+      "A": 1.10,
+      "B": 2.20,
+      "C": 3.30,
+      "D": 4.40,
+      "E": 5.50,
+    };
+    itemWidget.clear();
+    item.forEach((key, value) => itemWidget.add(formItem(key, value)));
+    setState(() {});
+  }
+
+  Widget formItem(var key, var value) {
+    return ListTile(
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          Text('$key', style: TextStyle(fontSize: 22)),
+          Text('$value', style: TextStyle(fontSize: 22)),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
         width: sized(context).width,
+        height: sized(context).height,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ElevatedButton(
-              child: Text('Over lab time'),
-              onPressed: () async {
-                var time = new Time(
-                  startTime: '2022-03-02 00:00',
-                  endTime: '2022-03-02 01:00',
-                );
-                var resFieldIdIsOverLab = await ApiConnect.post(
-                  path: '/time/getOverLabTimes',
-                  body: time,
-                );
-                // print(resFieldIdIsOverLab.toString());
-                var resFieldIdIsOverLabData = jsonDecode(resFieldIdIsOverLab.toString());
-                List fieldIdIsOverLab = resFieldIdIsOverLabData['data'];
-                print(fieldIdIsOverLab);
-                // fieldIdIsOverLab.map((e) => print(e)).toList();
-                var resField = await ApiConnect.get(path: '/field/findAll');
-                var resConvert = jsonDecode(resField.toString());
-                List lst = resConvert['data'];
-                List<Field> fields = fieldsFromJson(lst);
-                List fieldsId = [];
-                fields.map((e) => fieldsId.add(e.id)).toList();
-                List<Field> newFields = [];
-                for(int i = 0 ; i < fields.length ; i++){
-                  for(int j = 0 ; j < fieldIdIsOverLab.length; j++){
-                    if(fields[i].id != fieldIdIsOverLab[j]){
-                      newFields.add(fields[i]);
-                    }
-                  }
-                }
-                print(fieldsId);
-                // newFields.map((e) => print(e.id)).toList();
-                print(newFields.length);
-                // print(fields.length);
-                // fields.map((e) => print(e.id)).toList();
-
-              },
+            Container(
+              width: 55,
+              height: 100,
+              color: Colors.amber,
+              // child: Text("sdfsdfsd"),
             ),
-            ElevatedButton(
-              onPressed: () async {
-                User user = User();
-                user.userName = 'dbcooper';
-                user.passWord = '1234567890';
-                user.tel = '0987654321';
-                String token =
-                    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYmNvb3BlciIsIk5BTUUiOiJkYmNvb3BlciIsImV4cCI6MTY0Nzc5NDY0NiwiaXNzIjoibnNjIn0.0Yd8rlbzg5Tj615EYsewdzxkTkFMJ0QQw8y-iG2ZwGEg_w68E-P-lfAnv5K1l4h19G-FGwOtPbqHw-n4zWCihQ";
-
-                // var url = Uri.parse("${Config.API_URL}/field/findAll"); // use get method
-                var url = Uri.parse(
-                  "${Config.API_URL}/authorize?username=${user.userName}&password=${user.passWord}",
-                );
-                var response = await http.post(
-                  url,
-                  headers: {
-                    HttpHeaders.authorizationHeader: "Bearer $token",
-                  },
-                ).then((value) {
-                  var decode = jsonDecode(value.body);
-                  if (decode['data'] == 1) {
-                    print('Token → ${decode['token']}');
-                  } else {
-                    print(decode);
-                  }
-                });
-              },
-              child: Text('tester'),
-            ),
-            ElevatedButton(
-              onPressed: () async {
-                String token =
-                    "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYmNvb3BlciIsIk5BTUUiOiJkYmNvb3BlciIsImV4cCI6MTY0Nzc5NDY0NiwiaXNzIjoibnNjIn0.0Yd8rlbzg5Tj615EYsewdzxkTkFMJ0QQw8y-iG2ZwGEg_w68E-P-lfAnv5K1l4h19G-FGwOtPbqHw-n4zWCihQ";
-                SharedPreferences sharePref =
-                    await SharedPreferences.getInstance();
-                // print(sharePref.getString(AuthService.TOKEN));
-                var url = Uri.parse(
-                    "${Config.API_URL}/field/findAll"); // use get method
-                var res = await FieldServices.findAll();
-                print(res);
-              },
-              child: Text('get'),
-            ),
+            ElevatedButton(onPressed: () => _onButton(), child: Text('button')),
+            ...List.generate(itemWidget.length, (index) => itemWidget[index]),
           ],
         ),
       ),

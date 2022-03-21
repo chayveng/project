@@ -21,6 +21,8 @@ const Color greyPrimaryColor = Color(0xFFe7e6e1);
 const Color creamPrimaryColor = Color(0xFFf7f6e7);
 const Color orangePrimaryColor = Color(0xFFf2a154);
 const Color navyPrimaryColor = Color(0xFF314e52);
+// const Color navyPrimaryColor = HexColor("#f2f2f2");
+// const Color navyPrimaryColor = Colors.black;
 
 const Color orangeColor = Color.fromRGBO(253, 108, 43, 1);
 const Color whiteColor = Color.fromRGBO(255, 255, 255, 1);

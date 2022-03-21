@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_app/core/models/Time.dart';
 
-import '../../../../constants.dart';
-
+import '../../../../../../constants.dart';
 
 
 class AlertDialogCancel extends StatelessWidget {
