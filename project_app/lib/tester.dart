@@ -49,6 +49,12 @@ class _TesterScreenState extends State<TesterScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
+            Container(
+              width: 55,
+              height: 100,
+              color: Colors.amber,
+              // child: Text("sdfsdfsd"),
+            ),
             ElevatedButton(onPressed: () => _onButton(), child: Text('button')),
             ...List.generate(itemWidget.length, (index) => itemWidget[index]),
           ],
